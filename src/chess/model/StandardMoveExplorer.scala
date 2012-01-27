@@ -1,9 +1,21 @@
 package chess.model
 
+import chess.util.UnhandledCaseException
+import chess.model.ex.{
+  AttackedPositionException,
+  CheckedOwnKing,
+  InterveningPieceException,
+  PreviouslyMovedException,
+  UnreachablePositionException
+}
+import Misc.kingInCheck
+
 /**
  * The moves of standard chess
  */
 class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
+
+  implicit def tuple2list(t: Tuple2[Position, Position]) = List(t._2, t._2)
 
   /**
    * @return The a list of possible positions excluding moves that would result in 1. the move escaping from the board edges,
@@ -98,6 +110,88 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
       case Some((otherColour, _, _)) => {
         if (otherColour == movingPieceColour) (true, false) else (false, true)
       }
+    }
+  }
+
+  def rejectIllegalMove(move: Move) {
+    def checkReachable(start: Position, end: Position) = {
+      val legalPositions = getBasicPositions(start)
+      if (!legalPositions.contains(end)) {
+        throw new UnreachablePositionException(MovePiece(start, end), legalPositions)
+      }
+    }
+    def checkKingNotLeftInCheckAfterMove(start: Position, end: Position) = {
+
+      /*
+       * 1. Clone the current conf
+       * 2. Apply the move without recursively calling this method
+       * 3. See if the King is in check
+       */
+
+      val (colour, _, _) = conf.getExistingPiece(start)
+      val future = conf.copyOf
+      future.applyMove(MovePiece(start, end))
+
+      if (kingInCheck(colour, future)) {
+        throw new CheckedOwnKing(move)
+      }
+    }
+
+    move match {
+      case MovePiece(start, end) => {
+        checkReachable(start, end)
+        checkKingNotLeftInCheckAfterMove(start, end)
+      }
+      case Castle(colour, castlingType) => {
+        /*
+        * Castling restrictions.
+        * 1. Your king has been moved earlier in the game.
+		* 2. The rook that castles has been moved earlier in the game.
+		* 3. There are pieces standing between your king and rook.
+		* 4. The king is in check.
+		* 5. The king moves through a square that is under attack by an opponents piece.
+		* 6. The king would be in check after castling.
+        */
+
+        val row = colour.homeRow
+
+        val ((king, _), (rook, _)) = castlingType.getPositions(row)
+
+        /* Disallow if either piece has already been moved. */
+        (king, rook).foreach { p =>
+          conf.getExistingPiece(p) match {
+            case (_, _, Some(_)) => throw new PreviouslyMovedException(move)
+            case default => Unit
+          }
+        }
+        /* Disallow if there are any pieces between the rook and king */
+        val interveningPositions = Position.getInterveningPositions(king, rook)
+        interveningPositions.foreach { p =>
+          conf.getPiece(p) match {
+            case Some(_) => throw new InterveningPieceException(move, p)
+            case default => Unit
+          }
+        }
+
+        /* Disallow if King is in check or would cross any square that is is attacked or would end in check. */
+        // TODO: Consider converting to map operation with predicate to test for attacked status
+        val exposedPositions = king :: rook :: interveningPositions
+        val opponentPositions = conf.locatePieces(colour.opposite)
+        opponentPositions.foreach { p =>
+          val attackedPositions = getBasicPositions(p)
+          val i = exposedPositions.intersect(attackedPositions)
+          if (i.nonEmpty) {
+            throw new AttackedPositionException(move, i.head)
+          }
+        }
+
+      }
+      //      case Resign(_) => Unit
+      case Promote(start, end, piece) => {
+        checkReachable(start, end)
+        checkKingNotLeftInCheckAfterMove(start, end)
+      }
+      case default => throw new UnhandledCaseException(move.toString)
     }
   }
 
