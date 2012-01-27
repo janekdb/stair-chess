@@ -1,10 +1,13 @@
 package chess.model
 
 /**
- * Objects can encapsulate moves extend this trait.
+ * Classes that can encapsulate moves extend this trait.
  */
 trait MoveExplorer {
 
   def getBasicPositions(position: Position): List[Position]
+
+  /** @throw An exception when the move would violate a condition not considered by {@link getBasicPositions} */
+  def rejectIllegalMove(move: Move)
 
 }
