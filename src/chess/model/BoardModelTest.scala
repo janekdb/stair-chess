@@ -8,7 +8,8 @@ import chess.util.TODO
 
 object BoardModelTest extends Test {
 
-  implicit def piece2list(t: Piece) = List(t)
+  implicit def piece2List(t: Piece) = List(t)
+  implicit def string2Position(s: String) = new Position(s)
 
   // TODO: Find out how to only define this in the superclass  
   def main(args: Array[String]): Unit = {
@@ -25,14 +26,15 @@ object BoardModelTest extends Test {
     rejectCastlingWhenAnySquareUnderAttack
     rejectIfMoveLeavesOwnKingInCheck
     checkMateIsDetected
+    checkButNotMateIsDetected
 
   }
 
   private def rejectMoveOntoOwnPiece = {
     val bm = new BoardModel
 
-    bm.place(Black, Queen(), new Position("g7"))
-    bm.place(Black, King(), new Position("g8"))
+    bm.place(Black, Queen(), "g7")
+    bm.place(Black, King(), "g8")
     // TODO: Stop direct access to this property.
     bm.placed = true
     try {
@@ -46,11 +48,18 @@ object BoardModelTest extends Test {
     }
   }
 
+  private def placeKings(boardModel: BoardModel) = {
+    boardModel.place(White, King(), "e1")
+    boardModel.place(Black, King(), "e8")
+  }
+
   private def rejectPawnDoubleAdvanceIfNotFirstMove = {
     val bm = new BoardModel
 
-    bm.place(Black, Pawn(), new Position("a7"))
-    bm.place(Black, King(), new Position("e8"))
+    placeKings(bm)
+
+    bm.place(Black, Pawn(), "a7")
+    bm.place(Black, Queen(), "f8")
 
     // TODO: Stop direct access to this property.
     bm.placed = true
@@ -68,27 +77,28 @@ object BoardModelTest extends Test {
 
   private def acceptCastlingWhenNoInterveningPieces = {
     val bm = new BoardModel
+    bm.place(Black, King(), "e8")
 
-    bm.place(White, Rook(), new Position("h1"))
-    bm.place(White, King(), new Position("d1"))
+    bm.place(White, Rook(), "h1")
+    bm.place(White, King(), "d1")
     bm.move(Castle(White, Long))
   }
 
   private def acceptCastlingWhenIrrelevantOpponentPiecesExist = {
     val bm = new BoardModel
-
-    bm.place(White, Rook(), new Position("h1"))
-    bm.place(White, King(), new Position("d1"))
-    bm.place(Black, Knight(), new Position("a8"))
+    bm.place(Black, King(), "e8")
+    bm.place(White, Rook(), "h1")
+    bm.place(White, King(), "d1")
+    bm.place(Black, Knight(), "a8")
     bm.move(Castle(White, Long))
   }
 
   private def rejectCastlingWhenInterveningPiece = {
     val bm = new BoardModel
 
-    bm.place(White, Rook(), new Position("h1"))
-    bm.place(White, King(), new Position("d1"))
-    bm.place(White, Bishop(), new Position("e1"))
+    bm.place(White, Rook(), "h1")
+    bm.place(White, King(), "d1")
+    bm.place(White, Bishop(), "e1")
 
     try {
       bm.move(Castle(White, Long))
@@ -98,6 +108,9 @@ object BoardModelTest extends Test {
       case e: Exception => unexpected(e)
     }
   }
+  
+// TODO: Add to Evernote: Multiple consoles
+// TODO: Add to Evernote: Use of OSGi console in Eclipse - can connect to GF?
 
   private def rejectCastlingWhenAnySquareUnderAttack = {
 
@@ -105,10 +118,10 @@ object BoardModelTest extends Test {
     for (file <- files) {
       val bm = new BoardModel
 
-      bm.place(White, Rook(), new Position("h1"))
-      bm.place(White, King(), new Position("d1"))
+      bm.place(White, Rook(), "h1")
+      bm.place(White, King(), "d1")
       /* Attack a square */
-      bm.place(Black, Rook(), new Position(file + "8"))
+      bm.place(Black, Rook(), file + "8")
 
       try {
         bm.move(Castle(White, Long))
@@ -123,9 +136,9 @@ object BoardModelTest extends Test {
   private def rejectIfMoveLeavesOwnKingInCheck = {
     val bm = new BoardModel
 
-    bm.place(White, Rook(), new Position("e2"))
-    bm.place(White, King(), new Position("e1"))
-    bm.place(Black, Rook(), new Position("e7"))
+    bm.place(White, Rook(), "e2")
+    bm.place(White, King(), "e1")
+    bm.place(Black, Rook(), "e7")
 
     try {
       bm.move(new MovePiece("e2h2"))
@@ -135,14 +148,14 @@ object BoardModelTest extends Test {
       case e: Exception => unexpected(e)
     }
   }
-  
+
   private def checkMateIsDetected = {
     val bm = new BoardModel
 
-    bm.place(White, King(), new Position("a2"))
-    bm.place(Black, King(), new Position("h7"))
-    bm.place(Black, Rook(), new Position("b8"))
-    bm.place(Black, Rook(), new Position("c7"))
+    bm.place(White, King(), "a2")
+    bm.place(Black, King(), "h7")
+    bm.place(Black, Rook(), "b8")
+    bm.place(Black, Rook(), "c7")
     // TODO: Write this test without assignment to this vars maybe by using a pattern guard in the subscriber to fall through
     var actual: List[(Colour, WinModes.WinMode)] = List()
 
@@ -157,14 +170,48 @@ object BoardModelTest extends Test {
         }
       }
     }
-    
+
     bm.subscribe(s)
-    
+
     bm.move(new MovePiece("c7a7"))
-    
-    assert(actual.size == 1, "One BoardChanged event was fired")
+
+    assert(actual.size == 1, "One BoardChanged event was fired: " + actual.size)
     val (colour, winMode) = actual.head
-    assert(colour == White)
+    assert(colour == Black)
     assert(winMode == WinModes.CheckMate)
   }
+
+  private def checkButNotMateIsDetected = {
+    val bm = new BoardModel
+
+    bm.place(White, King(), "b2")
+    bm.place(Black, King(), "h7")
+    bm.place(Black, Rook(), "c8")
+    bm.place(Black, Rook(), "d7")
+    // TODO: Write this test without assignment to this vars maybe by using a pattern guard in the subscriber to fall through
+    var actual: List[(Colour, WinModes.WinMode)] = List()
+
+    //    
+    var pieceMoved = false
+    var eventCount = 0
+    val s = new Object with BoardChangedSubscriber {
+      def onBoardChanged(event: BoardChanged) = {
+        eventCount += 1
+        event match {
+          case PieceMoved(_, _) => pieceMoved = true
+          case default => fail("Unexpected event: " + event)
+        }
+      }
+    }
+
+    bm.subscribe(s)
+
+    /* Check the King who get move to a2 to escape check. */
+    bm.move(new MovePiece("d7b7"))
+
+    assert(pieceMoved, "The game was not won when the king was checked but could escape")
+    assert(eventCount == 1, "There was only one event")
+  }
+  
+  
 }
