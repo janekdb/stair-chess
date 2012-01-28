@@ -7,7 +7,7 @@ trait MoveExplorer {
 
   def getBasicPositions(position: Position): List[Position]
 
-  /** @throw An exception when the move would violate a condition not considered by {@link getBasicPositions} */
+  /** @throw IllegalMoveException when the move would violate a condition not considered by {@link getBasicPositions} */
   def rejectIllegalMove(move: Move)
 
 }
