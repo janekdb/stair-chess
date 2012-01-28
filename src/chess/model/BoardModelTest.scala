@@ -188,10 +188,7 @@ object BoardModelTest extends Test {
     bm.place(Black, King(), "h7")
     bm.place(Black, Rook(), "c8")
     bm.place(Black, Rook(), "d7")
-    // TODO: Write this test without assignment to this vars maybe by using a pattern guard in the subscriber to fall through
-    var actual: List[(Colour, WinModes.WinMode)] = List()
 
-    //    
     var pieceMoved = false
     var eventCount = 0
     val s = new Object with BoardChangedSubscriber {
@@ -206,12 +203,11 @@ object BoardModelTest extends Test {
 
     bm.subscribe(s)
 
-    /* Check the King who get move to a2 to escape check. */
+    /* Check the King. This is not checkmate since a move to a2 escapes check. */
     bm.move(new MovePiece("d7b7"))
 
     assert(pieceMoved, "The game was not won when the king was checked but could escape")
     assert(eventCount == 1, "There was only one event")
   }
-  
   
 }
