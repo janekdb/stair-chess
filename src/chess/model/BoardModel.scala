@@ -3,11 +3,12 @@ package chess.model
 import chess.util.UnhandledCaseException
 import chess.util.TODO
 import chess.model.ex.{
-  AttackedPositionException,
-  CheckedOwnKing,
-  InterveningPieceException,
-  PreviouslyMovedException,
-  UnreachablePositionException
+  //  AttackedPositionException,
+  //  CheckedOwnKing,
+  //  InterveningPieceException,
+  IllegalMoveException
+  //  PreviouslyMovedException,
+  //  UnreachablePositionException
 }
 import Misc.kingInCheck
 
@@ -27,15 +28,15 @@ class BoardModel {
   def isWon = winner != null
 
   def getWinner: Colour = {
-    winner ensuring(isWon)
+    winner ensuring (isWon)
   }
 
   def isCheckMate: Boolean = {
-    winMode == WinModes.CheckMate ensuring(isWon)
+    winMode == WinModes.CheckMate ensuring (isWon)
   }
 
   def isResigned: Boolean = {
-    winMode == WinModes.Resignation ensuring(isWon)
+    winMode == WinModes.Resignation ensuring (isWon)
   }
 
   /* TODO: Hide this var from the test */
@@ -64,9 +65,9 @@ class BoardModel {
 
   private val conf: Configuration = new GridConfiguration
   private val moveExplorer: MoveExplorer = new StandardMoveExplorer(conf)
-  
+
   /* TODO: Revert to private or extract move checking to new object */
-   def place(colour: Colour, pieces: List[Piece], position: Position): Unit = {
+  def place(colour: Colour, pieces: List[Piece], position: Position): Unit = {
 
     val p :: ps = pieces
     conf.add(position, colour, p)
@@ -78,7 +79,7 @@ class BoardModel {
 
   def move(move: Move): Unit = {
     debug("Moving: " + move)
-    
+
     if (winner != null) {
       throw new IllegalStateException("The game has already been won");
     }
@@ -106,7 +107,7 @@ class BoardModel {
         }
 
         val e = conf.applyMove(move)
-        
+
         // TODO: Move this side-effect out of the case statement
         if (checkForCheckMate(colour.opposite)) {
           winMode = WinModes.CheckMate
@@ -122,34 +123,31 @@ class BoardModel {
       subscribers.foreach { _.onBoardChanged(Won(winner, winMode)) }
     }
   }
-  
 
   private def checkForCheckMate(colour: Colour): Boolean = {
     return kingInCheck(colour, conf) && !checkedKingCanEscape(colour, conf)
   }
 
-  // TODO: Write checkedKingCanEscape
   /*
    * @return true when there is at least one move that will get the king out of
    * check
    */
   private def checkedKingCanEscape(colour: Colour, conf: Configuration): Boolean = {
     val me = new StandardMoveExplorer(conf)
-    // TODO: Replace this with a list comprehension
-    conf.locatePieces(colour).foreach { p =>
-      for (end <- me.getBasicPositions(p)) {
-        try {
-          me.rejectIllegalMove(MovePiece(p, end))
-          /* The move did not left the king in check so there is a way out of check */
-          return true
-        } catch {
-          case default => Unit
-        }
+    def moveIsLegal(move: MovePiece) = {
+      try {
+        // TODO: Convert from exception throwing to case class return to signal illegal move
+        me.rejectIllegalMove(move)
+        /* The move did not leave the king in check so there is a way out of check */
+        true
+      } catch {
+        case e: IllegalMoveException => { false };
       }
     }
-    false
+    conf.locatePieces(colour).exists(start =>
+      me.getBasicPositions(start).exists(end => moveIsLegal(MovePiece(start, end))))
   }
-  
+
   // Debug
   private def debug(s: String): Unit = { println(s) }
 
