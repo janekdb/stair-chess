@@ -10,14 +10,8 @@ object Misc {
     // TODO: Consolidate this code with the same code as the Castling case by passing a block to
     //   code that finds and iterates over the opponents pieces.
     val opponentPositions = conf.locatePieces(colour.opposite)
-    // TODO: Upgrade to functional style with exists(...)
-    opponentPositions.foreach { p =>
-      val attackedPositions = futureMoveExplorer.getBasicPositions(p)
-      if (attackedPositions.contains(king)) {
-        return true
-      }
-    }
-    return false
+    opponentPositions.exists(p =>
+      futureMoveExplorer.getBasicPositions(p).contains(king))
   }
 
 }
