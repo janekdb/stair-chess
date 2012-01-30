@@ -27,6 +27,7 @@ object BoardModelTest extends Test {
     rejectIfMoveLeavesOwnKingInCheck
     checkMateIsDetected
     checkButNotMateIsDetected
+    enPassantAllowed
 
   }
 
@@ -210,4 +211,7 @@ object BoardModelTest extends Test {
     assert(eventCount == 1, "There was only one event")
   }
   
+  private def enPassantAllowed = {
+    fail
+  }
 }
