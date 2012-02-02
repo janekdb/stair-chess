@@ -10,6 +10,8 @@ object BoardModelTest extends Test {
 
   implicit def piece2List(t: Piece) = List(t)
   implicit def string2Position(s: String) = new Position(s)
+  // TODO: Replace new MovePiece(x) with x
+  implicit def string2MovePiece(s: String) = new MovePiece(s)
 
   // TODO: Find out how to only define this in the superclass  
   def main(args: Array[String]): Unit = {
@@ -28,6 +30,7 @@ object BoardModelTest extends Test {
     checkMateIsDetected
     checkButNotMateIsDetected
     enPassantAllowed
+    enPassantDisallowedIfNotImmediatelyUsed
 
   }
 
@@ -109,9 +112,9 @@ object BoardModelTest extends Test {
       case e: Exception => unexpected(e)
     }
   }
-  
-// TODO: Add to Evernote: Multiple consoles
-// TODO: Add to Evernote: Use of OSGi console in Eclipse - can connect to GF?
+
+  // TODO: Add to Evernote: Multiple consoles
+  // TODO: Add to Evernote: Use of OSGi console in Eclipse - can connect to GF?
 
   private def rejectCastlingWhenAnySquareUnderAttack = {
 
@@ -210,8 +213,46 @@ object BoardModelTest extends Test {
     assert(pieceMoved, "The game was not won when the king was checked but could escape")
     assert(eventCount == 1, "There was only one event")
   }
-  
+
   private def enPassantAllowed = {
+    val bm = newBoardModel
+
+    /* The pawn that will capture via en-passant */
+    bm.place(White, Pawn(), "e2")
+    bm.place(Black, Pawn(), "d7")
+
+    // TODO: Find out how to declare a null local var of type PieceMovedTaking but
+    //  then do not use it because the List mechanism is cleaner
+    var pieceMovedTaking = List[PieceMovedTaking]()
+    val s = new Object with BoardChangedSubscriber {
+      def onBoardChanged(event: BoardChanged) = {
+        event match {
+          case e @ PieceMovedTaking(_, _, _) => pieceMovedTaking = List(e)
+          case default => fail("Unexpected event: " + event)
+        }
+      }
+    }
+
+    bm.move("e2e4")
+    bm.move("e4e5")
+    
+    bm.move("d7d5")
+
+    bm.subscribe(s)
+    bm.move("e5d6")
+
+    assert(pieceMovedTaking == PieceMovedTaking("d6", "e5", "d5"), "Black's pawn was taken via en passant")
+  }
+
+  private def enPassantDisallowedIfNotImmediatelyUsed = {
     fail
+  }
+
+  private def newBoardModel = {
+    val bm = new BoardModel
+
+    bm.place(White, King(), "e1")
+    bm.place(Black, King(), "e8")
+    bm
   }
 }
