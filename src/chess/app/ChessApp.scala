@@ -1,10 +1,8 @@
 package chess.app
 
-import chess.model.{Colours, Move}
+import chess.model.{ Colours, Move }
 import chess.model.BoardModel
-import chess.model.BoardModelTest
-import chess.model.PositionTest
-import chess.player.{Computer, Human}
+import chess.player.{ Computer, Human }
 import chess.ui.UI
 import chess.util.PlayerSelector
 
@@ -12,7 +10,7 @@ object ChessApp {
   def main(args: Array[String]): Unit = {
 
     runTests
-    
+
     val board = new BoardModel
     /* The UI listens for changes and renders them immediately */
     new UI(board).showBoard
@@ -26,9 +24,13 @@ object ChessApp {
       board.move(playerSelector.next.getMove)
     }
   }
-  
+
   def runTests: Unit = {
+    import chess.model.BoardModelTest
+    import chess.model.PositionTest
+    import chess.model.StandardMoveExplorerTest
     BoardModelTest.runTests
     PositionTest.runTests
+    StandardMoveExplorerTest.runTests
   }
 }
