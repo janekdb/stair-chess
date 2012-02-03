@@ -1,13 +1,14 @@
 package chess.model
 
-import chess.model.Colours.{ Black, White }
-import chess.model.ex._
+import Colours.{ Black, White }
+import ex._
 
 import test.Test
 import chess.util.TODO
 
 object BoardModelTest extends Test {
 
+  // TODO: Define this test helping implicits in a common location
   implicit def piece2List(t: Piece) = List(t)
   implicit def string2Position(s: String) = new Position(s)
   // TODO: Replace new MovePiece(x) with x
@@ -235,7 +236,7 @@ object BoardModelTest extends Test {
 
     bm.move("e2e4")
     bm.move("e4e5")
-    
+
     bm.move("d7d5")
 
     bm.subscribe(s)
