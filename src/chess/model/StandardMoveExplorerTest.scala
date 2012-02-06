@@ -21,6 +21,7 @@ object StandardMoveExplorerTest extends Test {
     // TODO: Add test that a white pawn on e3 does not include e5 in the list of basic positions
     getBasicPositionsExcludesEnPassantOnNonFifthRank
     getBasicPositionsIncludesEnPassantOnFifthRank
+    getBasicPositionsExcludesTwoSquarePawnAdvanceWhenFirstMoveButNotOnStartPosition
   }
 
   private def getBasicPositionsExcludesEnPassantOnNonFifthRank = {
@@ -41,24 +42,23 @@ object StandardMoveExplorerTest extends Test {
   }
 
   private def getBasicPositionsIncludesEnPassantOnFifthRank = {
-    // TODO: Write this test
     val whitePawnStart = new Position("e4")
     val whitePawnEnd = new Position("e5")
     val conf = new GridConfiguration
     conf.add(whitePawnStart, White, Pawn())
     conf.add("d7", Black, Pawn())
     val e = new StandardMoveExplorer(conf)
-    // TODO: Update this comment
     /*
-     * The black pawn is now on the same rank as the white pawn which a pre-condition for en passant
-     * but not a sufficient condition. The captured pawn must have moved two squares immediately prior
-     * to the capture.
+     * The black pawn is now on the same rank as the white pawn and has moved two squares which is the
+     * full set of pre-conditions required to allow white to capture via en-passant.
      */
+    /* Move white to remove the possibility of a two square advance. */
     conf.move(whitePawnStart, whitePawnEnd)
     conf.move("d7", "d5")
     val actual = e.getBasicPositions(whitePawnEnd)
     val expected: Set[Position] = Set("d6", "e6")
     assert(expected == actual, "Incorrect position set: expected: " + expected + ", actual: " + actual)
-    fail
   }
+  
+  private def getBasicPositionsExcludesTwoSquarePawnAdvanceWhenFirstMoveButNotOnStartPosition = fail
 }
