@@ -35,11 +35,9 @@ object StandardMoveExplorerTest extends Test {
      * to the capture.
      */
     conf.move("d3", "d2")
-    val ps = e.getBasicPositions(whitePawn)
-    // TODO: Find out how to convert a List to a Set so the order of the positions is not tested.
-    val expected: List[Position] = List("e4", "e3")
-    var actual: List[Position] = ps
-    assert(expected == actual, "Incorrect list of positions: expected: " + expected + ", actual: " + actual)
+    val actual = e.getBasicPositions(whitePawn)
+    val expected: Set[Position] = Set("e4", "e3")
+    assert(expected == actual, "Incorrect position set: expected: " + expected + ", actual: " + actual)
   }
 
   private def getBasicPositionsIncludesEnPassantOnFifthRank = {
@@ -58,11 +56,9 @@ object StandardMoveExplorerTest extends Test {
      */
     conf.move(whitePawnStart, whitePawnEnd)
     conf.move("d7", "d5")
-    val ps = e.getBasicPositions(whitePawnEnd)
-    // TODO: Find out how to convert a List to a Set so the order of the positions is not tested.
-    val expected: List[Position] = List("d6", "e6")
-    var actual: List[Position] = ps
-    assert(expected == actual, "Incorrect list of positions: expected: " + expected + ", actual: " + actual)
+    val actual = e.getBasicPositions(whitePawnEnd)
+    val expected: Set[Position] = Set("d6", "e6")
+    assert(expected == actual, "Incorrect position set: expected: " + expected + ", actual: " + actual)
     fail
   }
 }

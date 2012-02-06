@@ -5,8 +5,7 @@ package chess.model
  */
 trait MoveExplorer {
 
-  // TODO: Change to Set[Position]
-  def getBasicPositions(position: Position): List[Position]
+  def getBasicPositions(position: Position): Set[Position]
 
   /** @throw IllegalMoveException when the move would violate a condition not considered by {@link getBasicPositions} */
   def rejectIllegalMove(move: Move)

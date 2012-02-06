@@ -21,7 +21,7 @@ class AttackedPositionException(move: Move, attackedPosition: Position) extends 
   override def toString(): String = super.toString + ", attacked position " + attackedPosition
 }
 
-class UnreachablePositionException(move: Move, legalPositions: List[Position]) extends IllegalMoveException(move) {
+class UnreachablePositionException(move: Move, legalPositions: Set[Position]) extends IllegalMoveException(move) {
   override def toString(): String = "Position was unreachable: " + move + ", legal positions: " + legalPositions
 }
 

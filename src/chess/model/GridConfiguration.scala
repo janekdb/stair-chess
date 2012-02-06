@@ -10,7 +10,7 @@ class GridConfiguration extends Configuration {
 
   def add(position: Position, colour: Colour, piece: Piece): Unit = {
     pieces += (position -> (colour, piece, None))
-    assert(pieces.contains(new Position(position.getCol, position.getRow)))
+    assert(pieces contains new Position(position.getCol, position.getRow))
   }
 
   def remove(position: Position): Unit = {
@@ -31,7 +31,7 @@ class GridConfiguration extends Configuration {
    */
   def move(start: Position, end: Position): Unit = {
     val (colour, piece, _) = getExistingPiece(start)
-    if (pieces.contains(end)) {
+    if (pieces contains end) {
       throw new IllegalStateException("End position was occupied: " + end)
     }
     pieces.remove(start)

@@ -18,10 +18,10 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
   implicit def tuple2list(t: Tuple2[Position, Position]) = List(t._2, t._2)
 
   /**
-   * @return The a list of possible positions excluding moves that would result in 1. the move escaping from the board edges,
+   * @return The a set of possible positions excluding moves that would result in 1. the move escaping from the board edges,
    * or 2. A non-Knight jumping over a piece, or 3. A piece taking another piece of the same colour
    */
-  def getBasicPositions(position: Position): List[Position] = {
+  def getBasicPositions(position: Position): Set[Position] = {
     val (colour, piece, _) = conf.getExistingPiece(position)
 
     val vectors = piece.movements(colour)
@@ -32,7 +32,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
       case Rook() => true
       case default => false
     }
-    var basicPositions = List[Position]()
+    var basicPositions = Set[Position]()
 
     val moveAllowed = piece match {
       case Pawn() => pawnMoveAllowed _
@@ -51,7 +51,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
           c = c.offset(v._1, v._2)
           val (ownPiece, opponentPiece) = testPieceColour(c, colour)
           /* Empty square or opponents piece */
-          if (!ownPiece) basicPositions = c :: basicPositions
+          if (!ownPiece) basicPositions = basicPositions + c
           if (ownPiece || opponentPiece) advanceTerminated = true
         }
       }
@@ -68,6 +68,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
     if (pawnDiagonal(dCol, dRow)) {
       /* Can only take if piece present. The client code will check for the colour */
       val p = startPosition.offset(dCol, dRow)
+      log("pawnDiagonal: checking position: " + p)
       conf.getPiece(p) match {
         case Some(_) => true
         case None => false
@@ -116,7 +117,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
   def rejectIllegalMove(move: Move) {
     def checkReachable(start: Position, end: Position) = {
       val legalPositions = getBasicPositions(start)
-      if (!legalPositions.contains(end)) {
+      if (!(legalPositions contains end)) {
         throw new UnreachablePositionException(MovePiece(start, end), legalPositions)
       }
     }
@@ -179,14 +180,14 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
         val opponentPositions = conf.locatePieces(colour.opposite)
         opponentPositions.foreach { p =>
           val attackedPositions = getBasicPositions(p)
-          val i = exposedPositions.intersect(attackedPositions)
+          // TODO: Change exposedPositions to Set[Position]
+          val i = exposedPositions.toSet.intersect(attackedPositions)
           if (i.nonEmpty) {
             throw new AttackedPositionException(move, i.head)
           }
         }
 
       }
-      //      case Resign(_) => Unit
       case Promote(start, end, piece) => {
         checkReachable(start, end)
         checkKingNotLeftInCheckAfterMove(start, end)
@@ -195,4 +196,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
     }
   }
 
+  private def log(message: String) = {
+    println(message);
+  }
 }

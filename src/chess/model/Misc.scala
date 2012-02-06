@@ -12,7 +12,7 @@ object Misc {
     // TODO: Confirm this considers non-basic move restriction such as en-passant.
     val opponentPositions = conf.locatePieces(colour.opposite)
     opponentPositions.exists(p =>
-      futureMoveExplorer.getBasicPositions(p).contains(king))
+      futureMoveExplorer.getBasicPositions(p) contains king)
   }
 
 }
