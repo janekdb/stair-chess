@@ -26,11 +26,11 @@ object ChessApp {
   }
 
   def runTests: Unit = {
-    import chess.model.BoardModelTest
-    import chess.model.PositionTest
-    import chess.model.StandardMoveExplorerTest
-    BoardModelTest.runTests
-    PositionTest.runTests
-    StandardMoveExplorerTest.runTests
+    // TODO: Determine if each test object could add itself into a object
+    //   which would allow all tests to be looped over to run them.
+    chess.model.PositionTest.runTests
+    chess.model.GridConfigurationTest.runTests
+    chess.model.BoardModelTest.runTests
+    chess.model.StandardMoveExplorerTest.runTests
   }
 }
