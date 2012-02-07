@@ -38,6 +38,8 @@ class GridConfiguration extends Configuration {
     pieces += (end -> (colour, piece, Some(start)))
   }
 
+  def getLastMove: Option[(Position, Position)] = None
+  
   /** Replace the piece with a the same colour carrying over the previous position */
   def replace(position: Position, replacementPiece: Piece): Unit = {
     val (colour, _, ppo) = getExistingPiece(position)
