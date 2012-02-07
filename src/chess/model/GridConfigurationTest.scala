@@ -23,9 +23,15 @@ object GridConfigurationTest extends Test {
   }
 
   def moveHistoryMaintained = {
-    var conf = new GridConfiguration
-    conf.add("e2", White, Pawn())
-    conf.add("h8", Black, Rook())
+    val conf = new GridConfiguration
+
+    val whiteStart: Position = "e2"
+    val whiteEnd: Position = "e3"
+    conf.add(whiteStart, White, Pawn())
+
+    val blackStart: Position = "h8"
+    val blackEnd: Position = "h4"
+    conf.add(blackStart, Black, Rook())
 
     conf.getLastMove match {
       case None => Unit
@@ -37,18 +43,14 @@ object GridConfigurationTest extends Test {
         case Some((_, _)) => Unit
         case default => fail("The last move should have been Some((_, _)) but was " + conf.getLastMove)
       }
-      val (e1, e2) = expected
-      val Some((start, end)) = actual
-      assert(start == e1)
-      assert(end == e2)
-
+      assert(expected == actual)
     }
-    // TODO: Stop repeating position strings
-    conf.move("e2", "e3")
-    assertEquals(("e2", "e3"), conf.getLastMove)
 
-    conf.move("h8", "h1")
-    assertEquals(("h8", "h1"), conf.getLastMove)
+    conf.move(whiteStart, whiteEnd)
+    assertEquals((whiteStart, whiteEnd), conf.getLastMove)
+
+    conf.move(blackStart, blackEnd)
+    assertEquals((blackStart, blackEnd), conf.getLastMove)
   }
 
   def moveHistoryCopied = fail
