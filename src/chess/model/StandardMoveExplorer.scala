@@ -69,17 +69,13 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
       /* Can only take if piece present. The client code will check for the colour */
       val p = startPosition.offset(dCol, dRow)
       log("pawnDiagonal: checking position: " + p)
-      conf.getPiece(p) match {
-        case Some(_) => true
-        case None => false
-      }
+      log("pawnDiagonal: Allow en passant by inspecting previously moved piece")
+      // TODO: Use Configuration history to test for en passant possibility
+      exists(p)
     } else if (pawnForward(dCol, dRow)) {
       /* Prevent forward capturing. */
       val p = startPosition.offset(dCol, dRow)
-      conf.getPiece(p) match {
-        case Some(_) => false
-        case None => true
-      }
+      !exists(p)
     } else if (pawnForwardTwo(dCol, dRow)) {
       conf.getExistingPiece(startPosition) match {
         /* Disallow double advancement if the pawn has already been moved. */
@@ -88,14 +84,19 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
           /* Deny attempt to jump over a piece */
           val r = if (dRow == 2) 1 else -1
           val p = startPosition.offset(0, r)
-          conf.getPiece(p) match {
-            case Some(_) => false
-            case None => true
-          }
+          !exists(p)
         }
       }
     } else {
       throw new AssertionError("All pawn moves handled")
+    }
+  }
+
+  // TODO: Move this existence test into Configuration
+  private def exists(p: Position) = {
+    conf.getPiece(p) match {
+      case Some(_) => true
+      case None => false
     }
   }
 
