@@ -21,6 +21,7 @@ object StandardMoveExplorerTest extends Test {
     // TODO: Add test that a white pawn on e3 does not include e5 in the list of basic positions
     getBasicPositionsExcludesEnPassantOnNonFifthRank
     getBasicPositionsIncludesEnPassantOnFifthRank
+    getBasicPositionsExcludesEnPassantOnFifthRankWhenNotMovedOnPreviousTurn
     getBasicPositionsExcludesTwoSquarePawnAdvanceWhenFirstMoveButNotOnStartPosition
   }
 
@@ -59,6 +60,10 @@ object StandardMoveExplorerTest extends Test {
     val expected: Set[Position] = Set("d6", "e6")
     assert(expected == actual, "Incorrect position set: expected: " + expected + ", actual: " + actual)
   }
+  
+  /* When the opponents pawn was in the correct position for en passant but had not moved to that position on
+   * the previous turn. */
+  private def getBasicPositionsExcludesEnPassantOnFifthRankWhenNotMovedOnPreviousTurn = fail
   
   private def getBasicPositionsExcludesTwoSquarePawnAdvanceWhenFirstMoveButNotOnStartPosition = fail
 }
