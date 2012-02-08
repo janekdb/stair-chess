@@ -38,19 +38,20 @@ object GridConfigurationTest extends Test {
       case default => fail("The last move should have been None")
     }
 
-    def assertEquals(expected: (Position, Position), actual: Option[(Position, Position)]) = {
+    def assertSomeEquals(expected: (Position, Position), actual: Option[(Position, Position)]) = {
       actual match {
         case Some((_, _)) => Unit
         case default => fail("The last move should have been Some((_, _)) but was " + conf.getLastMove)
       }
-      assert(expected == actual)
+      val Some((a, b)) = actual
+      assert(expected == (a, b), "Expected: " + expected + " but had: " + actual)
     }
 
     conf.move(whiteStart, whiteEnd)
-    assertEquals((whiteStart, whiteEnd), conf.getLastMove)
+    assertSomeEquals((whiteStart, whiteEnd), conf.getLastMove)
 
     conf.move(blackStart, blackEnd)
-    assertEquals((blackStart, blackEnd), conf.getLastMove)
+    assertSomeEquals((blackStart, blackEnd), conf.getLastMove)
   }
 
   def moveHistoryCopied = fail
