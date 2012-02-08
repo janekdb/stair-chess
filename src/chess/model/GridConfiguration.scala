@@ -105,6 +105,8 @@ class GridConfiguration extends Configuration {
     for ((position, (colour, piece, last)) <- pieces) {
       c.pieces += (position -> (colour, piece, last))
     }
+    /* Immutable object */
+    c.lastMove = lastMove
     c
   }
 
