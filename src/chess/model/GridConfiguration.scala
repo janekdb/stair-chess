@@ -36,9 +36,13 @@ class GridConfiguration extends Configuration {
     }
     pieces.remove(start)
     pieces += (end -> (colour, piece, Some(start)))
+    lastMove = Option((start, end))
   }
 
-  def getLastMove: Option[(Position, Position)] = None
+  private var lastMove: Option[(Position, Position)] = None
+  
+  // TODO: Drop getLastMove in favour of compiler provided getter
+  def getLastMove: Option[(Position, Position)] = lastMove
   
   /** Replace the piece with a the same colour carrying over the previous position */
   def replace(position: Position, replacementPiece: Piece): Unit = {
