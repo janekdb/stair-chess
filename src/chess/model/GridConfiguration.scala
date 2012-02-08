@@ -36,14 +36,14 @@ class GridConfiguration extends Configuration {
     }
     pieces.remove(start)
     pieces += (end -> (colour, piece, Some(start)))
-    lastMove = Option((start, end))
+    lastMove = Option((piece, start, end))
   }
 
-  private var lastMove: Option[(Position, Position)] = None
-  
+  private var lastMove: Option[(Piece, Position, Position)] = None
+
   // TODO: Drop getLastMove in favour of compiler provided getter
-  def getLastMove: Option[(Position, Position)] = lastMove
-  
+  def getLastMove: Option[(Piece, Position, Position)] = lastMove
+
   /** Replace the piece with a the same colour carrying over the previous position */
   def replace(position: Position, replacementPiece: Piece): Unit = {
     val (colour, _, ppo) = getExistingPiece(position)
@@ -99,7 +99,7 @@ class GridConfiguration extends Configuration {
     result
   }
 
-    /** Return a deep copy of the Configuration */
+  /** Return a deep copy of the Configuration */
   def copyOf: Configuration = {
     val c = new GridConfiguration
     for ((position, (colour, piece, last)) <- pieces) {

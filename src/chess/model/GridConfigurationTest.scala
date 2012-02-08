@@ -39,10 +39,10 @@ object GridConfigurationTest extends Test {
     }
 
     conf.move(whiteStart, whiteEnd)
-    assertSomeEquals((whiteStart, whiteEnd), conf.getLastMove)
+    assertSomeEquals((Pawn(), whiteStart, whiteEnd), conf.getLastMove)
 
     conf.move(blackStart, blackEnd)
-    assertSomeEquals((blackStart, blackEnd), conf.getLastMove)
+    assertSomeEquals((Rook(), blackStart, blackEnd), conf.getLastMove)
   }
 
   def moveHistoryCopied = {
@@ -54,16 +54,16 @@ object GridConfigurationTest extends Test {
 
     conf.move(whiteStart, whiteEnd)
     val copy = conf.copyOf
-    assertSomeEquals((whiteStart, whiteEnd), copy.getLastMove)
+    assertSomeEquals((Pawn(), whiteStart, whiteEnd), copy.getLastMove)
   }
 
-  def assertSomeEquals(expected: (Position, Position), actual: Option[(Position, Position)]) = {
+  def assertSomeEquals(expected: (Piece, Position, Position), actual: Option[(Piece, Position, Position)]) = {
     actual match {
-      case Some((_, _)) => Unit
+      case Some((_, _, _)) => Unit
       case default => fail("The last move should have been Some((_, _)) but was " + actual)
     }
-    val Some((a, b)) = actual
-    assert(expected == (a, b), "Expected: " + expected + " but had: " + actual)
+    val Some((p, a, b)) = actual
+    assert(expected == (p, a, b), "Expected: " + expected + " but had: " + actual)
   }
 
 }
