@@ -17,12 +17,11 @@ trait Configuration {
    * Throw exception if the end position is already occupied.
    */
   def move(start: Position, end: Position)
-
   
   /**
    * Return the last move or None
    */
-  def getLastMove: Option[(Position, Position)]
+  def getLastMove: Option[(Piece, Position, Position)]
   
   /** Replace the piece with a the same colour carrying over the move count */
   def replace(position: Position, replacementPiece: Piece)
