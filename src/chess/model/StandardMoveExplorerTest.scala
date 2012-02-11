@@ -46,27 +46,26 @@ object StandardMoveExplorerTest extends Test {
     assert(expected == actual, "Incorrect position set: expected: " + expected + ", actual: " + actual)
   }
 
-  
   /* All conditions met */
   private def getBasicPositionsIncludesEnPassantBlack = {
-		  val blackPawnStart = new Position("e5")
-		  val blackPawnEnd = new Position("e4")
-		  val conf = new GridConfiguration
-		  conf.add(blackPawnStart, Black, Pawn())
-		  conf.add("d2", White, Pawn())
-		  val e = new StandardMoveExplorer(conf)
-		  /* Move black to remove the possibility of a two square advance. */
-		  conf.move(blackPawnStart, blackPawnEnd)
-		  conf.move("d2", "d4")
-		  /*
+    val blackPawnStart = new Position("e5")
+    val blackPawnEnd = new Position("e4")
+    val conf = new GridConfiguration
+    conf.add(blackPawnStart, Black, Pawn())
+    conf.add("d2", White, Pawn())
+    val e = new StandardMoveExplorer(conf)
+    /* Move black to remove the possibility of a two square advance. */
+    conf.move(blackPawnStart, blackPawnEnd)
+    conf.move("d2", "d4")
+    /*
 		   * The white pawn is now on the same rank as the black pawn and has moved two squares which is the
 		   * full set of pre-conditions required to allow black to capture via en-passant.
 		   */
-		  val actual = e.getBasicPositions(blackPawnEnd)
-		  val expected: Set[Position] = Set("d3", "e3")
-		  assert(expected == actual, "Incorrect position set: expected: " + expected + ", actual: " + actual)
+    val actual = e.getBasicPositions(blackPawnEnd)
+    val expected: Set[Position] = Set("d3", "e3")
+    assert(expected == actual, "Incorrect position set: expected: " + expected + ", actual: " + actual)
   }
-  
+
   /*
    * Check there is no en passant when one of the three necessary conditions is missing:
    * 1. Double advance, 2. Fifth rank, 3. Adjacent column.
