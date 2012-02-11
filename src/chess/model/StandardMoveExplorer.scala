@@ -62,16 +62,24 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
   private def anyMoveAllowed(startPosition: Position, d: (Int, Int)) = true
 
   // TODO: Add prerequisites for moves:
-  // TODO: Allow en-passant possibly by modelling a takable virtual pawn with Configuration.getTakable
   private def pawnMoveAllowed(startPosition: Position, d: (Int, Int)) = {
     val (dCol, dRow) = d
     if (pawnDiagonal(dCol, dRow)) {
-      /* Can only take if piece present. The client code will check for the colour */
+      /* Can only take if piece present or en passant possible. The client code will check for the colour */
       val p = startPosition.offset(dCol, dRow)
-      log("pawnDiagonal: checking position: " + p)
-      log("pawnDiagonal: Allow en passant by inspecting previously moved piece")
-      // TODO: Use Configuration history to test for en passant possibility
-      exists(p)
+      val lastMoveWasDoublePawn = conf.getLastMove match {
+        case Some((Pawn(), start, end)) if (start.getRow - end.getRow).abs == 2 => true
+        case default => false
+      }
+      var lastMoveWasAdjacentColumn = conf.getLastMove match {
+        case Some((Pawn(), start, end)) if end.getCol == p.getCol => true
+        case default => false
+      }
+      var rowIsEnPassant = {
+        val (colour, _, _) = conf.getExistingPiece(startPosition)
+        startPosition.getRow == colour.enPassantRow
+      }
+      exists(p) || (lastMoveWasDoublePawn && lastMoveWasAdjacentColumn && rowIsEnPassant)
     } else if (pawnForward(dCol, dRow)) {
       /* Prevent forward capturing. */
       val p = startPosition.offset(dCol, dRow)
