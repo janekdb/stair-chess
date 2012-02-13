@@ -219,22 +219,19 @@ object BoardModelTest extends Test {
     val bm = newBoardModel
 
     /* The pawn that will capture via en-passant */
-    bm.place(White, Pawn(), "e2")
+    bm.place(White, Pawn(), "e4")
     bm.place(Black, Pawn(), "d7")
 
-    // TODO: Find out how to declare a null local var of type PieceMovedTaking but
-    //  then do not use it because the List mechanism is cleaner
-    var pieceMovedTaking = List[PieceMovedTaking]()
+    var pieceMovedTaking: PieceMovedTaking = null
     val s = new Object with BoardChangedSubscriber {
       def onBoardChanged(event: BoardChanged) = {
         event match {
-          case e @ PieceMovedTaking(_, _, _) => pieceMovedTaking = List(e)
+          case e @ PieceMovedTaking(_, _, _) => pieceMovedTaking = e
           case default => fail("Unexpected event: " + event)
         }
       }
     }
 
-    bm.move("e2e4")
     bm.move("e4e5")
 
     bm.move("d7d5")
@@ -242,7 +239,7 @@ object BoardModelTest extends Test {
     bm.subscribe(s)
     bm.move("e5d6")
 
-    assert(pieceMovedTaking == PieceMovedTaking("d6", "e5", "d5"), "Black's pawn was taken via en passant")
+    assert(pieceMovedTaking == PieceMovedTaking("e5", "d6", "d5"), "Black's pawn was taken via en passant")
   }
 
   private def enPassantDisallowedIfNotImmediatelyUsed = {
