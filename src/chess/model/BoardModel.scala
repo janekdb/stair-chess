@@ -92,20 +92,8 @@ class BoardModel {
         List(Resigned(colour))
       }
       case default => {
-        // TODO: Reduce the amount of code used to acquire the active colour.
-        val colour = move match {
-          case Castle(colour, _) => colour
-          case MovePiece(start, _) => {
-            val (colour, _, _) = conf.getExistingPiece(start)
-            colour
-          }
-          case Promote(start, _, _) => {
-            val (colour, _, _) = conf.getExistingPiece(start)
-            colour
-          }
-          case default => throw new UnhandledCaseException(move.toString)
-        }
-
+        /* Cache off the colour before the move is applied. */
+        val colour = extractColour(move)
         val e = conf.applyMove(move)
 
         // TODO: Move this side-effect out of the case statement
@@ -121,6 +109,22 @@ class BoardModel {
     // TODO: Consider including Won(_, _) in the list of events from applyMove
     if (winner != null) {
       subscribers.foreach { _.onBoardChanged(Won(winner, winMode)) }
+    }
+  }
+
+  private def extractColour(move: Move): Colour = {
+    // TODO: Reduce the amount of code used to acquire the active colour.
+    move match {
+      case Castle(colour, _) => colour
+      case MovePiece(start, _) => {
+        val (colour, _, _) = conf.getExistingPiece(start)
+        colour
+      }
+      case Promote(start, _, _) => {
+        val (colour, _, _) = conf.getExistingPiece(start)
+        colour
+      }
+      case default => throw new UnhandledCaseException(move.toString)
     }
   }
 
