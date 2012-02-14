@@ -68,6 +68,7 @@ object BoardModelTest extends Test {
 
     // TODO: Stop direct access to this property.
     bm.placed = true
+
     bm.move(new MovePiece("a7a6"))
     try {
       bm.move(new MovePiece("a6a4"))
@@ -233,7 +234,7 @@ object BoardModelTest extends Test {
     }
 
     bm.move("e4e5")
-
+    /* Double advance on adjacent column with white on the same row allows en passant */
     bm.move("d7d5")
 
     bm.subscribe(s)
