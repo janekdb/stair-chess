@@ -20,3 +20,4 @@ case class Promote(start: Position, end: Position, piece: Piece) extends Move {
     }
   }
 }
+case class EnPassant(start: Position, end: Position) extends Move
