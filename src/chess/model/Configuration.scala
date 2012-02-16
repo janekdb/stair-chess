@@ -51,10 +51,10 @@ trait Configuration {
   def applyMove(move: Move): List[BoardChanged] = {
     move match {
       case MovePiece(start, end) => {
-        val (colour, _, _) = this.getExistingPiece(start)
+        val (colour, piece, _) = this.getExistingPiece(start)
         this.getPiece(end) match {
           case None => {
-            /* Square unoccupied so just move the piece */
+            /* Square unoccupied so just move the piece if not en passant*/
             this.move(start, end)
             List(PieceMoved(start, end))
           }
@@ -68,6 +68,10 @@ trait Configuration {
             // TODO: Handle en-passant
             List(PieceMovedTaking(start, end, end))
         }
+      }
+      case EnPassant(start, end) => {
+        // TODO: Apply EnPassant resulting in PieceMovedTaking
+        List()
       }
       case Castle(colour, castlingType) => {
         val row = colour.homeRow
