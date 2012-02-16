@@ -1,5 +1,7 @@
 package chess.model
 
+import ex._
+
 import test.Test
 
 import Colours.{ Black, White }
@@ -24,6 +26,11 @@ object StandardMoveExplorerTest extends Test {
     getBasicPositionsExcludesEnPassantWhenNotDoubleAdvance
     getBasicPositionsExcludesEnPassantWhenNotAdjacentColumn
     getBasicPositionsExcludesEnPassantWhenNotFifthRow
+
+    rejectIllegalMoveAllowsValidEnPassant
+    rejectIllegalMoveRejectsNotAdjacentColumnEnPassant
+    rejectIllegalMoveRejectsNotDoubleAdvanceEnPassant
+    rejectIllegalMoveRejectsSelfCheckingEnPassant
   }
 
   /* All conditions met */
@@ -118,6 +125,72 @@ object StandardMoveExplorerTest extends Test {
     val actual = e.getBasicPositions(whitePawnEnd)
     val expected: Set[Position] = Set("e6")
     assert(expected == actual, "Incorrect position set: expected: " + expected + ", actual: " + actual)
+  }
+
+  private def rejectIllegalMoveAllowsValidEnPassant = {
+    val conf = new GridConfiguration
+    conf.add("e5", White, Pawn())
+    conf.add("f2", Black, Pawn())
+    val e = new StandardMoveExplorer(conf)
+    conf.move("f2", "f4")
+    e.rejectIllegalMove(EnPassant("e5", "f6"))
+  }
+
+  private def rejectIllegalMoveRejectsNotAdjacentColumnEnPassant = {
+    val conf = new GridConfiguration
+    conf.add("e5", White, Pawn())
+    conf.add("g7", Black, Pawn())
+    val e = new StandardMoveExplorer(conf)
+    conf.move("g7", "g5")
+    // TODO: Replace this with a function that takes a text block and an expected exception type
+    try {
+      e.rejectIllegalMove(EnPassant("e5", "f6"))
+      fail("En-passant should be rejected when the adjacent column does not contain a pawn")
+    } catch {
+      case e: UnreachablePositionException => { /* expected */ }
+      case e @ default => fail("Unexpected exception: " + e)
+    }
+  }
+
+  private def rejectIllegalMoveRejectsNotDoubleAdvanceEnPassant = {
+    val conf = new GridConfiguration
+    conf.add("e4", White, Pawn())
+    conf.add("d7", Black, Pawn())
+    val e = new StandardMoveExplorer(conf)
+    conf.move("d7", "d6")
+    conf.move("e4", "e5")
+    conf.move("d6", "d5")
+    // TODO: Replace this with a function that takes a text block and an expected exception type
+    try {
+      e.rejectIllegalMove(EnPassant("e5", "d6"))
+      fail("En-passant should be rejected when the previous move was not a double advance")
+    } catch {
+      case e: UnreachablePositionException => { /* expected */ }
+      case e @ default => fail("Unexpected exception: " + e)
+    }
+  }
+
+  /* Do not overtest */
+  //  private def rejectIllegalMoveRejectsIncorrectRowEnPassant = fail
+
+  private def rejectIllegalMoveRejectsSelfCheckingEnPassant = {
+    val conf = new GridConfiguration
+    conf.add("e5", White, Pawn())
+    conf.add("d7", Black, Pawn())
+    /* The rook that will check. */
+    conf.add("e8", Black, Rook())
+    conf.add("e1", White, King())
+    val e = new StandardMoveExplorer(conf)
+    conf.move("d7", "d5")
+    // TODO: Replace this with a function that takes a text block and an expected exception type
+    try {
+      e.rejectIllegalMove(EnPassant("e5", "d6"))
+      fail("En-passant should be rejected when the player would self check")
+    } catch {
+      case e: CheckedOwnKing => { /* expected */ }
+      case e @ default => fail("Unexpected exception: " + e)
+    }
+
   }
 
 }
