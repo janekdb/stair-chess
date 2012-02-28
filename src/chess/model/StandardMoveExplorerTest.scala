@@ -129,10 +129,11 @@ object StandardMoveExplorerTest extends Test {
 
   private def rejectIllegalMoveAllowsValidEnPassant = {
     val conf = new GridConfiguration
+    placeKings(conf)
     conf.add("e5", White, Pawn())
-    conf.add("f2", Black, Pawn())
+    conf.add("f7", Black, Pawn())
     val e = new StandardMoveExplorer(conf)
-    conf.move("f2", "f4")
+    conf.applyMove(MovePiece("f7", "f5"))
     e.rejectIllegalMove(EnPassant("e5", "f6"))
   }
 
@@ -182,15 +183,21 @@ object StandardMoveExplorerTest extends Test {
     conf.add("e1", White, King())
     val e = new StandardMoveExplorer(conf)
     conf.move("d7", "d5")
-    // TODO: Replace this with a function that takes a text block and an expected exception type
+    // TODO: Replace this with a function that takes a block and an expected exception type(s)
     try {
       e.rejectIllegalMove(EnPassant("e5", "d6"))
       fail("En-passant should be rejected when the player would self check")
     } catch {
       case e: CheckedOwnKing => { /* expected */ }
+      case e: FailureException => throw e
       case e @ default => fail("Unexpected exception: " + e)
     }
+  }
 
+  // TODO: Modify BoardModel.place to match Configuration.add argument signature
+  private def placeKings(conf: Configuration) = {
+    conf.add("e1", White, King())
+    conf.add("e8", Black, King())
   }
 
 }
