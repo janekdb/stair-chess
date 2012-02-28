@@ -11,18 +11,19 @@ trait Configuration {
   /** Throw exception if there is no piece at the given position */
   def remove(position: Position): Unit
 
+  // TODO: Determine if Configuration.move can be non-public
   /**
    * Move the piece, incrementing it's move count.
    * Throw exception if there is no piece at the given position.
    * Throw exception if the end position is already occupied.
    */
   def move(start: Position, end: Position)
-  
+
   /**
    * Return the last move or None
    */
   def getLastMove: Option[(Piece, Position, Position)]
-  
+
   /** Replace the piece with a the same colour carrying over the move count */
   def replace(position: Position, replacementPiece: Piece)
 
@@ -39,15 +40,15 @@ trait Configuration {
 
   /** Return positions of all pieces of the given colour. */
   def locatePieces(colour: Colour): List[Position]
-  
+
   /** Return a deep copy of the Configuration */
   def copyOf: Configuration
 
-    /**
+  /**
    * Update board configuration. The move must be legal i.e. the caller takes responsibility for
-   * ensuring the move is legal. 
+   * ensuring the move is legal.
    * @return A list of UI events to send to listeners.
-   **/
+   */
   def applyMove(move: Move): List[BoardChanged] = {
     move match {
       case MovePiece(start, end) => {
@@ -61,7 +62,7 @@ trait Configuration {
           case Some((otherColour, _, _)) =>
             {
               /* The opponents piece is being captured. */
-              assert (otherColour != colour)
+              assert(otherColour != colour)
               this.remove(end)
               this.move(start, end)
             }
@@ -70,8 +71,12 @@ trait Configuration {
         }
       }
       case EnPassant(start, end) => {
+        this.move(start, end)
+        // TODO: Add method to EnPassant to calculate taken piece position
+        val taken = new Position(end.getCol, start.getRow)
+        this.remove(taken)
         // TODO: Apply EnPassant resulting in PieceMovedTaking
-        List()
+        List(PieceMovedTaking(start, end, end))
       }
       case Castle(colour, castlingType) => {
         val row = colour.homeRow
