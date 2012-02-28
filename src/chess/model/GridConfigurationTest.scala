@@ -20,7 +20,7 @@ object GridConfigurationTest extends Test {
   def runTests(): Unit = {
     moveHistoryMaintained
     moveHistoryCopied
-    enPassantEvents
+    enPassantEventSent
   }
 
   def moveHistoryMaintained = {
@@ -67,7 +67,7 @@ object GridConfigurationTest extends Test {
     assert(expected == (p, a, b), "Expected: " + expected + " but had: " + actual)
   }
 
-  def enPassantEvents = {
+  def enPassantEventSent = {
     val conf = new GridConfiguration
 
     val whiteStart: Position = "a5"
