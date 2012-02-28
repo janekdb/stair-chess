@@ -20,6 +20,7 @@ object GridConfigurationTest extends Test {
   def runTests(): Unit = {
     moveHistoryMaintained
     moveHistoryCopied
+    enPassantEvents
   }
 
   def moveHistoryMaintained = {
@@ -38,10 +39,10 @@ object GridConfigurationTest extends Test {
       case default => fail("The last move should have been None")
     }
 
-    conf.move(whiteStart, whiteEnd)
+    conf.applyMove(MovePiece(whiteStart, whiteEnd))
     assertSomeEquals((Pawn(), whiteStart, whiteEnd), conf.getLastMove)
 
-    conf.move(blackStart, blackEnd)
+    conf.applyMove(MovePiece(blackStart, blackEnd))
     assertSomeEquals((Rook(), blackStart, blackEnd), conf.getLastMove)
   }
 
@@ -52,7 +53,7 @@ object GridConfigurationTest extends Test {
     val whiteEnd: Position = "e3"
     conf.add(whiteStart, White, Pawn())
 
-    conf.move(whiteStart, whiteEnd)
+    conf.applyMove(MovePiece(whiteStart, whiteEnd))
     val copy = conf.copyOf
     assertSomeEquals((Pawn(), whiteStart, whiteEnd), copy.getLastMove)
   }
@@ -66,4 +67,36 @@ object GridConfigurationTest extends Test {
     assert(expected == (p, a, b), "Expected: " + expected + " but had: " + actual)
   }
 
+  def enPassantEvents = {
+    val conf = new GridConfiguration
+
+    val whiteStart: Position = "a5"
+    val whiteEnd: Position = "b6"
+    conf.add(whiteStart, White, Pawn())
+
+    val blackStart: Position = "b7"
+    val blackEnd: Position = "b5"
+    val blackTaken: Position = "b6"
+    conf.add(blackStart, Black, Pawn())
+
+    conf.applyMove(MovePiece(blackStart, blackEnd))
+    val events = conf.applyMove(EnPassant(whiteStart, whiteEnd))
+    events match {
+      case List(PieceMovedTaking(start, end, taken)) => {
+        // TODO: Add assertEquals to Test and replace the use of assert here with assertEquals
+        assert(start == whiteStart)
+        assert(end == whiteEnd)
+        assert(taken == blackTaken)
+      }
+      case default => fail("Unexpected list of events: " + events)
+    }
+    val (colour, piece, _) = conf.getExistingPiece(whiteEnd)
+    // TODO: Replace with use of assertEquals
+    assert(colour == White)
+    assert(piece == Pawn())
+    conf.getPiece(blackEnd) match {
+      case None => {}
+      case default => fail("The black pawn should have been taken")
+    }
+  }
 }
