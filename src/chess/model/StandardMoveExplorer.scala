@@ -9,6 +9,7 @@ import chess.model.ex.{
   UnreachablePositionException
 }
 import Misc.kingInCheck
+import chess.util.TODO
 
 /**
  * The moves of standard chess
@@ -130,27 +131,11 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
         throw new UnreachablePositionException(MovePiece(start, end), legalPositions)
       }
     }
-    def checkKingNotLeftInCheckAfterMove(start: Position, end: Position) = {
-
-      /*
-       * 1. Clone the current conf
-       * 2. Apply the move without recursively calling this method
-       * 3. See if the King is in check
-       */
-
-      val (colour, _, _) = conf.getExistingPiece(start)
-      val future = conf.copyOf
-      future.applyMove(MovePiece(start, end))
-
-      if (kingInCheck(colour, future)) {
-        throw new CheckedOwnKing(move)
-      }
-    }
 
     move match {
       case MovePiece(start, end) => {
         checkReachable(start, end)
-        checkKingNotLeftInCheckAfterMove(start, end)
+        checkKingNotLeftInCheckAfterMove(MovePiece(start, end))
       }
       case Castle(colour, castlingType) => {
         /*
@@ -199,9 +184,50 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
       }
       case Promote(start, end, piece) => {
         checkReachable(start, end)
-        checkKingNotLeftInCheckAfterMove(start, end)
+        /* For this purpose Promote is the same as MovePiece */
+        checkKingNotLeftInCheckAfterMove(MovePiece(start, end))
+      }
+      case EnPassant(start, end) => {
+        checkReachable(start, end)
+        checkKingNotLeftInCheckAfterMove(EnPassant(start, end))
       }
       case default => throw new UnhandledCaseException(move.toString)
+    }
+  }
+
+  // TODO: Reduce duplication with other checkKingNotLeftInCheckAfterMove methods
+  private def checkKingNotLeftInCheckAfterMove(move: MovePiece) = {
+
+    val MovePiece(start, _) = move
+    /*
+       * 1. Clone the current conf
+       * 2. Apply the move without recursively calling this method
+       * 3. See if the King is in check
+       */
+    val (colour, _, _) = conf.getExistingPiece(start)
+    val future = conf.copyOf
+    future.applyMove(move)
+
+    if (kingInCheck(colour, future)) {
+      throw new CheckedOwnKing(move)
+    }
+  }
+
+  // TODO: Reduce duplication with other checkKingNotLeftInCheckAfterMove methods
+  private def checkKingNotLeftInCheckAfterMove(move: EnPassant) = {
+
+    val EnPassant(start, _) = move
+    /*
+	   * 1. Clone the current conf
+	   * 2. Apply the move without recursively calling this method
+	   * 3. See if the King is in check
+	   */
+    val (colour, _, _) = conf.getExistingPiece(start)
+    val future = conf.copyOf
+    future.applyMove(move)
+    log("checkKingNotLeftInCheckAfterMove: EnPassant: " + move)
+    if (kingInCheck(colour, future)) {
+      throw new CheckedOwnKing(move)
     }
   }
 
