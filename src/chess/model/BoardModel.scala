@@ -124,6 +124,10 @@ class BoardModel {
         val (colour, _, _) = conf.getExistingPiece(start)
         colour
       }
+      case EnPassant(start, _) => {
+        val (colour, _, _) = conf.getExistingPiece(start)
+        colour
+      }
       case default => throw new UnhandledCaseException(move.toString)
     }
   }
