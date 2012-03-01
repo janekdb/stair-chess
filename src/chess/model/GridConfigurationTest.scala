@@ -76,7 +76,6 @@ object GridConfigurationTest extends Test {
 
     val blackStart: Position = "b7"
     val blackEnd: Position = "b5"
-    val blackTaken: Position = "b6"
     conf.add(blackStart, Black, Pawn())
 
     conf.applyMove(MovePiece(blackStart, blackEnd))
@@ -86,7 +85,7 @@ object GridConfigurationTest extends Test {
         // TODO: Add assertEquals to Test and replace the use of assert here with assertEquals
         assert(start == whiteStart)
         assert(end == whiteEnd)
-        assert(taken == blackTaken)
+        assert(taken == blackEnd)
       }
       case default => fail("Unexpected list of events: " + events)
     }
