@@ -219,6 +219,8 @@ object BoardModelTest extends Test {
   private def enPassantAllowed = {
     val bm = newBoardModel
 
+    placeKings(bm)
+
     /* The pawn that will capture via en-passant */
     bm.place(White, Pawn(), "e4")
     bm.place(Black, Pawn(), "d7")
@@ -235,12 +237,21 @@ object BoardModelTest extends Test {
 
     bm.move("e4e5")
     /* Double advance on adjacent column with white on the same row allows en passant */
+    val blackEnd: Position = "d5"
+    // TODO: Use blackEnd val in move
     bm.move("d7d5")
 
     bm.subscribe(s)
-    bm.move("e5d6")
 
-    assert(pieceMovedTaking == PieceMovedTaking("e5", "d6", "d5"), "Black's pawn was taken via en passant")
+    val whiteStart: Position = "e5"
+    val whiteEnd: Position = "d6"
+    bm.move(EnPassant(whiteStart, whiteEnd))
+
+    assert(pieceMovedTaking != null, "PieceMovedTaking event was sent")
+    // TODO: Replace with assertEquals
+    assert(pieceMovedTaking.start == whiteStart, "PieceMovedTaking.start was correct: " + pieceMovedTaking)
+    assert(pieceMovedTaking.end == whiteEnd, "PieceMovedTaking.end was correct: " + pieceMovedTaking)
+    assert(pieceMovedTaking.taken == blackEnd, "PieceMovedTaking.taken was correct: Expected: " + blackEnd + ", had: " + pieceMovedTaking)
   }
 
   private def enPassantDisallowedIfNotImmediatelyUsed = {
