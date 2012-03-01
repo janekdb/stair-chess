@@ -75,8 +75,7 @@ trait Configuration {
         // TODO: Add method to EnPassant to calculate taken piece position
         val taken = new Position(end.getCol, start.getRow)
         this.remove(taken)
-        // TODO: Apply EnPassant resulting in PieceMovedTaking
-        List(PieceMovedTaking(start, end, end))
+        List(PieceMovedTaking(start, end, taken))
       }
       case Castle(colour, castlingType) => {
         val row = colour.homeRow
