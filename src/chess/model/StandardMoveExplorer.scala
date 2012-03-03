@@ -225,7 +225,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
     val (colour, _, _) = conf.getExistingPiece(start)
     val future = conf.copyOf
     future.applyMove(move)
-    log("checkKingNotLeftInCheckAfterMove: EnPassant: " + move)
+
     if (kingInCheck(colour, future)) {
       throw new CheckedOwnKing(move)
     }
