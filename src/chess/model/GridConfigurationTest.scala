@@ -6,7 +6,7 @@ import test.Test
 
 object GridConfigurationTest extends Test {
 
-  // TODO: Define this test helping implicits in a common location
+  // TODO: Define these test helping implicits in a common location
   implicit def piece2List(t: Piece) = List(t)
   implicit def string2Position(s: String) = new Position(s)
   // TODO: Replace new MovePiece(x) with x
