@@ -247,7 +247,7 @@ object BoardModelTest extends Test {
     val whiteEnd: Position = "d6"
     bm.move(EnPassant(whiteStart, whiteEnd))
 
-    assert(pieceMovedTaking != null, "PieceMovedTaking event was sent")
+    assertNotNull(pieceMovedTaking, "PieceMovedTaking event was sent")
     // TODO: Replace with assertEquals
     assert(pieceMovedTaking.start == whiteStart, "PieceMovedTaking.start was correct: " + pieceMovedTaking)
     assert(pieceMovedTaking.end == whiteEnd, "PieceMovedTaking.end was correct: " + pieceMovedTaking)
@@ -255,7 +255,32 @@ object BoardModelTest extends Test {
   }
 
   private def enPassantDisallowedIfNotImmediatelyUsed = {
-    fail
+
+    val bm = newBoardModel
+
+    placeKings(bm)
+
+    /* The pawn that will capture via en-passant */
+    bm.place(White, Pawn(), "e4")
+
+    /* The pawn that white will attempt to capture with en-passant */
+    bm.place(Black, Pawn(), "d7")
+
+    bm.move("d7d5")
+    bm.move("e4e5")
+
+    /* Black king */
+    bm.move("e8d8")
+
+    // TODO: Replace with block and expected exception class taking help method
+    try {
+      /* En-passant */
+      bm.move("e5d6")
+      fail("En-passant disallowed when not immediately played")
+    } catch {
+      case e: UnreachablePositionException => { /* Expected */ }
+      case e: Exception => unexpected(e)
+    }
   }
 
   private def newBoardModel = {
