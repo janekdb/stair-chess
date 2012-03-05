@@ -16,6 +16,10 @@ trait Test {
     assert(expected == actual, "Expected: " + expected + ", actual: " + actual)
   }
 
+  def assertNotNull(obj: Any, message: String) = {
+    assert(obj != null, message)
+  }
+
   class FailureException(e: Exception, message: String) extends RuntimeException(message, e) {
 
     // TODO: Add the name of the unexpected exception to the message.
