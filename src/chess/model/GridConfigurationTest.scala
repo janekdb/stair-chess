@@ -64,7 +64,7 @@ object GridConfigurationTest extends Test {
       case default => fail("The last move should have been Some((_, _)) but was " + actual)
     }
     val Some((p, a, b)) = actual
-    assert(expected == (p, a, b), "Expected: " + expected + " but had: " + actual)
+    assertEquals(expected, (p, a, b))
   }
 
   def enPassantEventSent = {
@@ -82,17 +82,15 @@ object GridConfigurationTest extends Test {
     val events = conf.applyMove(EnPassant(whiteStart, whiteEnd))
     events match {
       case List(PieceMovedTaking(start, end, taken)) => {
-        // TODO: Add assertEquals to Test and replace the use of assert here with assertEquals
-        assert(start == whiteStart)
-        assert(end == whiteEnd)
-        assert(taken == blackEnd)
+        assertEquals(whiteStart, start)
+        assertEquals(whiteEnd, end)
+        assertEquals(blackEnd, taken)
       }
       case default => fail("Unexpected list of events: " + events)
     }
     val (colour, piece, _) = conf.getExistingPiece(whiteEnd)
-    // TODO: Replace with use of assertEquals
-    assert(colour == White)
-    assert(piece == Pawn())
+    assertEquals(White, colour)
+    assertEquals(Pawn(), piece)
     conf.getPiece(blackEnd) match {
       case None => {}
       case default => fail("The black pawn should have been taken")
