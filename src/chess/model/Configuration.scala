@@ -70,12 +70,11 @@ trait Configuration {
             List(PieceMovedTaking(start, end, end))
         }
       }
-      case EnPassant(start, end) => {
+      case e @ EnPassant(start, end) => {
         this.move(start, end)
-        // TODO: Add method to EnPassant to calculate taken piece position
         val taken = new Position(end.getCol, start.getRow)
-        this.remove(taken)
-        List(PieceMovedTaking(start, end, taken))
+        this.remove(e.taken)
+        List(PieceMovedTaking(start, end, e.taken))
       }
       case Castle(colour, castlingType) => {
         val row = colour.homeRow
