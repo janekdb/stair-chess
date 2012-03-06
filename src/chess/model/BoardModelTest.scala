@@ -11,7 +11,6 @@ object BoardModelTest extends Test {
   // TODO: Define this test helping implicits in a common location
   implicit def piece2List(t: Piece) = List(t)
   implicit def string2Position(s: String) = new Position(s)
-  // TODO: Replace new MovePiece(x) with x
   implicit def string2MovePiece(s: String) = new MovePiece(s)
 
   // TODO: Find out how to only define this in the superclass  
@@ -43,7 +42,7 @@ object BoardModelTest extends Test {
     // TODO: Stop direct access to this property.
     bm.placed = true
     try {
-      bm.move(new MovePiece("g7g8"))
+      bm.move("g7g8")
       fail("Move onto own piece should be rejected")
     } catch {
       /* Success */
@@ -69,9 +68,9 @@ object BoardModelTest extends Test {
     // TODO: Stop direct access to this property.
     bm.placed = true
 
-    bm.move(new MovePiece("a7a6"))
+    bm.move("a7a6")
     try {
-      bm.move(new MovePiece("a6a4"))
+      bm.move("a6a4")
       fail("Pawn double advance should be rejected if it was not the piece's first move")
     } catch {
       /* Success */
@@ -147,7 +146,7 @@ object BoardModelTest extends Test {
     bm.place(Black, Rook(), "e7")
 
     try {
-      bm.move(new MovePiece("e2h2"))
+      bm.move("e2h2")
       fail("A move by white that leaves the whte King in check should be rejected")
     } catch {
       case _: CheckedOwnKing => Unit
@@ -179,7 +178,7 @@ object BoardModelTest extends Test {
 
     bm.subscribe(s)
 
-    bm.move(new MovePiece("c7a7"))
+    bm.move("c7a7")
 
     assert(actual.size == 1, "One BoardChanged event was fired: " + actual.size)
     val (colour, winMode) = actual.head
@@ -210,7 +209,7 @@ object BoardModelTest extends Test {
     bm.subscribe(s)
 
     /* Check the King. This is not checkmate since a move to a2 escapes check. */
-    bm.move(new MovePiece("d7b7"))
+    bm.move("d7b7")
 
     assert(pieceMoved, "The game was not won when the king was checked but could escape")
     assert(eventCount == 1, "There was only one event")
