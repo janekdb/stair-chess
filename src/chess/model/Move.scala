@@ -20,4 +20,6 @@ case class Promote(start: Position, end: Position, piece: Piece) extends Move {
     }
   }
 }
-case class EnPassant(start: Position, end: Position) extends Move
+case class EnPassant(start: Position, end: Position) extends Move {
+  val taken = new Position(end.getCol, start.getRow)
+}
