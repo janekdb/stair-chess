@@ -66,15 +66,13 @@ trait Configuration {
               this.remove(end)
               this.move(start, end)
             }
-            // TODO: Handle en-passant
             List(PieceMovedTaking(start, end, end))
         }
       }
-      case e @ EnPassant(start, end) => {
-        this.move(start, end)
-        val taken = new Position(end.getCol, start.getRow)
+      case e: EnPassant => {
+        this.move(e.start, e.end)
         this.remove(e.taken)
-        List(PieceMovedTaking(start, end, e.taken))
+        List(PieceMovedTaking(e.start, e.end, e.taken))
       }
       case Castle(colour, castlingType) => {
         val row = colour.homeRow
