@@ -41,7 +41,7 @@ class GridConfiguration extends Configuration {
 
   private var lastMove: Option[(Piece, Position, Position)] = None
 
-  // TODO: Drop getLastMove in favour of compiler provided getter
+  // TODO: Drop getLastMove in favour of compiler provided getter without a setter
   def getLastMove: Option[(Piece, Position, Position)] = lastMove
 
   /** Replace the piece with a the same colour carrying over the previous position */
