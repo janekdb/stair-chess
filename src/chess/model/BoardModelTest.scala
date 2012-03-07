@@ -114,9 +114,6 @@ object BoardModelTest extends Test {
     }
   }
 
-  // TODO: Add to Evernote: Multiple consoles
-  // TODO: Add to Evernote: Use of OSGi console in Eclipse - can connect to GF?
-
   private def rejectCastlingWhenAnySquareUnderAttack = {
 
     val files = List("d", "e", "f", "g", "h");
