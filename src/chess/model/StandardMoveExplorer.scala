@@ -80,11 +80,11 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
         val (colour, _, _) = conf.getExistingPiece(startPosition)
         startPosition.getRow == colour.enPassantRow
       }
-      exists(p) || (lastMoveWasDoublePawn && lastMoveWasAdjacentColumn && rowIsEnPassant)
+      conf.exists(p) || (lastMoveWasDoublePawn && lastMoveWasAdjacentColumn && rowIsEnPassant)
     } else if (pawnForward(dCol, dRow)) {
       /* Prevent forward capturing. */
       val p = startPosition.offset(dCol, dRow)
-      !exists(p)
+      !conf.exists(p)
     } else if (pawnForwardTwo(dCol, dRow)) {
       conf.getExistingPiece(startPosition) match {
         /* Disallow double advancement if the pawn has already been moved. */
@@ -93,19 +93,11 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
           /* Deny attempt to jump over a piece */
           val r = if (dRow == 2) 1 else -1
           val p = startPosition.offset(0, r)
-          !exists(p)
+          !conf.exists(p)
         }
       }
     } else {
       throw new AssertionError("All pawn moves handled")
-    }
-  }
-
-  // TODO: Move this existence test into Configuration
-  private def exists(p: Position) = {
-    conf.getPiece(p) match {
-      case Some(_) => true
-      case None => false
     }
   }
 

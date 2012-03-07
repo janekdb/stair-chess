@@ -44,6 +44,14 @@ trait Configuration {
   /** Return a deep copy of the Configuration */
   def copyOf: Configuration
 
+  /** @return true if a piece exists at the given location */
+  def exists(p: Position) = {
+    getPiece(p) match {
+      case Some(_) => true
+      case None => false
+    }
+  }
+
   /**
    * Update board configuration. The move must be legal i.e. the caller takes responsibility for
    * ensuring the move is legal.
