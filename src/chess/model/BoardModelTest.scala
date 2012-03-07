@@ -177,10 +177,10 @@ object BoardModelTest extends Test {
 
     bm.move("c7a7")
 
-    assert(actual.size == 1, "One BoardChanged event was fired: " + actual.size)
+    assertEquals( 1, actual.size , "One BoardChanged event was fired: " + actual.size)
     val (colour, winMode) = actual.head
-    assert(colour == Black)
-    assert(winMode == WinModes.CheckMate)
+    assertEquals(Black, colour)
+    assertEquals(WinModes.CheckMate, winMode)
   }
 
   private def checkButNotMateIsDetected = {
@@ -209,7 +209,7 @@ object BoardModelTest extends Test {
     bm.move("d7b7")
 
     assert(pieceMoved, "The game was not won when the king was checked but could escape")
-    assert(eventCount == 1, "There was only one event")
+    assertEquals(1, eventCount, "There was only one event")
   }
 
   private def enPassantAllowed = {
@@ -244,10 +244,9 @@ object BoardModelTest extends Test {
     bm.move(EnPassant(whiteStart, whiteEnd))
 
     assertNotNull(pieceMovedTaking, "PieceMovedTaking event was sent")
-    // TODO: Replace with assertEquals
-    assert(pieceMovedTaking.start == whiteStart, "PieceMovedTaking.start was correct: " + pieceMovedTaking)
-    assert(pieceMovedTaking.end == whiteEnd, "PieceMovedTaking.end was correct: " + pieceMovedTaking)
-    assert(pieceMovedTaking.taken == blackEnd, "PieceMovedTaking.taken was correct: Expected: " + blackEnd + ", had: " + pieceMovedTaking)
+    assertEquals(whiteStart, pieceMovedTaking.start, "PieceMovedTaking.start was correct: " + pieceMovedTaking)
+    assertEquals(whiteEnd, pieceMovedTaking.end, "PieceMovedTaking.end was correct: " + pieceMovedTaking)
+    assertEquals(blackEnd, pieceMovedTaking.taken, "PieceMovedTaking.taken was correct: Expected: " + blackEnd + ", had: " + pieceMovedTaking)
   }
 
   private def enPassantDisallowedIfNotImmediatelyUsed = {
