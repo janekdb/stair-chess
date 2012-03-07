@@ -4,7 +4,6 @@ import chess.model.{ BoardModel, Castle, Colour, Move, MovePiece, Position, Prom
 
 class Human(val board: BoardModel, val colour: Colour) extends Player {
 
-  // TODO: Investigate using an implicit to allow the removal of the colour argument from all moves. */
   var moves = List(
     new MovePiece("a7a6"),
     new MovePiece("d7d5"),
