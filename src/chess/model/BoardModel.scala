@@ -70,6 +70,7 @@ class BoardModel {
   private val moveExplorer: MoveExplorer = new StandardMoveExplorer(conf)
 
   /* TODO: Revert to private or extract move checking to new object */
+  // TODO: Modify BoardModel.place to match Configuration.add argument signature: position, colour, piece
   def place(colour: Colour, pieces: List[Piece], position: Position): Unit = {
 
     val p :: ps = pieces
