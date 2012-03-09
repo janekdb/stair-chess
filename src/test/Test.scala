@@ -16,6 +16,10 @@ trait Test {
     assert(expected == actual, "Expected: " + expected + ", actual: " + actual)
   }
 
+  def assertEquals(expected: Any, actual: Any, message: String) = {
+	  assert(expected == actual, "Expected: " + expected + ", actual: " + actual+": " + message)
+  }
+  
   def assertNotNull(obj: Any, message: String) = {
     assert(obj != null, message)
   }
