@@ -5,7 +5,6 @@ import chess.model.Move
 import chess.model.Position
 
 
-// TODO: Make this exception abstract
 abstract class IllegalMoveException(move: Move) extends RuntimeException("Illegal move: " + move.toString())
 
 //// TODO: Use better name for MoveOntoOwnPieceException
