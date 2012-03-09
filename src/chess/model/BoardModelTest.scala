@@ -12,7 +12,7 @@ object BoardModelTest extends Test {
   implicit def piece2List(t: Piece) = List(t)
   implicit def string2Position(s: String) = new Position(s)
   implicit def string2MovePiece(s: String) = new MovePiece(s)
-
+  
   // TODO: Find out how to only define this in the superclass  
   def main(args: Array[String]): Unit = {
     runTests
@@ -158,7 +158,7 @@ object BoardModelTest extends Test {
     bm.place(Black, King(), "h7")
     bm.place(Black, Rook(), "b8")
     bm.place(Black, Rook(), "c7")
-    // TODO: Write this test without assignment to this vars maybe by using a pattern guard in the subscriber to fall through
+    // TODO: Write this test without assignment to this var maybe by using a pattern guard in the subscriber to fall through
     var actual: List[(Colour, WinModes.WinMode)] = List()
 
     //    
@@ -233,9 +233,9 @@ object BoardModelTest extends Test {
 
     bm.move("e4e5")
     /* Double advance on adjacent column with white on the same row allows en passant */
+    val blackStart: Position = "d7"
     val blackEnd: Position = "d5"
-    // TODO: Use blackEnd val in move
-    bm.move("d7d5")
+    bm.move(MovePiece(blackStart, blackEnd))
 
     bm.subscribe(s)
 
