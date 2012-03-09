@@ -194,7 +194,6 @@ object StandardMoveExplorerTest extends Test {
     }
   }
 
-  // TODO: Modify BoardModel.place to match Configuration.add argument signature
   private def placeKings(conf: Configuration) = {
     conf.add("e1", White, King())
     conf.add("e8", Black, King())
