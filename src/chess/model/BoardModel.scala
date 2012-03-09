@@ -11,6 +11,7 @@ import chess.model.ex.{
   //  UnreachablePositionException
 }
 import Misc.kingInCheck
+import WinModes.WinMode
 
 /**
  * This class is concerned with maintaining a model of a chess game. It contains no UI. A UI can be attached as a listener.
@@ -31,10 +32,12 @@ class BoardModel {
     winner ensuring (isWon)
   }
 
+  // TODO: Move isCheckMate into WinState object
   def isCheckMate: Boolean = {
     winMode == WinModes.CheckMate ensuring (isWon)
   }
 
+  //  TODO: Move isResigned into WinState object
   def isResigned: Boolean = {
     winMode == WinModes.Resignation ensuring (isWon)
   }
@@ -77,6 +80,12 @@ class BoardModel {
     }
   }
 
+  // TODO: Encapsulate the win state into an object
+  private def setWinState(winMode: WinMode, winner: Colour) {
+    this.winMode = winMode
+    this.winner = winner
+  }
+    
   def move(move: Move): Unit = {
     debug("Moving: " + move)
 
@@ -86,9 +95,7 @@ class BoardModel {
     moveExplorer.rejectIllegalMove(move)
     val events = move match {
       case Resign(colour) => {
-        // TODO: Set the win mode and colour via a private method
-        winMode = WinModes.Resignation
-        winner = colour.opposite
+        setWinState(WinModes.Resignation, colour.opposite)
         List(Resigned(colour))
       }
       case default => {
@@ -98,8 +105,7 @@ class BoardModel {
 
         // TODO: Move this side-effect out of the case statement
         if (checkForCheckMate(colour.opposite)) {
-          winMode = WinModes.CheckMate
-          winner = colour
+        	setWinState(WinModes.CheckMate, colour)
         }
         e
       }
@@ -108,6 +114,7 @@ class BoardModel {
     for (s <- subscribers; e <- events) { s.onBoardChanged(e) }
     // TODO: Consider including Won(_, _) in the list of events from applyMove
     if (winner != null) {
+      // TODO: Change this to use the WinState object
       subscribers.foreach { _.onBoardChanged(Won(winner, winMode)) }
     }
   }
