@@ -2,9 +2,9 @@ package chess.model
 
 import Colours.{ Black, White }
 import ex._
-
 import test.Test
 import chess.util.TODO
+import scala.collection.mutable.ListBuffer
 
 object BoardModelTest extends Test {
 
@@ -35,12 +35,13 @@ object BoardModelTest extends Test {
   }
 
   private def rejectMoveOntoOwnPiece = {
-    val bm = new BoardModel
+    // TODO: Use a more compact syntax for building the placement list
+    var placements: List[(Colour, Piece, Position)] = List()
+    placements = (Black, Queen(), new Position("g7")) :: placements
+    placements = (Black, King(), new Position("g8")) :: placements
 
-    bm.place(Black, Queen(), "g7")
-    bm.place(Black, King(), "g8")
-    // TODO: Stop direct access to this property.
-    bm.placed = true
+    val bm = new BoardModel(placements)
+
     try {
       bm.move("g7g8")
       fail("Move onto own piece should be rejected")
@@ -52,21 +53,13 @@ object BoardModelTest extends Test {
     }
   }
 
-  private def placeKings(boardModel: BoardModel) = {
-    boardModel.place(White, King(), "e1")
-    boardModel.place(Black, King(), "e8")
-  }
-
   private def rejectPawnDoubleAdvanceIfNotFirstMove = {
-    val bm = new BoardModel
+    var placements: List[(Colour, Piece, Position)] = List()
+    placements = (Black, Pawn(), new Position("a7")) :: placements
+    placements = (Black, Queen(), new Position("f8")) :: placements
+    placements = placements ::: getKings
 
-    placeKings(bm)
-
-    bm.place(Black, Pawn(), "a7")
-    bm.place(Black, Queen(), "f8")
-
-    // TODO: Stop direct access to this property.
-    bm.placed = true
+    val bm = new BoardModel(placements)
 
     bm.move("a7a6")
     try {
@@ -81,30 +74,37 @@ object BoardModelTest extends Test {
   }
 
   private def acceptCastlingWhenNoInterveningPieces = {
-    val bm = new BoardModel
-    bm.place(Black, King(), "e8")
+    var placements: List[(Colour, Piece, Position)] = List()
+    placements = (Black, King(), new Position("e8")) :: placements
+    placements = (White, Rook(), new Position("h1")) :: placements
+    placements = (White, King(), new Position("d1")) :: placements
 
-    bm.place(White, Rook(), "h1")
-    bm.place(White, King(), "d1")
+    val bm = new BoardModel(placements)
+
     bm.move(Castle(White, Long))
   }
 
   private def acceptCastlingWhenIrrelevantOpponentPiecesExist = {
-    val bm = new BoardModel
-    bm.place(Black, King(), "e8")
-    bm.place(White, Rook(), "h1")
-    bm.place(White, King(), "d1")
-    bm.place(Black, Knight(), "a8")
+    var placements: List[(Colour, Piece, Position)] = List()
+    placements = (Black, King(), new Position("e8")) :: placements
+    placements = (White, Rook(), new Position("h1")) :: placements
+    placements = (White, King(), new Position("d1")) :: placements
+    placements = (Black, Knight(), new Position("a8")) :: placements
+
+    val bm = new BoardModel(placements)
     bm.move(Castle(White, Long))
   }
 
   private def rejectCastlingWhenInterveningPiece = {
-    val bm = new BoardModel
+    var placements: List[(Colour, Piece, Position)] = List()
+    placements = (White, Rook(), new Position("h1")) :: placements
 
-    bm.place(White, Rook(), "h1")
-    bm.place(White, King(), "d1")
-    bm.place(White, Bishop(), "e1")
+    placements = (White, King(), new Position("d1")) :: placements
 
+    placements = (White, Bishop(), new Position("e1")) :: placements
+
+    val bm = new BoardModel(placements)
+    
     try {
       bm.move(Castle(White, Long))
       fail("Castling should be rejected when there is an intervening piece")
@@ -118,12 +118,15 @@ object BoardModelTest extends Test {
 
     val files = List("d", "e", "f", "g", "h");
     for (file <- files) {
-      val bm = new BoardModel
+      var placements: List[(Colour, Piece, Position)] = List()
 
-      bm.place(White, Rook(), "h1")
-      bm.place(White, King(), "d1")
+      placements = (White, Rook(), new Position("h1")) :: placements
+      placements = (White, King(), new Position("d1")) :: placements
       /* Attack a square */
-      bm.place(Black, Rook(), file + "8")
+      placements = (Black, Rook(), new Position(file + "8")) :: placements
+      //      bm.place(Black, Rook(), file + "8)
+
+      val bm = new BoardModel(placements)
 
       try {
         bm.move(Castle(White, Long))
@@ -136,11 +139,13 @@ object BoardModelTest extends Test {
   }
 
   private def rejectIfMoveLeavesOwnKingInCheck = {
-    val bm = new BoardModel
+    var placements: List[(Colour, Piece, Position)] = List()
 
-    bm.place(White, Rook(), "e2")
-    bm.place(White, King(), "e1")
-    bm.place(Black, Rook(), "e7")
+    placements = (White, Rook(), new Position("e2")) :: placements
+    placements = (White, King(), new Position("e1")) :: placements
+    placements = (Black, Rook(), new Position("e7")) :: placements
+
+    val bm = new BoardModel(placements)
 
     try {
       bm.move("e2h2")
@@ -152,16 +157,18 @@ object BoardModelTest extends Test {
   }
 
   private def checkMateIsDetected = {
-    val bm = new BoardModel
+    var placements: List[(Colour, Piece, Position)] = List()
 
-    bm.place(White, King(), "a2")
-    bm.place(Black, King(), "h7")
-    bm.place(Black, Rook(), "b8")
-    bm.place(Black, Rook(), "c7")
+    placements = (White, King(), new Position("a2")) :: placements
+    placements = (Black, King(), new Position("h7")) :: placements
+    placements = (Black, Rook(), new Position("b8")) :: placements
+    placements = (Black, Rook(), new Position("c7")) :: placements
+
+    val bm = new BoardModel(placements)
+    
     // TODO: Write this test without assignment to this var maybe by using a pattern guard in the subscriber to fall through
     var actual: List[(Colour, WinModes.WinMode)] = List()
 
-    //    
     val s = new Object with BoardChangedSubscriber {
       def onBoardChanged(event: BoardChanged) = {
         event match {
@@ -177,19 +184,21 @@ object BoardModelTest extends Test {
 
     bm.move("c7a7")
 
-    assertEquals( 1, actual.size , "One BoardChanged event was fired: " + actual.size)
+    assertEquals(1, actual.size, "One BoardChanged event was fired: " + actual.size)
     val (colour, winMode) = actual.head
     assertEquals(Black, colour)
     assertEquals(WinModes.CheckMate, winMode)
   }
 
   private def checkButNotMateIsDetected = {
-    val bm = new BoardModel
+    var placements: List[(Colour, Piece, Position)] = List()
 
-    bm.place(White, King(), "b2")
-    bm.place(Black, King(), "h7")
-    bm.place(Black, Rook(), "c8")
-    bm.place(Black, Rook(), "d7")
+    placements = (White, King(), new Position("b2")) :: placements
+    placements = (Black, King(), new Position("h7")) :: placements
+    placements = (Black, Rook(), new Position("c8")) :: placements
+    placements = (Black, Rook(), new Position("d7")) :: placements
+
+    val bm = new BoardModel(placements)
 
     var pieceMoved = false
     var eventCount = 0
@@ -213,13 +222,16 @@ object BoardModelTest extends Test {
   }
 
   private def enPassantAllowed = {
-    val bm = newBoardModel
-
-    placeKings(bm)
+    var placements: List[(Colour, Piece, Position)] = List()
 
     /* The pawn that will capture via en-passant */
-    bm.place(White, Pawn(), "e4")
-    bm.place(Black, Pawn(), "d7")
+    placements = (White, Pawn(), new Position("e4")) :: placements
+    placements = (Black, Pawn(), new Position("d7")) :: placements
+
+    // TODO: Initialize list as getKings
+    placements = placements ::: getKings
+
+    val bm = new BoardModel(placements)
 
     var pieceMovedTaking: PieceMovedTaking = null
     val s = new Object with BoardChangedSubscriber {
@@ -251,15 +263,15 @@ object BoardModelTest extends Test {
 
   private def enPassantDisallowedIfNotImmediatelyUsed = {
 
-    val bm = newBoardModel
+    var placements: List[(Colour, Piece, Position)] = List()
 
-    placeKings(bm)
-
+    placements = placements ::: getKings
     /* The pawn that will capture via en-passant */
-    bm.place(White, Pawn(), "e4")
-
+    placements = (White, Pawn(), new Position("e4")) :: placements
     /* The pawn that white will attempt to capture with en-passant */
-    bm.place(Black, Pawn(), "d7")
+    placements = (Black, Pawn(), new Position("d7")) :: placements
+
+    val bm = new BoardModel(placements)
 
     bm.move("d7d5")
     bm.move("e4e5")
@@ -278,11 +290,6 @@ object BoardModelTest extends Test {
     }
   }
 
-  private def newBoardModel = {
-    val bm = new BoardModel
+  private def getKings = (White, King(), new Position("e1")) :: (Black, King(), new Position("e8")):: Nil
 
-    bm.place(White, King(), "e1")
-    bm.place(Black, King(), "e8")
-    bm
-  }
 }
