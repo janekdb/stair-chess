@@ -20,6 +20,15 @@ import WinModes.WinMode
  */
 class BoardModel {
 
+  private val conf: Configuration = new GridConfiguration
+  private val moveExplorer: MoveExplorer = new StandardMoveExplorer(conf)
+  
+// TODO: Replace place methods with this constructor and then remove the placed field
+  def this(placements: List[(Colour, Piece, Position)]) {
+    this()
+    for((colour, piece, position) <- placements) place(colour, piece, position)
+  }
+
   var winner: Colour = null
 
   var winMode: WinModes.WinMode = null
@@ -42,13 +51,7 @@ class BoardModel {
     winMode == WinModes.Resignation ensuring (isWon)
   }
 
-  /* TODO: Hide this var from the test */
-  var placed: Boolean = false
-
   def placePieces: Unit = {
-    if (placed) {
-      throw new IllegalStateException("The pieces have been placed");
-    }
 
     val pawns = List.fill(Constants.BOARD_SIZE)(Pawn())
     val others = List(Rook(), Knight(), Bishop(), King(), Queen(), Bishop(), Knight(), Rook())
@@ -58,19 +61,26 @@ class BoardModel {
 
     place(Colours.Black, pawns, 7)
     place(Colours.Black, others, 8)
+  }
 
-    placed = true
+  private def place(colour: Colour, piece: Piece, position: Position){
+    assert(colour != null)
+    assert(piece != null)
+    assert(position != null)
+    assert(conf != null)
+    conf.add(position, colour, piece)
+    subscribers.foreach { _.onBoardChanged(PiecePlaced(colour, piece, position)) }    
   }
 
   private def place(colour: Colour, pieces: List[Piece], row: Int): Unit = {
     place(colour, pieces, new Position(1, row))
   }
 
-  private val conf: Configuration = new GridConfiguration
-  private val moveExplorer: MoveExplorer = new StandardMoveExplorer(conf)
-
-  /* TODO: Revert to private or extract move checking to new object */
+  /* TODO: Revert to private */
   // TODO: Modify BoardModel.place to match Configuration.add argument signature: position, colour, piece
+  /** Place pieces from the list start at position for the first piece then advancing to the next
+   * column until all pieces have been placed.
+   */
   def place(colour: Colour, pieces: List[Piece], position: Position): Unit = {
 
     val p :: ps = pieces
