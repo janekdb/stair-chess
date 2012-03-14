@@ -8,45 +8,33 @@ import chess.model.{ Castle, MovePiece }
 
 import chess.model.{ BoardChanged, Castled, PieceMoved, PieceMovedTaking, PiecePlaced, Promoted, Resigned, Won }
 
-import chess.util.TODO
+import chess.util.TODO	
 
-class UI(val board: BoardModel) extends BoardChangedSubscriber {
-
-  board.subscribe(this)
+class UI extends BoardChangedSubscriber {
 
   def onBoardChanged(event: BoardChanged): Unit = {
     event match {
       case Castled(king, rook) => {
         {
-//          val (colour, piece) = conf.remove(king.start)
-//          conf.add(king.end, colour, piece)
           conf.move(king.start, king.end)
         }
         {
-//          val (colour, piece) = conf.remove(rook.start)
-//          conf.add(rook.end, colour, piece)
           conf.move(rook.start, rook.end)
         }
       }
       case PieceMoved(start, end) => {
         /* Assumes a piece is present at the start position. */
-//        val (colour, piece) = conf.remove(start)
-//        conf.add(end, colour, piece)
         conf.move(start, end)
       }
       case PieceMovedTaking(start, end, taken) => {
         /* Assumes pieces are present at the start and taken positions. */
         conf.remove(taken)
-//        val (colour, piece) = conf.remove(start)
-//        conf.add(end, colour, piece)
         conf.move(start, end)
       }
       case PiecePlaced(colour, piece, position) => {
         conf.add(position, colour, piece)
       }
       case Promoted(position, replacementPiece) => {
-//        val (colour, _) = conf.remove(position)
-//        conf.add(position, colour, replacementPiece)
         conf.replace(position, replacementPiece)
       }
       case Resigned(colour) => {
@@ -55,7 +43,7 @@ class UI(val board: BoardModel) extends BoardChangedSubscriber {
           case List() => throw new RuntimeException("The King could not be found for " + colour)
           // TODO: Improve resignation visualization
           case List(position) => { conf.remove(position) }
-          case default => throw new RuntimeException("More than one King was found for " + colour+": "+positions)
+          case default => throw new RuntimeException("More than one King was found for " + colour + ": " + positions)
         }
       }
       case Won(winner, winMode) => {
