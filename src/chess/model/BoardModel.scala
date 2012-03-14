@@ -23,10 +23,10 @@ class BoardModel {
   private val conf: Configuration = new GridConfiguration
   private val moveExplorer: MoveExplorer = new StandardMoveExplorer(conf)
   
-// TODO: Replace place methods with this constructor and then remove the placed field
-  def this(placements: List[(Colour, Piece, Position)]) {
-    this()
-    for((colour, piece, position) <- placements) place(colour, piece, position)
+  def this(placements: List[(Colour, Piece, Position)], subscribers: List[BoardChangedSubscriber]) {
+    this
+    subscribers foreach subscribe
+    for ((colour, piece, position) <- placements) place(colour, piece, position)
   }
 
   var winner: Colour = null

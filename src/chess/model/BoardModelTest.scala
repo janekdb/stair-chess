@@ -40,7 +40,7 @@ object BoardModelTest extends Test {
     placements = (Black, Queen(), new Position("g7")) :: placements
     placements = (Black, King(), new Position("g8")) :: placements
 
-    val bm = new BoardModel(placements)
+    val bm = new BoardModel(placements, Nil)
 
     try {
       bm.move("g7g8")
@@ -59,7 +59,7 @@ object BoardModelTest extends Test {
     placements = (Black, Queen(), new Position("f8")) :: placements
     placements = placements ::: getKings
 
-    val bm = new BoardModel(placements)
+    val bm = new BoardModel(placements, Nil)
 
     bm.move("a7a6")
     try {
@@ -79,7 +79,7 @@ object BoardModelTest extends Test {
     placements = (White, Rook(), new Position("h1")) :: placements
     placements = (White, King(), new Position("d1")) :: placements
 
-    val bm = new BoardModel(placements)
+    val bm = new BoardModel(placements, Nil)
 
     bm.move(Castle(White, Long))
   }
@@ -91,7 +91,7 @@ object BoardModelTest extends Test {
     placements = (White, King(), new Position("d1")) :: placements
     placements = (Black, Knight(), new Position("a8")) :: placements
 
-    val bm = new BoardModel(placements)
+    val bm = new BoardModel(placements, Nil)
     bm.move(Castle(White, Long))
   }
 
@@ -103,7 +103,7 @@ object BoardModelTest extends Test {
 
     placements = (White, Bishop(), new Position("e1")) :: placements
 
-    val bm = new BoardModel(placements)
+    val bm = new BoardModel(placements, Nil)
     
     try {
       bm.move(Castle(White, Long))
@@ -126,7 +126,7 @@ object BoardModelTest extends Test {
       placements = (Black, Rook(), new Position(file + "8")) :: placements
       //      bm.place(Black, Rook(), file + "8)
 
-      val bm = new BoardModel(placements)
+      val bm = new BoardModel(placements, Nil)
 
       try {
         bm.move(Castle(White, Long))
@@ -145,7 +145,7 @@ object BoardModelTest extends Test {
     placements = (White, King(), new Position("e1")) :: placements
     placements = (Black, Rook(), new Position("e7")) :: placements
 
-    val bm = new BoardModel(placements)
+    val bm = new BoardModel(placements, Nil)
 
     try {
       bm.move("e2h2")
@@ -164,7 +164,7 @@ object BoardModelTest extends Test {
     placements = (Black, Rook(), new Position("b8")) :: placements
     placements = (Black, Rook(), new Position("c7")) :: placements
 
-    val bm = new BoardModel(placements)
+    val bm = new BoardModel(placements, Nil)
     
     // TODO: Write this test without assignment to this var maybe by using a pattern guard in the subscriber to fall through
     var actual: List[(Colour, WinModes.WinMode)] = List()
@@ -198,7 +198,7 @@ object BoardModelTest extends Test {
     placements = (Black, Rook(), new Position("c8")) :: placements
     placements = (Black, Rook(), new Position("d7")) :: placements
 
-    val bm = new BoardModel(placements)
+    val bm = new BoardModel(placements, Nil)
 
     var pieceMoved = false
     var eventCount = 0
@@ -231,7 +231,7 @@ object BoardModelTest extends Test {
     // TODO: Initialize list as getKings
     placements = placements ::: getKings
 
-    val bm = new BoardModel(placements)
+    val bm = new BoardModel(placements, Nil)
 
     var pieceMovedTaking: PieceMovedTaking = null
     val s = new Object with BoardChangedSubscriber {
@@ -271,7 +271,7 @@ object BoardModelTest extends Test {
     /* The pawn that white will attempt to capture with en-passant */
     placements = (Black, Pawn(), new Position("d7")) :: placements
 
-    val bm = new BoardModel(placements)
+    val bm = new BoardModel(placements, Nil)
 
     bm.move("d7d5")
     bm.move("e4e5")

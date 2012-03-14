@@ -5,16 +5,18 @@ import chess.model.BoardModel
 import chess.player.{ Computer, Human }
 import chess.ui.UI
 import chess.util.PlayerSelector
+import chess.util.TODO
 
 object ChessApp {
   def main(args: Array[String]): Unit = {
 
     runTests
 
-    val board = new BoardModel
+    val ui = new UI
+    val board = new BoardModel(BoardModel.standardPlacements, List(ui))
+
     /* The UI listens for changes and renders them immediately */
-    new UI(board).showBoard
-    board.placePieces
+    ui.showBoard
 
     val white = new Computer(board, Colours.White)
     val black = new Human(board, Colours.Black)
@@ -23,6 +25,7 @@ object ChessApp {
     while (!board.isWon) {
       board.move(playerSelector.next.getMove)
     }
+    TODO.throwRuntimeEx("Find out why the board is empty since the use of the BoardModel placements constructor")
   }
 
   def runTests: Unit = {
