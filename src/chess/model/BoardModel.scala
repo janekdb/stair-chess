@@ -51,18 +51,6 @@ class BoardModel {
     winMode == WinModes.Resignation ensuring (isWon)
   }
 
-  def placePieces: Unit = {
-
-    val pawns = List.fill(Constants.BOARD_SIZE)(Pawn())
-    val others = List(Rook(), Knight(), Bishop(), King(), Queen(), Bishop(), Knight(), Rook())
-
-    place(Colours.White, others, 1)
-    place(Colours.White, pawns, 2)
-
-    place(Colours.Black, pawns, 7)
-    place(Colours.Black, others, 8)
-  }
-
   private def place(colour: Colour, piece: Piece, position: Position){
     assert(colour != null)
     assert(piece != null)
@@ -70,25 +58,6 @@ class BoardModel {
     assert(conf != null)
     conf.add(position, colour, piece)
     subscribers.foreach { _.onBoardChanged(PiecePlaced(colour, piece, position)) }    
-  }
-
-  private def place(colour: Colour, pieces: List[Piece], row: Int): Unit = {
-    place(colour, pieces, new Position(1, row))
-  }
-
-  /* TODO: Revert to private */
-  // TODO: Modify BoardModel.place to match Configuration.add argument signature: position, colour, piece
-  /** Place pieces from the list start at position for the first piece then advancing to the next
-   * column until all pieces have been placed.
-   */
-  def place(colour: Colour, pieces: List[Piece], position: Position): Unit = {
-
-    val p :: ps = pieces
-    conf.add(position, colour, p)
-    subscribers.foreach { _.onBoardChanged(PiecePlaced(colour, p, position)) }
-    if (!ps.isEmpty) {
-      place(colour, ps, position.incrementCol)
-    }
   }
 
   // TODO: Encapsulate the win state into an object
@@ -182,5 +151,62 @@ class BoardModel {
   var subscribers: List[BoardChangedSubscriber] = Nil
 
   def subscribe(subscriber: BoardChangedSubscriber) = subscribers ::= subscriber
+
+}
+
+object BoardModel {
+
+  import Colours.{ Black, White }
+
+  def standardPlacements: List[(Colour, Piece, Position)] = {
+
+    var result: List[(Colour, Piece, Position)] = Nil
+
+    //    val columns = 1 to Constants.BOARD_SIZE
+    val pawns = List.fill(Constants.BOARD_SIZE)(Pawn())
+    val others = List(Rook(), Knight(), Bishop(), King(), Queen(), Bishop(), Knight(), Rook())
+
+    //    val positions = columns map { c => new Position(c, 2)}
+    //    val b = pawns zip positions
+    // TODO: Refactor to local method
+    result = result ::: others.zipWithIndex.map { case (piece, index) => (White, piece, new Position(index + 1, 1)) }
+    result = result ::: pawns.zipWithIndex.map { case (piece, index) => (White, piece, new Position(index + 1, 2)) }
+    result = result ::: pawns.zipWithIndex.map { case (piece, index) => (Black, piece, new Position(index + 1, 7)) }
+    result = result ::: others.zipWithIndex.map { case (piece, index) => (Black, piece, new Position(index + 1, 8)) }
+
+    //    println(b)
+    //    val c = b map { case (piece, position) => (White, piece, position)}
+    //    println(c)
+    //    println(columns zip pawns)
+    // TODO: Use zip to make the lists of pawns and others
+
+    //    place(Colours.White, others, 1)
+    //    place(Colours.White, pawns, 2)
+    //
+    //    place(Colours.Black, pawns, 7)
+    //    place(Colours.Black, others, 8)
+    println(result)
+    result
+  }
+
+
+//  private def place(colour: Colour, pieces: List[Piece], row: Int): Unit = {
+//    place(colour, pieces, new Position(1, row))
+//  }
+//
+//  /* TODO: Revert to private */
+//  // TODO: Modify BoardModel.place to match Configuration.add argument signature: position, colour, piece
+//  /** Place pieces from the list start at position for the first piece then advancing to the next
+//   * column until all pieces have been placed.
+//   */
+//  def place(colour: Colour, pieces: List[Piece], position: Position): Unit = {
+//
+//    val p :: ps = pieces
+//    conf.add(position, colour, p)
+//    subscribers.foreach { _.onBoardChanged(PiecePlaced(colour, p, position)) }
+//    if (!ps.isEmpty) {
+//      place(colour, ps, position.incrementCol)
+//    }
+//  }
 
 }
