@@ -151,18 +151,13 @@ object BoardModel {
 
   def standardPlacements: List[(Colour, Piece, Position)] = {
 
-    var result: List[(Colour, Piece, Position)] = Nil
-
     val pawns = List.fill(Constants.BOARD_SIZE)(Pawn())
     val others = List(Rook(), Knight(), Bishop(), King(), Queen(), Bishop(), Knight(), Rook())
 
-    // TODO: Refactor to local method
-    result = result ::: others.zipWithIndex.map { case (piece, index) => (White, piece, new Position(index + 1, 1)) }
-    result = result ::: pawns.zipWithIndex.map { case (piece, index) => (White, piece, new Position(index + 1, 2)) }
-    result = result ::: pawns.zipWithIndex.map { case (piece, index) => (Black, piece, new Position(index + 1, 7)) }
-    result = result ::: others.zipWithIndex.map { case (piece, index) => (Black, piece, new Position(index + 1, 8)) }
-
-    println(result)
-    result
+    def bp(pieces: List[Piece], colour: Colour, row: Int) = {
+      pieces.zipWithIndex.map { case (piece, index) => (colour, piece, new Position(index + 1, row)) }
+    }
+    
+    bp(others, White, 1) ::: bp(pawns, White, 2) ::: bp(pawns, Black, 7) ::: bp(others, Black, 8)
   }
 }
