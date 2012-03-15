@@ -31,6 +31,8 @@ object BoardModelTest extends Test {
     checkButNotMateIsDetected
     enPassantAllowed
     enPassantDisallowedIfNotImmediatelyUsed
+    // Companion Object
+    standardPlacements
 
   }
 
@@ -288,6 +290,12 @@ object BoardModelTest extends Test {
       case e: UnreachablePositionException => { /* Expected */ }
       case e: Exception => unexpected(e)
     }
+  }
+  
+  // Companion object
+  
+  private def standardPlacements {
+    assertEquals(4 * 8, BoardModel.standardPlacements.size, "There was a correct number of placements")
   }
 
   private def getKings = (White, King(), new Position("e1")) :: (Black, King(), new Position("e8")):: Nil
