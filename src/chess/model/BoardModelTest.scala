@@ -6,6 +6,8 @@ import test.Test
 import chess.util.TODO
 import scala.collection.mutable.ListBuffer
 
+// TODO: Simply other test method signatures by removing :Unit = 
+
 object BoardModelTest extends Test {
 
   // TODO: Define this test helping implicits in a common location
