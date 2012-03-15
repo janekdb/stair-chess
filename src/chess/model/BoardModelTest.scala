@@ -14,11 +14,11 @@ object BoardModelTest extends Test {
   implicit def string2MovePiece(s: String) = new MovePiece(s)
   
   // TODO: Find out how to only define this in the superclass  
-  def main(args: Array[String]): Unit = {
+  def main(args: Array[String]) {
     runTests
   }
 
-  def runTests(): Unit = {
+  def runTests {
 
     rejectMoveOntoOwnPiece
     rejectPawnDoubleAdvanceIfNotFirstMove
@@ -36,7 +36,7 @@ object BoardModelTest extends Test {
 
   }
 
-  private def rejectMoveOntoOwnPiece = {
+  private def rejectMoveOntoOwnPiece {
     // TODO: Use a more compact syntax for building the placement list
     var placements: List[(Colour, Piece, Position)] = List()
     placements = (Black, Queen(), new Position("g7")) :: placements
@@ -55,7 +55,7 @@ object BoardModelTest extends Test {
     }
   }
 
-  private def rejectPawnDoubleAdvanceIfNotFirstMove = {
+  private def rejectPawnDoubleAdvanceIfNotFirstMove {
     var placements: List[(Colour, Piece, Position)] = List()
     placements = (Black, Pawn(), new Position("a7")) :: placements
     placements = (Black, Queen(), new Position("f8")) :: placements
@@ -75,7 +75,7 @@ object BoardModelTest extends Test {
     }
   }
 
-  private def acceptCastlingWhenNoInterveningPieces = {
+  private def acceptCastlingWhenNoInterveningPieces {
     var placements: List[(Colour, Piece, Position)] = List()
     placements = (Black, King(), new Position("e8")) :: placements
     placements = (White, Rook(), new Position("h1")) :: placements
@@ -86,7 +86,7 @@ object BoardModelTest extends Test {
     bm.move(Castle(White, Long))
   }
 
-  private def acceptCastlingWhenIrrelevantOpponentPiecesExist = {
+  private def acceptCastlingWhenIrrelevantOpponentPiecesExist {
     var placements: List[(Colour, Piece, Position)] = List()
     placements = (Black, King(), new Position("e8")) :: placements
     placements = (White, Rook(), new Position("h1")) :: placements
@@ -97,7 +97,7 @@ object BoardModelTest extends Test {
     bm.move(Castle(White, Long))
   }
 
-  private def rejectCastlingWhenInterveningPiece = {
+  private def rejectCastlingWhenInterveningPiece {
     var placements: List[(Colour, Piece, Position)] = List()
     placements = (White, Rook(), new Position("h1")) :: placements
 
@@ -116,7 +116,7 @@ object BoardModelTest extends Test {
     }
   }
 
-  private def rejectCastlingWhenAnySquareUnderAttack = {
+  private def rejectCastlingWhenAnySquareUnderAttack {
 
     val files = List("d", "e", "f", "g", "h");
     for (file <- files) {
@@ -140,7 +140,7 @@ object BoardModelTest extends Test {
     }
   }
 
-  private def rejectIfMoveLeavesOwnKingInCheck = {
+  private def rejectIfMoveLeavesOwnKingInCheck {
     var placements: List[(Colour, Piece, Position)] = List()
 
     placements = (White, Rook(), new Position("e2")) :: placements
@@ -158,7 +158,7 @@ object BoardModelTest extends Test {
     }
   }
 
-  private def checkMateIsDetected = {
+  private def checkMateIsDetected {
     var placements: List[(Colour, Piece, Position)] = List()
 
     placements = (White, King(), new Position("a2")) :: placements
@@ -172,7 +172,7 @@ object BoardModelTest extends Test {
     var actual: List[(Colour, WinModes.WinMode)] = List()
 
     val s = new Object with BoardChangedSubscriber {
-      def onBoardChanged(event: BoardChanged) = {
+      def onBoardChanged(event: BoardChanged) {
         event match {
           case Won(colour, wonMode) => {
             actual = (colour, wonMode) :: actual
@@ -192,7 +192,7 @@ object BoardModelTest extends Test {
     assertEquals(WinModes.CheckMate, winMode)
   }
 
-  private def checkButNotMateIsDetected = {
+  private def checkButNotMateIsDetected {
     var placements: List[(Colour, Piece, Position)] = List()
 
     placements = (White, King(), new Position("b2")) :: placements
@@ -205,7 +205,7 @@ object BoardModelTest extends Test {
     var pieceMoved = false
     var eventCount = 0
     val s = new Object with BoardChangedSubscriber {
-      def onBoardChanged(event: BoardChanged) = {
+      def onBoardChanged(event: BoardChanged) {
         eventCount += 1
         event match {
           case PieceMoved(_, _) => pieceMoved = true
@@ -223,7 +223,7 @@ object BoardModelTest extends Test {
     assertEquals(1, eventCount, "There was only one event")
   }
 
-  private def enPassantAllowed = {
+  private def enPassantAllowed {
     var placements: List[(Colour, Piece, Position)] = List()
 
     /* The pawn that will capture via en-passant */
@@ -237,7 +237,7 @@ object BoardModelTest extends Test {
 
     var pieceMovedTaking: PieceMovedTaking = null
     val s = new Object with BoardChangedSubscriber {
-      def onBoardChanged(event: BoardChanged) = {
+      def onBoardChanged(event: BoardChanged) {
         event match {
           case e @ PieceMovedTaking(_, _, _) => pieceMovedTaking = e
           case default => fail("Unexpected event: " + event)
@@ -263,7 +263,7 @@ object BoardModelTest extends Test {
     assertEquals(blackEnd, pieceMovedTaking.taken, "PieceMovedTaking.taken was correct: Expected: " + blackEnd + ", had: " + pieceMovedTaking)
   }
 
-  private def enPassantDisallowedIfNotImmediatelyUsed = {
+  private def enPassantDisallowedIfNotImmediatelyUsed {
 
     var placements: List[(Colour, Piece, Position)] = List()
 
