@@ -29,26 +29,20 @@ class BoardModel {
     for ((colour, piece, position) <- placements) place(colour, piece, position)
   }
 
-  var winner: Colour = null
+  case class GameOutcome(winner: Colour, winMode: WinMode) {
+    def isCheckMate: Boolean = winMode == WinModes.CheckMate
+    def isResigned: Boolean = winMode == WinModes.Resignation
+  }
 
-  var winMode: WinModes.WinMode = null
+  var gameOutcome: GameOutcome = null
 
   private def wonGuard = if (!isWon) throw new AssertionError("There is no winner")
 
-  def isWon = winner != null
+  def isWon = gameOutcome != null
 
   def getWinner: Colour = {
-    winner ensuring (isWon)
-  }
-
-  // TODO: Move isCheckMate into WinState object
-  def isCheckMate: Boolean = {
-    winMode == WinModes.CheckMate ensuring (isWon)
-  }
-
-  //  TODO: Move isResigned into WinState object
-  def isResigned: Boolean = {
-    winMode == WinModes.Resignation ensuring (isWon)
+    assert(gameOutcome != null)
+    gameOutcome.winner
   }
 
   private def place(colour: Colour, piece: Piece, position: Position){
@@ -60,16 +54,14 @@ class BoardModel {
     subscribers.foreach { _.onBoardChanged(PiecePlaced(colour, piece, position)) }    
   }
 
-  // TODO: Encapsulate the win state into an object
   private def setWinState(winMode: WinMode, winner: Colour) {
-    this.winMode = winMode
-    this.winner = winner
+    this.gameOutcome = GameOutcome(winner, winMode)
   }
     
   def move(move: Move): Unit = {
     debug("Moving: " + move)
 
-    if (winner != null) {
+    if (gameOutcome != null) {
       throw new IllegalStateException("The game has already been won");
     }
     moveExplorer.rejectIllegalMove(move)
@@ -93,9 +85,8 @@ class BoardModel {
 
     for (s <- subscribers; e <- events) { s.onBoardChanged(e) }
     // TODO: Consider including Won(_, _) in the list of events from applyMove
-    if (winner != null) {
-      // TODO: Change this to use the WinState object
-      subscribers.foreach { _.onBoardChanged(Won(winner, winMode)) }
+    if (gameOutcome != null) {
+      subscribers.foreach { _.onBoardChanged(Won(gameOutcome.winner, gameOutcome.winMode)) }
     }
   }
 
