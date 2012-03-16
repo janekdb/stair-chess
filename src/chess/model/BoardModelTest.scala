@@ -66,7 +66,6 @@ object BoardModelTest extends Test {
     }
   }
 
-  // TODO: Convert all methods to use PlacementsBuilder
   private def rejectPawnDoubleAdvanceIfNotFirstMove {
     val pb = new PlacementsBuilder
     pb(Black, Pawn(), "a7")
