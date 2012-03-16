@@ -12,15 +12,15 @@ trait Test {
 
   def unexpected(e: Exception): Unit = throw new FailureException(e, "Unexpected exception:" + e.getClass.getName)
 
-  def assertEquals(expected: Any, actual: Any) = {
+  def assertEquals(expected: Any, actual: Any) {
     assert(expected == actual, "Expected: " + expected + ", actual: " + actual)
   }
 
-  def assertEquals(expected: Any, actual: Any, message: String) = {
+  def assertEquals(expected: Any, actual: Any, message: String) {
 	  assert(expected == actual, "Expected: " + expected + ", actual: " + actual+": " + message)
   }
   
-  def assertNotNull(obj: Any, message: String) = {
+  def assertNotNull(obj: Any, message: String) {
     assert(obj != null, message)
   }
 
