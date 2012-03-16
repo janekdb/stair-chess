@@ -10,11 +10,11 @@ object MoveTest extends Test {
   //  implicit def string2MovePiece(s: String) = new MovePiece(s)
 
   // TODO: Find out how to only define this in the superclass  
-  def main(args: Array[String]): Unit = {
+  def main(args: Array[String]) {
     runTests
   }
 
-  def runTests(): Unit = {
+  def runTests() {
     enPassant
   }
 

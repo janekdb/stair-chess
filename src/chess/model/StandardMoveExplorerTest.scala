@@ -14,11 +14,11 @@ object StandardMoveExplorerTest extends Test {
   implicit def string2MovePiece(s: String) = new MovePiece(s)
 
   // TODO: Find out how to only define this in the superclass  
-  def main(args: Array[String]): Unit = {
+  def main(args: Array[String]) {
     runTests
   }
 
-  def runTests(): Unit = {
+  def runTests() {
 
     // TODO: Add test that a white pawn on e3 does not include e5 in the list of basic positions
     getBasicPositionsIncludesEnPassantWhite
@@ -34,7 +34,7 @@ object StandardMoveExplorerTest extends Test {
   }
 
   /* All conditions met */
-  private def getBasicPositionsIncludesEnPassantWhite = {
+  private def getBasicPositionsIncludesEnPassantWhite {
     val whitePawnStart = new Position("e4")
     val whitePawnEnd = new Position("e5")
     val conf = new GridConfiguration
@@ -54,7 +54,7 @@ object StandardMoveExplorerTest extends Test {
   }
 
   /* All conditions met */
-  private def getBasicPositionsIncludesEnPassantBlack = {
+  private def getBasicPositionsIncludesEnPassantBlack {
     val blackPawnStart = new Position("e5")
     val blackPawnEnd = new Position("e4")
     val conf = new GridConfiguration
@@ -79,7 +79,7 @@ object StandardMoveExplorerTest extends Test {
    */
 
   /* No double advance */
-  private def getBasicPositionsExcludesEnPassantWhenNotDoubleAdvance = {
+  private def getBasicPositionsExcludesEnPassantWhenNotDoubleAdvance {
     val whitePawn = new Position("e2")
     val conf = new GridConfiguration
     conf.add(whitePawn, White, Pawn())
@@ -95,7 +95,7 @@ object StandardMoveExplorerTest extends Test {
   }
 
   /* Not fifth row */
-  private def getBasicPositionsExcludesEnPassantWhenNotFifthRow = {
+  private def getBasicPositionsExcludesEnPassantWhenNotFifthRow {
     val whitePawn = new Position("e2")
     val conf = new GridConfiguration
     conf.add(whitePawn, White, Pawn())
@@ -111,7 +111,7 @@ object StandardMoveExplorerTest extends Test {
   }
 
   /* Not adjacent column */
-  private def getBasicPositionsExcludesEnPassantWhenNotAdjacentColumn = {
+  private def getBasicPositionsExcludesEnPassantWhenNotAdjacentColumn {
     val whitePawnStart = new Position("e4")
     val whitePawnEnd = new Position("e5")
     val conf = new GridConfiguration
@@ -127,7 +127,7 @@ object StandardMoveExplorerTest extends Test {
     assert(expected == actual, "Incorrect position set: expected: " + expected + ", actual: " + actual)
   }
 
-  private def rejectIllegalMoveAllowsValidEnPassant = {
+  private def rejectIllegalMoveAllowsValidEnPassant {
     val conf = new GridConfiguration
     placeKings(conf)
     conf.add("e5", White, Pawn())
@@ -137,7 +137,7 @@ object StandardMoveExplorerTest extends Test {
     e.rejectIllegalMove(EnPassant("e5", "f6"))
   }
 
-  private def rejectIllegalMoveRejectsNotAdjacentColumnEnPassant = {
+  private def rejectIllegalMoveRejectsNotAdjacentColumnEnPassant {
     val conf = new GridConfiguration
     conf.add("e5", White, Pawn())
     conf.add("g7", Black, Pawn())
@@ -153,7 +153,7 @@ object StandardMoveExplorerTest extends Test {
     }
   }
 
-  private def rejectIllegalMoveRejectsNotDoubleAdvanceEnPassant = {
+  private def rejectIllegalMoveRejectsNotDoubleAdvanceEnPassant {
     val conf = new GridConfiguration
     conf.add("e4", White, Pawn())
     conf.add("d7", Black, Pawn())
@@ -174,7 +174,7 @@ object StandardMoveExplorerTest extends Test {
   /* Do not overtest */
   //  private def rejectIllegalMoveRejectsIncorrectRowEnPassant = fail
 
-  private def rejectIllegalMoveRejectsSelfCheckingEnPassant = {
+  private def rejectIllegalMoveRejectsSelfCheckingEnPassant {
     val conf = new GridConfiguration
     conf.add("e5", White, Pawn())
     conf.add("d7", Black, Pawn())
@@ -194,7 +194,7 @@ object StandardMoveExplorerTest extends Test {
     }
   }
 
-  private def placeKings(conf: Configuration) = {
+  private def placeKings(conf: Configuration) {
     conf.add("e1", White, King())
     conf.add("e8", Black, King())
   }

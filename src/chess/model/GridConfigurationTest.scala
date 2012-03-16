@@ -12,17 +12,17 @@ object GridConfigurationTest extends Test {
   //  implicit def string2MovePiece(s: String) = new MovePiece(s)
 
   // TODO: Find out how to only define this in the superclass  
-  def main(args: Array[String]): Unit = {
+  def main(args: Array[String]) {
     runTests
   }
 
-  def runTests(): Unit = {
+  def runTests() {
     moveHistoryMaintained
     moveHistoryCopied
     enPassantEventSent
   }
 
-  def moveHistoryMaintained = {
+  def moveHistoryMaintained {
     val conf = new GridConfiguration
 
     val whiteStart: Position = "e2"
@@ -45,7 +45,7 @@ object GridConfigurationTest extends Test {
     assertSomeEquals((Rook(), blackStart, blackEnd), conf.getLastMove)
   }
 
-  def moveHistoryCopied = {
+  def moveHistoryCopied {
     val conf = new GridConfiguration
 
     val whiteStart: Position = "e2"
@@ -57,7 +57,7 @@ object GridConfigurationTest extends Test {
     assertSomeEquals((Pawn(), whiteStart, whiteEnd), copy.getLastMove)
   }
 
-  def assertSomeEquals(expected: (Piece, Position, Position), actual: Option[(Piece, Position, Position)]) = {
+  def assertSomeEquals(expected: (Piece, Position, Position), actual: Option[(Piece, Position, Position)]) {
     actual match {
       case Some((_, _, _)) => Unit
       case default => fail("The last move should have been Some((_, _)) but was " + actual)
@@ -66,7 +66,7 @@ object GridConfigurationTest extends Test {
     assertEquals(expected, (p, a, b))
   }
 
-  def enPassantEventSent = {
+  def enPassantEventSent {
     val conf = new GridConfiguration
 
     val whiteStart: Position = "a5"
