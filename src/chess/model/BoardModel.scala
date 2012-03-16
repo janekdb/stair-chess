@@ -91,21 +91,12 @@ class BoardModel {
   }
 
   private def extractColour(move: Move): Colour = {
-    // TODO: Reduce the amount of code used to acquire the active colour.
+    implicit def tuple2colour(t: (Colour, Piece, Option[Position])) = t._1
     move match {
       case Castle(colour, _) => colour
-      case MovePiece(start, _) => {
-        val (colour, _, _) = conf.getExistingPiece(start)
-        colour
-      }
-      case Promote(start, _, _) => {
-        val (colour, _, _) = conf.getExistingPiece(start)
-        colour
-      }
-      case EnPassant(start, _) => {
-        val (colour, _, _) = conf.getExistingPiece(start)
-        colour
-      }
+      case MovePiece(start, _) => conf.getExistingPiece(start)
+      case Promote(start, _, _) => conf.getExistingPiece(start)
+      case EnPassant(start, _) => conf.getExistingPiece(start)
       case default => throw new UnhandledCaseException(move.toString)
     }
   }
