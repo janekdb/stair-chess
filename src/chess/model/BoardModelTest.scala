@@ -2,18 +2,12 @@ package chess.model
 
 import Colours.{ Black, White }
 import ex._
-import test.Test
+import test.{Test, TestUtils}
 import chess.util.TODO
 import scala.collection.mutable.ListBuffer
 
-object BoardModelTest extends Test {
+object BoardModelTest extends Test with TestUtils {
 
-  // TODO: Define this test helping implicits in a common location
-  implicit def piece2List(t: Piece) = List(t)
-  implicit def string2Position(s: String) = new Position(s)
-  implicit def string2MovePiece(s: String) = new MovePiece(s)
-//  implicit def string2Position((colour: Colour, piece: Piece, position: String)) = ()
-  
   // TODO: Find out how to only define this in the superclass  
   def main(args: Array[String]) {
     runTests

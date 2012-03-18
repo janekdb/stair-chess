@@ -2,14 +2,9 @@ package chess.model
 
 import Colours.{ Black, White }
 
-import test.Test
+import test.{Test, TestUtils}
 
-object GridConfigurationTest extends Test {
-
-  // TODO: Define these test helping implicits in a common location
-  implicit def piece2List(t: Piece) = List(t)
-  implicit def string2Position(s: String) = new Position(s)
-  //  implicit def string2MovePiece(s: String) = new MovePiece(s)
+object GridConfigurationTest extends Test with TestUtils{
 
   // TODO: Find out how to only define this in the superclass  
   def main(args: Array[String]) {

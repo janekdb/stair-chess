@@ -1,13 +1,8 @@
 package chess.model
 
-import test.Test
+import test.{Test, TestUtils}
 
-object MoveTest extends Test {
-
-  // TODO: Define these test helping implicits in a common location
-  implicit def piece2List(t: Piece) = List(t)
-  implicit def string2Position(s: String) = new Position(s)
-  //  implicit def string2MovePiece(s: String) = new MovePiece(s)
+object MoveTest extends Test with TestUtils {
 
   // TODO: Find out how to only define this in the superclass  
   def main(args: Array[String]) {
