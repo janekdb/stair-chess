@@ -138,13 +138,9 @@ object StandardMoveExplorerTest extends Test with TestUtils {
     conf.add("g7", Black, Pawn())
     val e = new StandardMoveExplorer(conf)
     conf.move("g7", "g5")
-    // TODO: Replace this with a function that takes a text block and an expected exception type
-    try {
+
+    assertExceptionThrown("En-passant should be rejected when the adjacent column does not contain a pawn", classOf[UnreachablePositionException] ) {
       e.rejectIllegalMove(EnPassant("e5", "f6"))
-      fail("En-passant should be rejected when the adjacent column does not contain a pawn")
-    } catch {
-      case e: UnreachablePositionException => { /* expected */ }
-      case e @ default => fail("Unexpected exception: " + e)
     }
   }
 
@@ -156,13 +152,9 @@ object StandardMoveExplorerTest extends Test with TestUtils {
     conf.move("d7", "d6")
     conf.move("e4", "e5")
     conf.move("d6", "d5")
-    // TODO: Replace this with a function that takes a text block and an expected exception type
-    try {
+
+    assertExceptionThrown("En-passant should be rejected when the previous move was not a double advance", classOf[UnreachablePositionException] ) {
       e.rejectIllegalMove(EnPassant("e5", "d6"))
-      fail("En-passant should be rejected when the previous move was not a double advance")
-    } catch {
-      case e: UnreachablePositionException => { /* expected */ }
-      case e @ default => fail("Unexpected exception: " + e)
     }
   }
 
@@ -178,17 +170,12 @@ object StandardMoveExplorerTest extends Test with TestUtils {
     conf.add("e1", White, King())
     val e = new StandardMoveExplorer(conf)
     conf.move("d7", "d5")
-    // TODO: Replace this with a function that takes a block and an expected exception type(s)
-    try {
+    
+    assertExceptionThrown("En-passant should be rejected when the player would self check", classOf[CheckedOwnKing] ) {
       e.rejectIllegalMove(EnPassant("e5", "d6"))
-      fail("En-passant should be rejected when the player would self check")
-    } catch {
-      case e: CheckedOwnKing => { /* expected */ }
-      case e: FailureException => throw e
-      case e @ default => fail("Unexpected exception: " + e)
     }
   }
-
+  
   private def placeKings(conf: Configuration) {
     conf.add("e1", White, King())
     conf.add("e8", Black, King())
