@@ -281,7 +281,7 @@ object BoardModelTest extends Test with TestUtils {
 
     /* Black king */
     bm.move("e8d8")
-
+    
     // TODO: Replace with block and expected exception class taking help method
     try {
       /* En-passant */
