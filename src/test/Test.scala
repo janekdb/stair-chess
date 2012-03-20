@@ -32,5 +32,26 @@ trait Test {
     def this(message: String) = this(null, message)
 
   }
+  
+  // TODO: Restrict expectedException to Exception or subclass
+  def assertExceptionThrown(assertion: String, expectedException: Any)(b:  => Unit) {
+    var thrown = false
+    var correctType = false
+    var ex: Any = null
+    try {
+      b
+    } catch {
+      case e @ default => {
+        thrown = true
+        ex = e
+        correctType = e.getClass == expectedException
+      }
+    }
+    if (!thrown) {
+      fail(assertion)
+    } else if (!correctType) {
+      fail("Unexpected exception type: Expected: " + expectedException.toString()+", had: " + ex)
+    }
+  }
 
 }
