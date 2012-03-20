@@ -6,6 +6,7 @@ import chess.player.{ Computer, Human }
 import chess.ui.UI
 import chess.util.PlayerSelector
 import chess.util.TODO
+import test.AllTests
 
 object ChessApp {
   def main(args: Array[String]): Unit = {
@@ -29,12 +30,6 @@ object ChessApp {
   }
 
   def runTests: Unit = {
-    // TODO: Determine if each test object could add itself into a object
-    //   which would allow all tests to be looped over to run them.
-    chess.model.PositionTest.runTests
-    chess.model.MoveTest.runTests
-    chess.model.GridConfigurationTest.runTests
-    chess.model.BoardModelTest.runTests
-    chess.model.StandardMoveExplorerTest.runTests
+    AllTests.runAllTests
   }
 }
