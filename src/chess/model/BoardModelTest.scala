@@ -282,15 +282,11 @@ object BoardModelTest extends Test with TestUtils {
     /* Black king */
     bm.move("e8d8")
     
-    // TODO: Replace with block and expected exception class taking help method
-    try {
+    assertExceptionThrown("En-passant disallowed when not immediately played", classOf[UnreachablePositionException] ) {
       /* En-passant */
       bm.move("e5d6")
-      fail("En-passant disallowed when not immediately played")
-    } catch {
-      case e: UnreachablePositionException => { /* Expected */ }
-      case e: Exception => unexpected(e)
     }
+
   }
   
   // Companion object
