@@ -59,7 +59,6 @@ object StandardMoveExplorerTest extends Test with TestUtils {
     assertEquals(expected, actual, "Position set excluded two square advance")
   }
 
-  // TODO: Replace assert( == ) with assertEquals()
   
   /* All conditions met */
   private def getBasicPositionsIncludesEnPassantWhite {
@@ -78,8 +77,9 @@ object StandardMoveExplorerTest extends Test with TestUtils {
      */
     val actual = e.getBasicPositions(whitePawnEnd)
     val expected: Set[Position] = Set("d6", "e6")
-    assert(expected == actual, "Incorrect position set: expected: " + expected + ", actual: " + actual)
+    assertEquals(expected, actual, "Position set included en-passant")
   }
+
 
   /* All conditions met */
   private def getBasicPositionsIncludesEnPassantBlack {
@@ -98,7 +98,7 @@ object StandardMoveExplorerTest extends Test with TestUtils {
 		   */
     val actual = e.getBasicPositions(blackPawnEnd)
     val expected: Set[Position] = Set("d3", "e3")
-    assert(expected == actual, "Incorrect position set: expected: " + expected + ", actual: " + actual)
+    assertEquals(expected, actual, "Position set included en-passant")
   }
 
   /*
@@ -119,7 +119,7 @@ object StandardMoveExplorerTest extends Test with TestUtils {
     conf.move("d3", "d2")
     val actual = e.getBasicPositions(whitePawn)
     val expected: Set[Position] = Set("e4", "e3")
-    assert(expected == actual, "Incorrect position set: expected: " + expected + ", actual: " + actual)
+    assertEquals(expected, actual, "Position set excluded en-passant")
   }
 
   /* Not fifth row */
@@ -135,7 +135,7 @@ object StandardMoveExplorerTest extends Test with TestUtils {
     conf.move("d7", "d5")
     val actual = e.getBasicPositions(whitePawn)
     val expected: Set[Position] = Set("e4", "e3")
-    assert(expected == actual, "Incorrect position set: expected: " + expected + ", actual: " + actual)
+    assertEquals(expected, actual, "Position set excluded en-passant")
   }
 
   /* Not adjacent column */
@@ -152,7 +152,7 @@ object StandardMoveExplorerTest extends Test with TestUtils {
     conf.move("b7", "b5")
     val actual = e.getBasicPositions(whitePawnEnd)
     val expected: Set[Position] = Set("e6")
-    assert(expected == actual, "Incorrect position set: expected: " + expected + ", actual: " + actual)
+    assertEquals(expected, actual, "Position set excluded en-passant")
   }
 
   private def rejectIllegalMoveAllowsValidEnPassant {
