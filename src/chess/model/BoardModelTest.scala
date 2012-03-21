@@ -171,7 +171,7 @@ object BoardModelTest extends Test with TestUtils {
 
     val bm = new BoardModel(pb, Nil)
     
-    // TODO: Write this test without assignment to this var maybe by using a pattern guard in the subscriber to fall through
+    // TODO: Write this test without assignment to this var maybe by using yield with one assignment
     var actual: List[(Colour, WinModes.WinMode)] = List()
 
     val s = new Object with BoardChangedSubscriber {
@@ -184,7 +184,7 @@ object BoardModelTest extends Test with TestUtils {
         }
       }
     }
-
+    
     bm.subscribe(s)
 
     bm.move("c7a7")
