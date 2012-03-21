@@ -16,6 +16,7 @@ object StandardMoveExplorerTest extends Test with TestUtils {
   def runTests() {
 
     getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveWhite
+    getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveBlack
     getBasicPositionsIncludesEnPassantWhite
     getBasicPositionsIncludesEnPassantBlack
     getBasicPositionsExcludesEnPassantWhenNotDoubleAdvance
@@ -30,21 +31,34 @@ object StandardMoveExplorerTest extends Test with TestUtils {
 
   private def getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveWhite {
 
-    val whitePawnStart = new Position("e2")
-    val whitePawnEnd = new Position("e3")
+    val start = new Position("e2")
+    val end = new Position("e3")
     val conf = new GridConfiguration
-    conf.add(whitePawnStart, White, Pawn())
+    conf.add(start, White, Pawn())
     val e = new StandardMoveExplorer(conf)
-    /* Move white to remove the possibility of a two square advance. */
-    conf.move(whitePawnStart, whitePawnEnd)
+    /* Move to remove the possibility of a two square advance. */
+    conf.move(start, end)
 
-    val actual = e.getBasicPositions(whitePawnEnd)
+    val actual = e.getBasicPositions(end)
     val expected: Set[Position] = Set("e4")
     assertEquals(expected, actual, "Position set excluded two square advance")
   }
 
-  // TODO: Add analog of getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveWhite for Black
-  
+  private def getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveBlack {
+
+    val start = new Position("e7")
+    val end = new Position("e6")
+    val conf = new GridConfiguration
+    conf.add(start, Black, Pawn())
+    val e = new StandardMoveExplorer(conf)
+    /* Move to remove the possibility of a two square advance. */
+    conf.move(start, end)
+
+    val actual = e.getBasicPositions(end)
+    val expected: Set[Position] = Set("e5")
+    assertEquals(expected, actual, "Position set excluded two square advance")
+  }
+
   // TODO: Replace assert( == ) with assertEquals()
   
   /* All conditions met */
