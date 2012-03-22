@@ -77,17 +77,13 @@ class BoardModel {
 
         // TODO: Move this side-effect out of the case statement
         if (checkForCheckMate(colour.opposite)) {
-        	setWinState(WinModes.CheckMate, colour)
+          setWinState(WinModes.CheckMate, colour)
         }
         e
-      }
+      } ::: { if (isWon) List(Won(gameOutcome.winner, gameOutcome.winMode)) else Nil }
     }
 
     for (s <- subscribers; e <- events) { s.onBoardChanged(e) }
-    // TODO: Consider including Won(_, _) in the list of events from applyMove
-    if (gameOutcome != null) {
-      subscribers.foreach { _.onBoardChanged(Won(gameOutcome.winner, gameOutcome.winMode)) }
-    }
   }
 
   private def extractColour(move: Move): Colour = {
