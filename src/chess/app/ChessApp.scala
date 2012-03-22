@@ -26,7 +26,6 @@ object ChessApp {
     while (!board.isWon) {
       board.move(playerSelector.next.getMove)
     }
-    TODO.throwRuntimeEx("Find out why the board is empty since the use of the BoardModel placements constructor")
   }
 
   def runTests: Unit = {
