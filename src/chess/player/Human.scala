@@ -37,7 +37,7 @@ class Human(val board: BoardModel, val colour: Colour) extends Player {
     new MovePiece("f7f8"),
     new MovePiece("f8f7"),
     new MovePiece("f7f8"),
-    // TODO: Test re-Castling is disallowed by adding a test to a different class
+
     Resign(colour))
 
   def getMove: Move = {
