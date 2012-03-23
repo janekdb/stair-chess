@@ -65,25 +65,27 @@ class BoardModel {
       throw new IllegalStateException("The game has already been won");
     }
     moveExplorer.rejectIllegalMove(move)
-    val events = move match {
+    val (events, outcomeOpt) = move match {
       case Resign(colour) => {
         setWinState(WinModes.Resignation, colour.opposite)
-        List(Resigned(colour))
+        (List(Resigned(colour)), Some(GameOutcome(colour.opposite, WinModes.Resignation)))
       }
       case default => {
         /* Cache off the colour before the move is applied. */
         val colour = extractColour(move)
         val e = conf.applyMove(move)
-
-        // TODO: Move this side-effect out of the case statement
-        if (checkForCheckMate(colour.opposite)) {
-          setWinState(WinModes.CheckMate, colour)
-        }
-        e
-      } ::: { if (isWon) List(Won(gameOutcome.winner, gameOutcome.winMode)) else Nil }
+        val outcomeOption = if (checkForCheckMate(colour.opposite)) Some(GameOutcome(colour, WinModes.CheckMate)) else None
+        (e, outcomeOption)
+      }
     }
-
-    for (s <- subscribers; e <- events) { s.onBoardChanged(e) }
+    outcomeOpt match {
+      case Some(g) => {
+        setWinState(g.winMode, g.winner)
+      }
+      case _ => Unit
+    }
+    val wonEvent = if (isWon) List(Won(gameOutcome.winner, gameOutcome.winMode)) else Nil
+    for (s <- subscribers; e <- events ::: wonEvent) { s.onBoardChanged(e) }
   }
 
   private def extractColour(move: Move): Colour = {
