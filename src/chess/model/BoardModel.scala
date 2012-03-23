@@ -29,7 +29,7 @@ class BoardModel {
     for ((colour, piece, position) <- placements) place(colour, piece, position)
   }
 
-  case class GameOutcome(winner: Colour, winMode: WinMode) {
+  case class GameOutcome(winMode: WinMode, winner: Colour) {
     def isCheckMate: Boolean = winMode == WinModes.CheckMate
     def isResigned: Boolean = winMode == WinModes.Resignation
   }
@@ -55,7 +55,7 @@ class BoardModel {
   }
 
   private def setWinState(winMode: WinMode, winner: Colour) {
-    this.gameOutcome = GameOutcome(winner, winMode)
+    this.gameOutcome = GameOutcome(winMode, winner)
   }
     
   def move(move: Move): Unit = {
@@ -68,13 +68,13 @@ class BoardModel {
     val (events, outcomeOpt) = move match {
       case Resign(colour) => {
         setWinState(WinModes.Resignation, colour.opposite)
-        (List(Resigned(colour)), Some(GameOutcome(colour.opposite, WinModes.Resignation)))
+        (List(Resigned(colour)), Some(GameOutcome(WinModes.Resignation, colour.opposite)))
       }
       case default => {
         /* Cache off the colour before the move is applied. */
         val colour = extractColour(move)
         val e = conf.applyMove(move)
-        val outcomeOption = if (checkForCheckMate(colour.opposite)) Some(GameOutcome(colour, WinModes.CheckMate)) else None
+        val outcomeOption = if (checkForCheckMate(colour.opposite)) Some(GameOutcome(WinModes.CheckMate, colour)) else None
         (e, outcomeOption)
       }
     }
