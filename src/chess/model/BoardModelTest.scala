@@ -5,6 +5,7 @@ import ex._
 import test.{Test, TestUtils}
 import chess.util.TODO
 import scala.collection.mutable.ListBuffer
+import chess.ui.UI
 
 object BoardModelTest extends Test with TestUtils {
 
@@ -21,6 +22,7 @@ object BoardModelTest extends Test with TestUtils {
     acceptCastlingWhenIrrelevantOpponentPiecesExist
     rejectCastlingWhenInterveningPiece
     rejectCastlingWhenAnySquareUnderAttack
+    rejectReCastling
     rejectIfMoveLeavesOwnKingInCheck
     checkMateIsDetected
     checkButNotMateIsDetected
@@ -140,6 +142,33 @@ object BoardModelTest extends Test with TestUtils {
         case _: AttackedPositionException => Unit
         case e: Exception => unexpected(e)
       }
+    }
+  }
+
+  // TODO: Add test that shows a rook can castle over an attached square because it is only the king that may not do this
+  
+  private def rejectReCastling {
+    val pb = new PlacementsBuilder
+
+    pb(White, Rook(), "a1")
+    pb(White, King(), "d1")
+    pb(Black, King(), "e8")
+
+    val bm = new BoardModel(pb, Nil)
+
+    bm.move(Castle(White, Short))
+    bm.move("e8e7")
+    bm.move("c1c2")
+    bm.move("e7e8")
+    bm.move("c2a2")
+    bm.move("e8e7")
+    bm.move("a2a1")
+    bm.move("b1c1")
+    bm.move("e7e8")
+    bm.move("c1d1")
+    bm.move("e8e7")
+    assertExceptionThrown("Re-Castling was rejected", classOf[PreviouslyMovedException]) {
+      bm.move(Castle(White, Short))
     }
   }
 
