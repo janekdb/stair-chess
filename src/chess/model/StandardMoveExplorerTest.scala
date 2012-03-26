@@ -27,6 +27,9 @@ object StandardMoveExplorerTest extends Test with TestUtils {
     rejectIllegalMoveRejectsNotAdjacentColumnEnPassant
     rejectIllegalMoveRejectsNotDoubleAdvanceEnPassant
     rejectIllegalMoveRejectsSelfCheckingEnPassant
+    
+    rejectIllegalMoveAllowsCastlingWhenRookOnlyCrossingAttackedSquare
+    rejectIllegalMoveRejectsCastlingWhenKingCrossingAttackedSquare
   }
 
   private def getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveWhite {
@@ -206,6 +209,30 @@ object StandardMoveExplorerTest extends Test with TestUtils {
     
     assertExceptionThrown("En-passant should be rejected when the player would self check", classOf[CheckedOwnKing] ) {
       e.rejectIllegalMove(EnPassant("e5", "d6"))
+    }
+  }
+  
+  private def rejectIllegalMoveAllowsCastlingWhenRookOnlyCrossingAttackedSquare {
+    val conf = new GridConfiguration
+    /* The piece attacking a square the castling rook will cross. */
+    conf.add("b2", White, Rook())
+    /* The castling pieces */
+    conf.add("e8", Black, King())
+    conf.add("a8", Black, Rook())
+    val e = new StandardMoveExplorer(conf)
+    e.rejectIllegalMove(Castle(Black, Long))
+  }
+
+  private def rejectIllegalMoveRejectsCastlingWhenKingCrossingAttackedSquare {
+    val conf = new GridConfiguration
+    /* The piece attacking a square the castling king will cross. */
+    conf.add("d2", White, Rook())
+    /* The castling pieces */
+    conf.add("e8", Black, King())
+    conf.add("a8", Black, Rook())
+    val e = new StandardMoveExplorer(conf)
+    assertExceptionThrown("Castling should be rejected when the king would cross an attacked square", classOf[AttackedPositionException]) {
+      e.rejectIllegalMove(Castle(Black, Long))
     }
   }
   
