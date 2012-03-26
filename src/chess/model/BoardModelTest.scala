@@ -145,7 +145,7 @@ object BoardModelTest extends Test with TestUtils {
     }
   }
 
-  // TODO: Add test that shows a rook can castle over an attached square because it is only the king that may not do this
+  // TODO: Add test that shows a rook can castle over an attacked square because it is only the king that may not do this
   
   private def rejectReCastling {
     val pb = new PlacementsBuilder
