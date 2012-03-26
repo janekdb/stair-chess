@@ -83,8 +83,8 @@ object BoardModelTest extends Test with TestUtils {
   private def acceptCastlingWhenNoInterveningPieces {
     val pb = new PlacementsBuilder
     pb(Black, King(), "e8") 
-    pb(White, Rook(), "h1") 
-    pb(White, King(), "d1") 
+    pb(White, Rook(), "a1") 
+    pb(White, King(), "e1") 
 
     val bm = new BoardModel(pb, Nil)
 
@@ -94,8 +94,8 @@ object BoardModelTest extends Test with TestUtils {
   private def acceptCastlingWhenIrrelevantOpponentPiecesExist {
     val pb = new PlacementsBuilder
     pb(Black, King(), "e8") 
-    pb(White, Rook(), "h1") 
-    pb(White, King(), "d1") 
+    pb(White, Rook(), "a1") 
+    pb(White, King(), "e1") 
     pb(Black, Knight(), "a8") 
 
     val bm = new BoardModel(pb, Nil)
@@ -104,11 +104,11 @@ object BoardModelTest extends Test with TestUtils {
 
   private def rejectCastlingWhenInterveningPiece {
     val pb = new PlacementsBuilder
-    pb(White, Rook(), "h1") 
+    pb(White, Rook(), "a1") 
 
-    pb(White, King(), "d1") 
+    pb(White, King(), "e1") 
 
-    pb(White, Bishop(), "e1") 
+    pb(White, Bishop(), "c1") 
 
     val bm = new BoardModel(pb, Nil)
     
@@ -123,12 +123,12 @@ object BoardModelTest extends Test with TestUtils {
 
   private def rejectCastlingWhenAnySquareUnderAttack {
 
-    val files = List("d", "e", "f", "g", "h");
+    val files = List("a", "b", "c", "d", "e");
     for (file <- files) {
       val pb = new PlacementsBuilder
 
-      pb(White, Rook(), "h1")
-      pb(White, King(), "d1")
+      pb(White, Rook(), "a1")
+      pb(White, King(), "e1")
       /* Attack a square */
       pb(Black, Rook(), file + "8")
       //      bm.place(Black, Rook(), file + "8)
@@ -146,29 +146,29 @@ object BoardModelTest extends Test with TestUtils {
   }
 
   // TODO: Add test that shows a rook can castle over an attacked square because it is only the king that may not do this
-  
+  // TODO: Determine if this test should move to StandardMoveExplorerTest
   private def rejectReCastling {
     val pb = new PlacementsBuilder
 
     pb(White, Rook(), "a1")
-    pb(White, King(), "d1")
+    pb(White, King(), "e1")
     pb(Black, King(), "e8")
 
     val bm = new BoardModel(pb, Nil)
 
-    bm.move(Castle(White, Short))
+    bm.move(Castle(White, Long))
     bm.move("e8e7")
-    bm.move("c1c2")
+    bm.move("d1d2")
     bm.move("e7e8")
-    bm.move("c2a2")
+    bm.move("d2a2")
     bm.move("e8e7")
     bm.move("a2a1")
-    bm.move("b1c1")
-    bm.move("e7e8")
     bm.move("c1d1")
+    bm.move("e7e8")
+    bm.move("d1e1")
     bm.move("e8e7")
     assertExceptionThrown("Re-Castling was rejected", classOf[PreviouslyMovedException]) {
-      bm.move(Castle(White, Short))
+      bm.move(Castle(White, Long))
     }
   }
 

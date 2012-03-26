@@ -13,11 +13,11 @@ trait CastlingType {
 
 // TODO: Correct the initial position of the king from 4 to 5 in Short and Long CastlingTypes
 object Short extends CastlingType {
-  def getColumns = ((4, 2), (1, 3))
+  def getColumns = ((5, 7), (8, 6))
   override def toString = "Short"
 }
 
 object Long extends CastlingType {
-  def getColumns = ((4, 7), (8, 6))
+  def getColumns = ((5, 3), (1, 4))
   override def toString = "Long"
 }
