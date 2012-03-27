@@ -142,7 +142,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
 
         val row = colour.homeRow
 
-        val ((king, _), (rook, _)) = castlingType.getPositions(row)
+        val ((king, kingEnd), (rook, _)) = castlingType.getPositions(row)
 
         /* Disallow if either piece has already been moved. */
         (king, rook).foreach { p =>
@@ -162,7 +162,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
 
         /* Disallow if King is in check or would cross any square that is is attacked or would end in check. */
         // TODO: Consider converting to map operation with predicate to test for attacked status
-        val exposedPositions = king :: rook :: interveningPositions toSet
+        val exposedPositions = king :: kingEnd :: Position.getInterveningPositions(king, kingEnd) toSet
         val opponentPositions = conf.locatePieces(colour.opposite)
         opponentPositions.foreach { p =>
           val attackedPositions = getBasicPositions(p)
