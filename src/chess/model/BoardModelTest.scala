@@ -21,7 +21,7 @@ object BoardModelTest extends Test with TestUtils {
     acceptCastlingWhenNoInterveningPieces
     acceptCastlingWhenIrrelevantOpponentPiecesExist
     rejectCastlingWhenInterveningPiece
-    rejectCastlingWhenAnySquareUnderAttack
+    rejectCastlingWhenAnySquareVisitedByTheKingIsUnderAttack
     rejectReCastling
     rejectIfMoveLeavesOwnKingInCheck
     checkMateIsDetected
@@ -121,26 +121,24 @@ object BoardModelTest extends Test with TestUtils {
     }
   }
 
-  private def rejectCastlingWhenAnySquareUnderAttack {
+  private def rejectCastlingWhenAnySquareVisitedByTheKingIsUnderAttack {
 
-    val files = List("a", "b", "c", "d", "e");
+    val files = List("c", "d", "e");
     for (file <- files) {
+      println("file: " + file)
       val pb = new PlacementsBuilder
 
       pb(White, Rook(), "a1")
       pb(White, King(), "e1")
       /* Attack a square */
       pb(Black, Rook(), file + "8")
+      pb(Black, King(), "h8")
       //      bm.place(Black, Rook(), file + "8)
 
       val bm = new BoardModel(pb, Nil)
 
-      try {
-        bm.move(Castle(White, Long))
-        fail("Castling over an attacked square should be rejected")
-      } catch {
-        case _: AttackedPositionException => Unit
-        case e: Exception => unexpected(e)
+      assertExceptionThrown("Castling the king over an attacked square should be rejected", classOf[AttackedPositionException]){
+    	  bm.move(Castle(White, Long))
       }
     }
   }
