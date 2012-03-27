@@ -35,20 +35,22 @@ trait Test {
   def assertExceptionThrown[T <: Exception](assertion: String, expectedException: Class[T])(b: => Unit) {
     var thrown = false
     var correctType = false
-    var ex: Any = null
+    var ex: Exception = null
     try {
       b
     } catch {
-      case e @ default => {
+      case e: Exception => {
         thrown = true
         ex = e
         correctType = e.getClass == expectedException
       }
+      case d @ default => throw new AssertionError("Unhandled case: " + d)
     }
     if (!thrown) {
       fail(assertion)
     } else if (!correctType) {
-      fail("Unexpected exception type: Expected: " + expectedException.toString() + ", had: " + ex)
+      /* Rethrowing provides more information than using fail. */
+      throw ex
     }
   }
 
