@@ -186,7 +186,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
   }
 
   // TODO: Reduce duplication with other checkKingNotLeftInCheckAfterMove methods
-  private def checkKingNotLeftInCheckAfterMove(move: MovePiece) = {
+  private def checkKingNotLeftInCheckAfterMove(move: MovePiece) {
 
     val MovePiece(start, _) = move
     /*
@@ -204,7 +204,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
   }
 
   // TODO: Reduce duplication with other checkKingNotLeftInCheckAfterMove methods
-  private def checkKingNotLeftInCheckAfterMove(move: EnPassant) = {
+  private def checkKingNotLeftInCheckAfterMove(move: EnPassant) {
 
     val EnPassant(start, _) = move
     /*
