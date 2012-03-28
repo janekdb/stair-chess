@@ -22,6 +22,7 @@ object BoardModelTest extends Test with TestUtils {
     acceptCastlingWhenIrrelevantOpponentPiecesExist
     rejectCastlingWhenInterveningPiece
     rejectCastlingWhenAnySquareVisitedByTheKingIsUnderAttack
+    acceptCastlingWhenSquaresVisitedByTheRookButNotTheKingAreUnderAttack
     rejectReCastling
     rejectIfMoveLeavesOwnKingInCheck
     checkMateIsDetected
@@ -125,25 +126,42 @@ object BoardModelTest extends Test with TestUtils {
 
     val files = List("c", "d", "e");
     for (file <- files) {
-      println("file: " + file)
       val pb = new PlacementsBuilder
 
+      /* Allow white to castle long. */
       pb(White, Rook(), "a1")
       pb(White, King(), "e1")
       /* Attack a square */
       pb(Black, Rook(), file + "8")
       pb(Black, King(), "h8")
-      //      bm.place(Black, Rook(), file + "8)
 
       val bm = new BoardModel(pb, Nil)
 
-      assertExceptionThrown("Castling the king over an attacked square should be rejected", classOf[AttackedPositionException]){
-    	  bm.move(Castle(White, Long))
+      assertExceptionThrown("Castling the king over an attacked square should be rejected", classOf[AttackedPositionException]) {
+        bm.move(Castle(White, Long))
       }
     }
   }
 
-  // TODO: Add test that shows a rook can castle over an attacked square because it is only the king that may not do this
+  private def acceptCastlingWhenSquaresVisitedByTheRookButNotTheKingAreUnderAttack {
+
+    val files = List("a", "b");
+    for (file <- files) {
+      val pb = new PlacementsBuilder
+
+      /* Allow white to castle long. */
+      pb(White, Rook(), "a1")
+      pb(White, King(), "e1")
+      /* Attack a square */
+      pb(Black, Rook(), file + "8")
+      pb(Black, King(), "h8")
+
+      val bm = new BoardModel(pb, Nil)
+
+      bm.move(Castle(White, Long))
+    }
+  }
+
   // TODO: Determine if this test should move to StandardMoveExplorerTest
   private def rejectReCastling {
     val pb = new PlacementsBuilder
