@@ -62,7 +62,6 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
 
   private def anyMoveAllowed(startPosition: Position, d: (Int, Int)) = true
 
-  // TODO: Add prerequisites for moves:
   private def pawnMoveAllowed(startPosition: Position, d: (Int, Int)) = {
     val (dCol, dRow) = d
     if (pawnDiagonal(dCol, dRow)) {
