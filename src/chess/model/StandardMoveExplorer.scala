@@ -185,25 +185,13 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
     }
   }
 
-  // TODO: Introduce SimpleMove(start, end) into Move hierarchy to allow this overloading to be removed
-  private def checkKingNotLeftInCheckAfterMove(move: MovePiece) {
-    val MovePiece(start, _) = move
-    checkKingNotLeftInCheckAfterMove(start, move)
-  }
-
-  // TODO: Introduce SimpleMove(start, end) into Move hierarchy to allow this overloading to be removed
-  private def checkKingNotLeftInCheckAfterMove(move: EnPassant) {
-    val EnPassant(start, _) = move
-    checkKingNotLeftInCheckAfterMove(move.start, move)
-  }
-  
-  private def checkKingNotLeftInCheckAfterMove(start: Position, move: Move) {
+  private def checkKingNotLeftInCheckAfterMove(move: SimpleMove) {
     /*
 	   * 1. Clone the current conf
 	   * 2. Apply the move without recursively calling this method
 	   * 3. See if the King is in check
 	   */
-    val (colour, _, _) = conf.getExistingPiece(start)
+    val (colour, _, _) = conf.getExistingPiece(move.start)
     val future = conf.copyOf
     future.applyMove(move)
 
