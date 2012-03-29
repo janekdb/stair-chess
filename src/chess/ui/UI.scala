@@ -69,11 +69,6 @@ class UI extends BoardChangedSubscriber {
     }
   }
 
-  // TODO: Use Piece -> Symbol map
-  //  val blackSymbols = Map[Piece, String](Rook -> "r", Knight -> "k", Bishop -> "b", King -> "k", Queen -> "q", Pawn -> "p");
-  //  val whiteSymbols = Map(Rook -> "R", Knight -> "K", Bishop -> "B", King -> "K", Queen -> "Q", Pawn -> "P");
-  //  val symbols = Map(Black -> blackSymbols, White -> whiteSymbols)
-
   val symbols = Map[Piece, String](Rook() -> "R", Knight() -> "N", Bishop() -> "B", King() -> "K", Queen() -> "Q", Pawn() -> "P")
 
   /* Black is lowercase */
