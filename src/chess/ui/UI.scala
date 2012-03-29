@@ -74,6 +74,8 @@ class UI extends BoardChangedSubscriber {
   //  val whiteSymbols = Map(Rook -> "R", Knight -> "K", Bishop -> "B", King -> "K", Queen -> "Q", Pawn -> "P");
   //  val symbols = Map(Black -> blackSymbols, White -> whiteSymbols)
 
+  val symbols = Map[Piece, String](Rook() -> "R", Knight() -> "N", Bishop() -> "B", King() -> "K", Queen() -> "Q", Pawn() -> "P")
+
   /* Black is lowercase */
   private def render: Unit = {
     println("  abcdefgh")
@@ -88,14 +90,7 @@ class UI extends BoardChangedSubscriber {
             case null => "·"
             case (c: Colour, p: Piece) => {
               val col = colourise(c)_
-              p match {
-                case p: Rook => col("R")
-                case p: Knight => col("N")
-                case p: Bishop => col("B")
-                case p: King => col("K") // Appeared as a question mark: "\u2654"
-                case p: Queen => col("Q")
-                case p: Pawn => col("P")
-              }
+              symbols.get(p) match { case Some(s) => col(s) case None => assert(false) }
             }
             case _ => "?"
           }
