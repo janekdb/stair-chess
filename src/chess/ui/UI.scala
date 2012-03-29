@@ -89,12 +89,12 @@ class UI extends BoardChangedSubscriber {
             case (c: Colour, p: Piece) => {
               val col = colourise(c)_
               p match {
-                case (p: Rook) => col("R")
-                case (p: Knight) => col("N")
-                case (p: Bishop) => col("B")
-                case (p: King) => col("K") // Appeared as a question mark: "\u2654"
-                case (p: Queen) => col("Q")
-                case (p: Pawn) => col("P")
+                case p: Rook => col("R")
+                case p: Knight => col("N")
+                case p: Bishop => col("B")
+                case p: King => col("K") // Appeared as a question mark: "\u2654"
+                case p: Queen => col("Q")
+                case p: Pawn => col("P")
               }
             }
             case _ => "?"
