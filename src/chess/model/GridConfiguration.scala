@@ -78,17 +78,10 @@ class GridConfiguration extends Configuration {
 
   def getPiece(position: Position): Option[(Colour, Piece, Option[Position])] = pieces.get(position)
 
-  /** Return positions of all pieces of the given colour and type. */
-  // TODO: Convert this to use a closure with foreach and yield
   def locatePieces(colour: Colour, piece: Piece): List[Position] = {
-    var result = List[Position]()
-    for ((position, (c, pi, _)) <- pieces; if c == colour && pi == piece) {
-      result = position :: result
-      //      yield position
-    }
-    result
+    for ((position, (c, pi, _)) <- pieces.toList; if c == colour && pi == piece) yield position
   }
-
+    
   /** Return positions of all pieces of the given colour. */
   // TODO: Convert this to use a closure with foreach and yield
   def locatePieces(colour: Colour): List[Position] = {
