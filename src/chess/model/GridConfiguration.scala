@@ -78,6 +78,7 @@ class GridConfiguration extends Configuration {
 
   def getPiece(position: Position): Option[(Colour, Piece, Option[Position])] = pieces.get(position)
 
+  // TODO: Convert from yield to filter + map
   def locatePieces(colour: Colour, piece: Piece): List[Position] = {
     for ((position, (c, pi, _)) <- pieces.toList; if c == colour && pi == piece) yield position
   }
