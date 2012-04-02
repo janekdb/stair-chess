@@ -2,14 +2,8 @@ package chess.model
 
 import chess.util.UnhandledCaseException
 import chess.util.TODO
-import chess.model.ex.{
-  //  AttackedPositionException,
-  //  CheckedOwnKing,
-  //  InterveningPieceException,
-  IllegalMoveException
-  //  PreviouslyMovedException,
-  //  UnreachablePositionException
-}
+import chess.model.ex.IllegalMoveException
+
 import Misc.kingInCheck
 import WinModes.WinMode
 
