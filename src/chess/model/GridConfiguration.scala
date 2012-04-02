@@ -90,7 +90,7 @@ class GridConfiguration extends Configuration {
   /** Return a deep copy of the Configuration */
   def copyOf: Configuration = {
     val c = new GridConfiguration
-    // TODO: Convert pieces to an immutable list
+    // TODO: Convert pieces to an immutable map
     for ((position, (colour, piece, last)) <- pieces) {
       c.pieces += (position -> (colour, piece, last))
     }
