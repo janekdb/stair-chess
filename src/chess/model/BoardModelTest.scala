@@ -162,7 +162,6 @@ object BoardModelTest extends Test with TestUtils {
     }
   }
 
-  // TODO: Duplicate this test to StandardMoveExplorerTest
   private def rejectReCastling {
     val pb = new PlacementsBuilder
 
