@@ -105,7 +105,6 @@ class BoardModel {
     val me = new StandardMoveExplorer(conf)
     def moveIsLegal(move: MovePiece) = {
       try {
-        // TODO: Convert from exception throwing to case class return to signal illegal move
         me.rejectIllegalMove(move)
         /* The move did not leave the king in check so there is a way out of check */
         true
