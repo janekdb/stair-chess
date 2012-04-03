@@ -2,26 +2,22 @@ package chess.model
 
 //import Colours.Colour
 import chess.util.TODO
-import scala.collection.mutable
 
 class GridConfiguration extends Configuration {
 
-  var pieces = mutable.Map[Position, (Colour, Piece, Option[Position])]()
+  var pieces = Map[Position, (Colour, Piece, Option[Position])]()
 
   def add(position: Position, colour: Colour, piece: Piece): Unit = {
     pieces += (position -> (colour, piece, None))
     assert(pieces contains new Position(position.getCol, position.getRow))
   }
 
-  def remove(position: Position): Unit = {
-    val option = pieces.get(position)
-    pieces.remove(position) match {
-      case Some(_) => Unit
-      case None => {
-        println(pieces)
-        throw new IllegalStateException("No piece at " + position)
-      }
-    }
+  def remove(position: Position) {
+	  if(!pieces.get(position).isDefined){
+		  println(pieces)
+		  throw new IllegalStateException("No piece at " + position)
+	  }
+      pieces -= position
   }
 
   /**
@@ -34,7 +30,7 @@ class GridConfiguration extends Configuration {
     if (pieces contains end) {
       throw new IllegalStateException("End position was occupied: " + end)
     }
-    pieces.remove(start)
+    pieces -= start
     pieces += (end -> (colour, piece, Some(start)))
     lastMove = Option((piece, start, end))
   }
@@ -90,10 +86,8 @@ class GridConfiguration extends Configuration {
   /** Return a deep copy of the Configuration */
   def copyOf: Configuration = {
     val c = new GridConfiguration
-    // TODO: Convert pieces to an immutable map
-    for ((position, (colour, piece, last)) <- pieces) {
-      c.pieces += (position -> (colour, piece, last))
-    }
+    /* Immutable object */
+    c.pieces = pieces
     /* Immutable object */
     c.lastMove = lastMove
     c
