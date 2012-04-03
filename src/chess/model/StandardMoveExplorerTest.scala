@@ -30,6 +30,7 @@ object StandardMoveExplorerTest extends Test with TestUtils {
     
     rejectIllegalMoveAllowsCastlingWhenRookOnlyCrossingAttackedSquare
     rejectIllegalMoveRejectsCastlingWhenKingCrossingAttackedSquare
+    rejectIllegalMoveRejectsReCastling
   }
 
   private def getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveWhite {
@@ -233,6 +234,33 @@ object StandardMoveExplorerTest extends Test with TestUtils {
     val e = new StandardMoveExplorer(conf)
     assertExceptionThrown("Castling should be rejected when the king would cross an attacked square", classOf[AttackedPositionException]) {
       e.rejectIllegalMove(Castle(Black, Long))
+    }
+  }
+
+  private def rejectIllegalMoveRejectsReCastling {
+    val conf = new GridConfiguration
+    val moveExplorer = new StandardMoveExplorer(conf)
+
+    conf.add("a1", White, Rook())
+    conf.add("e1", White, King())
+    conf.add("e8", Black, King())
+
+    /* Castle */
+    conf.applyMove(Castle(White, Long))
+    /* Move King and Rook back to castling start position */
+    conf.applyMove("e8e7")
+    conf.applyMove("d1d2")
+    conf.applyMove("e7e8")
+    conf.applyMove("d2a2")
+    conf.applyMove("e8e7")
+    conf.applyMove("a2a1")
+    conf.applyMove("c1d1")
+    conf.applyMove("e7e8")
+    conf.applyMove("d1e1")
+    conf.applyMove("e8e7")
+
+    assertExceptionThrown("Re-Castling was rejected", classOf[PreviouslyMovedException]) {
+      moveExplorer.rejectIllegalMove(Castle(White, Long))
     }
   }
   
