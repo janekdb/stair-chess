@@ -16,7 +16,7 @@ import chess.util.TODO
  */
 class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
 
-  implicit def tuple2list(t: Tuple2[Position, Position]) = List(t._2, t._2)
+  private implicit def tuple2list(t: Tuple2[Position, Position]) = List(t._2, t._2)
 
   /**
    * @return The a set of possible positions excluding moves that would result in 1. the move escaping from the board edges,
