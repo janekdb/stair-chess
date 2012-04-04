@@ -41,7 +41,7 @@ class UI extends BoardChangedSubscriber {
         val positions = conf.locatePieces(colour, King())
         positions match {
           case List() => throw new RuntimeException("The King could not be found for " + colour)
-          // TODO: Improve resignation visualization
+          // TODO: UI: Improve resignation visualization
           case List(position) => { conf.remove(position) }
           case default => throw new RuntimeException("More than one King was found for " + colour + ": " + positions)
         }
