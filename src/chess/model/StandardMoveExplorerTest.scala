@@ -31,6 +31,8 @@ object StandardMoveExplorerTest extends Test with TestUtils {
     rejectIllegalMoveAllowsCastlingWhenRookOnlyCrossingAttackedSquare
     rejectIllegalMoveRejectsCastlingWhenKingCrossingAttackedSquare
     rejectIllegalMoveRejectsReCastling
+
+    rejectIllegalMoveAllowsResigning
   }
 
   private def getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveWhite {
@@ -264,6 +266,16 @@ object StandardMoveExplorerTest extends Test with TestUtils {
     }
   }
   
+  private def rejectIllegalMoveAllowsResigning {
+    val conf = new GridConfiguration
+    val moveExplorer = new StandardMoveExplorer(conf)
+
+    conf.add("e1", White, King())
+    conf.add("e8", Black, King())
+
+    moveExplorer.rejectIllegalMove(Resign(White))
+  }
+
   private def placeKings(conf: Configuration) {
     conf.add("e1", White, King())
     conf.add("e8", Black, King())
