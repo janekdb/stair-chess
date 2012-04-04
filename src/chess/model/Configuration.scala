@@ -11,7 +11,6 @@ trait Configuration {
   /** Throw exception if there is no piece at the given position */
   def remove(position: Position): Unit
 
-  // TODO: Determine if Configuration.move can be non-public
   /**
    * Move the piece, incrementing it's move count.
    * Throw exception if there is no piece at the given position.
