@@ -99,10 +99,9 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
     }
   }
 
-  // TODO: Switch to contains test on list of moves with the complement added via map
-  private def pawnDiagonal(dCol: Int, dRow: Int): Boolean = (dCol == 1 | dCol == -1) & (dRow == 1 | dRow == -1)
-  private def pawnForward(dCol: Int, dRow: Int): Boolean = dCol == 0 & (dRow == 1 | dRow == -1)
-  private def pawnForwardTwo(dCol: Int, dRow: Int): Boolean = dCol == 0 & (dRow == 2 | dRow == -2)
+  private def pawnDiagonal(dCol: Int, dRow: Int): Boolean = List((1, 1),(1, -1), (-1, -1), (-1, 1)) contains (dCol, dRow)
+  private def pawnForward(dCol: Int, dRow: Int): Boolean = List((0, 1),(0, -1)) contains (dCol, dRow)
+  private def pawnForwardTwo(dCol: Int, dRow: Int): Boolean = List((0, 2),(0, -2)) contains (dCol, dRow)
 
   /** @return (encountered own piece, encountered opponent piece) */
   def testPieceColour(movePiecePosition: Position, movingPieceColour: Colour) = {
