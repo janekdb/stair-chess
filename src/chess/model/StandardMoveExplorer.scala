@@ -212,7 +212,6 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
     }    
   }
   
-  private def log(message: String) = {
-    println(message);
-  }
+  private def log(message: String) = println(message) 
+  
 }
