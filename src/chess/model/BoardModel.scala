@@ -4,7 +4,6 @@ import chess.util.UnhandledCaseException
 import chess.util.TODO
 import chess.model.ex.IllegalMoveException
 
-import Misc.kingInCheck
 import WinModes.WinMode
 
 /**
@@ -94,7 +93,7 @@ class BoardModel {
   }
 
   private def checkForCheckMate(colour: Colour): Boolean = {
-    return kingInCheck(colour, moveExplorer) && !checkedKingCanEscape(colour, conf)
+    return moveExplorer.kingInCheck(colour) && !checkedKingCanEscape(colour, conf)
   }
 
   /*

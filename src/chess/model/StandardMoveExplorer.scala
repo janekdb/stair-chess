@@ -8,7 +8,6 @@ import chess.model.ex.{
   PreviouslyMovedException,
   UnreachablePositionException
 }
-import Misc.kingInCheck
 import chess.util.TODO
 
 /**
@@ -195,6 +194,16 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
   /** Return positions of all pieces of the given colour. */
   def locatePieces(colour: Colour): List[Position] = conf.locatePieces(colour)
 
+  def kingInCheck(colour: Colour): Boolean = {
+    val List(king) = locatePieces(colour, King())
+    // TODO: Consolidate this code with the same code as the Castling case by passing a block to
+    //   code that finds and iterates over the opponents pieces.
+    // TODO: Confirm this considers non-basic move restriction such as en-passant.
+    val opponentPositions = locatePieces(colour.opposite)
+    opponentPositions.exists(p =>
+      getBasicPositions(p) contains king)
+  }
+
   private def checkKingNotLeftInCheckAfterMove(move: SimpleMove) {
     /*
 	   * 1. Clone the current conf
@@ -205,7 +214,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
     val future = conf.copyOf
     future.applyMove(move)
 
-    if (kingInCheck(colour, new StandardMoveExplorer(future))) {
+    if (new StandardMoveExplorer(future).kingInCheck(colour)) {
       throw new CheckedOwnKing(move)
     }    
   }
