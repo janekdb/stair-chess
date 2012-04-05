@@ -13,12 +13,4 @@ trait MoveExplorer {
   /** @return true if the king of the selected colour is in check */
   def kingInCheck(colour: Colour): Boolean
 
-  // TODO: Remove locatePieces from the trait
-  /** Return positions of all pieces of the given colour and type. */
-  def locatePieces(colour: Colour, piece: Piece): List[Position]
-
-  // TODO: Remove locatePieces from the trait
-  /** Return positions of all pieces of the given colour. */
-  def locatePieces(colour: Colour): List[Position]
-
 }
