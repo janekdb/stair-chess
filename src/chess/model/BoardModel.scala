@@ -94,7 +94,7 @@ class BoardModel {
   }
 
   private def checkForCheckMate(colour: Colour): Boolean = {
-    return kingInCheck(colour, conf) && !checkedKingCanEscape(colour, conf)
+    return kingInCheck(colour, moveExplorer) && !checkedKingCanEscape(colour, conf)
   }
 
   /*

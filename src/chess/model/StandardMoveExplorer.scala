@@ -188,6 +188,13 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
     }
   }
 
+  
+  /** Return positions of all pieces of the given colour and type. */
+  def locatePieces(colour: Colour, piece: Piece): List[Position] = conf.locatePieces(colour, piece)
+
+  /** Return positions of all pieces of the given colour. */
+  def locatePieces(colour: Colour): List[Position] = conf.locatePieces(colour)
+
   private def checkKingNotLeftInCheckAfterMove(move: SimpleMove) {
     /*
 	   * 1. Clone the current conf
@@ -198,7 +205,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
     val future = conf.copyOf
     future.applyMove(move)
 
-    if (kingInCheck(colour, future)) {
+    if (kingInCheck(colour, new StandardMoveExplorer(future))) {
       throw new CheckedOwnKing(move)
     }    
   }
