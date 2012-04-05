@@ -99,9 +99,9 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
     }
   }
 
-  private def pawnDiagonal(dCol: Int, dRow: Int): Boolean = List((1, 1),(1, -1), (-1, -1), (-1, 1)) contains (dCol, dRow)
-  private def pawnForward(dCol: Int, dRow: Int): Boolean = List((0, 1),(0, -1)) contains (dCol, dRow)
-  private def pawnForwardTwo(dCol: Int, dRow: Int): Boolean = List((0, 2),(0, -2)) contains (dCol, dRow)
+  private def pawnDiagonal(dCol: Int, dRow: Int) = Set((1, 1),(1, -1), (-1, -1), (-1, 1)) contains (dCol, dRow)
+  private def pawnForward(dCol: Int, dRow: Int) = Set((0, 1),(0, -1)) contains (dCol, dRow)
+  private def pawnForwardTwo(dCol: Int, dRow: Int) = Set((0, 2),(0, -2)) contains (dCol, dRow)
 
   /** @return (encountered own piece, encountered opponent piece) */
   def testPieceColour(movePiecePosition: Position, movingPieceColour: Colour) = {
