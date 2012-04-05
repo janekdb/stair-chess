@@ -151,6 +151,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
         /* Disallow if there are any pieces between the rook and king */
         val interveningPositions = Position.getInterveningPositions(king, rook)
         interveningPositions.foreach { p =>
+          // TODO: Use isDefined instead of match with Some
           conf.getPiece(p) match {
             case Some(_) => throw new InterveningPieceException(move, p)
             case default => Unit
@@ -188,8 +189,6 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
 
   def kingInCheck(colour: Colour): Boolean = {
     val List(king) = conf.locatePieces(colour, King())
-    // TODO: Consolidate this code with the same code as the Castling case by passing a block to
-    //   code that finds and iterates over the opponents pieces.
     // TODO: Confirm this considers non-basic move restriction such as en-passant.
     val opponentPositions = conf.locatePieces(colour.opposite)
     opponentPositions.exists(p =>
