@@ -151,11 +151,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
         /* Disallow if there are any pieces between the rook and king */
         val interveningPositions = Position.getInterveningPositions(king, rook)
         interveningPositions.foreach { p =>
-          // TODO: Use isDefined instead of match with Some
-          conf.getPiece(p) match {
-            case Some(_) => throw new InterveningPieceException(move, p)
-            case default => Unit
-          }
+          if (conf.getPiece(p).isDefined) throw new InterveningPieceException(move, p)
         }
 
         /* Disallow if King is in check or would cross any square that is is attacked or would end in check. */
