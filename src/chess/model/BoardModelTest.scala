@@ -213,7 +213,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     // TODO: Write this test without assignment to this var maybe by using yield with one assignment
     var actual: List[(Colour, WinModes.WinMode)] = List()
 
-    val s = new Object with BoardChangedSubscriber {
+    val s = new BoardChangedSubscriber {
       def onBoardChanged(event: BoardChanged) {
         event match {
           case Won(colour, wonMode) => {
