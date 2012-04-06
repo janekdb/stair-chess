@@ -4,7 +4,6 @@ import test.Test
 
 object PositionTest extends Test {
 
-  // TODO: Find out how to only define this in the superclass  
   def main(args: Array[String]) {
     runTests
   }

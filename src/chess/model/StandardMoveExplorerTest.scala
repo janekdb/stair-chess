@@ -8,7 +8,6 @@ import Colours.{ Black, White }
 
 object StandardMoveExplorerTest extends Test with TestUtils {
 
-  // TODO: Find out how to only define this in the superclass  
   def main(args: Array[String]) {
     runTests
   }
