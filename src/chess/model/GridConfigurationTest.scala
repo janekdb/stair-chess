@@ -4,7 +4,7 @@ import Colours.{ Black, White }
 
 import test.{Main, Test, TestUtils}
 
-object GridConfigurationTest extends Test with TestUtils with Main{
+object GridConfigurationTest extends Test with TestUtils with Main {
 
   def runTests() {
     moveHistoryMaintained
