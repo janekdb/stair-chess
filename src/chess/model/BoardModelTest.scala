@@ -2,16 +2,12 @@ package chess.model
 
 import Colours.{ Black, White }
 import ex._
-import test.{Test, TestUtils}
+import test.{Main, Test, TestUtils}
 import chess.util.TODO
 import scala.collection.mutable.ListBuffer
 import chess.ui.UI
 
-object BoardModelTest extends Test with TestUtils {
-
-  def main(args: Array[String]) {
-    runTests
-  }
+object BoardModelTest extends Test with TestUtils with Main {
 
   def runTests {
 

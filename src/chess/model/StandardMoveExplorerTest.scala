@@ -2,15 +2,11 @@ package chess.model
 
 import ex._
 
-import test.{Test, TestUtils}
+import test.{Main, Test, TestUtils}
 
 import Colours.{ Black, White }
 
-object StandardMoveExplorerTest extends Test with TestUtils {
-
-  def main(args: Array[String]) {
-    runTests
-  }
+object StandardMoveExplorerTest extends Test with TestUtils with Main {
 
   def runTests() {
 

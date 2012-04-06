@@ -2,13 +2,9 @@ package chess.model
 
 import Colours.{ Black, White }
 
-import test.{Test, TestUtils}
+import test.{Main, Test, TestUtils}
 
-object GridConfigurationTest extends Test with TestUtils{
-
-  def main(args: Array[String]) {
-    runTests
-  }
+object GridConfigurationTest extends Test with TestUtils with Main{
 
   def runTests() {
     moveHistoryMaintained

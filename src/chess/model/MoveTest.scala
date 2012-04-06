@@ -1,12 +1,8 @@
 package chess.model
 
-import test.{Test, TestUtils}
+import test.{Main, Test, TestUtils}
 
-object MoveTest extends Test with TestUtils {
-
-  def main(args: Array[String]) {
-    runTests
-  }
+object MoveTest extends Test with TestUtils with Main {
 
   def runTests() {
     enPassant
