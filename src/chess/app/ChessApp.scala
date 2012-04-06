@@ -9,7 +9,7 @@ import chess.util.TODO
 import test.AllTests
 
 object ChessApp {
-  def main(args: Array[String]): Unit = {
+  def main(args: Array[String]) {
 
     runTests
 
@@ -28,7 +28,7 @@ object ChessApp {
     }
   }
 
-  def runTests: Unit = {
+  def runTests {
     AllTests.runAllTests
   }
 }
