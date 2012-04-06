@@ -210,15 +210,13 @@ object BoardModelTest extends Test with TestUtils with Main {
 
     val bm = new BoardModel(pb, Nil)
     
-    // TODO: Write this test without assignment to this var maybe by using yield with one assignment
-    var actual: List[(Colour, WinModes.WinMode)] = List()
+    // TODO: Convert this test to use a verifying BoardChangedSubscriber possibly a mock
+    var actual: List[(Colour, WinModes.WinMode)] = Nil
 
     val s = new BoardChangedSubscriber {
       def onBoardChanged(event: BoardChanged) {
         event match {
-          case Won(colour, wonMode) => {
-            actual = (colour, wonMode) :: actual
-          }
+          case Won(colour, wonMode) => actual = (colour, wonMode) :: actual
           case default => Unit
         }
       }
