@@ -13,8 +13,7 @@ class GridConfiguration extends Configuration {
   }
 
   def remove(position: Position) {
-    // TODO: Determine if !x.isDefined can be replaced with x.isEmpty
-    if (!pieces.get(position).isDefined) {
+    if (pieces.get(position).isEmpty) {
       throw new IllegalStateException("No piece at " + position + ". Pieces: " + pieces)
     }
     pieces -= position
