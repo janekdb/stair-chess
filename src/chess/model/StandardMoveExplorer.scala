@@ -18,7 +18,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
   private implicit def tuple2list(t: Tuple2[Position, Position]) = List(t._2, t._2)
 
   /**
-   * @return The a set of possible positions excluding moves that would result in 1. the move escaping from the board edges,
+   * @return The set of possible positions excluding moves that would result in 1. the move escaping from the board edges,
    * or 2. A non-Knight jumping over a piece, or 3. A piece taking another piece of the same colour
    */
   def getBasicPositions(position: Position): Set[Position] = {
@@ -185,7 +185,6 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
 
   def kingInCheck(colour: Colour): Boolean = {
     val List(king) = conf.locatePieces(colour, King())
-    // TODO: Confirm this considers non-basic move restriction such as en-passant.
     val opponentPositions = conf.locatePieces(colour.opposite)
     opponentPositions.exists(p =>
       getBasicPositions(p) contains king)
