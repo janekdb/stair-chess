@@ -71,12 +71,9 @@ class BoardModel {
         (e, outcomeOption)
       }
     }
-    // TODO: Change from pattern matching
-    outcomeOpt match {
-      case Some(g) => {
-        setWinState(g.winMode, g.winner)
-      }
-      case _ => Unit
+    if (outcomeOpt.isDefined) {
+      val g = outcomeOpt.get
+      setWinState(g.winMode, g.winner)
     }
     val wonEvent = if (isWon) List(Won(gameOutcome.winner, gameOutcome.winMode)) else Nil
     for (s <- subscribers; e <- events ::: wonEvent) { s.onBoardChanged(e) }
