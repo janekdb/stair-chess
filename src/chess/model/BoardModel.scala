@@ -71,6 +71,7 @@ class BoardModel {
         (e, outcomeOption)
       }
     }
+    // TODO: Change from pattern matching
     outcomeOpt match {
       case Some(g) => {
         setWinState(g.winMode, g.winner)
