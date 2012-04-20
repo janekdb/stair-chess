@@ -74,10 +74,11 @@ class UI extends BoardChangedSubscriber {
   /* Black is lowercase */
   private def render: Unit = {
     println("  abcdefgh")
-    var rowNum = 1
-    for (row <- conf.getRows) {
+    val rows = conf.getRows.reverse
+    var rowNum = rows.size
+    for (row <- rows) {
       print(rowNum + " ")
-      rowNum = rowNum + 1
+      rowNum = rowNum - 1
       for (square <- row) {
         val symbol =
           square match {
