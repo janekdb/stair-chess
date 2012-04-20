@@ -73,7 +73,8 @@ class UI extends BoardChangedSubscriber {
 
   /* Black is lowercase */
   private def render: Unit = {
-    println("  abcdefgh")
+    def printColumnLabels = println("  abcdefgh")
+    printColumnLabels
     val rows = conf.getRows.reverse
     var rowNum = rows.size
     for (row <- rows) {
@@ -94,7 +95,7 @@ class UI extends BoardChangedSubscriber {
       }
       println
     }
-    println("  abcdefgh")
+    printColumnLabels
     println
   }
 
