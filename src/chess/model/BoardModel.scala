@@ -131,7 +131,7 @@ object BoardModel {
   def standardPlacements: List[(Colour, Piece, Position)] = {
 
     val pawns = List.fill(Constants.BOARD_SIZE)(Pawn())
-    val others = List(Rook(), Knight(), Bishop(), King(), Queen(), Bishop(), Knight(), Rook())
+    val others = List(Rook(), Knight(), Bishop(), Queen(), King(), Bishop(), Knight(), Rook())
 
     def bp(pieces: List[Piece], colour: Colour, row: Int) = {
       pieces.zipWithIndex.map { case (piece, index) => (colour, piece, new Position(index + 1, row)) }
