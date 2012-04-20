@@ -60,7 +60,7 @@ class UI extends BoardChangedSubscriber {
   }
 
   // TODO: UI: Visualise board and pieces
-  def showBoard: Unit = {
+  def showBoard {
     for (row <- conf.getRows) {
       for (square <- row) {
         print("|_")
