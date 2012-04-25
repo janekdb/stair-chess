@@ -43,10 +43,11 @@ object BoardUI extends BoardChangedSubscriber {
 
   def onBoardChanged(event: BoardChanged) {
     println("Board: " + event)
-    // TODO: Use label in this method
-    def label(p: Position): String = board.getLabel(p.getCol, p.getRow)
+
     def clearLabel(p: Position) = board.setLabel(p.getCol, p.getRow, "")
     def setLabel(p: Position, label: String) = board.setLabel(p.getCol, p.getRow, label)
+    def getLabel(p: Position) = board.getLabel(p.getCol, p.getRow)
+
     event match {
 
       /* Assume the consumer of BoardChangeEvent has access to the board configuration. */
@@ -56,13 +57,13 @@ object BoardUI extends BoardChangedSubscriber {
       }
       case PieceMoved(start, end) => {
         // TODO: Use a reference to a Configuration to acquire the piece from
-        val label = board.getLabel(start.getCol, start.getRow)
+        val label = getLabel(start)
         clearLabel(start)
         setLabel(end, label)
         Thread.sleep(100)
       }
       case PieceMovedTaking(start, end, taken) => {
-        val label = board.getLabel(start.getCol, start.getRow)
+        val label = getLabel(start)
         clearLabel(taken)
         clearLabel(start)
         setLabel(end, label)
@@ -70,13 +71,13 @@ object BoardUI extends BoardChangedSubscriber {
         Thread.sleep(100)
       }
       case Promoted(position, piece) => {
-        val label = board.getLabel(position.getCol, position.getRow)
+        val label = getLabel(position)
         setLabel(position, piece + "->" + label)
         Thread.sleep(100)
       }
       case Castled(king, rook) => {
-        val kingLabel = label(king.start)
-        val rookLabel = label(rook.start)
+        val kingLabel = getLabel(king.start)
+        val rookLabel = getLabel(rook.start)
         clearLabel(king.start)
         clearLabel(rook.start)
         setLabel(king.end, kingLabel)
