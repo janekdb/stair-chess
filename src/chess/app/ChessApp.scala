@@ -44,7 +44,7 @@ object BoardUI extends BoardChangedSubscriber {
   def onBoardChanged(event: BoardChanged) {
     println("Board: " + event)
 
-    def clearLabel(p: Position) = board.setLabel(p.getCol, p.getRow, "")
+    def clearLabel(p: Position) = board.clearLabel(p.getCol, p.getRow)
     def setLabel(p: Position, label: String) = board.setLabel(p.getCol, p.getRow, label)
     def getLabel(p: Position) = board.getLabel(p.getCol, p.getRow)
 
