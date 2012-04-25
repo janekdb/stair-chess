@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
  
+// TODO: Use chess piece images
 public class SwingBoard extends JFrame implements Board {
     GridLayout boardLayout = new GridLayout(8,8);
      
@@ -38,7 +39,6 @@ public class SwingBoard extends JFrame implements Board {
     	return (row-1) * BOARD_SIZE + (col-1);
     }
     
-    // TODO: Better name than buttons
     private JButton [] squares;
     
     private String columnLabels = "abcdefgh";
