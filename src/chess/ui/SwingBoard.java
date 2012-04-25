@@ -122,12 +122,15 @@ public class SwingBoard extends JFrame implements Board {
 		Board board = createAndShowBoard();
 	}
 	
-	// TODO: Move these operations into an interface.
+	public void clearLabel(final int col, final int row){
+		setLabel(col, row, "");
+	}
+
 	public void setLabel(final int col, final int row, final String label){
 		JButton b = squares[getIndex(col, row)];
-   		b.setText(label);
+		b.setText(label);
 	}
-	
+
 	public String getLabel(final int col, final int row) {
 		JButton b = squares[getIndex(col, row)];
 		return b.getText();
