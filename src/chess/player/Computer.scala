@@ -4,20 +4,21 @@ import chess.model.{ BoardModel, Castle, Colour, Move, MovePiece, Position, Prom
 
 class Computer(val board: BoardModel, val colour: Colour) extends Player {
 
-  var moves = List(
-    new MovePiece("a2a3"),
-    new MovePiece("b2b4"),
-    new MovePiece("c2c4"),
-    new MovePiece("h2h3"),
+  implicit def stringToMovePiece(s: String) = new MovePiece(s)
+
+  var moves: List[Move] = List(
+    "a2a3",
+    "b2b4",
+    "c2c4",
+    "h2h3",
     /* Knight */
-    new MovePiece("b1c3"),
+    "b1c3",
     /* Knight */
-    new MovePiece("g1f3"),
+    "g1f3",
     /* Knight takes pawn */
-    new MovePiece("c3d5"),
-    new MovePiece("c1b2"),
-    /* */
-    Resign(colour))
+    "c3d5",
+    "c1b2",
+    "b4b5")
 
   def getMove: Move = {
     val m :: ms = moves
