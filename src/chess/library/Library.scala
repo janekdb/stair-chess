@@ -7,13 +7,12 @@ object Library {
 
   implicit def stringToMovePiece(s: String) = new MovePiece(s)
 
-  // TODO: Use this library somewhere
-  var scholarsMateBlack: List[Move] = List(
+  private val scholarsMateBlack: List[Move] = List(
     "e7e5",
     "b8c6",
     "g8f6")
 
-  var scholarsMateWhite: List[Move] = List(
+  private val scholarsMateWhite: List[Move] = List(
     "e2e4",
     "d1h5",
     "f1c4",
@@ -23,4 +22,4 @@ object Library {
 
 }
 
-class Game(whiteMoves: List[Move], blackMoves: List[Move])
+class Game(val whiteMoves: List[Move], val blackMoves: List[Move])
