@@ -1,10 +1,11 @@
 package chess.app
 
+import java.util.regex.{Matcher, Pattern}
 import chess.library.Library
 import chess.model.{ Colours, Move }
 import chess.model.BoardModel
 import chess.model.{ BoardChangedSubscriber, BoardChanged }
-import chess.model.{ Castled, PiecePlaced, PieceMoved, PieceMovedTaking, Promoted, Resigned }
+import chess.model.{ Castled, PiecePlaced, PieceMoved, PieceMovedTaking, Promoted, Resigned, Won }
 import chess.model.Position
 import chess.player.DumbPlayer
 import chess.ui.UI
@@ -45,48 +46,53 @@ object BoardUI extends BoardChangedSubscriber {
   def onBoardChanged(event: BoardChanged) {
     println("Board: " + event)
 
-    def clearLabel(p: Position) = board.clearLabel(p.getCol, p.getRow)
-    def setLabel(p: Position, label: String) = board.setLabel(p.getCol, p.getRow, label)
-    def getLabel(p: Position) = board.getLabel(p.getCol, p.getRow)
+    def clearSquare(p: Position) = board.clearSquare(p.getCol, p.getRow)
+    def setPiece(p: Position, piece: String) = board.setPiece(p.getCol, p.getRow, piece)
+    def getPiece(p: Position) = board.getPiece(p.getCol, p.getRow)
+
+    val RATE = 5;
 
     event match {
 
       /* Assume the consumer of BoardChangeEvent has access to the board configuration. */
       case PiecePlaced(colour, piece, position) => {
-        setLabel(position, colour + ": " + piece)
-        Thread.sleep(10)
+        setPiece(position, convertLabel(colour + "-" + piece))
+        Thread.sleep(RATE * 10)
       }
       case PieceMoved(start, end) => {
         // TODO: Use a reference to a Configuration to acquire the piece from
-        val label = getLabel(start)
-        clearLabel(start)
-        setLabel(end, label)
-        Thread.sleep(100)
+        val label = getPiece(start)
+        clearSquare(start)
+        setPiece(end, label)
+        Thread.sleep(RATE * 100)
       }
       case PieceMovedTaking(start, end, taken) => {
-        val label = getLabel(start)
-        clearLabel(taken)
-        clearLabel(start)
-        setLabel(end, label)
+        val label = getPiece(start)
+        clearSquare(taken)
+        clearSquare(start)
+        setPiece(end, label)
 
-        Thread.sleep(100)
+        Thread.sleep(RATE * 100)
       }
       case Promoted(position, piece) => {
-        val label = getLabel(position)
-        setLabel(position, piece + "->" + label)
-        Thread.sleep(100)
+        val label = getPiece(position)
+        setPiece(position, piece + "->" + label)
+        Thread.sleep(RATE * 100)
       }
       case Castled(king, rook) => {
-        val kingLabel = getLabel(king.start)
-        val rookLabel = getLabel(rook.start)
-        clearLabel(king.start)
-        clearLabel(rook.start)
-        setLabel(king.end, kingLabel)
-        setLabel(rook.end, rookLabel)
+        val kingLabel = getPiece(king.start)
+        val rookLabel = getPiece(rook.start)
+        clearSquare(king.start)
+        clearSquare(rook.start)
+        setPiece(king.end, kingLabel)
+        setPiece(rook.end, rookLabel)
       }
       case Resigned(colour) => {
         // TODO: Improve resignation visualisation with a popup dialog
-        board.setLabel(1, 1, colour + " resigns!")
+        throw new RuntimeException(colour + " has resigned")
+      }
+      case Won(colour, winMode) => {
+        board.showWon(colour.toString, winMode.toString)
       }
       // TODO: Add Won by check mate
       //case class Won(colour: Colour, winMode: WinMode) extends BoardChanged
@@ -95,4 +101,14 @@ object BoardUI extends BoardChangedSubscriber {
     }
   }
 
+  val LABEL_PAT = Pattern.compile("(black|white)++-[a-z]++\\(\\)", Pattern.CASE_INSENSITIVE);
+
+  private def convertLabel(in: String): String = {
+    val m = LABEL_PAT.matcher(in)
+    if (!m.matches()) {
+      throw new IllegalArgumentException("Unable to convert label: " + in);
+    }
+    /* Black-Rook() -> black-rook */
+    in.substring(0, in.length() - 2).toLowerCase();
+  }
 }
