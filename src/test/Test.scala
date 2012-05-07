@@ -17,9 +17,17 @@ trait Test {
   }
 
   def assertEquals(expected: Any, actual: Any, message: String) {
-	  assert(expected == actual, "Expected: " + expected + ", actual: " + actual+": " + message)
+    assert(expected == actual, "Expected: " + expected + ", actual: " + actual + ": " + message)
   }
-  
+
+  def assertNotEquals(notExpected: Any, actual: Any) {
+    assert(notExpected != actual, "Not expected: " + notExpected + ", actual: " + actual)
+  }
+
+  def assertNotEquals(notExpected: Any, actual: Any, message: String) {
+    assert(notExpected != actual, "Not expected: " + notExpected + ", actual: " + actual + ": " + message)
+  }
+
   def assertNotNull(obj: Any, message: String) {
     assert(obj != null, message)
   }
