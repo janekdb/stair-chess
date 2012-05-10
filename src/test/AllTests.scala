@@ -11,6 +11,7 @@ object AllTests {
     tests = chess.model.GridConfigurationTest :: tests
     tests = chess.model.BoardModelTest :: tests
     tests = chess.model.StandardMoveExplorerTest :: tests
+    tests = chess.player.RandomPlayerTest :: tests
 
     println("AllTests: tests.size: " + tests.size)
     tests
