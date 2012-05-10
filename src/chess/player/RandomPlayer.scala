@@ -1,7 +1,7 @@
 package chess.player
 
-import chess.model.{Move, MovePiece}
-import chess.model.{Configuration, MoveExplorer}
+import chess.model.{ Move, MovePiece }
+import chess.model.{ Configuration, MoveExplorer }
 
 import chess.model.Colour
 
@@ -17,8 +17,14 @@ class RandomPlayer(val colour: Colour, val conf: Configuration, val explorer: Mo
 
   def getMove: Move = {
     val startPositions = conf.locatePieces(colour)
-    val endPositions = explorer.getBasicPositions(startPositions.head)
-    MovePiece(startPositions.head, endPositions.head)
+    for (
+      s <- startPositions
+    ) {
+      val endPositions = explorer.getBasicPositions(s)
+      if (endPositions.nonEmpty)
+        return MovePiece(s, endPositions.head)
+    }
+    throw new RuntimeException("No move found")
   }
 
 }
