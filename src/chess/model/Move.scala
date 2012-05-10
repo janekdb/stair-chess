@@ -13,6 +13,7 @@ abstract class SimpleMove extends Move {
 }
 
 /* Assume the consumer of MovePiece has access to the board configuration. */
+// TODO: Reject when start == end 
 case class MovePiece(start: Position, end: Position) extends SimpleMove {
   def this(move: String) = this(new Position(move.substring(0,2)), new Position(move.substring(2,4)))
 }
