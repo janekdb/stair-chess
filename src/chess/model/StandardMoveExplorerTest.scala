@@ -276,9 +276,9 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
   private def rejectNonPromotingPawnAdvanceToBackRank {
     val conf = new GridConfiguration
     placeKings(conf)
-    conf.add("d7", White, Rook())
+    conf.add("d7", White, Pawn())
     val e = new StandardMoveExplorer(conf)
-    assertExceptionThrown("Non promoting pawn advance to back rank should be rejected", classOf[NonPromotingPawnAdvance]) {
+    assertExceptionThrown("Non promoting pawn advance to opponents home rank should be rejected", classOf[NonPromotingPawnAdvance]) {
       e.rejectIllegalMove(MovePiece("d7", "d8"))
     }
   }
