@@ -33,13 +33,18 @@ object RandomPlayerTest extends Test with TestUtils with Main {
 
   private def selectsOnlyMove {
     val conf: Configuration = new GridConfiguration
-    addKing(conf)
     /* Box the rooks in */
     conf.add("a6", White, Pawn());
     conf.add("a7", White, Rook());
     conf.add("b7", White, Pawn());
     conf.add("a8", White, Rook());
     conf.add("b8", Black, Rook());
+    /* Box the White king in */
+    conf.add("h8", White, King());
+    conf.add("h7", White, Pawn());
+    conf.add("g8", White, Pawn());
+    conf.add("g7", White, Pawn());
+
     val rp = newRandomPlayer(conf)
     val m = rp.getMove
     assertEquals(MovePiece("a8", "b8"), m, "The only possible move should have been selected")
