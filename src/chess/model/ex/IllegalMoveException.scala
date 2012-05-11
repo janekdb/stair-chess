@@ -24,3 +24,7 @@ class UnreachablePositionException(move: Move, legalPositions: Set[Position]) ex
 class CheckedOwnKing(move: Move) extends IllegalMoveException(move) {
   override def toString(): String = "The move left the players own King in check: " + move
 }
+
+class NonPromotingPawnAdvance(move: Move) extends IllegalMoveException(move) {
+  override def toString(): String = "Pawn advance required a promotion: " + move
+}
