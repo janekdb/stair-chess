@@ -52,21 +52,21 @@ object BoardUI extends BoardChangedSubscriber {
     def setPiece(p: Position, piece: String) = board.setPiece(p.getCol, p.getRow, piece)
     def getPiece(p: Position) = board.getPiece(p.getCol, p.getRow)
 
-    val RATE = 5;
+    val DELAY_FACTOR = 1;
 
     event match {
 
       /* Assume the consumer of BoardChangeEvent has access to the board configuration. */
       case PiecePlaced(colour, piece, position) => {
         setPiece(position, convertLabel(colour + "-" + piece))
-        Thread.sleep(RATE * 2)
+        Thread.sleep(DELAY_FACTOR * 2)
       }
       case PieceMoved(start, end) => {
         // TODO: Use a reference to a Configuration to acquire the piece from
         val label = getPiece(start)
         clearSquare(start)
         setPiece(end, label)
-        Thread.sleep(RATE * 100)
+        Thread.sleep(DELAY_FACTOR * 100)
       }
       case PieceMovedTaking(start, end, taken) => {
         val label = getPiece(start)
@@ -74,12 +74,12 @@ object BoardUI extends BoardChangedSubscriber {
         clearSquare(start)
         setPiece(end, label)
 
-        Thread.sleep(RATE * 100)
+        Thread.sleep(DELAY_FACTOR * 100)
       }
       case Promoted(position, piece) => {
         val label = getPiece(position)
         setPiece(position, piece + "->" + label)
-        Thread.sleep(RATE * 100)
+        Thread.sleep(DELAY_FACTOR * 100)
       }
       case Castled(king, rook) => {
         val kingLabel = getPiece(king.start)
