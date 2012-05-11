@@ -13,12 +13,16 @@ object RandomPlayerTest extends Test with TestUtils with Main {
   }
 
   private def canMove {
-    val rp = newRandomPlayer
+    val conf: Configuration = new GridConfiguration
+    addKing(conf)
+    conf.add("a1", White, Rook())
+    val rp = newRandomPlayer(conf)
     assertNotNull(rp.getMove, "A move should be available")
   }
 
   private def isRandom {
     val conf: Configuration = new GridConfiguration
+    addKing(conf)
     conf.add("a1", White, Rook())
     val rp = newRandomPlayer(conf)
     val m1 = rp.getMove
@@ -29,6 +33,7 @@ object RandomPlayerTest extends Test with TestUtils with Main {
 
   private def selectsOnlyMove {
     val conf: Configuration = new GridConfiguration
+    addKing(conf)
     /* Box the rooks in */
     conf.add("a6", White, Pawn());
     conf.add("a7", White, Rook());
@@ -45,9 +50,8 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     new RandomPlayer(White, conf, explorer)
   }
 
-  private def newRandomPlayer: Player = {
-    val conf = new GridConfiguration
-    conf.add("a1", White, Rook())
-    newRandomPlayer(conf)
+  private def addKing(conf: Configuration) {
+    /* The King is required to allow the kingInCheck method to complete. */
+    conf.add("e1", White, King())
   }
 }
