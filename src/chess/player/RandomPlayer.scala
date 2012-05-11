@@ -22,10 +22,25 @@ class RandomPlayer(val colour: Colour, val conf: Configuration, val explorer: Mo
     for (
       s <- startPositions
     ) {
-      val endPositions = explorer.getBasicPositions(s).toArray
+      var endPositions = explorer.getBasicPositions(s).toArray
       shuffle(endPositions)
-      if (endPositions.nonEmpty)
-        return MovePiece(s, endPositions.head)
+      // TODO: Switch to functional approach
+      while (endPositions.nonEmpty) {
+        val move = MovePiece(s, endPositions.head)
+        val moveAccepted =
+          try {
+            // TODO: Convert rejectIllegalMove to a query method
+            explorer.rejectIllegalMove(move)
+            true
+          } catch {
+            // TODO: Try next end position because the current head failed
+            case e =>
+              { println("rejected move: " + move + ": " + e) }
+              false
+          }
+        if (moveAccepted) return move
+        endPositions = endPositions.tail
+      }
     }
     throw new RuntimeException("No move found")
   }
