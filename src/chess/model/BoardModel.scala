@@ -15,6 +15,10 @@ class BoardModel {
 
   private val conf: Configuration = new GridConfiguration
   private val moveExplorer: MoveExplorer = new StandardMoveExplorer(conf)
+
+  // TODO: Replace with read only view of Configuration for use by RandomPlayer
+  def getConfiguration = conf
+  def getMoveExplorer = moveExplorer
   
   def this(placements: List[(Colour, Piece, Position)], subscribers: List[BoardChangedSubscriber]) {
     this
