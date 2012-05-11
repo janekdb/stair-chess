@@ -59,7 +59,7 @@ object BoardUI extends BoardChangedSubscriber {
       /* Assume the consumer of BoardChangeEvent has access to the board configuration. */
       case PiecePlaced(colour, piece, position) => {
         setPiece(position, convertLabel(colour + "-" + piece))
-        Thread.sleep(RATE * 10)
+        Thread.sleep(RATE * 2)
       }
       case PieceMoved(start, end) => {
         // TODO: Use a reference to a Configuration to acquire the piece from
