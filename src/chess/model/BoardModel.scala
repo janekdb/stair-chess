@@ -6,6 +6,9 @@ import chess.model.ex.IllegalMoveException
 
 import WinModes.WinMode
 
+// TODO: End game when no progress is possible
+//   when only two kings
+
 /**
  * This class is concerned with maintaining a model of a chess game. It contains no UI. A UI can be attached as a listener.
  *
