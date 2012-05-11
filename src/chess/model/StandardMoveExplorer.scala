@@ -11,6 +11,8 @@ import chess.model.ex.{
 import chess.util.TODO
 import chess.model.ex.NonPromotingPawnAdvance
 
+// TODO: Confirm a pawn taking a piece on the back rank will be enforced as a promotion
+
 /**
  * The moves of standard chess
  */
