@@ -1,13 +1,13 @@
 package chess.app
 
-import java.util.regex.{Matcher, Pattern}
+import java.util.regex.{ Matcher, Pattern }
 import chess.library.Library
 import chess.model.{ Colours, Move }
 import chess.model.BoardModel
 import chess.model.{ BoardChangedSubscriber, BoardChanged }
 import chess.model.{ Castled, PiecePlaced, PieceMoved, PieceMovedTaking, Promoted, Resigned, Won }
 import chess.model.Position
-import chess.player.DumbPlayer
+import chess.player.RandomPlayer
 import chess.ui.UI
 import chess.util.PlayerSelector
 import chess.util.TODO
@@ -25,8 +25,10 @@ object ChessApp {
     /* The UI listens for changes and renders them immediately */
     ui.showBoard
 
-    val white = new DumbPlayer(Library.scholarsMate.whiteMoves)
-    val black = new DumbPlayer(Library.scholarsMate.blackMoves)
+    val white = new RandomPlayer(Colours.White, board.getConfiguration, board.getMoveExplorer)
+    val black = new RandomPlayer(Colours.Black, board.getConfiguration, board.getMoveExplorer)
+    //    val white = new DumbPlayer(Library.scholarsMate.whiteMoves)
+    //    val black = new DumbPlayer(Library.scholarsMate.blackMoves)
     val playerSelector = new PlayerSelector(white, black)
 
     while (!board.isWon) {
