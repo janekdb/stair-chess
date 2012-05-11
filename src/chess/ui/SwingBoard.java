@@ -100,7 +100,7 @@ public class SwingBoard extends JFrame implements Board {
 			BufferedImage myPicture = ImageIO.read(new File(imagePath));
 			return new ImageIcon(myPicture);
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("imageName: '" + imageName +"' : " + e);
 		}
 	}
 
