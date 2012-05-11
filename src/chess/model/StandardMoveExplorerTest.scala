@@ -28,6 +28,8 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     rejectIllegalMoveRejectsReCastling
 
     rejectIllegalMoveAllowsResigning
+
+    rejectNonPromotingPawnAdvanceToBackRank
   }
 
   private def getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveWhite {
@@ -269,6 +271,16 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add("e8", Black, King())
 
     moveExplorer.rejectIllegalMove(Resign(White))
+  }
+
+  private def rejectNonPromotingPawnAdvanceToBackRank {
+    val conf = new GridConfiguration
+    placeKings(conf)
+    conf.add("d7", White, Rook())
+    val e = new StandardMoveExplorer(conf)
+    assertExceptionThrown("Non promoting pawn advance to back rank should be rejected", classOf[NonPromotingPawnAdvance]) {
+      e.rejectIllegalMove(MovePiece("d7", "d8"))
+    }
   }
 
   private def placeKings(conf: Configuration) {
