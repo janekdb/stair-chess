@@ -77,8 +77,12 @@ object BoardUI extends BoardChangedSubscriber {
         Thread.sleep(DELAY_FACTOR * 100)
       }
       case Promoted(position, piece) => {
+        // TODO: Replace string handling with types
         val label = getPiece(position)
-        setPiece(position, piece + "->" + label)
+        /* white-pawn -> white-queen */
+        val colour = label.substring(0, label.indexOf("-"))
+        val promotedLabel = convertLabel(colour + "-" + piece)
+        setPiece(position, promotedLabel)
         Thread.sleep(DELAY_FACTOR * 100)
       }
       case Castled(king, rook) => {
