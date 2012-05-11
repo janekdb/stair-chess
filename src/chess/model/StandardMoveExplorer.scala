@@ -9,6 +9,7 @@ import chess.model.ex.{
   UnreachablePositionException
 }
 import chess.util.TODO
+import chess.model.ex.NonPromotingPawnAdvance
 
 /**
  * The moves of standard chess
@@ -19,7 +20,8 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
 
   /**
    * @return The set of possible positions excluding moves that would result in 1. the move escaping from the board edges,
-   * or 2. A non-Knight jumping over a piece, or 3. A piece taking another piece of the same colour
+   * or 2. A non-Knight jumping over a piece, or 3. A piece taking another piece of the same colour.
+   * Further restrictions on moves are imposed by {@link #rejectIllegalMove}
    */
   def getBasicPositions(position: Position): Set[Position] = {
     val (colour, piece, _) = conf.getExistingPiece(position)
@@ -99,9 +101,9 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
     }
   }
 
-  private def pawnDiagonal(dCol: Int, dRow: Int) = Set((1, 1),(1, -1), (-1, -1), (-1, 1)) contains (dCol, dRow)
-  private def pawnForward(dCol: Int, dRow: Int) = Set((0, 1),(0, -1)) contains (dCol, dRow)
-  private def pawnForwardTwo(dCol: Int, dRow: Int) = Set((0, 2),(0, -2)) contains (dCol, dRow)
+  private def pawnDiagonal(dCol: Int, dRow: Int) = Set((1, 1), (1, -1), (-1, -1), (-1, 1)) contains (dCol, dRow)
+  private def pawnForward(dCol: Int, dRow: Int) = Set((0, 1), (0, -1)) contains (dCol, dRow)
+  private def pawnForwardTwo(dCol: Int, dRow: Int) = Set((0, 2), (0, -2)) contains (dCol, dRow)
 
   /** @return (encountered own piece, encountered opponent piece) */
   def testPieceColour(movePiecePosition: Position, movingPieceColour: Colour) = {
@@ -121,10 +123,22 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
       }
     }
 
+    def checkNotNotPromotingPawnAdvance(start: Position, end: Position) = {
+      val (_, piece, _) = conf.getExistingPiece(start)
+      piece match {
+        case _: Pawn => {
+          if (end.getRow == Constants.WHITE_HOME_ROW || end.getRow == Constants.BLACK_HOME_ROW)
+            throw new NonPromotingPawnAdvance(move)
+        }
+        case default => Unit
+      }
+    }
+
     move match {
       case MovePiece(start, end) => {
         checkReachable(start, end)
         checkKingNotLeftInCheckAfterMove(MovePiece(start, end))
+        checkNotNotPromotingPawnAdvance(start, end)
       }
       case Castle(colour, castlingType) => {
         /*
@@ -204,9 +218,9 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
 
     if (new StandardMoveExplorer(future).kingInCheck(colour)) {
       throw new CheckedOwnKing(move)
-    }    
+    }
   }
-  
-  private def log(message: String) = println(message) 
-  
+
+  private def log(message: String) = println(message)
+
 }
