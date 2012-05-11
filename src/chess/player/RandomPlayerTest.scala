@@ -10,6 +10,7 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     canMove
     isRandom
     selectsOnlyMove
+    pawnPromotionSelected
   }
 
   private def canMove {
@@ -48,6 +49,25 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     val rp = newRandomPlayer(conf)
     val m = rp.getMove
     assertEquals(MovePiece("a8", "b8"), m, "The only possible move should have been selected")
+  }
+
+  private def pawnPromotionSelected {
+    val conf: Configuration = new GridConfiguration
+    /* The pawn that should be promoted */
+    conf.add("b7", White, Pawn())
+    /* Box the White king in */
+    conf.add("h8", White, King());
+    conf.add("h7", White, Pawn());
+    conf.add("g8", White, Pawn());
+    conf.add("g7", White, Pawn());
+
+    val rp = newRandomPlayer(conf)
+    val m = rp.getMove
+    m match {
+      case mp: Promote =>
+        assertEquals(Promote("b7", "b8", Queen()), mp.copy(piece = Queen()), "Pawn promotion was selected")
+      case default => fail("Move was not Promote: " + m)
+    }
   }
 
   private def newRandomPlayer(conf: Configuration): Player = {
