@@ -85,7 +85,9 @@ trait Configuration {
         List(Castled(new PieceMoved(king), new PieceMoved(rook)))
       }
       case Promote(start, end, piece) => {
-        Promoted(end, piece) :: applyMove(MovePiece(start, end)) reverse
+        val events = applyMove(MovePiece(start, end))
+        this.replace(end, piece)
+        Promoted(end, piece) :: events reverse
       }
       case Resign(colour) => throw new AssertionError("Resign should not be handled in applyMove")
       case default => throw new UnhandledCaseException(move.toString)
