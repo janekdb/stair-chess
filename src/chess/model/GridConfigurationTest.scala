@@ -10,6 +10,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     moveHistoryMaintained
     moveHistoryCopied
     enPassantEventSent
+    promoteReplacesPiece
   }
 
   def moveHistoryMaintained {
@@ -84,5 +85,17 @@ object GridConfigurationTest extends Test with TestUtils with Main {
       case None => {}
       case default => fail("The black pawn should have been taken")
     }
+  }
+
+  def promoteReplacesPiece {
+    val conf = new GridConfiguration
+
+    val start: Position = "f7"
+    val end: Position = "f8"
+    conf.add(start, White, Pawn())
+    val events = conf.applyMove(Promote(start, end, Knight()))
+    assertEquals(PieceMoved(start, end) :: Promoted(end, Knight()) :: Nil, events)
+    assertEquals(List(), conf.locatePieces(White, Pawn()), "There should not have been any pawns")
+    assertEquals(List(end), conf.locatePieces(White, Knight()), "A knight should be present")
   }
 }
