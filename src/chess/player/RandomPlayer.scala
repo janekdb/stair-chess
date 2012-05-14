@@ -23,10 +23,8 @@ class RandomPlayer(val colour: Colour, val conf: Configuration, val explorer: Mo
   def getMove: Move = {
     val startPositions = conf.locatePieces(colour).toArray
     shuffle(startPositions)
-    java.util.Collections.shuffle(java.util.Arrays.asList(startPositions: _*))
-    for (
-      s <- startPositions
-    ) {
+    def isHomeRow(row: Int): Boolean = row == Constants.WHITE_HOME_ROW || row == Constants.BLACK_HOME_ROW
+    for (s <- startPositions) {
       var endPositions = explorer.getBasicPositions(s).toArray
       shuffle(endPositions)
       // TODO: Switch to functional approach
@@ -35,7 +33,7 @@ class RandomPlayer(val colour: Colour, val conf: Configuration, val explorer: Mo
         val end = endPositions.head
         val move = piece match {
           // TODO: Randomly select between Queen and Knight
-          case Pawn() if (end.getRow == Constants.WHITE_HOME_ROW || end.getRow == Constants.BLACK_HOME_ROW) => Promote(s, end, Queen())
+          case Pawn() if isHomeRow(end.getRow) => Promote(s, end, Queen())
           case default => MovePiece(s, end)
         }
         val moveAccepted =
