@@ -6,7 +6,7 @@ import test.{Main, Test, TestUtils}
 
 object GridConfigurationTest extends Test with TestUtils with Main {
 
-  def runTests() {
+  def runTests {
     moveHistoryMaintained
     moveHistoryCopied
     enPassantEventSent

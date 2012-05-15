@@ -8,7 +8,7 @@ import Colours.{ Black, White }
 
 object StandardMoveExplorerTest extends Test with TestUtils with Main {
 
-  def runTests() {
+  def runTests {
 
     getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveWhite
     getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveBlack
