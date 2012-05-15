@@ -9,7 +9,19 @@ import Colours.{ Black, White }
 object StandardMoveExplorerTest extends Test with TestUtils with Main {
 
   def runTests {
+        
+    acceptMovePieceThatWouldNotCapture
+    acceptPromoteThatWouldNotCapture
 
+    rejectMovePieceThatWouldCapture
+    rejectPromoteThatWouldCapture
+        
+    acceptMovePieceCapturingThatWouldNotCapture
+    acceptPromoteCapturingThatWouldNotCapture
+
+    rejectMovePieceCapturingThatWouldNotCapture
+    rejectPromoteCapturingThatWouldNotCapture
+    
     getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveWhite
     getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveBlack
     getBasicPositionsIncludesEnPassantWhite
@@ -32,6 +44,18 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     rejectNonPromotingPawnAdvanceToBackRank
   }
 
+  private def acceptMovePieceThatWouldNotCapture = fail
+  private def acceptPromoteThatWouldNotCapture = fail
+
+  private def rejectMovePieceThatWouldCapture = fail
+  private def rejectPromoteThatWouldCapture = fail
+        
+  private def acceptMovePieceCapturingThatWouldNotCapture = fail
+  private def acceptPromoteCapturingThatWouldNotCapture = fail
+
+  private def rejectMovePieceCapturingThatWouldNotCapture = fail
+  private def rejectPromoteCapturingThatWouldNotCapture = fail
+    
   private def getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveWhite {
 
     val start = new Position("e2")
