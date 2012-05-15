@@ -125,7 +125,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
       }
     }
 
-    def checkNotNotPromotingPawnAdvance(start: Position, end: Position) = {
+    def checkNotNonPromotingPawnAdvance(start: Position, end: Position) = {
       val (_, piece, _) = conf.getExistingPiece(start)
       piece match {
         case _: Pawn => {
@@ -140,7 +140,8 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
       case MovePiece(start, end) => {
         checkReachable(start, end)
         checkKingNotLeftInCheckAfterMove(MovePiece(start, end))
-        checkNotNotPromotingPawnAdvance(start, end)
+        /* If the move was a promotion it would be matched by Promote */
+        checkNotNonPromotingPawnAdvance(start, end)
       }
       case Castle(colour, castlingType) => {
         /*
