@@ -1,0 +1,7 @@
+Expand the Move hierarchy by adding
+  MovePieceTaking
+  PromoteTaking
+This will allow the condition logic in Configuration.applyMove in the MovePiece case to be eliminated.
+The Promote case can also be simplified by not calling applyMove to determine if a piece was taken.
+This is aimed at adding support to StandardMoveExplorer for providing a list of all possible legal moves instead of
+using getBasicMoves which is incomplete because it does not include castling.
