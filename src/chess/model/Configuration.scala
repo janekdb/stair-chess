@@ -46,6 +46,8 @@ trait Configuration {
   /** @return true if a piece exists at the given location */
   def exists(p: Position) = getPiece(p).isDefined
 
+  // TODO: Separate the two aspects of this case into a) Conversion from physical Move to MovePiece or MovePieceTaking to
+  //  allow RandomPlayer to get a list of actual moves from Configuration
   /**
    * Update board configuration. The move must be legal i.e. the caller takes responsibility for
    * ensuring the move is legal.
