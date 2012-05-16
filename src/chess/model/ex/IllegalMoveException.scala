@@ -28,3 +28,5 @@ class CheckedOwnKing(move: Move) extends IllegalMoveException(move) {
 class NonPromotingPawnAdvance(move: Move) extends IllegalMoveException(move) {
   override def toString(): String = "Pawn advance required a promotion: " + move
 }
+
+class NonCapturingMoveException(move: Move) extends IllegalMoveException(move)
