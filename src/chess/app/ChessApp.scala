@@ -1,5 +1,6 @@
 package chess.app
 
+import java.util.concurrent.TimeUnit
 import java.util.regex.{ Matcher, Pattern }
 import chess.library.Library
 import chess.model.{ Colours, Move }
@@ -54,19 +55,21 @@ object BoardUI extends BoardChangedSubscriber {
 
     val DELAY_FACTOR = 1;
 
+    def delay(d: Int) { TimeUnit.MILLISECONDS.sleep(d * DELAY_FACTOR) }
+
     event match {
 
       /* Assume the consumer of BoardChangeEvent has access to the board configuration. */
       case PiecePlaced(colour, piece, position) => {
         setPiece(position, convertLabel(colour + "-" + piece))
-        Thread.sleep(DELAY_FACTOR * 2)
+        delay(2)
       }
       case PieceMoved(start, end) => {
         // TODO: Use a reference to a Configuration to acquire the piece from
         val label = getPiece(start)
         clearSquare(start)
         setPiece(end, label)
-        Thread.sleep(DELAY_FACTOR * 100)
+        delay(100)
       }
       case PieceMovedTaking(start, end, taken) => {
         val label = getPiece(start)
@@ -74,7 +77,7 @@ object BoardUI extends BoardChangedSubscriber {
         clearSquare(start)
         setPiece(end, label)
 
-        Thread.sleep(DELAY_FACTOR * 100)
+        delay(100)
       }
       case Promoted(position, piece) => {
         // TODO: Replace string handling with types
@@ -83,7 +86,7 @@ object BoardUI extends BoardChangedSubscriber {
         val colour = label.substring(0, label.indexOf("-"))
         val promotedLabel = convertLabel(colour + "-" + piece)
         setPiece(position, promotedLabel)
-        Thread.sleep(DELAY_FACTOR * 100)
+        delay(100)
       }
       case Castled(king, rook) => {
         val kingLabel = getPiece(king.start)
