@@ -145,9 +145,9 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
     }
 
     move match {
-      case MovePiece(start, end) => {
+      case m @ MovePiece(start, end) => {
         checkReachable(start, end)
-        checkKingNotLeftInCheckAfterMove(MovePiece(start, end))
+        checkKingNotLeftInCheckAfterMove(m)
         /* If the move was a promotion it would be matched by Promote */
         checkNotNonPromotingPawnAdvance(start, end)
         /* MovePieceCapturing must be used when capturing */
@@ -197,6 +197,8 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
       case m @ Promote(start, end, piece) => {
         checkReachable(start, end)
         checkKingNotLeftInCheckAfterMove(m)
+        /* PromoteCapturing must be used when capturing */
+        checkNotCapturing(end)
       }
       case m @ EnPassant(start, end) => {
         checkReachable(start, end)
