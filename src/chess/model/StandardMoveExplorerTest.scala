@@ -16,8 +16,8 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     rejectMovePieceThatWouldCapture
     rejectPromoteThatWouldCapture
         
-    acceptMovePieceCapturingThatWouldNotCapture
-    acceptPromoteCapturingThatWouldNotCapture
+    acceptMovePieceCapturingThatWouldCapture
+    acceptPromoteCapturingThatWouldCapture
 
     rejectMovePieceCapturingThatWouldNotCapture
     rejectPromoteCapturingThatWouldNotCapture
@@ -44,14 +44,54 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     rejectNonPromotingPawnAdvanceToBackRank
   }
 
-  private def acceptMovePieceThatWouldNotCapture = fail
-  private def acceptPromoteThatWouldNotCapture = fail
+  private def acceptMovePieceThatWouldNotCapture {
+    val start = new Position("e2")
+    val end = new Position("e3")
+    val conf = new GridConfiguration
+    placeKings(conf)
+    conf.add(start, White, Pawn())
+    val e = new StandardMoveExplorer(conf)
+    e.rejectIllegalMove(MovePiece(start, end))
+  }
 
-  private def rejectMovePieceThatWouldCapture = fail
-  private def rejectPromoteThatWouldCapture = fail
+  private def acceptPromoteThatWouldNotCapture {
+    val start = new Position("a7")
+    val end = new Position("a8")
+    val conf = new GridConfiguration
+    placeKings(conf)
+    conf.add(start, White, Pawn())
+    val e = new StandardMoveExplorer(conf)
+    e.rejectIllegalMove(Promote(start, end, Queen()))
+  }
+
+  private def rejectMovePieceThatWouldCapture {
+    val start = new Position("a7")
+    val end = new Position("a8")
+    val conf = new GridConfiguration
+    placeKings(conf)
+    conf.add(start, White, Rook())
+    conf.add(end, Black, Rook())
+    val e = new StandardMoveExplorer(conf)
+    assertExceptionThrown("MovePiece that would have taken a piece was rejected", classOf[NonCapturingMoveException]) {
+      e.rejectIllegalMove(MovePiece(start, end))
+    }
+  }
+
+  private def rejectPromoteThatWouldCapture {
+    val start = new Position("a7")
+    val end = new Position("b8")
+    val conf = new GridConfiguration
+    placeKings(conf)
+    conf.add(start, White, Pawn())
+    conf.add(end, Black, Rook())
+    val e = new StandardMoveExplorer(conf)
+    assertExceptionThrown("Promote that would have taken a piece was rejected", classOf[NonCapturingMoveException]) {
+      e.rejectIllegalMove(Promote(start, end, Queen()))
+    }
+  }
         
-  private def acceptMovePieceCapturingThatWouldNotCapture = fail
-  private def acceptPromoteCapturingThatWouldNotCapture = fail
+  private def acceptMovePieceCapturingThatWouldCapture = fail
+  private def acceptPromoteCapturingThatWouldCapture = fail
 
   private def rejectMovePieceCapturingThatWouldNotCapture = fail
   private def rejectPromoteCapturingThatWouldNotCapture = fail
