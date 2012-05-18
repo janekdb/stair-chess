@@ -15,6 +15,7 @@ abstract class SimpleMove extends Move {
 /* Assume the consumer of MovePiece has access to the board configuration. */
 case class MovePiece(start: Position, end: Position) extends SimpleMove {
   require(start != end, "start must be different to end: " + start)
+  // TODO: Determine if an extractor could use use to parse "a1a2" into an instance of MovePiece
   def this(move: String) = this(new Position(move.substring(0,2)), new Position(move.substring(2,4)))
 }
 case class Resign(colour: Colour) extends Move
