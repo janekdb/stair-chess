@@ -5,6 +5,7 @@ import chess.model.ex.{
   AttackedPositionException,
   CheckedOwnKing,
   InterveningPieceException,
+  NonCapturingMoveException,
   PreviouslyMovedException,
   UnreachablePositionException
 }
@@ -118,14 +119,15 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
   }
 
   def rejectIllegalMove(move: Move) {
-    def checkReachable(start: Position, end: Position) = {
+
+    def checkReachable(start: Position, end: Position) {
       val legalPositions = getBasicPositions(start)
       if (!(legalPositions contains end)) {
         throw new UnreachablePositionException(MovePiece(start, end), legalPositions)
       }
     }
 
-    def checkNotNonPromotingPawnAdvance(start: Position, end: Position) = {
+    def checkNotNonPromotingPawnAdvance(start: Position, end: Position) {
       val (_, piece, _) = conf.getExistingPiece(start)
       piece match {
         case _: Pawn => {
@@ -136,12 +138,20 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
       }
     }
 
+    def checkNotCapturing(end: Position) {
+      if (conf.getPiece(end).isDefined) {
+        throw new NonCapturingMoveException(move)
+      }
+    }
+
     move match {
       case MovePiece(start, end) => {
         checkReachable(start, end)
         checkKingNotLeftInCheckAfterMove(MovePiece(start, end))
         /* If the move was a promotion it would be matched by Promote */
         checkNotNonPromotingPawnAdvance(start, end)
+        /* MovePieceCapturing must be used when capturing */
+        checkNotCapturing(end)
       }
       case Castle(colour, castlingType) => {
         /*
@@ -184,14 +194,13 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
         }
 
       }
-      case Promote(start, end, piece) => {
+      case m @ Promote(start, end, piece) => {
         checkReachable(start, end)
-        /* For this purpose Promote is the same as MovePiece */
-        checkKingNotLeftInCheckAfterMove(MovePiece(start, end))
+        checkKingNotLeftInCheckAfterMove(m)
       }
-      case EnPassant(start, end) => {
+      case m @ EnPassant(start, end) => {
         checkReachable(start, end)
-        checkKingNotLeftInCheckAfterMove(EnPassant(start, end))
+        checkKingNotLeftInCheckAfterMove(m)
       }
       case _: Resign => {
         /* Nothing */
