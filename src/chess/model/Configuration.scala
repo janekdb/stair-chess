@@ -56,22 +56,18 @@ trait Configuration {
   def applyMove(move: Move): List[BoardChanged] = {
     move match {
       case MovePiece(start, end) => {
+        /* Square unoccupied so just move the piece if not en passant*/
+        this.move(start, end)
+        List(PieceMoved(start, end))
+      }
+      case MovePieceCapturing(start, end) => {
         val (colour, piece, _) = this.getExistingPiece(start)
-        this.getPiece(end) match {
-          case None => {
-            /* Square unoccupied so just move the piece if not en passant*/
-            this.move(start, end)
-            List(PieceMoved(start, end))
-          }
-          case Some((otherColour, _, _)) =>
-            {
-              /* The opponents piece is being captured. */
-              assert(otherColour != colour)
-              this.remove(end)
-              this.move(start, end)
-            }
-            List(PieceMovedTaking(start, end, end))
-        }
+        val (otherColour, _, _) = this.getExistingPiece(end)
+        /* The opponents piece is being captured. */
+        assert(otherColour != colour)
+        this.remove(end)
+        this.move(start, end)
+        List(PieceMovedTaking(start, end, end))
       }
       case e: EnPassant => {
         this.move(e.start, e.end)
@@ -88,6 +84,11 @@ trait Configuration {
       }
       case Promote(start, end, piece) => {
         val events = applyMove(MovePiece(start, end))
+        this.replace(end, piece)
+        Promoted(end, piece) :: events reverse
+      }
+      case PromoteCapturing(start, end, piece) => {
+        val events = applyMove(MovePieceCapturing(start, end))
         this.replace(end, piece)
         Promoted(end, piece) :: events reverse
       }
