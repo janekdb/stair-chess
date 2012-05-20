@@ -14,13 +14,29 @@ abstract class SimpleMove extends Move {
 
 /* Assume the consumer of MovePiece has access to the board configuration. */
 case class MovePiece(start: Position, end: Position) extends SimpleMove {
-  require(start != end, "start must be different to end: " + start)
+  require(start != end, "Start must be different to end: " + start)
+  // TODO: Add methods to move.{start, end} with an implicit operator
+  // TODO: Determine if an extractor could use use to parse "a1a2" into an instance of MovePiece
+  def this(move: String) = this(new Position(move.substring(0,2)), new Position(move.substring(2,4)))
+}
+case class MovePieceCapturing(start: Position, end: Position) extends SimpleMove {
+  require(start != end, "Start must be different to end: " + start)
   // TODO: Determine if an extractor could use use to parse "a1a2" into an instance of MovePiece
   def this(move: String) = this(new Position(move.substring(0,2)), new Position(move.substring(2,4)))
 }
 case class Resign(colour: Colour) extends Move
 case class Castle(colour: Colour, castlingType: CastlingType) extends Move
 case class Promote(start: Position, end: Position, piece: Piece) extends SimpleMove {
+  // TODO: Remove end because for promotion without capturing the start determines the end
+  def this(move: String, piece: Piece) = {
+    this(new Position(move.substring(0,2)), new Position(move.substring(2,4)), piece)
+    if(List(King(), Pawn()) contains piece){
+      throw new IllegalPromotionException(piece)
+    }
+  }
+}
+case class PromoteCapturing(start: Position, end: Position, piece: Piece) extends SimpleMove {
+  // TODO: Reduce duplication with Promote
   def this(move: String, piece: Piece) = {
     this(new Position(move.substring(0,2)), new Position(move.substring(2,4)), piece)
     if(List(King(), Pawn()) contains piece){
@@ -29,5 +45,6 @@ case class Promote(start: Position, end: Position, piece: Piece) extends SimpleM
   }
 }
 case class EnPassant(start: Position, end: Position) extends SimpleMove {
+  // TODO: Rename taken to captured
   val taken = new Position(end.getCol, start.getRow)
 }
