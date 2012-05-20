@@ -30,3 +30,5 @@ class NonPromotingPawnAdvance(move: Move) extends IllegalMoveException(move) {
 }
 
 class NonCapturingMoveException(move: Move) extends IllegalMoveException(move)
+
+class CapturingMoveException(move: Move) extends IllegalMoveException(move)
