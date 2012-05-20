@@ -15,6 +15,10 @@ object MoveTest extends Test with TestUtils with Main {
       val p = new Position("e7")
       MovePiece(p, p)
     }
+    assertExceptionThrown("A move with the start equal to the end position should be rejected", classOf[IllegalArgumentException]) {
+    	val p = new Position("e7")
+    	MovePieceCapturing(p, p)
+    }
   }
 
   private def enPassant {
