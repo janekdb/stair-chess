@@ -3,6 +3,7 @@ package chess.model
 import chess.util.UnhandledCaseException
 import chess.model.ex.{
   AttackedPositionException,
+  CapturingMoveException,
   CheckedOwnKing,
   InterveningPieceException,
   NonCapturingMoveException,
@@ -144,14 +145,30 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
       }
     }
 
+    def checkCapturing(end: Position) {
+      if (conf.getPiece(end).isEmpty) {
+        throw new CapturingMoveException(move)
+      }
+    }
+
     move match {
       case m @ MovePiece(start, end) => {
         checkReachable(start, end)
-        checkKingNotLeftInCheckAfterMove(m)
         /* If the move was a promotion it would be matched by Promote */
         checkNotNonPromotingPawnAdvance(start, end)
         /* MovePieceCapturing must be used when capturing */
         checkNotCapturing(end)
+        /* Perform this check after all move validating checks */
+        checkKingNotLeftInCheckAfterMove(m)
+      }
+      case m @ MovePieceCapturing(start, end) => {
+        checkReachable(start, end)
+        /* If the move was a promotion it would be matched by Promote */
+        checkNotNonPromotingPawnAdvance(start, end)
+        /* MovePiece must be used when not capturing */
+        checkCapturing(end)
+        /* Perform this check after all move validating checks */
+        checkKingNotLeftInCheckAfterMove(m)
       }
       case Castle(colour, castlingType) => {
         /*
@@ -196,9 +213,17 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
       }
       case m @ Promote(start, end, piece) => {
         checkReachable(start, end)
-        checkKingNotLeftInCheckAfterMove(m)
         /* PromoteCapturing must be used when capturing */
         checkNotCapturing(end)
+        /* Perform this check after all move validating checks */
+        checkKingNotLeftInCheckAfterMove(m)
+      }
+      case m @ PromoteCapturing(start, end, piece) => {
+        checkReachable(start, end)
+        /* Promote must be used when not capturing */
+        checkCapturing(end)
+        /* Perform this check after all move validating checks */
+        checkKingNotLeftInCheckAfterMove(m)
       }
       case m @ EnPassant(start, end) => {
         checkReachable(start, end)
