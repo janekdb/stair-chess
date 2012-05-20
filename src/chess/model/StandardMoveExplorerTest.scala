@@ -90,11 +90,53 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     }
   }
         
-  private def acceptMovePieceCapturingThatWouldCapture = fail
-  private def acceptPromoteCapturingThatWouldCapture = fail
+  private def acceptMovePieceCapturingThatWouldCapture {
+    val start = new Position("a7")
+    val end = new Position("b8")
+    val conf = new GridConfiguration
+    placeKings(conf)
+    conf.add(start, White, Bishop())
+    conf.add(end, Black, Rook())
+    val e = new StandardMoveExplorer(conf)
+    e.rejectIllegalMove(MovePieceCapturing(start, end))
+  }
 
-  private def rejectMovePieceCapturingThatWouldNotCapture = fail
-  private def rejectPromoteCapturingThatWouldNotCapture = fail
+  private def acceptPromoteCapturingThatWouldCapture {
+    val start = new Position("a7")
+    val end = new Position("b8")
+    val conf = new GridConfiguration
+    placeKings(conf)
+    conf.add(start, White, Pawn())
+    conf.add(end, Black, Rook())
+    val e = new StandardMoveExplorer(conf)
+    e.rejectIllegalMove(PromoteCapturing(start, end, Rook()))
+  }
+
+  private def rejectMovePieceCapturingThatWouldNotCapture {
+    val start = new Position("a7")
+    val end = new Position("a8")
+    val conf = new GridConfiguration
+    placeKings(conf)
+    conf.add(start, White, Rook())
+    conf.add("f5", Black, Rook())
+    val e = new StandardMoveExplorer(conf)
+    assertExceptionThrown("MovePieceCapturing that would not have captured a piece was rejected", classOf[CapturingMoveException]) {
+      e.rejectIllegalMove(MovePieceCapturing(start, end))
+    }
+  }
+
+private def rejectPromoteCapturingThatWouldNotCapture {
+    val start = new Position("a7")
+    val end = new Position("a8")
+    val conf = new GridConfiguration
+    placeKings(conf)
+    conf.add(start, White, Pawn())
+    conf.add("f5", Black, Rook())
+    val e = new StandardMoveExplorer(conf)
+    assertExceptionThrown("PromoteCapturing that would not have capturing a piece was rejected", classOf[CapturingMoveException]) {
+      e.rejectIllegalMove(PromoteCapturing(start, end, Queen()))
+    }
+  }
     
   private def getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveWhite {
 
