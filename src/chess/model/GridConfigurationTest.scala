@@ -10,6 +10,10 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     moveHistoryMaintained
     moveHistoryCopied
     enPassantEventSent
+    pieceMovedEventSent
+    pieceMovedCapturingEventSent
+    promoteEventsSent
+    promoteCapturingEventsSent
     promoteReplacesPiece
   }
 
@@ -85,6 +89,15 @@ object GridConfigurationTest extends Test with TestUtils with Main {
       case None => {}
       case default => fail("The black pawn should have been taken")
     }
+  }
+
+  def pieceMovedEventSent { // TODO: Implement pieceMovedEventSent
+  }
+  def pieceMovedCapturingEventSent { // TODO: Implement pieceMovedCapturingEventSent
+  }
+  def promoteEventsSent { // TODO: Implement promoteEventsSent
+  }
+  def promoteCapturingEventsSent { // TODO: Implement promoteCapturingEventsSent
   }
 
   def promoteReplacesPiece {
