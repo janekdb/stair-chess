@@ -1,11 +1,10 @@
 package chess.player
 
-import chess.model.{ Move, MovePiece }
+import chess.model.{ Move, MovePiece,MovePieceCapturing, Promote, PromoteCapturing }
 import chess.model.{ Configuration, MoveExplorer }
 import chess.model.Colour
 import chess.model.Position
 import chess.model.Pawn
-import chess.model.Promote
 import chess.model.Constants
 import chess.model.Queen
 
@@ -31,10 +30,12 @@ class RandomPlayer(val colour: Colour, val conf: Configuration, val explorer: Mo
       while (endPositions.nonEmpty) {
         val (_, piece, _) = conf.getExistingPiece(s)
         val end = endPositions.head
+        val isCapturing = conf.getPiece(end).isDefined
         val move = piece match {
           // TODO: Randomly select between Queen and Knight
-          case Pawn() if isHomeRow(end.getRow) => Promote(s, end, Queen())
-          case default => MovePiece(s, end)
+          case Pawn() if isHomeRow(end.getRow) =>
+            if (isCapturing) PromoteCapturing(s, end, Queen()) else Promote(s, end, Queen())
+          case default => if(isCapturing) MovePieceCapturing(s, end) else MovePiece(s, end)
         }
         val moveAccepted =
           try {
