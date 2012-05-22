@@ -109,9 +109,21 @@ object RandomPlayerTest extends Test with TestUtils with Main {
 //2 ·····P··
 //1 ······K·
 //  abcdefgh
-
+  /* Black can escape checkmate by taking the queen */
   private def queenCaptureSelected2 {
-    fail
+    val conf: Configuration = new GridConfiguration
+    conf.add("g1", White, King())
+    conf.add("f2", Black, Pawn())
+    conf.add("a3", Black, Pawn())
+    conf.add("b3", White, Rook())
+    conf.add("d3", White, Pawn())
+    conf.add("f3", White, Pawn())
+    conf.add("d4", White, Bishop())
+    conf.add("f7", White, Queen())
+    conf.add("g8", Black, King())
+    val rp = newRandomPlayer(conf, Black)
+    val m = rp.getMove
+    assertEquals(MovePieceCapturing("g8", "f7"), m, "Black escaped from check by selected the only possible move")
   }
 
   private def newRandomPlayer(conf: Configuration): Player = {
