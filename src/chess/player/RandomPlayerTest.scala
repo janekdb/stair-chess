@@ -11,6 +11,8 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     isRandom
     selectsOnlyMove
     pawnPromotionSelected
+    queenCaptureSelected
+    queenCaptureSelected2
   }
 
   private def canMove {
@@ -73,9 +75,53 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     }
   }
 
+  //  abcdefgh
+  //8 ········
+  //7 ········
+  //6 ······q·
+  //5 ········
+  //4 ·K······
+  //3 ···kQ···
+  //2 ·······Q
+  //1 ··.b····
+  //  abcdefgh
+  /* Black can escape checkmate by taking the queen */
+  private def queenCaptureSelected {
+    val conf: Configuration = new GridConfiguration
+    conf.add("d1", Black, Bishop())
+    conf.add("h2", White, Queen())
+    conf.add("d3", Black, King())
+    conf.add("e3", White, Queen())
+    conf.add("b4", White, King())
+    conf.add("g6", Black, Queen())
+    val rp = newRandomPlayer(conf, Black)
+    val m = rp.getMove
+    assertEquals(MovePieceCapturing("d3", "e3"), m, "Black escaped from check by selected the only possible move")
+  }
+
+//  abcdefgh
+//8 ······k·
+//7 ·····Q··
+//6 ········
+//5 ········
+//4 ···B····
+//3 pR·p·p··
+//2 ·····P··
+//1 ······K·
+//  abcdefgh
+
+  private def queenCaptureSelected2 {
+    fail
+  }
+
   private def newRandomPlayer(conf: Configuration): Player = {
     val explorer: MoveExplorer = new StandardMoveExplorer(conf)
     new RandomPlayer(White, conf, explorer)
+  }
+
+  private def newRandomPlayer(conf: Configuration, colour: Colour): Player = {
+		  val explorer: MoveExplorer = new StandardMoveExplorer(conf)
+  new RandomPlayer(colour, conf, explorer)
   }
 
   private def addKing(conf: Configuration) {
