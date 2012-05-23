@@ -13,6 +13,8 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     pawnPromotionSelected
     queenCaptureSelected
     queenCaptureSelected2
+    shortCastlingSelected
+    longCastlingSelected
   }
 
   private def canMove {
@@ -126,14 +128,35 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     assertEquals(MovePieceCapturing("g8", "f7"), m, "Black escaped from check by selected the only possible move")
   }
 
+  private def shortCastlingSelected {
+
+    val conf: Configuration = new GridConfiguration
+    conf.add("e1", White, King())
+    conf.add("a1", White, Rook())
+    conf.add("h1", White, Rook())
+    val allowedMove = Castle(White, Short)
+    val explorer: MoveExplorer = new StandardMoveExplorer(conf)
+    val rp = new RandomPlayer(White, conf, explorer) {
+      override protected def moveAcceptable(move: Move): Boolean = {
+        // TODO: Remove this println
+        println("Testing: " + move)
+        move == allowedMove
+      }
+    }
+    val m = rp.getMove
+    assertEquals(allowedMove, m, "When the only possible move was short castling it was selected")
+  }
+
+  private def longCastlingSelected = fail
+
   private def newRandomPlayer(conf: Configuration): Player = {
     val explorer: MoveExplorer = new StandardMoveExplorer(conf)
     new RandomPlayer(White, conf, explorer)
   }
 
   private def newRandomPlayer(conf: Configuration, colour: Colour): Player = {
-		  val explorer: MoveExplorer = new StandardMoveExplorer(conf)
-  new RandomPlayer(colour, conf, explorer)
+    val explorer: MoveExplorer = new StandardMoveExplorer(conf)
+    new RandomPlayer(colour, conf, explorer)
   }
 
   private def addKing(conf: Configuration) {
