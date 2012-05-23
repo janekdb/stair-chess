@@ -42,7 +42,7 @@ class RandomPlayer(val colour: Colour, val conf: Configuration, val explorer: Mo
     throw new RuntimeException("No move found")
   }
 
-  private def moveAcceptable(move: Move): Boolean = {
+  protected def moveAcceptable(move: Move): Boolean = {
     try {
       // TODO: Convert rejectIllegalMove to a query method
       explorer.rejectIllegalMove(move)
