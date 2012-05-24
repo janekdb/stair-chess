@@ -15,6 +15,8 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     queenCaptureSelected2
     shortCastlingSelected
     longCastlingSelected
+    shortCastlingNotConsiderWhenStartPositionsIncorrect
+    longCastlingNotConsiderWhenStartPositionsIncorrect
   }
 
   private def canMove {
@@ -159,6 +161,25 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     val m = rp.getMove
     assertEquals(allowedMove, m, "When the only possible move was long castling it was selected")
   }
+
+  private def shortCastlingNotConsiderWhenStartPositionsIncorrect {
+    val conf: Configuration = new GridConfiguration
+    conf.add("a1", White, Rook())
+    conf.add("e1", White, King())
+    conf.add("h2", White, Rook())
+    var castlingMoves = List[Castle]()
+    val explorer: MoveExplorer = new StandardMoveExplorer(conf)
+    val rp = new RandomPlayer(White, conf, explorer) {
+      override protected def moveAcceptable(move: Move): Boolean = {
+        move match { case a: Castle => castlingMoves = a :: castlingMoves case default => Unit}
+        super.moveAcceptable(move)
+      }
+    }
+    val m = rp.getMove
+    assertEquals(List(Castle(White, Long)), castlingMoves, "When only long castling was possible short castling was not considered")
+  }
+
+  private def longCastlingNotConsiderWhenStartPositionsIncorrect = fail
 
   private def newRandomPlayer(conf: Configuration): Player = {
     val explorer: MoveExplorer = new StandardMoveExplorer(conf)
