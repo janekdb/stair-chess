@@ -130,15 +130,13 @@ object RandomPlayerTest extends Test with TestUtils with Main {
 
   private def shortCastlingSelected {
     val conf: Configuration = new GridConfiguration
-    conf.add("e1", White, King())
     conf.add("a1", White, Rook())
+    conf.add("e1", White, King())
     conf.add("h1", White, Rook())
     val allowedMove = Castle(White, Short)
     val explorer: MoveExplorer = new StandardMoveExplorer(conf)
     val rp = new RandomPlayer(White, conf, explorer) {
       override protected def moveAcceptable(move: Move): Boolean = {
-        // TODO: Remove this println
-        println("Testing: " + move)
         move == allowedMove
       }
     }
@@ -148,15 +146,13 @@ object RandomPlayerTest extends Test with TestUtils with Main {
 
   private def longCastlingSelected {
     val conf: Configuration = new GridConfiguration
-    conf.add("e1", White, King())
     conf.add("a1", White, Rook())
+    conf.add("e1", White, King())
     conf.add("h1", White, Rook())
     val allowedMove = Castle(White, Long)
     val explorer: MoveExplorer = new StandardMoveExplorer(conf)
     val rp = new RandomPlayer(White, conf, explorer) {
       override protected def moveAcceptable(move: Move): Boolean = {
-        // TODO: Remove this println
-        println("Testing: " + move)
         move == allowedMove
       }
     }
