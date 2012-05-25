@@ -196,8 +196,23 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     val m = rp.getMove
     assertEquals(List(Castle(White, Short)), castlingMoves, "When only short castling was possible long castling was not considered")
   }
-  
-  private def castlingNotConsideredWhenEitherPieceIsNotOwnPiece = fail
+
+  private def castlingNotConsideredWhenEitherPieceIsNotOwnPiece {
+    val conf: Configuration = new GridConfiguration
+    conf.add("a1", Black, Rook())
+    conf.add("e1", White, King())
+    conf.add("h1", Black, Rook())
+    var castlingMoves = List[Castle]()
+    val explorer: MoveExplorer = new StandardMoveExplorer(conf)
+    val rp = new RandomPlayer(White, conf, explorer) {
+      override protected def moveAcceptable(move: Move): Boolean = {
+        move match { case a: Castle => castlingMoves = a :: castlingMoves case default => Unit}
+        super.moveAcceptable(move)
+      }
+    }
+    val m = rp.getMove
+    assertEquals(List(), castlingMoves, "When no castling was possible no castling was considered")
+  }
 
   private def newRandomPlayer(conf: Configuration): Player = {
     val explorer: MoveExplorer = new StandardMoveExplorer(conf)
