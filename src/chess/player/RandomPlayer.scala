@@ -42,8 +42,18 @@ class RandomPlayer(val colour: Colour, val conf: Configuration, val explorer: Mo
         endPositions = endPositions.tail
       }
     }
-    //    only add castling if the king and rooks are at the correct position or better, improve rejectIllegalMove to handle this correctly
-    moves = Castle(colour, Long) :: Castle(colour, Short) :: moves
+
+    /*
+     * Only add castling if the king and rooks are at the correct positions because
+     * rejectIllegalMove does not explicitly check the pieces are present.
+     */
+    // TODO: add overload of conf.exists that takes the colour as a filter.
+    for (castlingType <- List(Long, Short)) {
+      val ((king, _), (rook, _)) = castlingType.getPositions(colour.homeRow)
+      if (List(king, rook).forall(conf.exists)) {
+        moves = Castle(colour, castlingType) :: moves
+      }
+    }
     moves = moves filter { moveAcceptable }
     if (moves.isEmpty) throw new RuntimeException("No move found")
     moves(new util.Random().nextInt(moves.size))
