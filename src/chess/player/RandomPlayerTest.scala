@@ -15,8 +15,9 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     queenCaptureSelected2
     shortCastlingSelected
     longCastlingSelected
-    shortCastlingNotConsiderWhenStartPositionsIncorrect
-    longCastlingNotConsiderWhenStartPositionsIncorrect
+    shortCastlingNotConsideredWhenStartPositionsIncorrect
+    longCastlingNotConsideredWhenStartPositionsIncorrect
+    castlingNotConsideredWhenEitherPieceIsNotOwnPiece
   }
 
   private def canMove {
@@ -162,7 +163,7 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     assertEquals(allowedMove, m, "When the only possible move was long castling it was selected")
   }
 
-  private def shortCastlingNotConsiderWhenStartPositionsIncorrect {
+  private def shortCastlingNotConsideredWhenStartPositionsIncorrect {
     val conf: Configuration = new GridConfiguration
     conf.add("a1", White, Rook())
     conf.add("e1", White, King())
@@ -179,7 +180,24 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     assertEquals(List(Castle(White, Long)), castlingMoves, "When only long castling was possible short castling was not considered")
   }
 
-  private def longCastlingNotConsiderWhenStartPositionsIncorrect = fail
+  private def longCastlingNotConsideredWhenStartPositionsIncorrect  {
+    val conf: Configuration = new GridConfiguration
+    conf.add("a2", White, Rook())
+    conf.add("e1", White, King())
+    conf.add("h1", White, Rook())
+    var castlingMoves = List[Castle]()
+    val explorer: MoveExplorer = new StandardMoveExplorer(conf)
+    val rp = new RandomPlayer(White, conf, explorer) {
+      override protected def moveAcceptable(move: Move): Boolean = {
+        move match { case a: Castle => castlingMoves = a :: castlingMoves case default => Unit}
+        super.moveAcceptable(move)
+      }
+    }
+    val m = rp.getMove
+    assertEquals(List(Castle(White, Short)), castlingMoves, "When only short castling was possible long castling was not considered")
+  }
+  
+  private def castlingNotConsideredWhenEitherPieceIsNotOwnPiece = fail
 
   private def newRandomPlayer(conf: Configuration): Player = {
     val explorer: MoveExplorer = new StandardMoveExplorer(conf)
