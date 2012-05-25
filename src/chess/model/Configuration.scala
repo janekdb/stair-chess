@@ -46,6 +46,15 @@ trait Configuration {
   /** @return true if a piece exists at the given location */
   def exists(p: Position) = getPiece(p).isDefined
 
+  /** @return true if a piece exists at the given location with the given colour*/
+  // TODO: Do this in a monadic style
+  def exists(p: Position, c: Colour) = {
+    getPiece(p) match {
+      case Some((colour, _, _)) => colour == c
+      case None => false
+    }
+  }
+
   // TODO: Separate the two aspects of this case into a) Conversion from physical Move to MovePiece or MovePieceTaking to
   //  allow RandomPlayer to get a list of actual moves from Configuration
   /**
