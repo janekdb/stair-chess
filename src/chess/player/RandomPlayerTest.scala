@@ -18,11 +18,12 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     shortCastlingNotConsideredWhenStartPositionsIncorrect
     longCastlingNotConsideredWhenStartPositionsIncorrect
     castlingNotConsideredWhenEitherPieceIsNotOwnPiece
+    enPassantSelected
   }
 
   private def canMove {
     val conf: Configuration = new GridConfiguration
-    addKing(conf)
+    addWhiteKing(conf)
     conf.add("a1", White, Rook())
     val rp = newRandomPlayer(conf)
     assertNotNull(rp.getMove, "A move should be available")
@@ -30,7 +31,7 @@ object RandomPlayerTest extends Test with TestUtils with Main {
 
   private def isRandom {
     val conf: Configuration = new GridConfiguration
-    addKing(conf)
+    addWhiteKing(conf)
     conf.add("a1", White, Rook())
     val rp = newRandomPlayer(conf)
     val m1 = rp.getMove
@@ -214,6 +215,32 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     assertEquals(List(), castlingMoves, "When no castling was possible no castling was considered")
   }
 
+  private def enPassantSelected {
+    val conf: Configuration = new GridConfiguration
+    addBlackKing(conf)
+    addWhiteKing(conf)
+    conf.add("e7", Black, Pawn())
+    conf.add("d4", White, Pawn())
+    /* Do not allow double advance */
+    conf.applyMove(MovePiece("d4", "d5"))
+    /* Allow pawn to be captured with en passant */
+    conf.applyMove(MovePiece("e7", "e5"))
+    var moves = List[Move]()
+    val explorer: MoveExplorer = new StandardMoveExplorer(conf)
+    val rp = new RandomPlayer(White, conf, explorer) {
+      override protected def moveAcceptable(move: Move): Boolean = {
+        var accept = super.moveAcceptable(move)
+        if (accept) moves = move :: moves
+        accept
+      }
+    }
+    val m = rp.getMove
+    // TODO: Remove this println
+    println("moves: " + moves)
+    assertFalse(moves contains MovePiece("d5", "e6"), "MovePiece should not have been in the list of acceptable moves")
+    assertTrue(moves contains EnPassant("d5", "e6"), "En passant was in the list of acceptable moves")
+  }
+
   private def newRandomPlayer(conf: Configuration): Player = {
     val explorer: MoveExplorer = new StandardMoveExplorer(conf)
     new RandomPlayer(White, conf, explorer)
@@ -224,8 +251,13 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     new RandomPlayer(colour, conf, explorer)
   }
 
-  private def addKing(conf: Configuration) {
+  private def addBlackKing(conf: Configuration) {
     /* The King is required to allow the kingInCheck method to complete. */
-    conf.add("e1", White, King())
+    conf.add("e8", Black, King())
+  }
+
+  private def addWhiteKing(conf: Configuration) {
+	  /* The King is required to allow the kingInCheck method to complete. */
+	  conf.add("e1", White, King())
   }
 }
