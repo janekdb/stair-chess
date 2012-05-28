@@ -32,6 +32,14 @@ trait Test {
     assert(obj != null, message)
   }
 
+  def assertTrue(condition: Boolean, message: String) {
+    assert(condition, message)
+  }
+
+  def assertFalse(condition: Boolean, message: String) {
+	  assert(!condition, message)
+  }
+
   class FailureException(e: Exception, message: String) extends RuntimeException(message, e) {
 
     def this(e: Exception) = this(e, "Unexpected exception: " + e.getClass())
