@@ -1,6 +1,6 @@
 package chess.player
 
-import chess.model.{ Castle, Move, MovePiece, MovePieceCapturing, Promote, PromoteCapturing }
+import chess.model.{ Castle, EnPassant, Move, MovePiece, MovePieceCapturing, Promote, PromoteCapturing }
 import chess.model.{ Configuration, MoveExplorer }
 import chess.model.Colour
 import chess.model.Position
@@ -20,18 +20,20 @@ class RandomPlayer(val colour: Colour, val conf: Configuration, val explorer: Mo
   def getMove: Move = {
     val startPositions = conf.locatePieces(colour)
     def isHomeRow(row: Int): Boolean = row == Constants.WHITE_HOME_ROW || row == Constants.BLACK_HOME_ROW
+    def isDiagonal(a: Position, b: Position): Boolean = a.col != b.col
     var moves = List[Move]()
     for (s <- startPositions) {
       var endPositions = explorer.getBasicPositions(s)
       val (_, piece, _) = conf.getExistingPiece(s)
       // TODO: Switch to functional approach with yield
       endPositions.foreach { end =>
-        val isCapturing = conf.getPiece(end).isDefined
+        val endOccupied = conf.getPiece(end).isDefined
         val move = piece match {
-          // TODO: Randomly select between Queen and Knight
+          // TODO: Add both Queen and Knight variants
           case Pawn() if isHomeRow(end.getRow) =>
-            if (isCapturing) PromoteCapturing(s, end, Queen()) else Promote(s, end, Queen())
-          case default => if (isCapturing) MovePieceCapturing(s, end) else MovePiece(s, end)
+            if (endOccupied) PromoteCapturing(s, end, Queen()) else Promote(s, end, Queen())
+          case Pawn() if (!endOccupied && isDiagonal(s, end)) => EnPassant(s, end)
+          case default => if (endOccupied) MovePieceCapturing(s, end) else MovePiece(s, end)
         }
         moves = move :: moves
       }
