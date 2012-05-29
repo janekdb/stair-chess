@@ -235,8 +235,6 @@ object RandomPlayerTest extends Test with TestUtils with Main {
       }
     }
     val m = rp.getMove
-    // TODO: Remove this println
-    println("moves: " + moves)
     assertFalse(moves contains MovePiece("d5", "e6"), "MovePiece should not have been in the list of acceptable moves")
     assertTrue(moves contains EnPassant("d5", "e6"), "En passant was in the list of acceptable moves")
   }
