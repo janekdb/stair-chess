@@ -11,6 +11,7 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     isRandom
     selectsOnlyMove
     pawnPromotionSelected
+    pawnCapturingPromotionSelected
     queenCaptureSelected
     queenCaptureSelected2
     shortCastlingSelected
@@ -66,20 +67,55 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     val conf: Configuration = new GridConfiguration
     /* The pawn that should be promoted */
     conf.add("b7", White, Pawn())
+    // TODO: Now that the list of considered moves is extracted stop boxing the king in
     /* Box the White king in */
     conf.add("h8", White, King());
     conf.add("h7", White, Pawn());
     conf.add("g8", White, Pawn());
     conf.add("g7", White, Pawn());
 
-    val rp = newRandomPlayer(conf)
-    val m = rp.getMove
-    m match {
-      case mp: Promote =>
-        assertEquals(Promote("b7", "b8", Queen()), mp.copy(piece = Queen()), "Pawn promotion was selected")
-      case default => fail("Move was not Promote: " + m)
+    var moves = List[Move]()
+
+    val explorer: MoveExplorer = new StandardMoveExplorer(conf)
+    val rp = new RandomPlayer(White, conf, explorer) {
+      override protected def moveAcceptable(move: Move): Boolean = {
+        move match { case a: Promote => moves = a :: moves case default => Unit }
+        super.moveAcceptable(move)
+      }
     }
+    val m = rp.getMove
+    val promote = Promote("b7", "b8", Queen())
+    val expected = List(promote, promote.copy(piece = Knight()))
+    assertEquals(expected, moves, "Pawn promotion to both Queen and Knight was considered")
   }
+
+  private def pawnCapturingPromotionSelected  {
+    val conf: Configuration = new GridConfiguration
+    /* The pawn that should be promoted */
+    conf.add("b7", White, Pawn())
+    conf.add("c8", Black, Rook())
+    // TODO: Now that the list of considered moves is extracted stop boxing the king in
+    /* Box the White king in */
+    conf.add("h8", White, King());
+    conf.add("h7", White, Pawn());
+    conf.add("g8", White, Pawn());
+    conf.add("g7", White, Pawn());
+
+    var moves = List[Move]()
+
+    val explorer: MoveExplorer = new StandardMoveExplorer(conf)
+    val rp = new RandomPlayer(White, conf, explorer) {
+      override protected def moveAcceptable(move: Move): Boolean = {
+        move match { case a: PromoteCapturing => moves = a :: moves case default => Unit }
+        super.moveAcceptable(move)
+      }
+    }
+    val m = rp.getMove
+    val promote = PromoteCapturing("b7", "c8", Queen())
+    val expected = List(promote, promote.copy(piece = Knight()))
+    assertEquals(expected, moves, "Capturing pawn promotion to both Queen and Knight was considered")
+  }
+
 
   //  abcdefgh
   //8 ········
