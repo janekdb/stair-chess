@@ -20,8 +20,7 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
-// TODO: Use chess piece images
-// TODO: Conver to Scala
+// TODO: Convert to Scala
 public class SwingBoard extends JFrame implements Board {
 	GridLayout boardLayout = new GridLayout(8, 8);
 
