@@ -2,6 +2,7 @@ package chess.player
 
 import chess.model.{ Castle, EnPassant, Move, MovePiece, MovePieceCapturing, Promote, PromoteCapturing }
 import chess.model.{ Configuration, MoveExplorer }
+import chess.model.ex.IllegalMoveException
 import chess.model.Colour
 import chess.model.Position
 import chess.model.Pawn
@@ -60,12 +61,9 @@ class RandomPlayer(val colour: Colour, val conf: Configuration, val explorer: Mo
       explorer.rejectIllegalMove(move)
       true
     } catch {
-      case e => false
+      case e: IllegalMoveException=> false
     }
   }
 
-  // TODO: Improve shuffling, maybe use Fisher-Yates shuffling algorithm.
-  //  private def shuffle(a: Array[Position]) = {
-  //    java.util.Collections.shuffle(java.util.Arrays.asList(a: _*))
-  //  }
+  // TODO: Research Fisher-Yates shuffling algorithm.
 }
