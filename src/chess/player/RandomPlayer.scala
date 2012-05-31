@@ -20,7 +20,7 @@ class RandomPlayer(val colour: Colour, val conf: Configuration, val explorer: Mo
 
   def getMove: Move = {
     val startPositions = conf.locatePieces(colour)
-    def isHomeRow(row: Int): Boolean = row == Constants.WHITE_HOME_ROW || row == Constants.BLACK_HOME_ROW
+    def isHomeRow(row: Int): Boolean = List(Constants.WHITE_HOME_ROW, Constants.BLACK_HOME_ROW) contains row
     def isDiagonal(a: Position, b: Position): Boolean = a.col != b.col
     var moves = List[Move]()
     val ps = List(Knight(), Queen())
