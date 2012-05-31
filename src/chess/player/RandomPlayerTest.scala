@@ -67,12 +67,7 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     val conf: Configuration = new GridConfiguration
     /* The pawn that should be promoted */
     conf.add("b7", White, Pawn())
-    // TODO: Now that the list of considered moves is extracted stop boxing the king in
-    /* Box the White king in */
     conf.add("h8", White, King());
-    conf.add("h7", White, Pawn());
-    conf.add("g8", White, Pawn());
-    conf.add("g7", White, Pawn());
 
     var moves = List[Move]()
 
