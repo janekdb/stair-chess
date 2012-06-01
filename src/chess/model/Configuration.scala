@@ -80,8 +80,8 @@ trait Configuration {
       }
       case e: EnPassant => {
         this.move(e.start, e.end)
-        this.remove(e.taken)
-        List(PieceMovedTaking(e.start, e.end, e.taken))
+        this.remove(e.captured)
+        List(PieceMovedTaking(e.start, e.end, e.captured))
       }
       case Castle(colour, castlingType) => {
         val row = colour.homeRow

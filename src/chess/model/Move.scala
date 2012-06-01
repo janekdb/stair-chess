@@ -45,6 +45,5 @@ case class PromoteCapturing(start: Position, end: Position, piece: Piece) extend
   }
 }
 case class EnPassant(start: Position, end: Position) extends SimpleMove {
-  // TODO: Rename taken to captured
-  val taken = new Position(end.getCol, start.getRow)
+  val captured = new Position(end.getCol, start.getRow)
 }
