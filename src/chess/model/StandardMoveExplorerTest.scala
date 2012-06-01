@@ -42,6 +42,19 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     rejectIllegalMoveAllowsResigning
 
     rejectNonPromotingPawnAdvanceToBackRank
+
+    /* legalMoves */
+    selectsOnlyMove
+    pawnPromotionSelected
+    pawnCapturingPromotionSelected
+    queenCaptureSelected
+    queenCaptureSelected2
+    castlingIncluded
+    shortCastlingNotConsideredWhenStartPositionsIncorrect
+    longCastlingNotConsideredWhenStartPositionsIncorrect
+    castlingNotConsideredWhenEitherPieceIsNotOwnPiece
+    enPassantSelected
+
   }
 
   private def acceptMovePieceThatWouldNotCapture {
@@ -389,6 +402,172 @@ private def rejectPromoteCapturingThatWouldNotCapture {
     }
   }
 
+  /* legalMoves: start */
+  private def selectsOnlyMove {
+    val conf: Configuration = new GridConfiguration
+    /* Box the rooks in */
+    // Rr    PK
+    // RP    PP
+    // P
+    conf.add("a6", White, Pawn());
+    conf.add("a7", White, Rook());
+    conf.add("b7", White, Pawn());
+    conf.add("a8", White, Rook());
+    conf.add("b8", Black, Rook());
+    /* Box the White king in */
+    conf.add("h8", White, King());
+    conf.add("h7", White, Pawn());
+    conf.add("g8", White, Pawn());
+    conf.add("g7", White, Pawn());
+
+    val e = new StandardMoveExplorer(conf)
+    val moves = e.legalMoves(White)
+    assertEquals(List(MovePieceCapturing("a8", "b8")), moves, "The only possible move should have been selected")
+  }
+
+  private def pawnPromotionSelected {
+    val conf: Configuration = new GridConfiguration
+    /* The pawn that should be promoted */
+    conf.add("b7", White, Pawn())
+    conf.add("h8", White, King());
+
+    val e = new StandardMoveExplorer(conf)
+    val moves = e.legalMoves(White) filter { case a: Promote => true case default => false}
+    val promote = Promote("b7", "b8", Queen())
+    val expected = List(promote.copy(piece = Knight()), promote)
+    assertEquals(expected, moves, "Pawn promotion to both Queen and Knight was considered")
+  }
+
+  private def pawnCapturingPromotionSelected  {
+    val conf: Configuration = new GridConfiguration
+    /* The pawn that should be promoted */
+    conf.add("b7", White, Pawn())
+    conf.add("c8", Black, Rook())
+    // TODO: Now that the list of considered moves is extracted stop boxing the king in
+    /* Box the White king in */
+    conf.add("h8", White, King());
+    conf.add("h7", White, Pawn());
+    conf.add("g8", White, Pawn());
+    conf.add("g7", White, Pawn());
+
+    val e = new StandardMoveExplorer(conf)
+    val moves = e.legalMoves(White) filter { case a: PromoteCapturing => true case default => false}
+    val promote = PromoteCapturing("b7", "c8", Queen())
+    val expected = List(promote.copy(piece = Knight()), promote)
+    assertEquals(expected, moves, "Capturing pawn promotion to both Queen and Knight was considered")
+  }
+
+
+  //  abcdefgh
+  //8 ········
+  //7 ········
+  //6 ······q·
+  //5 ········
+  //4 ·K······
+  //3 ···kQ···
+  //2 ·······Q
+  //1 ··.b····
+  //  abcdefgh
+  /* Black can escape checkmate by taking the queen */
+  private def queenCaptureSelected {
+    val conf: Configuration = new GridConfiguration
+    conf.add("d1", Black, Bishop())
+    conf.add("h2", White, Queen())
+    conf.add("d3", Black, King())
+    conf.add("e3", White, Queen())
+    conf.add("b4", White, King())
+    conf.add("g6", Black, Queen())
+    val e = new StandardMoveExplorer(conf)
+    val moves = e.legalMoves(Black)
+    assertEquals(List(MovePieceCapturing("d3", "e3")), moves, "Black escaped from check by selected the only possible move")
+  }
+
+//  abcdefgh
+//8 ······k·
+//7 ·····Q··
+//6 ········
+//5 ········
+//4 ···B····
+//3 pR·p·p··
+//2 ·····P··
+//1 ······K·
+//  abcdefgh
+  /* Black can escape checkmate by taking the queen */
+  private def queenCaptureSelected2 {
+    val conf: Configuration = new GridConfiguration
+    conf.add("g1", White, King())
+    conf.add("f2", Black, Pawn())
+    conf.add("a3", Black, Pawn())
+    conf.add("b3", White, Rook())
+    conf.add("d3", White, Pawn())
+    conf.add("f3", White, Pawn())
+    conf.add("d4", White, Bishop())
+    conf.add("f7", White, Queen())
+    conf.add("g8", Black, King())
+    val e = new StandardMoveExplorer(conf)
+    val moves = e.legalMoves(Black)
+    assertEquals(List(MovePieceCapturing("g8", "f7")), moves, "Black escaped from check by selected the only possible move")
+  }
+
+  private def castlingIncluded {
+    val conf: Configuration = new GridConfiguration
+    conf.add("a1", White, Rook())
+    conf.add("e1", White, King())
+    conf.add("h1", White, Rook())
+    val allowedMove = Castle(White, Long)
+    val e = new StandardMoveExplorer(conf)
+    val moves = e.legalMoves(White) filter { case a: Castle => true case default => false }
+    assertEquals(List(Castle(White, Short), Castle(White, Long)), moves, "Both long and short castling was included")
+  }
+
+  private def shortCastlingNotConsideredWhenStartPositionsIncorrect {
+    val conf: Configuration = new GridConfiguration
+    conf.add("a1", White, Rook())
+    conf.add("e1", White, King())
+    conf.add("h2", White, Rook())
+    val e = new StandardMoveExplorer(conf)
+    val moves = e.legalMoves(White) filter { case a: Castle => true case default => false }
+    assertEquals(List(Castle(White, Long)), moves, "When only long castling was possible short castling was not considered")
+  }
+
+  private def longCastlingNotConsideredWhenStartPositionsIncorrect  {
+    val conf: Configuration = new GridConfiguration
+    conf.add("a2", White, Rook())
+    conf.add("e1", White, King())
+    conf.add("h1", White, Rook())
+    val e = new StandardMoveExplorer(conf)
+    val moves = e.legalMoves(White) filter { case a: Castle => true case default => false }
+    assertEquals(List(Castle(White, Short)), moves, "When only short castling was possible long castling was not considered")
+  }
+
+  private def castlingNotConsideredWhenEitherPieceIsNotOwnPiece {
+    val conf: Configuration = new GridConfiguration
+    conf.add("a1", Black, Rook())
+    conf.add("e1", White, King())
+    conf.add("h1", Black, Rook())
+    val e = new StandardMoveExplorer(conf)
+    val moves = e.legalMoves(White) filter { case a: Castle => true case default => false }
+    assertEquals(List(), moves, "When no castling was possible no castling was considered")
+  }
+
+  private def enPassantSelected {
+    val conf: Configuration = new GridConfiguration
+    placeKings(conf)
+    conf.add("e7", Black, Pawn())
+    conf.add("d4", White, Pawn())
+    /* Do not allow double advance */
+    conf.applyMove(MovePiece("d4", "d5"))
+    /* Allow pawn to be captured with en passant */
+    conf.applyMove(MovePiece("e7", "e5"))
+    val e = new StandardMoveExplorer(conf)
+    val moves = e.legalMoves(White)
+    assertFalse(moves contains MovePiece("d5", "e6"), "MovePiece should not have been in the list of acceptable moves")
+    assertTrue(moves contains EnPassant("d5", "e6"), "En passant was in the list of acceptable moves")
+  }
+
+  
+  /* legalMoves: end*/
+  
   private def placeKings(conf: Configuration) {
     conf.add("e1", White, King())
     conf.add("e8", Black, King())

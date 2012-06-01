@@ -5,6 +5,7 @@ import chess.model.ex.{
   AttackedPositionException,
   CapturingMoveException,
   CheckedOwnKing,
+  IllegalMoveException,
   InterveningPieceException,
   NonCapturingMoveException,
   PreviouslyMovedException,
@@ -257,6 +258,52 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
 
     if (new StandardMoveExplorer(future).kingInCheck(colour)) {
       throw new CheckedOwnKing(move)
+    }
+  }
+
+  /** @return All legal moves. */
+  def legalMoves(colour: Colour): List[Move] = {
+    val startPositions = conf.locatePieces(colour)
+    def isHomeRow(row: Int): Boolean = List(Constants.WHITE_HOME_ROW, Constants.BLACK_HOME_ROW) contains row
+    def isDiagonal(a: Position, b: Position): Boolean = a.col != b.col
+    var moves = List[Move]()
+    val ps = List(Knight(), Queen())
+    for (s <- startPositions) {
+      var endPositions = this.getBasicPositions(s)
+      val (_, piece, _) = conf.getExistingPiece(s)
+      // TODO: Switch to functional approach with yield
+      endPositions.foreach { end =>
+        val endOccupied = conf.getPiece(end).isDefined
+        val ms = piece match {
+          case Pawn() if isHomeRow(end.getRow) =>
+            if (endOccupied) ps.map { PromoteCapturing(s, end, _) } else ps.map { Promote(s, end, _) }
+          case Pawn() if (!endOccupied && isDiagonal(s, end)) => List(EnPassant(s, end))
+          case default => if (endOccupied) List(MovePieceCapturing(s, end)) else List(MovePiece(s, end))
+        }
+        moves = ms ::: moves
+      }
+    }
+
+    /*
+     * Only add castling if the king and rooks are at the correct positions because
+     * rejectIllegalMove does not explicitly check the pieces are present.
+     */
+    for (castlingType <- List(Long, Short)) {
+      val ((king, _), (rook, _)) = castlingType.getPositions(colour.homeRow)
+      if (List(king, rook).forall(conf.exists(_, colour))) {
+        moves = Castle(colour, castlingType) :: moves
+      }
+    }
+    moves filter { moveAcceptable }
+  }
+
+  private def moveAcceptable(move: Move): Boolean = {
+    try {
+      // TODO: Convert rejectIllegalMove to a query method
+      this.rejectIllegalMove(move)
+      true
+    } catch {
+      case e: IllegalMoveException => false
     }
   }
 
