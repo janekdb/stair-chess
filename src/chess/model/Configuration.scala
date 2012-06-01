@@ -55,8 +55,6 @@ trait Configuration {
     }
   }
 
-  // TODO: Separate the two aspects of this case into a) Conversion from physical Move to MovePiece or MovePieceTaking to
-  //  allow RandomPlayer to get a list of actual moves from Configuration
   /**
    * Update board configuration. The move must be legal i.e. the caller takes responsibility for
    * ensuring the move is legal.
@@ -76,12 +74,12 @@ trait Configuration {
         assert(otherColour != colour)
         this.remove(end)
         this.move(start, end)
-        List(PieceMovedTaking(start, end, end))
+        List(PieceMovedCapturing(start, end, end))
       }
       case e: EnPassant => {
         this.move(e.start, e.end)
         this.remove(e.captured)
-        List(PieceMovedTaking(e.start, e.end, e.captured))
+        List(PieceMovedCapturing(e.start, e.end, e.captured))
       }
       case Castle(colour, castlingType) => {
         val row = colour.homeRow

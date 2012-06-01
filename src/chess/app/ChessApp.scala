@@ -6,7 +6,7 @@ import chess.library.Library
 import chess.model.{ Colours, Move }
 import chess.model.BoardModel
 import chess.model.{ BoardChangedSubscriber, BoardChanged }
-import chess.model.{ Castled, PiecePlaced, PieceMoved, PieceMovedTaking, Promoted, Resigned, Won }
+import chess.model.{ Castled, PiecePlaced, PieceMoved, PieceMovedCapturing, Promoted, Resigned, Won }
 import chess.model.Position
 import chess.player.RandomPlayer
 import chess.ui.UI
@@ -71,9 +71,9 @@ object BoardUI extends BoardChangedSubscriber {
         setPiece(end, label)
         delay(100)
       }
-      case PieceMovedTaking(start, end, taken) => {
+      case PieceMovedCapturing(start, end, captured) => {
         val label = getPiece(start)
-        clearSquare(taken)
+        clearSquare(captured)
         clearSquare(start)
         setPiece(end, label)
 

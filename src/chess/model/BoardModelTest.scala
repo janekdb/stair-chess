@@ -274,11 +274,11 @@ object BoardModelTest extends Test with TestUtils with Main {
 
     val bm = new BoardModel(pb, Nil)
 
-    var pieceMovedTaking: PieceMovedTaking = null
+    var pieceMovedCapturing: PieceMovedCapturing = null
     val s = new Object with BoardChangedSubscriber {
       def onBoardChanged(event: BoardChanged) {
         event match {
-          case e @ PieceMovedTaking(_, _, _) => pieceMovedTaking = e
+          case e @ PieceMovedCapturing(_, _, _) => pieceMovedCapturing = e
           case default => fail("Unexpected event: " + event)
         }
       }
@@ -296,10 +296,10 @@ object BoardModelTest extends Test with TestUtils with Main {
     val whiteEnd: Position = "d6"
     bm.move(EnPassant(whiteStart, whiteEnd))
 
-    assertNotNull(pieceMovedTaking, "PieceMovedTaking event was sent")
-    assertEquals(whiteStart, pieceMovedTaking.start, "PieceMovedTaking.start was correct: " + pieceMovedTaking)
-    assertEquals(whiteEnd, pieceMovedTaking.end, "PieceMovedTaking.end was correct: " + pieceMovedTaking)
-    assertEquals(blackEnd, pieceMovedTaking.taken, "PieceMovedTaking.taken was correct: Expected: " + blackEnd + ", had: " + pieceMovedTaking)
+    assertNotNull(pieceMovedCapturing, "PieceMovedTaking event was sent")
+    assertEquals(whiteStart, pieceMovedCapturing.start, "PieceMovedCapturing.start was correct: " + pieceMovedCapturing)
+    assertEquals(whiteEnd, pieceMovedCapturing.end, "PieceMovedCapturing.end was correct: " + pieceMovedCapturing)
+    assertEquals(blackEnd, pieceMovedCapturing.captured, "PieceMovedCapturing.captured was correct: Expected: " + blackEnd + ", had: " + pieceMovedCapturing)
   }
 
   private def enPassantDisallowedIfNotImmediatelyUsed {

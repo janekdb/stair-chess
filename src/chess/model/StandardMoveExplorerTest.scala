@@ -440,15 +440,10 @@ private def rejectPromoteCapturingThatWouldNotCapture {
 
   private def pawnCapturingPromotionSelected  {
     val conf: Configuration = new GridConfiguration
+    placeKings(conf)
     /* The pawn that should be promoted */
     conf.add("b7", White, Pawn())
     conf.add("c8", Black, Rook())
-    // TODO: Now that the list of considered moves is extracted stop boxing the king in
-    /* Box the White king in */
-    conf.add("h8", White, King());
-    conf.add("h7", White, Pawn());
-    conf.add("g8", White, Pawn());
-    conf.add("g7", White, Pawn());
 
     val e = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(White) filter { case a: PromoteCapturing => true case default => false}

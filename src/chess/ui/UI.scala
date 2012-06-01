@@ -6,7 +6,7 @@ import chess.model.Colours.{ Black, White }
 import chess.model.{ Rook, Knight, Bishop, Queen, King, Pawn }
 import chess.model.{ Castle, MovePiece }
 
-import chess.model.{ BoardChanged, Castled, PieceMoved, PieceMovedTaking, PiecePlaced, Promoted, Resigned, Won }
+import chess.model.{ BoardChanged, Castled, PieceMoved, PieceMovedCapturing, PiecePlaced, Promoted, Resigned, Won }
 
 import chess.util.TODO	
 
@@ -26,9 +26,9 @@ class UI extends BoardChangedSubscriber {
         /* Assumes a piece is present at the start position. */
         conf.move(start, end)
       }
-      case PieceMovedTaking(start, end, taken) => {
-        /* Assumes pieces are present at the start and taken positions. */
-        conf.remove(taken)
+      case PieceMovedCapturing(start, end, captured) => {
+        /* Assumes pieces are present at the start and captured positions. */
+        conf.remove(captured)
         conf.move(start, end)
       }
       case PiecePlaced(colour, piece, position) => {
