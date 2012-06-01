@@ -15,6 +15,7 @@ import chess.util.TODO
 import chess.model.ex.NonPromotingPawnAdvance
 
 // TODO: Confirm a pawn taking a piece on the back rank will be enforced as a promotion
+// TODO: Rework checkmate escape code to use list of valid moves
 
 /**
  * The moves of standard chess
