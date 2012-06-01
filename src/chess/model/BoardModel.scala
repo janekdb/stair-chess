@@ -8,6 +8,18 @@ import WinModes.WinMode
 
 // TODO: End game when no progress is possible
 //   when only two kings
+//   when stalemate
+//		  abcdefgh
+//		8 ········
+//		7 ········
+//		6 ········
+//		5 ········
+//		4 ······n·
+//		3 ········
+//		2 ········
+//		1 ·····k·K
+//		  abcdefgh
+
 
 /**
  * This class is concerned with maintaining a model of a chess game. It contains no UI. A UI can be attached as a listener.
