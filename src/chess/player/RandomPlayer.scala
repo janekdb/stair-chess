@@ -14,6 +14,4 @@ class RandomPlayer(val colour: Colour, val conf: Configuration, val explorer: Mo
     if (moves.isEmpty) throw new RuntimeException("No move found")
     moves(new util.Random().nextInt(moves.size))
   }
-
-  // TODO: Research Fisher-Yates shuffling algorithm.
 }
