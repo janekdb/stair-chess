@@ -42,6 +42,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     rejectIllegalMoveAllowsResigning
 
     rejectNonPromotingPawnAdvanceToBackRank
+    rejectNonPromotingPawnCaptureOfBackRankPiece
 
     /* legalMoves */
     selectsOnlyMove
@@ -399,6 +400,17 @@ private def rejectPromoteCapturingThatWouldNotCapture {
     val e = new StandardMoveExplorer(conf)
     assertExceptionThrown("Non promoting pawn advance to opponents home rank should be rejected", classOf[NonPromotingPawnAdvance]) {
       e.rejectIllegalMove(MovePiece("d7", "d8"))
+    }
+  }
+
+  private def rejectNonPromotingPawnCaptureOfBackRankPiece {
+    val conf = new GridConfiguration
+    placeKings(conf)
+    conf.add("d7", White, Pawn())
+    conf.add("e8", Black, Bishop())
+    val e = new StandardMoveExplorer(conf)
+    assertExceptionThrown("Non promoting pawn capturing of opponents home rank piece should be rejected", classOf[NonPromotingPawnAdvance]) {
+      e.rejectIllegalMove(MovePieceCapturing("d7", "e8"))
     }
   }
 
