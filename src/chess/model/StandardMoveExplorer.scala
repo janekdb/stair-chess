@@ -14,7 +14,6 @@ import chess.model.ex.{
 import chess.util.TODO
 import chess.model.ex.NonPromotingPawnAdvance
 
-// TODO: Confirm a pawn taking a piece on the back rank will be enforced as a promotion
 // TODO: Rework checkmate escape code to use list of valid moves
 
 /**
@@ -265,24 +264,12 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
   /** @return All legal moves. */
   def legalMoves(colour: Colour): List[Move] = {
     val startPositions = conf.locatePieces(colour)
-    def isHomeRow(row: Int): Boolean = List(Constants.WHITE_HOME_ROW, Constants.BLACK_HOME_ROW) contains row
-    def isDiagonal(a: Position, b: Position): Boolean = a.col != b.col
     var moves = List[Move]()
-    val ps = List(Knight(), Queen())
     for (s <- startPositions) {
       var endPositions = this.getBasicPositions(s)
       val (_, piece, _) = conf.getExistingPiece(s)
-      // TODO: Switch to functional approach with yield
-      endPositions.foreach { end =>
-        val endOccupied = conf.getPiece(end).isDefined
-        val ms = piece match {
-          case Pawn() if isHomeRow(end.getRow) =>
-            if (endOccupied) ps.map { PromoteCapturing(s, end, _) } else ps.map { Promote(s, end, _) }
-          case Pawn() if (!endOccupied && isDiagonal(s, end)) => List(EnPassant(s, end))
-          case default => if (endOccupied) List(MovePieceCapturing(s, end)) else List(MovePiece(s, end))
-        }
-        moves = ms ::: moves
-      }
+      for (moveList <- generateMoves(piece, s, endPositions))
+        moves = moveList ::: moves
     }
 
     /*
@@ -296,6 +283,23 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
       }
     }
     moves filter { moveAcceptable }
+  }
+
+  private def isHomeRow(row: Int): Boolean = List(Constants.WHITE_HOME_ROW, Constants.BLACK_HOME_ROW) contains row
+  private def isDiagonal(a: Position, b: Position): Boolean = a.col != b.col
+
+  private val promotionPieces = List(Knight(), Queen())
+
+  private def generateMoves(piece: Piece, start: Position, endPositions: Set[Position]) = {
+    for (end <- endPositions) yield {
+      val endOccupied = conf.getPiece(end).isDefined
+      piece match {
+        case Pawn() if isHomeRow(end.getRow) =>
+          if (endOccupied) promotionPieces.map { PromoteCapturing(start, end, _) } else promotionPieces.map { Promote(start, end, _) }
+        case Pawn() if (!endOccupied && isDiagonal(start, end)) => List(EnPassant(start, end))
+        case default => if (endOccupied) List(MovePieceCapturing(start, end)) else List(MovePiece(start, end))
+      }
+    }
   }
 
   private def moveAcceptable(move: Move): Boolean = {
