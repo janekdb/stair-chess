@@ -52,15 +52,6 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     assertSomeEquals((Pawn(), whiteStart, whiteEnd), copy.getLastMove)
   }
 
-  def assertSomeEquals(expected: (Piece, Position, Position), actual: Option[(Piece, Position, Position)]) {
-    actual match {
-      case Some((_, _, _)) => Unit
-      case default => fail("The last move should have been Some((_, _)) but was " + actual)
-    }
-    val Some((p, a, b)) = actual
-    assertEquals(expected, (p, a, b))
-  }
-
   def enPassantEventSent {
     val conf = new GridConfiguration
 
@@ -91,13 +82,42 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     }
   }
 
-  def pieceMovedEventSent { // TODO: Implement pieceMovedEventSent
+  def pieceMovedEventSent {
+    val conf = new GridConfiguration
+    val whiteStart: Position = "a5"
+    val whiteEnd: Position = "a6"
+    conf.add(whiteStart, White, Pawn())
+    val events = conf.applyMove(MovePiece(whiteStart, whiteEnd))
+    assertEquals(List(PieceMoved(whiteStart, whiteEnd)), events, "The events sent when a piece was moved should have been correct")
   }
-  def pieceMovedCapturingEventSent { // TODO: Implement pieceMovedCapturingEventSent
+
+  def pieceMovedCapturingEventSent {
+    val conf = new GridConfiguration
+    val whiteStart: Position = "a5"
+    val whiteEnd: Position = "b6"
+    conf.add(whiteStart, White, Pawn())
+    conf.add(whiteEnd, Black, Queen())
+    val events = conf.applyMove(MovePieceCapturing(whiteStart, whiteEnd))
+    assertEquals(List(PieceMovedCapturing(whiteStart, whiteEnd, whiteEnd)), events, "The events sent when a piece captured should have been correct")
   }
-  def promoteEventsSent { // TODO: Implement promoteEventsSent
+  
+  def promoteEventsSent {
+    val conf = new GridConfiguration
+    val whiteStart: Position = "a7"
+    val whiteEnd: Position = "a8"
+    conf.add(whiteStart, White, Pawn())
+    val events = conf.applyMove(Promote(whiteStart, whiteEnd, Queen()))
+    assertEquals(List(PieceMoved(whiteStart, whiteEnd), Promoted(whiteEnd, Queen())), events, "The events sent when a piece was promote should have been correct")
   }
-  def promoteCapturingEventsSent { // TODO: Implement promoteCapturingEventsSent
+
+  def promoteCapturingEventsSent {
+    val conf = new GridConfiguration
+    val whiteStart: Position = "a7"
+    val whiteEnd: Position = "b8"
+    conf.add(whiteStart, White, Pawn())
+    conf.add(whiteEnd, Black, Bishop())
+    val events = conf.applyMove(PromoteCapturing(whiteStart, whiteEnd, Queen()))
+    assertEquals(List(PieceMovedCapturing(whiteStart, whiteEnd, whiteEnd), Promoted(whiteEnd, Queen())), events, "The events sent when a piece was promote should have been correct")
   }
 
   def promoteReplacesPiece {
@@ -110,5 +130,14 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     assertEquals(PieceMoved(start, end) :: Promoted(end, Knight()) :: Nil, events)
     assertEquals(List(), conf.locatePieces(White, Pawn()), "There should not have been any pawns")
     assertEquals(List(end), conf.locatePieces(White, Knight()), "A knight should be present")
+  }
+
+  def assertSomeEquals(expected: (Piece, Position, Position), actual: Option[(Piece, Position, Position)]) {
+    actual match {
+      case Some((_, _, _)) => Unit
+      case default => fail("The last move should have been Some((_, _)) but was " + actual)
+    }
+    val Some((p, a, b)) = actual
+    assertEquals(expected, (p, a, b))
   }
 }
