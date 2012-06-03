@@ -7,7 +7,7 @@ import chess.model.Colour
 /**
  * A player that selects moves at random.
  */
-class RandomPlayer(val colour: Colour, val conf: Configuration, val explorer: MoveExplorer) extends Player {
+class RandomPlayer(val colour: Colour, val explorer: MoveExplorer) extends Player {
 
   def getMove: Move = {
     val moves = explorer.legalMoves(colour)

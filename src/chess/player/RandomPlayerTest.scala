@@ -32,12 +32,12 @@ object RandomPlayerTest extends Test with TestUtils with Main {
 
   private def newRandomPlayer(conf: Configuration): Player = {
     val explorer: MoveExplorer = new StandardMoveExplorer(conf)
-    new RandomPlayer(White, conf, explorer)
+    new RandomPlayer(White, explorer)
   }
 
   private def newRandomPlayer(conf: Configuration, colour: Colour): Player = {
     val explorer: MoveExplorer = new StandardMoveExplorer(conf)
-    new RandomPlayer(colour, conf, explorer)
+    new RandomPlayer(colour, explorer)
   }
 
   private def addWhiteKing(conf: Configuration) {
