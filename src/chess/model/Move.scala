@@ -2,19 +2,16 @@ package chess.model
 
 import ex.IllegalPromotionException
 
-
-//class StringOps(val s: String) {
-//  def start = s.substring(0, 2)
-//  def end = s.substring(2, 4)
-//}
-//implicit def stringOps(s: String) = new StringOps(s)
-
-object start {
-  def apply(move: String): Position = new Position(move.substring(0, 2))
+private object Utils {
+  def start(move: String): Position = new Position(move.substring(0, 2))
+  def end(move: String): Position = new Position(move.substring(2, 4))
+  def rejectInvalidPromotionPiece(piece: Piece) {
+    if (List(King(), Pawn()) contains piece)
+      throw new IllegalPromotionException(piece)
+  }
 }
-object end {
-	def apply(move: String): Position = new Position(move.substring(2, 4))
-}
+
+import Utils._
 
 /** Verbs */
 
@@ -42,19 +39,14 @@ case class Promote(val start: Position, val end: Position, val piece: Piece) ext
   // TODO: Remove end because for promotion without capturing the start determines the end
   def this(move: String, piece: Piece) = {
     this(start(move), end(move), piece)
-    if (List(King(), Pawn()) contains piece) {
-      throw new IllegalPromotionException(piece)
-    }
+    rejectInvalidPromotionPiece(piece)
   }
 }
 case class PromoteCapturing(val start: Position, val end: Position, val piece: Piece) extends SimpleMove {
   require(start != end, "Start must be different to end: " + start)
-  // TODO: Reduce duplication with Promote
   def this(move: String, piece: Piece) = {
     this(start(move), end(move), piece)
-    if (List(King(), Pawn()) contains piece) {
-      throw new IllegalPromotionException(piece)
-    }
+    rejectInvalidPromotionPiece(piece)
   }
 }
 case class EnPassant(val start: Position, val end: Position) extends SimpleMove {
