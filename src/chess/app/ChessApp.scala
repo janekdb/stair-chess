@@ -103,8 +103,6 @@ object BoardUI extends BoardChangedSubscriber {
       case Won(colour, winMode) => {
         board.showWon(colour.toString, winMode.toString)
       }
-      // TODO: Add Won by check mate
-      //case class Won(colour: Colour, winMode: WinMode) extends BoardChanged
 
       case default => TODO.throwRuntimeEx("Unhandled case: " + event)
     }
