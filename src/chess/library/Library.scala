@@ -1,7 +1,8 @@
 package chess.library
 
-import chess.model.{ BoardModel, Castle, Colour, Move, MovePiece, Position, Promote, Resign, Short, Long, Queen }
+import chess.model.{ BoardModel, Castle, Colour, Move, MovePiece, MovePieceCapturing, Position, Promote, Resign, Short, Long, Queen }
 import chess.model.Promote
+import chess.model.MovePieceCapturing
 
 object Library {
 
@@ -16,7 +17,7 @@ object Library {
     "e2e4",
     "d1h5",
     "f1c4",
-    "h5f7")
+    new MovePieceCapturing("h5f7"))
 
   val scholarsMate = new Game(scholarsMateWhite, scholarsMateBlack)
 
