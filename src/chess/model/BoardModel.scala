@@ -102,7 +102,7 @@ class BoardModel {
       case Castle(colour, _) => colour
       case MovePiece(start, _) => conf.getExistingPiece(start)
       case MovePieceCapturing(start, _) => conf.getExistingPiece(start)
-      case Promote(start, _, _) => conf.getExistingPiece(start)
+      case Promote(start, _) => conf.getExistingPiece(start)
       case PromoteCapturing(start, _, _) => conf.getExistingPiece(start)
       case EnPassant(start, _) => conf.getExistingPiece(start)
       case default => throw new UnhandledCaseException(move.toString)
