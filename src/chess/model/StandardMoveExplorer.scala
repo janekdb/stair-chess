@@ -212,10 +212,10 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
         }
 
       }
-      case m @ Promote(start, end, piece) => {
-        checkReachable(start, end)
+      case m @ Promote(start, piece) => {
+        checkReachable(start, m.end)
         /* PromoteCapturing must be used when capturing */
-        checkNotCapturing(end)
+        checkNotCapturing(m.end)
         /* Perform this check after all move validating checks */
         checkKingNotLeftInCheckAfterMove(m)
       }
@@ -295,7 +295,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
       val endOccupied = conf.getPiece(end).isDefined
       piece match {
         case Pawn() if isHomeRow(end.getRow) =>
-          if (endOccupied) promotionPieces.map { PromoteCapturing(start, end, _) } else promotionPieces.map { Promote(start, end, _) }
+          if (endOccupied) promotionPieces.map { PromoteCapturing(start, end, _) } else promotionPieces.map { Promote(start, _) }
         case Pawn() if (!endOccupied && isDiagonal(start, end)) => List(EnPassant(start, end))
         case default => if (endOccupied) List(MovePieceCapturing(start, end)) else List(MovePiece(start, end))
       }
