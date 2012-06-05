@@ -75,7 +75,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     placeKings(conf)
     conf.add(start, White, Pawn())
     val e = new StandardMoveExplorer(conf)
-    e.rejectIllegalMove(Promote(start, end, Queen()))
+    e.rejectIllegalMove(Promote(start, Queen()))
   }
 
   private def rejectMovePieceThatWouldCapture {
@@ -93,14 +93,14 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
 
   private def rejectPromoteThatWouldCapture {
     val start = new Position("a7")
-    val end = new Position("b8")
+    val end = new Position("a8")
     val conf = new GridConfiguration
     placeKings(conf)
     conf.add(start, White, Pawn())
     conf.add(end, Black, Rook())
     val e = new StandardMoveExplorer(conf)
-    assertExceptionThrown("Promote that would have taken a piece was rejected", classOf[NonCapturingMoveException]) {
-      e.rejectIllegalMove(Promote(start, end, Queen()))
+    assertExceptionThrown("Promote that would have taken a piece was rejected", classOf[UnreachablePositionException]) {
+      e.rejectIllegalMove(Promote(start, Queen()))
     }
   }
         
@@ -445,7 +445,7 @@ private def rejectPromoteCapturingThatWouldNotCapture {
 
     val e = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(White) filter { case a: Promote => true case default => false}
-    val promote = Promote("b7", "b8", Queen())
+    val promote = Promote("b7", Queen())
     val expected = List(promote.copy(piece = Knight()), promote)
     assertEquals(expected, moves, "Pawn promotion to both Queen and Knight was considered")
   }
