@@ -89,10 +89,10 @@ trait Configuration {
         }
         List(Castled(new PieceMoved(king), new PieceMoved(rook)))
       }
-      case Promote(start, end, piece) => {
-        val events = applyMove(MovePiece(start, end))
-        this.replace(end, piece)
-        Promoted(end, piece) :: events reverse
+      case p @ Promote(start, piece) => {
+        val events = applyMove(MovePiece(start, p.end))
+        this.replace(p.end, piece)
+        Promoted(p.end, piece) :: events reverse
       }
       case PromoteCapturing(start, end, piece) => {
         val events = applyMove(MovePieceCapturing(start, end))
