@@ -34,11 +34,13 @@ case class MovePieceCapturing(val start: Position, val end: Position) extends Si
 }
 case class Resign(colour: Colour) extends Move
 case class Castle(colour: Colour, castlingType: CastlingType) extends Move
-case class Promote(val start: Position, val end: Position, val piece: Piece) extends SimpleMove {
+//case class PromoteCapturing(val start: Position, val end: Position, val piece: Piece) extends SimpleMove {
+case class Promote(val start: Position, val piece: Piece) extends SimpleMove {
   require(start != end, "Start must be different to end: " + start)
-  // TODO: Remove end because for promotion without capturing the start determines the end
+  //TODO: Remove magic value of 7
+  val end = { val row = if (start.row == 7) start.row + 1 else start.row - 1; new Position(start.col, row) }
   def this(move: String, piece: Piece) = {
-    this(start(move), end(move), piece)
+    this(start(move), piece)
     rejectInvalidPromotionPiece(piece)
   }
 }
