@@ -1,19 +1,26 @@
 package chess.app
 
 import java.util.concurrent.TimeUnit
-import java.util.regex.{ Matcher, Pattern }
-import chess.library.Library
-import chess.model.{ Colours, Move }
+import java.util.regex.Pattern
+
+import chess.model.BoardChanged
+import chess.model.BoardChangedSubscriber
 import chess.model.BoardModel
-import chess.model.{ BoardChangedSubscriber, BoardChanged }
-import chess.model.{ Castled, PiecePlaced, PieceMoved, PieceMovedCapturing, Promoted, Resigned, Won }
+import chess.model.Castled
+import chess.model.Colours
+import chess.model.PieceMoved
+import chess.model.PieceMovedCapturing
+import chess.model.PiecePlaced
 import chess.model.Position
+import chess.model.Promoted
+import chess.model.Resigned
+import chess.model.Won
 import chess.player.RandomPlayer
+import chess.ui.SwingBoard
 import chess.ui.UI
 import chess.util.PlayerSelector
 import chess.util.TODO
 import test.AllTests
-import chess.ui.{ Board, SwingBoard }
 
 object ChessApp {
   def main(args: Array[String]) {
