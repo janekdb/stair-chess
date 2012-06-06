@@ -1,6 +1,7 @@
 package chess.model
 
 import Colours.{ Black, White }
+import WinModes.WinMode
 import ex._
 import test.{Main, Test, TestUtils}
 import chess.util.TODO
@@ -21,7 +22,8 @@ object BoardModelTest extends Test with TestUtils with Main {
     rejectReCastling
     rejectIfMoveLeavesOwnKingInCheck
     checkMateIsDetected
-    checkButNotMateIsDetected
+    checkWithNonCapturingEscapeIsDetected
+    checkWithCapturingEscapeIsDetected
     enPassantAllowed
     enPassantDisallowedIfNotImmediatelyUsed
     // Companion Object
@@ -232,7 +234,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     assertEquals(WinModes.CheckMate, winMode)
   }
 
-  private def checkButNotMateIsDetected {
+  private def checkWithNonCapturingEscapeIsDetected {
     val pb = new PlacementsBuilder
 
     pb(White, King(), "b2") 
@@ -261,6 +263,59 @@ object BoardModelTest extends Test with TestUtils with Main {
 
     assert(pieceMoved, "The game was not won when the king was checked but could escape")
     assertEquals(1, eventCount, "There was only one event")
+  }
+  
+//  abcdefgh
+//8 ··Qk····
+//7 ···pb·r·
+//6 ·····n··
+//5 p··P···p
+//4 P······P
+//3 ·Q·n··R·
+//2 ·Rb·KP··
+//1 ········
+//  abcdefgh  
+  private def checkWithCapturingEscapeIsDetected {
+    val pb = new PlacementsBuilder
+    /* Position the Queen so that it can check the black King on the next move. */
+    val queenStart = "b7"
+    val queenEnd = "c8"
+    pb(White, Queen(), queenStart)
+    pb(Black, King(), "d8")
+
+    pb(Black, Pawn(), "d7")
+    pb(Black, Bishop(), "e7")
+    pb(Black, Rook(), "g7")
+
+    pb(Black, Knight(), "f6")
+
+    pb(Black, Pawn(), "a5")
+    pb(White, Pawn(), "d5")
+    pb(Black, Pawn(), "h5")
+
+    pb(Black, Pawn(), "a4")
+    pb(Black, Pawn(), "h4")
+
+    pb(White, Queen(), "b3")
+    pb(Black, Knight(), "d3")
+    pb(White, Rook(), "g3")
+
+    pb(White, Rook(), "b2")
+    pb(Black, Bishop(), "c2")
+    pb(White, King(), "e2")
+    pb(White, Pawn(), "f2")
+
+    val bm = new BoardModel(pb, Nil)
+    var events: List[BoardChanged] = Nil
+    val s = new Object with BoardChangedSubscriber {
+      def onBoardChanged(event: BoardChanged) {
+        events = events :+ event
+      }
+    }
+    bm.subscribe(s)
+    bm.move(MovePiece(queenStart, queenEnd))
+    assertFalse(events contains Won(White, WinModes.CheckMate), "The list of event should not include Won")
+    assertEquals(List(PieceMoved(queenStart, queenEnd)), events, "The list of events should be comprised of one PieceMoved event")
   }
 
   private def enPassantAllowed {
