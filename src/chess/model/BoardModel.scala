@@ -119,17 +119,7 @@ class BoardModel {
    */
   private def checkedKingCanEscape(colour: Colour, conf: Configuration): Boolean = {
     val me = new StandardMoveExplorer(conf)
-    def moveIsLegal(move: MovePiece) = {
-      try {
-        me.rejectIllegalMove(move)
-        /* The move did not leave the king in check so there is a way out of check */
-        true
-      } catch {
-        case e: IllegalMoveException => { false };
-      }
-    }
-    conf.locatePieces(colour).exists(start =>
-      me.getBasicPositions(start).exists(end => moveIsLegal(MovePiece(start, end))))
+    me.legalMoves(colour).nonEmpty
   }
 
   // Debug
