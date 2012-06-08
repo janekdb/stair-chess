@@ -14,8 +14,6 @@ import chess.model.ex.{
 import chess.util.TODO
 import chess.model.ex.NonPromotingPawnAdvance
 
-// TODO: Rework checkmate escape code to use list of valid moves
-
 /**
  * The moves of standard chess
  */
