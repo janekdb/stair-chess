@@ -4,7 +4,6 @@ import test.{ Main, Test, TestUtils }
 
 object MoveTest extends Test with TestUtils with Main {
 
-  // TODO: Remove parens on all runTests
   def runTests {
     rejectWhenStartEqualsEnd
     enPassant
