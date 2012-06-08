@@ -200,10 +200,10 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
         /* Disallow if King is in check or would cross any square that is is attacked or would end in check. */
         // TODO: Consider converting to map operation with predicate to test for attacked status
         val exposedPositions = king :: kingEnd :: Position.getInterveningPositions(king, kingEnd) toSet
-        val opponentPositions = conf.locatePieces(colour.opposite)
+        val opponentPositions = conf locatePieces colour.opposite
         opponentPositions.foreach { p =>
           val attackedPositions = getBasicPositions(p)
-          val i = exposedPositions.intersect(attackedPositions)
+          val i = exposedPositions intersect attackedPositions
           if (i.nonEmpty) {
             throw new AttackedPositionException(move, i.head)
           }
