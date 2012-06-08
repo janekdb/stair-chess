@@ -1,6 +1,7 @@
 package chess.model
 
 import ex.IllegalPromotionException
+import Constants._
 
 private object Utils {
   def start(move: String): Position = new Position(move.substring(0, 2))
@@ -37,8 +38,8 @@ case class Castle(colour: Colour, castlingType: CastlingType) extends Move
 //case class PromoteCapturing(val start: Position, val end: Position, val piece: Piece) extends SimpleMove {
 case class Promote(val start: Position, val piece: Piece) extends SimpleMove {
   require(start != end, "Start must be different to end: " + start)
-  //TODO: Remove magic value of 7
-  val end = { val row = if (start.row == 7) start.row + 1 else start.row - 1; new Position(start.col, row) }
+  /* Use the current row to determine the end row */
+  val end = new Position(start.col, if (start.row == WHITE_HOME_ROW + 1) WHITE_HOME_ROW else BLACK_HOME_ROW)
   def this(move: String, piece: Piece) = {
     this(start(move), piece)
     rejectInvalidPromotionPiece(piece)
