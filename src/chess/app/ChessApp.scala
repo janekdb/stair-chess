@@ -22,6 +22,7 @@ import chess.util.TODO
 import test.AllTests
 import chess.model.ConfigurationChangedSubscriber
 import chess.model.Configuration
+import chess.model.ConfigurationView
 
 object ChessApp {
   def main(args: Array[String]) {
@@ -55,9 +56,9 @@ object BoardUI extends BoardChangedSubscriber with ConfigurationChangedSubscribe
 
   val board = SwingBoard.createAndShowBoard()
 
-  var configuration: Configuration = null
+  var configuration: ConfigurationView = null
 
-  def onConfigurationChanged(event: Configuration) {
+  def onConfigurationChanged(event: ConfigurationView) {
     this.configuration = event
   }
 
@@ -66,8 +67,8 @@ object BoardUI extends BoardChangedSubscriber with ConfigurationChangedSubscribe
 
     def clearSquare(p: Position) = board.clearSquare(p.getCol, p.getRow)
     def setPiece(p: Position, piece: String) = board.setPiece(p.getCol, p.getRow, piece)
-    // TODO: Use the set Configuration instead of accessing the board
-    def getPiece(p: Position) = board.getPiece(p.getCol, p.getRow)
+    // TODO: Remove getPiece from board trait
+//    def getPiece(p: Position) = board.getPiece(p.getCol, p.getRow)
 
     val DELAY_FACTOR = 1;
 
@@ -81,36 +82,31 @@ object BoardUI extends BoardChangedSubscriber with ConfigurationChangedSubscribe
         delay(2)
       }
       case PieceMoved(start, end) => {
-        // TODO: Use a reference to a Configuration to acquire the piece from
-        val label = getPiece(start)
+        val (colour, piece, _) = configuration.getExistingPiece(end)
         clearSquare(start)
-        setPiece(end, label)
+        setPiece(end, convertLabel(colour + "-" + piece))
         delay(100)
       }
       case PieceMovedCapturing(start, end, captured) => {
-        val label = getPiece(start)
+        val (colour, piece, _) = configuration.getExistingPiece(end)
         clearSquare(captured)
         clearSquare(start)
-        setPiece(end, label)
+        setPiece(end, convertLabel(colour + "-" + piece))
 
         delay(100)
       }
       case Promoted(position, piece) => {
-        // TODO: Replace string handling with types
-        val label = getPiece(position)
-        /* white-pawn -> white-queen */
-        val colour = label.substring(0, label.indexOf("-"))
+        val (colour, piece, _) = configuration.getExistingPiece(position)
         val promotedLabel = convertLabel(colour + "-" + piece)
         setPiece(position, promotedLabel)
         delay(100)
       }
       case Castled(king, rook) => {
-        val kingLabel = getPiece(king.start)
-        val rookLabel = getPiece(rook.start)
-        clearSquare(king.start)
-        clearSquare(rook.start)
-        setPiece(king.end, kingLabel)
-        setPiece(rook.end, rookLabel)
+        for (pm <- List(king, rook)) {
+          val (colour, piece, _) = configuration.getExistingPiece(pm.end)
+          clearSquare(pm.start)
+          setPiece(pm.end, convertLabel(colour + "-" + piece))
+        }
       }
       case Resigned(colour) => {
         // TODO: Improve resignation visualisation with a popup dialog
