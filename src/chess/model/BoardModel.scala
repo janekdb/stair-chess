@@ -33,9 +33,11 @@ class BoardModel {
 
   def getMoveExplorer = moveExplorer
   
-  def this(placements: List[(Colour, Piece, Position)], subscribers: List[BoardChangedSubscriber]) {
+  def this(placements: List[(Colour, Piece, Position)], subscribers: List[BoardChangedSubscriber], confChangedSubscribers: List[ConfigurationChangedSubscriber]) {
     this
     subscribers foreach subscribe
+    // TODO: Supply a read only version of the configuration to the subscribers
+    confChangedSubscribers foreach { _.onConfigurationChanged(conf) }
     for ((colour, piece, position) <- placements) place(colour, piece, position)
   }
 
@@ -127,9 +129,9 @@ class BoardModel {
 
   // Events
 
-  var subscribers: List[BoardChangedSubscriber] = Nil
+  private var subscribers: List[BoardChangedSubscriber] = Nil
 
-  def subscribe(subscriber: BoardChangedSubscriber) = subscribers ::= subscriber
+  def subscribe(subscriber: BoardChangedSubscriber) { subscribers ::= subscriber }
 
 }
 
