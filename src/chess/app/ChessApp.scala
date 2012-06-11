@@ -2,7 +2,6 @@ package chess.app
 
 import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
-
 import chess.model.BoardChanged
 import chess.model.BoardChangedSubscriber
 import chess.model.BoardModel
@@ -21,6 +20,8 @@ import chess.ui.UI
 import chess.util.PlayerSelector
 import chess.util.TODO
 import test.AllTests
+import chess.model.ConfigurationChangedSubscriber
+import chess.model.Configuration
 
 object ChessApp {
   def main(args: Array[String]) {
@@ -28,7 +29,7 @@ object ChessApp {
     runTests
 
     val ui = new UI
-    val board = new BoardModel(BoardModel.standardPlacements, List(ui, BoardUI))
+    val board = new BoardModel(BoardModel.standardPlacements, List(ui, BoardUI), List(BoardUI))
 
     /* The UI listens for changes and renders them immediately */
     ui.showBoard
@@ -49,15 +50,23 @@ object ChessApp {
   }
 }
 
-object BoardUI extends BoardChangedSubscriber {
+// TODO: Move BoardUI into a class
+object BoardUI extends BoardChangedSubscriber with ConfigurationChangedSubscriber {
 
   val board = SwingBoard.createAndShowBoard()
+
+  var configuration: Configuration = null
+
+  def onConfigurationChanged(event: Configuration) {
+    this.configuration = event
+  }
 
   def onBoardChanged(event: BoardChanged) {
     println("Board: " + event)
 
     def clearSquare(p: Position) = board.clearSquare(p.getCol, p.getRow)
     def setPiece(p: Position, piece: String) = board.setPiece(p.getCol, p.getRow, piece)
+    // TODO: Use the set Configuration instead of accessing the board
     def getPiece(p: Position) = board.getPiece(p.getCol, p.getRow)
 
     val DELAY_FACTOR = 1;
