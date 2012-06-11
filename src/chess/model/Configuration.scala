@@ -3,7 +3,7 @@ package chess.model
 //import Colours.Colour
 import chess.util.UnhandledCaseException
 
-trait Configuration {
+trait Configuration extends ConfigurationView {
 
   /** Add a piece to the configuration with an initial move count of zero */
   def add(position: Position, colour: Colour, piece: Piece): Unit
@@ -18,42 +18,11 @@ trait Configuration {
    */
   def move(start: Position, end: Position)
 
-  /**
-   * Return the last move or None
-   */
-  def getLastMove: Option[(Piece, Position, Position)]
-
   /** Replace the piece with a the same colour carrying over the move count */
   def replace(position: Position, replacementPiece: Piece)
 
-  def getRows: List[List[(Colour, Piece)]]
-
-  /** Throw exception if there is no piece at the given position. Includes the previous position if any. */
-  def getExistingPiece(position: Position): (Colour, Piece, Option[Position])
-
-  /** Include previous position option. */
-  def getPiece(position: Position): Option[(Colour, Piece, Option[Position])]
-
-  /** Return positions of all pieces of the given colour and type. */
-  def locatePieces(colour: Colour, piece: Piece): List[Position]
-
-  /** Return positions of all pieces of the given colour. */
-  def locatePieces(colour: Colour): List[Position]
-
   /** Return a deep copy of the Configuration */
   def copyOf: Configuration
-
-  /** @return true if a piece exists at the given location */
-  def exists(p: Position) = getPiece(p).isDefined
-
-  /** @return true if a piece exists at the given location with the given colour*/
-  // TODO: Do this in a monadic style
-  def exists(p: Position, c: Colour) = {
-    getPiece(p) match {
-      case Some((colour, _, _)) => colour == c
-      case None => false
-    }
-  }
 
   /**
    * Update board configuration. The move must be legal i.e. the caller takes responsibility for
