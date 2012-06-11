@@ -2,5 +2,5 @@ package chess.model
 
 trait ConfigurationChangedSubscriber {
 
-  def onConfigurationChanged(configuration: Configuration)
+  def onConfigurationChanged(configuration: ConfigurationView)
 }
