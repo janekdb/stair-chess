@@ -9,7 +9,7 @@ public interface Board {
 	/** 1-based */
 	void setPiece(final int col, final int row, final String piece);
 
-	// TODO: Remove this method once the Board has access to a Configuration
+	// TODO: Remove this method once the Board has access to a read only Configuration
 	/** 1-based */
 	String getPiece(final int col, final int row);
 
