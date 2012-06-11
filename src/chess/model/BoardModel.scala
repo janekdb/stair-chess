@@ -36,7 +36,7 @@ class BoardModel {
   def this(placements: List[(Colour, Piece, Position)], subscribers: List[BoardChangedSubscriber], confChangedSubscribers: List[ConfigurationChangedSubscriber]) {
     this
     subscribers foreach subscribe
-    // TODO: Supply a read only version of the configuration to the subscribers
+    // TODO: Supply an instance of ConfigurationView that delegates to Configuration to prevent casting to Configuration
     confChangedSubscribers foreach { _.onConfigurationChanged(conf) }
     for ((colour, piece, position) <- placements) place(colour, piece, position)
   }

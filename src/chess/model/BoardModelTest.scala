@@ -383,9 +383,9 @@ object BoardModelTest extends Test with TestUtils with Main {
   }
 
   private def confirmConfigurationEventIsSent {
-    var events: List[Configuration] = Nil
+    var events: List[ConfigurationView] = Nil
     val listener = new Object with ConfigurationChangedSubscriber {
-      def onConfigurationChanged(event: Configuration) {
+      def onConfigurationChanged(event: ConfigurationView) {
         events ::= event
       }
     }
