@@ -20,7 +20,7 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
-// TODO: Convert to Scala
+// TODO: UI: Convert SwingBoard to Scala
 public class SwingBoard extends JFrame implements Board {
 	GridLayout boardLayout = new GridLayout(8, 8);
 
