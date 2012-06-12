@@ -23,6 +23,7 @@ import test.AllTests
 import chess.model.ConfigurationChangedSubscriber
 import chess.model.Configuration
 import chess.model.ConfigurationView
+import chess.ui.Board
 
 object ChessApp {
   def main(args: Array[String]) {
@@ -30,7 +31,8 @@ object ChessApp {
     runTests
 
     val ui = new UI
-    val board = new BoardModel(BoardModel.standardPlacements, List(ui, BoardUI), List(BoardUI))
+    val boardAdapter = new BoardAdapter(SwingBoard.createAndShowBoard())
+    val board = new BoardModel(BoardModel.standardPlacements, List(ui, boardAdapter), List(boardAdapter))
 
     /* The UI listens for changes and renders them immediately */
     ui.showBoard
@@ -51,10 +53,8 @@ object ChessApp {
   }
 }
 
-// TODO: Move BoardUI into a class
-object BoardUI extends BoardChangedSubscriber with ConfigurationChangedSubscriber {
-
-  val board = SwingBoard.createAndShowBoard()
+// TODO: Move BoardAdapter into the ui package
+class BoardAdapter(val board: Board) extends BoardChangedSubscriber with ConfigurationChangedSubscriber {
 
   var configuration: ConfigurationView = null
 
@@ -63,7 +63,6 @@ object BoardUI extends BoardChangedSubscriber with ConfigurationChangedSubscribe
   }
 
   def onBoardChanged(event: BoardChanged) {
-    println("Board: " + event)
 
     def clearSquare(p: Position) = board.clearSquare(p.getCol, p.getRow)
     def setPiece(p: Position, piece: String) = board.setPiece(p.getCol, p.getRow, piece)
@@ -119,6 +118,7 @@ object BoardUI extends BoardChangedSubscriber with ConfigurationChangedSubscribe
 
   val LABEL_PAT = Pattern.compile("(black|white)++-[a-z]++\\(\\)", Pattern.CASE_INSENSITIVE);
 
+  // TODO: Use two parameters to allow string concatenation to be dropped
   private def convertLabel(in: String): String = {
     val m = LABEL_PAT.matcher(in)
     if (!m.matches()) {
