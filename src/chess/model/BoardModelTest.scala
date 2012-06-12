@@ -391,7 +391,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     }
     val bm = new BoardModel(List(), Nil, List(listener))
     assertEquals(1, events.size, "The list of recieved events should have had one element")
-    assertTrue(events(0).isInstanceOf[Configuration], "The events should have been an instance of Configuration but was: " + events(0).getClass)
+    assertTrue(events(0).isInstanceOf[ConfigurationView], "The events should have been an instance of ConfigurationView but was: " + events(0).getClass)
   }
 
   // Companion object

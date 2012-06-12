@@ -36,8 +36,8 @@ class BoardModel {
   def this(placements: List[(Colour, Piece, Position)], subscribers: List[BoardChangedSubscriber], confChangedSubscribers: List[ConfigurationChangedSubscriber]) {
     this
     subscribers foreach subscribe
-    // TODO: Supply an instance of ConfigurationView that delegates to Configuration to prevent casting to Configuration
-    confChangedSubscribers foreach { _.onConfigurationChanged(conf) }
+    val confView = new DelegatingConfigurationView(conf)
+    confChangedSubscribers foreach { _.onConfigurationChanged(confView) }
     for ((colour, piece, position) <- placements) place(colour, piece, position)
   }
 
