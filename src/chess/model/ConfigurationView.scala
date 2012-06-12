@@ -18,6 +18,7 @@ trait ConfigurationView {
   /** Include previous position option. */
   def getPiece(position: Position): Option[(Colour, Piece, Option[Position])]
 
+  // TODO: Consider implementing locatePieces(colour, pieces) in terms of locatePieces(colour)
   /** Return positions of all pieces of the given colour and type. */
   def locatePieces(colour: Colour, piece: Piece): List[Position]
 
