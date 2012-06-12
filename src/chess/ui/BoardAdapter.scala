@@ -15,7 +15,6 @@ import chess.model.BoardChangedSubscriber
 import chess.model.Position
 import java.util.concurrent.TimeUnit
 
-// TODO: Move BoardAdapter into the ui package
 class BoardAdapter(val board: Board) extends BoardChangedSubscriber with ConfigurationChangedSubscriber {
 
   var configuration: ConfigurationView = null
