@@ -67,9 +67,6 @@ object BoardUI extends BoardChangedSubscriber with ConfigurationChangedSubscribe
 
     def clearSquare(p: Position) = board.clearSquare(p.getCol, p.getRow)
     def setPiece(p: Position, piece: String) = board.setPiece(p.getCol, p.getRow, piece)
-    // TODO: Remove getPiece from board trait
-//    def getPiece(p: Position) = board.getPiece(p.getCol, p.getRow)
-
     val DELAY_FACTOR = 1;
 
     def delay(d: Int) { TimeUnit.MILLISECONDS.sleep(d * DELAY_FACTOR) }
