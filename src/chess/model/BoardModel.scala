@@ -7,6 +7,7 @@ import chess.model.ex.IllegalMoveException
 import WinModes.WinMode
 
 // TODO: End game when no progress is possible
+// TODO: End game when the last n positions have been repeated checking for the value of n
 //   when only two kings
 //   when stalemate
 //		  abcdefgh
