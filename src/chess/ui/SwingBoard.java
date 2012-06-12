@@ -173,12 +173,6 @@ public class SwingBoard extends JFrame implements Board {
 		sq.graphicName = gName;
 	}
 
-	/** @return The piece category such as black-rook */
-	public String getPiece(final int col, final int row) {
-		Square sq = squares[getIndex(col, row)];
-		return sq.graphicName;
-	}
-
 	public void showWon(final String colour, final String wonMode) {
 		final JPanel boardPanel = new JPanel();
 		boardPanel.add(new JButton("Won by " + colour + " with " + wonMode));
