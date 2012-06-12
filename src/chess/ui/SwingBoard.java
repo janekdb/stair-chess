@@ -6,8 +6,9 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 import javax.imageio.ImageIO;
@@ -36,8 +37,7 @@ public class SwingBoard extends JFrame implements Board {
 
 	private static final Color WHITE_BACKGROUND = Color.WHITE;
 	private static final Color BLACK_BACKGROUND = Color.LIGHT_GRAY;
-	private static final Color[] BACKGROUNDS = new Color[] { WHITE_BACKGROUND,
-			BLACK_BACKGROUND };
+	private static final Color[] BACKGROUNDS = new Color[] { WHITE_BACKGROUND, BLACK_BACKGROUND };
 	private static final int SQUARE_BORDER_WIDTH = 0;
 
 	private Color getBackgroundColor(final int col, final int row) {
@@ -70,8 +70,7 @@ public class SwingBoard extends JFrame implements Board {
 		boardPanel.setLayout(boardLayout);
 
 		int borderedSqSz = SQUARE_SIZE + 2 * SQUARE_BORDER_WIDTH;
-		boardPanel.setPreferredSize(new Dimension(borderedSqSz * BOARD_SIZE,
-				borderedSqSz * BOARD_SIZE));
+		boardPanel.setPreferredSize(new Dimension(borderedSqSz * BOARD_SIZE, borderedSqSz * BOARD_SIZE));
 
 		squares = new Square[BOARD_SIZE * BOARD_SIZE];
 
@@ -92,17 +91,25 @@ public class SwingBoard extends JFrame implements Board {
 		pane.add(boardPanel, BorderLayout.CENTER);
 	}
 
-	// TODO: Memoize the getPiece method
+	private final Map<String, Icon> icons = new HashMap<String, Icon>();
+
+	private static final String ICON_PATH_TEMPLATE = "chess/resource/piece/%s.png";
+
 	private Icon getPiece(final String imageName) {
+		Icon icon = icons.get(imageName);
+		if (icon != null) {
+			return icon;
+		}
 		try {
-			String PATH_TEMPLATE = "chess/resource/piece/%s.png";
-			String imagePath = String.format(PATH_TEMPLATE, imageName);
+			String imagePath = String.format(ICON_PATH_TEMPLATE, imageName);
 			InputStream is = getClass().getClassLoader().getResourceAsStream(imagePath);
 			BufferedImage myPicture = ImageIO.read(is);
-			return new ImageIcon(myPicture);
+			icon = new ImageIcon(myPicture);
 		} catch (Exception e) {
-			throw new RuntimeException("imageName: '" + imageName +"' : " + e);
+			throw new RuntimeException("imageName: '" + imageName + "' : " + e);
 		}
+		icons.put(imageName, icon);
+		return icon;
 	}
 
 	/**
@@ -178,6 +185,6 @@ public class SwingBoard extends JFrame implements Board {
 	public void showWon(final String colour, final String wonMode) {
 		final JPanel boardPanel = new JPanel();
 		boardPanel.add(new JButton("Won by " + colour + " with " + wonMode));
-		setTitle(String.format("Won by %s with %s", colour,  wonMode));
+		setTitle(String.format("Won by %s with %s", colour, wonMode));
 	}
 }
