@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.InputStream;
 import java.util.concurrent.CountDownLatch;
 
 import javax.imageio.ImageIO;
@@ -91,12 +92,13 @@ public class SwingBoard extends JFrame implements Board {
 		pane.add(boardPanel, BorderLayout.CENTER);
 	}
 
-	// TODO: Convert to getResource method
+	// TODO: Memoize the getPiece method
 	private Icon getPiece(final String imageName) {
 		try {
-			String PATH_TEMPLATE = "C:\\Users\\jdb\\workspaces\\main\\stair-chess\\src\\chess\\resource\\piece\\%s.png";
+			String PATH_TEMPLATE = "chess/resource/piece/%s.png";
 			String imagePath = String.format(PATH_TEMPLATE, imageName);
-			BufferedImage myPicture = ImageIO.read(new File(imagePath));
+			InputStream is = getClass().getClassLoader().getResourceAsStream(imagePath);
+			BufferedImage myPicture = ImageIO.read(is);
 			return new ImageIcon(myPicture);
 		} catch (Exception e) {
 			throw new RuntimeException("imageName: '" + imageName +"' : " + e);
