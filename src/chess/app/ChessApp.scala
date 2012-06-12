@@ -106,7 +106,7 @@ object BoardUI extends BoardChangedSubscriber with ConfigurationChangedSubscribe
         }
       }
       case Resigned(colour) => {
-        // TODO: Improve resignation visualisation with a popup dialog
+        // TODO: UI: Improve resignation visualisation with a popup dialog
         throw new RuntimeException(colour + " has resigned")
       }
       case Won(colour, winMode) => {
