@@ -72,7 +72,7 @@ class BoardModel {
   }
     
   def move(move: Move): Unit = {
-    debug("Moving: " + move)
+//    debug("Moving: " + move)
 
     if (gameOutcome != null) {
       throw new IllegalStateException("The game has already been won");
