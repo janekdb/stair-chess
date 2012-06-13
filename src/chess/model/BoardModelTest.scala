@@ -30,6 +30,9 @@ object BoardModelTest extends Test with TestUtils with Main {
     confirmConfigurationEventIsSent
     // Companion Object
     standardPlacements
+    /* Repeated configurations */
+    // TODO: Allow draw to be claimed
+    // repeatedConfigurationsIsDetected
 
   }
 
@@ -311,7 +314,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     var events: List[BoardChanged] = Nil
     val s = new Object with BoardChangedSubscriber {
       def onBoardChanged(event: BoardChanged) {
-        events = events :+ event
+        events ::= event
       }
     }
     bm.subscribe(s)
@@ -399,6 +402,25 @@ object BoardModelTest extends Test with TestUtils with Main {
   private def standardPlacements {
     assertEquals(4 * 8, BoardModel.standardPlacements.size, "There was a correct number of placements")
   }
+
+  /* Repeated configurations */
+
+  /*
+The relevant rule in the FIDE laws of chess is 9.2, which reads:
+
+The game is drawn, upon a correct claim by the player having the move, when the same position, for at least the third time
+(not necessarily by sequential repetition of moves)
+a. is about to appear, if he first writes his move on his scoresheet and declares to the arbiter his intention to make this move, or
+b. has just appeared, and the player claiming the draw has the move.
+Positions as in (a) and (b) are considered the same, if the same player has the move, pieces of the same kind and colour occupy
+the same squares, and the possible moves of all the pieces of both players are the same.
+Positions are not [considered to be] the same if a pawn that could have been captured en passant can no longer be captured or
+if the right to castle has been changed. (FIDE 2005, Article 9.2)
+While the rule does not require that the position occur thrice on nearly consecutive moves, it happens this way very often in practice,
+typically with one of the kings being put into perpetual check. The intermediate
+positions and moves do not matter – they can be the same or different. The rule applies to positions, not moves.
+  private def repeatedConfigurationsIsDetected = fail
+  */
 
   private def getKings = (White, King(), new Position("e1")) :: (Black, King(), new Position("e8")) :: Nil
 
