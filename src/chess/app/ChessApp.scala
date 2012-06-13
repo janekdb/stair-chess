@@ -38,14 +38,16 @@ object ChessApp {
     /* The UI listens for changes and renders them immediately */
     ui.showBoard
 
-    val white = new RandomPlayer(Colours.White, board.getMoveExplorer)
-    val black = new RandomPlayer(Colours.Black, board.getMoveExplorer)
+    import board._
+
+    val white = new RandomPlayer(Colours.White, getMoveExplorer)
+    val black = new RandomPlayer(Colours.Black, getMoveExplorer)
     //    val white = new DumbPlayer(Library.scholarsMate.whiteMoves)
     //    val black = new DumbPlayer(Library.scholarsMate.blackMoves)
     val playerSelector = new PlayerSelector(white, black)
 
-    while (!board.isWon) {
-      board.move(playerSelector.next.getMove)
+    while (!isWon) {
+      move(playerSelector.next.getMove)
     }
   }
 
