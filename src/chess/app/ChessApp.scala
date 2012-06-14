@@ -25,6 +25,7 @@ import chess.model.Configuration
 import chess.model.ConfigurationView
 import chess.ui.Board
 import chess.ui.BoardAdapter
+import chess.player.CapturingPlayer
 
 object ChessApp {
   def main(args: Array[String]) {
@@ -40,7 +41,7 @@ object ChessApp {
 
     import board._
 
-    val white = new RandomPlayer(Colours.White, getMoveExplorer)
+    val white = new CapturingPlayer(Colours.White, getMoveExplorer)
     val black = new RandomPlayer(Colours.Black, getMoveExplorer)
     //    val white = new DumbPlayer(Library.scholarsMate.whiteMoves)
     //    val black = new DumbPlayer(Library.scholarsMate.blackMoves)
