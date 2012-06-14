@@ -12,7 +12,8 @@ object AllTests {
     tests = chess.model.BoardModelTest :: tests
     tests = chess.model.StandardMoveExplorerTest :: tests
     tests = chess.player.RandomPlayerTest :: tests
-
+    // TODO: Use ::= for all test additions
+    tests ::= chess.player.CapturingPlayerTest
     println("AllTests: tests.size: " + tests.size)
     tests
   }
