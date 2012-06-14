@@ -6,14 +6,15 @@ object AllTests {
     var tests: List[Test] = Nil
     // TODO: Determine if each test object could add itself into a object
     //   which would allow all tests to be looped over to run them.
-    tests = chess.model.PositionTest :: tests
-    tests = chess.model.MoveTest :: tests
-    tests = chess.model.GridConfigurationTest :: tests
-    tests = chess.model.BoardModelTest :: tests
-    tests = chess.model.StandardMoveExplorerTest :: tests
-    tests = chess.player.RandomPlayerTest :: tests
-    // TODO: Use ::= for all test additions
-    tests ::= chess.player.CapturingPlayerTest
+    import chess.model._
+    tests ::= PositionTest
+    tests ::= MoveTest
+    tests ::= GridConfigurationTest
+    tests ::= BoardModelTest
+    tests ::= StandardMoveExplorerTest
+    import chess.player._
+    tests ::= RandomPlayerTest
+    tests ::= CapturingPlayerTest
     println("AllTests: tests.size: " + tests.size)
     tests
   }
