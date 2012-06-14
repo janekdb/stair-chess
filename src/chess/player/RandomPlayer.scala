@@ -9,9 +9,12 @@ import chess.model.Colour
  */
 class RandomPlayer(val colour: Colour, val explorer: MoveExplorer) extends Player {
 
-  def getMove: Move = {
+  def getMove: Option[Move] = {
     val moves = explorer.legalMoves(colour)
-    if (moves.isEmpty) throw new RuntimeException("No move found")
-    moves(new util.Random().nextInt(moves.size))
+    if (moves.isEmpty) {
+      None
+    } else {
+      Some(moves(new util.Random().nextInt(moves.size)))
+    }
   }
 }

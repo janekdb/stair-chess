@@ -6,7 +6,7 @@ import chess.model.ex.IllegalMoveException
 
 import WinModes.WinMode
 
-// TODO: End game when no progress is possible
+// TODO: ->End game when no progress is possible
 // TODO: End game when the last n positions have been repeated checking for the value of n
 //   when only two kings
 //   when stalemate
@@ -71,12 +71,19 @@ class BoardModel {
     this.gameOutcome = GameOutcome(winMode, winner)
   }
     
-  def move(move: Move): Unit = {
+  def move(optMove: Option[Move]): Unit = {
 //    debug("Moving: " + move)
 
     if (gameOutcome != null) {
       throw new IllegalStateException("The game has already been won");
     }
+
+    if(optMove.isEmpty){
+      // TODO: Set win state and send stalemate event
+      TODO.throwRuntimeEx
+    }
+
+    val move = optMove.get
     moveExplorer.rejectIllegalMove(move)
     val (events, outcomeOpt) = move match {
       case Resign(colour) => {

@@ -13,9 +13,9 @@ class Human(val board: BoardModel, val colour: Colour) extends Player {
       "g8f6"
     )
     
-  def getMove: Move = {
+  def getMove: Option[Move] = {
     val m :: ms = moves
     moves = ms
-    m
+    Some(m)
   }
 }

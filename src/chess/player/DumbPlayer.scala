@@ -4,10 +4,10 @@ import chess.model.Move
 
 class DumbPlayer(var moves: List[Move]) extends Player {
 
-  def getMove: Move = {
+  def getMove: Option[Move] = {
     val m :: ms = moves
     moves = ms
-    m
+    Some(m)
   }
 
 }

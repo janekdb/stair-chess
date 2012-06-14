@@ -6,6 +6,8 @@ import chess.model.Colours._
 
 object RandomPlayerTest extends Test with TestUtils with Main {
 
+  implicit def optMove2Move(optMove: Option[Move]) = optMove.get
+
   def runTests {
     canMove
     isRandom

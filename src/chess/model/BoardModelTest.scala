@@ -31,7 +31,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     // Companion Object
     standardPlacements
     /* Repeated configurations */
-    // TODO: Allow draw to be claimed
+    // TODO: LOW: Allow draw to be claimed
     // repeatedConfigurationsIsDetected
 
   }

@@ -28,7 +28,7 @@ object CapturingPlayerTest extends Test with TestUtils with Main {
     val rp = newPlayer(conf)
     val move = rp.getMove
     assertNotNull(move, "A move should be available")
-    assertEquals(new MovePieceCapturing("a1", "a2"), move, "The capturing moves should have been selected")
+    assertEquals(Some(new MovePieceCapturing("a1", "a2")), move, "The capturing moves should have been selected")
   }
 
   private def newPlayer(conf: Configuration): Player = {
