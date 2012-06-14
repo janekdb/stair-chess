@@ -4,7 +4,7 @@ object AllTests {
 
   def tests: List[Test] = {
     var tests: List[Test] = Nil
-    // TODO: Determine if each test object could add itself into a object
+    // TODO: Determine if each test suite could be added via classpath scanning
     //   which would allow all tests to be looped over to run them.
     import chess.model._
     tests ::= PositionTest
