@@ -27,6 +27,9 @@ import chess.ui.Board
 import chess.ui.BoardAdapter
 import chess.player.CapturingPlayer
 
+// TODO: Add a player that prefers to check the opponents king
+// TODO: Add a tournament mode
+// TODO: Add an interactive mode
 object ChessApp {
   def main(args: Array[String]) {
 
@@ -39,16 +42,14 @@ object ChessApp {
     /* The UI listens for changes and renders them immediately */
     ui.showBoard
 
-    import board._
-
-    val white = new CapturingPlayer(Colours.White, getMoveExplorer)
-    val black = new RandomPlayer(Colours.Black, getMoveExplorer)
+    val white = new CapturingPlayer(Colours.White, board.getMoveExplorer)
+    val black = new RandomPlayer(Colours.Black, board.getMoveExplorer)
     //    val white = new DumbPlayer(Library.scholarsMate.whiteMoves)
     //    val black = new DumbPlayer(Library.scholarsMate.blackMoves)
     val playerSelector = new PlayerSelector(white, black)
 
-    while (!isWon) {
-      move(playerSelector.next.getMove)
+    while (!board.isWon) {
+      board.move(playerSelector.next.getMove)
     }
   }
 
