@@ -2,5 +2,5 @@ package chess.model
 
 object WinModes extends Enumeration {
   type WinMode = Value
-  val Resignation, CheckMate, Draw = Value
+  val Resignation, CheckMate, Stalemate = Value
 }
