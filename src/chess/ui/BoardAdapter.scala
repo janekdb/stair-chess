@@ -74,7 +74,7 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
       case Won(colour, winMode) => {
         board.showWon(colour.toString, winMode.toString)
       }
-
+      // TODO: Add Stalemated
       case default => TODO.throwRuntimeEx("Unhandled case: " + event)
     }
   }
