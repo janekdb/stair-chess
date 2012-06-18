@@ -15,3 +15,4 @@ case class Resigned(colour: Colour) extends BoardChanged
 case class Castled(king: PieceMoved, rook: PieceMoved) extends BoardChanged
 case class Promoted(pawn: Position, replacement: Piece) extends BoardChanged
 case class Won(colour: Colour, winMode: WinMode) extends BoardChanged
+case class Stalemated() extends BoardChanged
