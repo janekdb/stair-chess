@@ -3,10 +3,12 @@ package chess.model
 import chess.util.UnhandledCaseException
 import chess.util.TODO
 import chess.model.ex.IllegalMoveException
-
 import WinModes.WinMode
+import chess.model.ex.InvalidStalemateException
+import chess.model.ex.EarlyStalemateException
+import chess.model.ex.UnconsideredMovesStalemateException
 
-// TODO: ->End game when no progress is possible
+// TODO: ->End game when stalemate has been reached
 // TODO: End game when the last n positions have been repeated checking for the value of n
 //   when only two kings
 //   when stalemate
@@ -42,20 +44,30 @@ class BoardModel {
     for ((colour, piece, position) <- placements) place(colour, piece, position)
   }
 
-  case class GameOutcome(winMode: WinMode, winner: Colour) {
+  // TODO: Rename winner member to winnerOpt
+  case class GameOutcome(winMode: WinMode, winner: Option[Colour]) {
     def isCheckMate: Boolean = winMode == WinModes.CheckMate
     def isResigned: Boolean = winMode == WinModes.Resignation
+    def isStalemate: Boolean = winMode == WinModes.Stalemate
   }
 
+  // TODO: Convert gameOutcome to Option[GameOutcome]
   var gameOutcome: GameOutcome = null
 
   private def wonGuard = if (!isWon) throw new AssertionError("There is no winner")
 
-  def isWon = gameOutcome != null
+  def isWon = gameOutcome != null && (gameOutcome.isCheckMate || gameOutcome.isResigned)
+
+  def isCompleted = gameOutcome != null
+
+  def isDrawn = gameOutcome != null && (gameOutcome.isStalemate)
+
+  def getGameOutcome = gameOutcome
 
   def getWinner: Colour = {
     assert(gameOutcome != null)
-    gameOutcome.winner
+    assert(gameOutcome.winner.isDefined)
+    gameOutcome.winner.get
   }
 
   private def place(colour: Colour, piece: Piece, position: Position){
@@ -67,34 +79,52 @@ class BoardModel {
     subscribers.foreach { _.onBoardChanged(PiecePlaced(colour, piece, position)) }    
   }
 
-  private def setWinState(winMode: WinMode, winner: Colour) {
-    this.gameOutcome = GameOutcome(winMode, winner)
+  // TODO: Rename to setGameOutcome
+  private def setWinState(winMode: WinMode, winnerOpt: Option[Colour]) {
+    this.gameOutcome = GameOutcome(winMode, winnerOpt)
   }
-    
+
+  private var lastColour: Option[Colour] = None
+
   def move(optMove: Option[Move]): Unit = {
-//    debug("Moving: " + move)
 
     if (gameOutcome != null) {
       throw new IllegalStateException("The game has already been won");
     }
 
-    if(optMove.isEmpty){
-      // TODO: Set win state and send stalemate event
-      TODO.throwRuntimeEx
+    if (optMove.isDefined) {
+      moveExplorer.rejectIllegalMove(optMove.get)
+    } else {
+      if (lastColour.isEmpty) throw new EarlyStalemateException
+      val moves = moveExplorer.legalMoves(lastColour.get.opposite)
+      if (moves.nonEmpty) throw new UnconsideredMovesStalemateException
     }
 
-    val move = optMove.get
-    moveExplorer.rejectIllegalMove(move)
-    val (events, outcomeOpt) = move match {
-      case Resign(colour) => {
-        setWinState(WinModes.Resignation, colour.opposite)
-        (List(Resigned(colour)), Some(GameOutcome(WinModes.Resignation, colour.opposite)))
+    /* Extract the last colour before the configuration is changed. */
+    // TODO: Use lastColour in match statement below instead of re-extracting it.
+    lastColour = optMove match {
+      case Some(Resign(colour)) => Some(colour)
+      case None => None
+      case default => Some(extractColour(optMove.get))
+    }
+
+    val (events, outcomeOpt) = optMove match {
+      case Some(Resign(colour)) => {
+        // TODO: Remove this redundant setWinState call
+        setWinState(WinModes.Resignation, Some(colour.opposite))
+        (List(Resigned(colour)), Some(GameOutcome(WinModes.Resignation, Some(colour.opposite))))
+      }
+      case None => {
+        // TODO: Remove this redundant setWinState call
+        setWinState(WinModes.Stalemate, None)
+        (List(Stalemated()), Some(GameOutcome(WinModes.Stalemate, None)))
       }
       case default => {
         /* Cache off the colour before the move is applied. */
+        val move = optMove.get
         val colour = extractColour(move)
         val e = conf.applyMove(move)
-        val outcomeOption = if (checkForCheckMate(colour.opposite)) Some(GameOutcome(WinModes.CheckMate, colour)) else None
+        val outcomeOption = if (checkForCheckMate(colour.opposite)) Some(GameOutcome(WinModes.CheckMate, Some(colour))) else None
         (e, outcomeOption)
       }
     }
@@ -102,7 +132,8 @@ class BoardModel {
       val g = outcomeOpt.get
       setWinState(g.winMode, g.winner)
     }
-    val wonEvent = if (isWon) List(Won(gameOutcome.winner, gameOutcome.winMode)) else Nil
+    // TODO: Change from isWon to isCompleted to allow for Stalemated.
+    val wonEvent = if (isWon) List(Won(gameOutcome.winner.get, gameOutcome.winMode)) else Nil
     for (s <- subscribers; e <- events ::: wonEvent) { s.onBoardChanged(e) }
   }
 
@@ -120,7 +151,7 @@ class BoardModel {
   }
 
   private def checkForCheckMate(colour: Colour): Boolean = {
-    return moveExplorer.kingInCheck(colour) && !checkedKingCanEscape(colour, conf)
+    moveExplorer.kingInCheck(colour) && !checkedKingCanEscape(colour, conf)
   }
 
   /*

@@ -30,6 +30,9 @@ object BoardModelTest extends Test with TestUtils with Main {
     confirmConfigurationEventIsSent
     // Companion Object
     standardPlacements
+    /* Stalemate */
+    stalemateIsDetected
+    invalidStalemateIsRejected
     /* Repeated configurations */
     // TODO: LOW: Allow draw to be claimed
     // repeatedConfigurationsIsDetected
@@ -401,6 +404,47 @@ object BoardModelTest extends Test with TestUtils with Main {
 
   private def standardPlacements {
     assertEquals(4 * 8, BoardModel.standardPlacements.size, "There was a correct number of placements")
+  }
+
+  /* Stalemate */
+  private def stalemateIsDetected {
+    val pb = new PlacementsBuilder
+
+    pb(getKings)
+    pb(Black, Rook(), "d8")
+    pb(Black, Rook(), "f8")
+    pb(Black, Rook(), "a2")
+
+    val bm = new BoardModel(pb, Nil, Nil)
+/* Move black to ensure lastColour is set */
+    bm.move("a2b2")
+
+    // TODO: Encapsulate event capture in a class and reuse in other tests
+    var events: List[BoardChanged] = Nil
+    val s = new Object with BoardChangedSubscriber {
+      def onBoardChanged(event: BoardChanged) {
+        events ::= event
+      }
+    }
+    bm.subscribe(s)
+    bm.move(None)
+    assertEquals(List(Stalemated()), events, "When no move was offered stalemate was detected")
+    assertTrue(bm.isCompleted, "On stalemate the game is completed")
+    assertFalse(bm.isWon, "On stalemate the game was not won")
+    assertTrue(bm.isDrawn, "On stalemate the game was drawn")
+    assertTrue(bm.getGameOutcome.isStalemate, "On stalemate the game outcome was stalemate")
+    // TODO: Use either Option or prevent use of getWinner
+  }
+
+  /* Defend against a Player that fails to select a move when one was available. */
+  private def invalidStalemateIsRejected {
+    val pb = new PlacementsBuilder
+    pb(getKings)
+    val bm = new BoardModel(pb, Nil, Nil)
+    bm.move("e8e7")
+    assertExceptionThrown("Invalid  stalemate indication was rejected", classOf[UnconsideredMovesStalemateException]) {
+          bm.move(None)
+    }
   }
 
   /* Repeated configurations */
