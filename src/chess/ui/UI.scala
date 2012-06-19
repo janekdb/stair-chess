@@ -2,13 +2,11 @@ package chess.ui
 
 import chess.model.{ BoardModel, BoardChangedSubscriber, Configuration, GridConfiguration, Colour, Move, Piece, Position, Promote, Resign, WinModes }
 import chess.model.Colours.{ Black, White }
-
 import chess.model.{ Rook, Knight, Bishop, Queen, King, Pawn }
 import chess.model.{ Castle, MovePiece }
-
 import chess.model.{ BoardChanged, Castled, PieceMoved, PieceMovedCapturing, PiecePlaced, Promoted, Resigned, Won }
-
 import chess.util.TODO	
+import chess.model.Stalemated
 
 class UI extends BoardChangedSubscriber {
 
@@ -50,8 +48,11 @@ class UI extends BoardChangedSubscriber {
         // TODO: UI: Visualize won game
         display(winMode + "! " + winner + " wins")
       }
+      case Stalemated() => {
+        display("Stalemate!")
+      }
       case default => {
-        TODO.throwRuntimeEx
+        TODO.throwRuntimeEx(event.toString)
       }
     }
     render
