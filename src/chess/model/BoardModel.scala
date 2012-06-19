@@ -62,10 +62,7 @@ class BoardModel {
   def getGameOutcome = gameOutcome
 
   def getWinner: Option[Colour] = {
-    assert(gameOutcome.isDefined)
-//    assert(gameOutcome.get.winner.isDefined)
     gameOutcome.get.winner
-    // TODO: Use ensuring instead of assert
   }
 
   private def place(colour: Colour, piece: Piece, position: Position){
@@ -99,8 +96,7 @@ class BoardModel {
     }
 
     /* Extract the last colour before the configuration is changed. */
-    // TODO: Use lastColour in match statement below instead of re-extracting it.
-    lastColour = optMove match {
+    val optColour = optMove match {
       case Some(Resign(colour)) => Some(colour)
       case None => None
       case default => Some(extractColour(optMove.get))
@@ -118,9 +114,8 @@ class BoardModel {
         (List(Stalemated()), Some(GameOutcome(WinModes.Stalemate, None)))
       }
       case default => {
-        /* Cache off the colour before the move is applied. */
         val move = optMove.get
-        val colour = extractColour(move)
+        val colour = optColour.get
         val e = conf.applyMove(move)
         val outcomeOption = if (checkForCheckMate(colour.opposite)) Some(GameOutcome(WinModes.CheckMate, Some(colour))) else None
         (e, outcomeOption)
@@ -130,9 +125,11 @@ class BoardModel {
       val g = outcomeOpt.get
       setWinState(g.winMode, g.winner)
     }
-    // TODO: Change from isWon to isCompleted to allow for Stalemated.
+    // TODO: Add Drawn() event to allow for Stalemate.
     val wonEvent = if (isWon) List(Won(gameOutcome.get.winner.get, gameOutcome.get.winMode)) else Nil
     for (s <- subscribers; e <- events ::: wonEvent) { s.onBoardChanged(e) }
+
+    lastColour = optColour
   }
 
   private def extractColour(move: Move): Colour = {
