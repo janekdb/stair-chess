@@ -1,21 +1,23 @@
 package chess.ui
-import chess.model.ConfigurationChangedSubscriber
-import java.util.regex.Pattern
-import chess.model.ConfigurationView
-import chess.model.Won
-import chess.model.PieceMoved
-import chess.model.Promoted
-import chess.model.PieceMovedCapturing
-import chess.util.TODO
-import chess.model.Resigned
-import chess.model.PiecePlaced
-import chess.model.BoardChanged
-import chess.model.Castled
-import chess.model.BoardChangedSubscriber
-import chess.model.Position
 import java.util.concurrent.TimeUnit
-import chess.model.Piece
+
+import chess.model.BoardChanged
+import chess.model.BoardChangedSubscriber
+import chess.model.Castled
 import chess.model.Colour
+import chess.model.ConfigurationChangedSubscriber
+import chess.model.ConfigurationView
+import chess.model.Piece
+import chess.model.PieceMoved
+import chess.model.PieceMovedCapturing
+import chess.model.PiecePlaced
+import chess.model.Position
+import chess.model.Promoted
+import chess.model.Resigned
+import chess.model.Stalemated
+import chess.model.Won
+import chess.model.WinModes
+import chess.util.TODO
 
 class BoardAdapter(val board: Board) extends BoardChangedSubscriber with ConfigurationChangedSubscriber {
 
@@ -74,7 +76,9 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
       case Won(colour, winMode) => {
         board.showWon(colour.toString, winMode.toString)
       }
-      // TODO: Add Stalemated
+      case Stalemated() => {
+        board.showDrawn(WinModes.Stalemate.toString)
+      }
       case default => TODO.throwRuntimeEx("Unhandled case: " + event)
     }
   }
