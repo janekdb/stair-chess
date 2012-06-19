@@ -10,4 +10,6 @@ public interface Board {
 	void setPiece(final int col, final int row, final String piece);
 
 	void showWon(final String colour, final String wonMode);
+
+	void showDrawn(final String drawnMode);
 }
