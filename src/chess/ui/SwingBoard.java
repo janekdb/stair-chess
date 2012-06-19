@@ -187,4 +187,8 @@ public class SwingBoard extends JFrame implements Board {
 		boardPanel.add(new JButton("Won by " + colour + " with " + wonMode));
 		setTitle(String.format("Won by %s with %s", colour, wonMode));
 	}
+
+	public void showDrawn(final String drawMode) {
+		setTitle(String.format("Drawn with %s", drawMode));
+	}
 }
