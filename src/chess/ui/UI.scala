@@ -10,15 +10,13 @@ import chess.model.Stalemated
 
 class UI extends BoardChangedSubscriber {
 
+  private var moveCount = 0
+
   def onBoardChanged(event: BoardChanged): Unit = {
     event match {
       case Castled(king, rook) => {
-        {
           conf.move(king.start, king.end)
-        }
-        {
           conf.move(rook.start, rook.end)
-        }
       }
       case PieceMoved(start, end) => {
         /* Assumes a piece is present at the start position. */
@@ -56,7 +54,8 @@ class UI extends BoardChangedSubscriber {
       }
     }
     render
-    display("UI: Move completed: " + event.toString)
+    moveCount += 1
+    display("UI: Move completed: " + moveCount + ": " + event.toString)
     display("")
   }
 
