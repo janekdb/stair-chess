@@ -50,23 +50,23 @@ class BoardModel {
     def isStalemate: Boolean = winMode == WinModes.Stalemate
   }
 
-  // TODO: Convert gameOutcome to Option[GameOutcome]
-  var gameOutcome: GameOutcome = null
+  var gameOutcome: Option[GameOutcome] = None
 
   private def wonGuard = if (!isWon) throw new AssertionError("There is no winner")
 
-  def isWon = gameOutcome != null && (gameOutcome.isCheckMate || gameOutcome.isResigned)
+  def isWon = gameOutcome.isDefined && (gameOutcome.get.isCheckMate || gameOutcome.get.isResigned)
 
-  def isCompleted = gameOutcome != null
+  def isCompleted = gameOutcome.isDefined
 
-  def isDrawn = gameOutcome != null && (gameOutcome.isStalemate)
+  def isDrawn = gameOutcome.isDefined && (gameOutcome.get.isStalemate)
 
   def getGameOutcome = gameOutcome
 
   def getWinner: Colour = {
-    assert(gameOutcome != null)
-    assert(gameOutcome.winner.isDefined)
-    gameOutcome.winner.get
+    assert(gameOutcome.isDefined)
+    assert(gameOutcome.get.winner.isDefined)
+    gameOutcome.get.winner.get
+    // TODO: Use ensuring instead of assert
   }
 
   private def place(colour: Colour, piece: Piece, position: Position){
@@ -80,15 +80,15 @@ class BoardModel {
 
   // TODO: Rename to setGameOutcome
   private def setWinState(winMode: WinMode, winnerOpt: Option[Colour]) {
-    this.gameOutcome = GameOutcome(winMode, winnerOpt)
+    this.gameOutcome = Some(GameOutcome(winMode, winnerOpt))
   }
 
   private var lastColour: Option[Colour] = None
 
   def move(optMove: Option[Move]): Unit = {
 
-    if (gameOutcome != null) {
-      throw new IllegalStateException("The game has already been won");
+    if (gameOutcome.isDefined) {
+      throw new IllegalStateException("The game has already been completed");
     }
 
     if (optMove.isDefined) {
@@ -132,7 +132,7 @@ class BoardModel {
       setWinState(g.winMode, g.winner)
     }
     // TODO: Change from isWon to isCompleted to allow for Stalemated.
-    val wonEvent = if (isWon) List(Won(gameOutcome.winner.get, gameOutcome.winMode)) else Nil
+    val wonEvent = if (isWon) List(Won(gameOutcome.get.winner.get, gameOutcome.get.winMode)) else Nil
     for (s <- subscribers; e <- events ::: wonEvent) { s.onBoardChanged(e) }
   }
 
