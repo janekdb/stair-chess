@@ -8,7 +8,6 @@ import chess.model.ex.InvalidStalemateException
 import chess.model.ex.EarlyStalemateException
 import chess.model.ex.UnconsideredMovesStalemateException
 
-// TODO: ->End game when stalemate has been reached
 // TODO: End game when the last n positions have been repeated checking for the value of n
 //   when only two kings
 //   when stalemate
