@@ -432,7 +432,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     assertTrue(bm.isCompleted, "On stalemate the game is completed")
     assertFalse(bm.isWon, "On stalemate the game was not won")
     assertTrue(bm.isDrawn, "On stalemate the game was drawn")
-    assertTrue(bm.getGameOutcome.isStalemate, "On stalemate the game outcome was stalemate")
+    assertTrue(bm.getGameOutcome.get.isStalemate, "On stalemate the game outcome was stalemate")
     // TODO: Use either Option or prevent use of getWinner
   }
 
