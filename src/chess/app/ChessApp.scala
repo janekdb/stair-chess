@@ -48,7 +48,7 @@ object ChessApp {
     //    val black = new DumbPlayer(Library.scholarsMate.blackMoves)
     val playerSelector = new PlayerSelector(white, black)
 
-    while (!board.isWon) {
+    while (!board.isCompleted) {
       board.move(playerSelector.next.getMove)
     }
   }
