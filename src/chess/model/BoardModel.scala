@@ -43,7 +43,6 @@ class BoardModel {
     for ((colour, piece, position) <- placements) place(colour, piece, position)
   }
 
-  // TODO: Rename winner member to winnerOpt
   case class GameOutcome(winMode: WinMode, winner: Option[Colour]) {
     def isCheckMate: Boolean = winMode == WinModes.CheckMate
     def isResigned: Boolean = winMode == WinModes.Resignation
@@ -62,10 +61,10 @@ class BoardModel {
 
   def getGameOutcome = gameOutcome
 
-  def getWinner: Colour = {
+  def getWinner: Option[Colour] = {
     assert(gameOutcome.isDefined)
-    assert(gameOutcome.get.winner.isDefined)
-    gameOutcome.get.winner.get
+//    assert(gameOutcome.get.winner.isDefined)
+    gameOutcome.get.winner
     // TODO: Use ensuring instead of assert
   }
 
