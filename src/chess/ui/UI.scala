@@ -5,8 +5,8 @@ import chess.model.Colours.{ Black, White }
 import chess.model.{ Rook, Knight, Bishop, Queen, King, Pawn }
 import chess.model.{ Castle, MovePiece }
 import chess.model.{ BoardChanged, Castled, PieceMoved, PieceMovedCapturing, PiecePlaced, Promoted, Resigned, Won }
-import chess.util.TODO	
-import chess.model.Stalemated
+import chess.util.TODO
+import chess.model.Drawn
 
 class UI extends BoardChangedSubscriber {
 
@@ -46,8 +46,8 @@ class UI extends BoardChangedSubscriber {
         // TODO: UI: Visualize won game
         display(winMode + "! " + winner + " wins")
       }
-      case Stalemated() => {
-        display("Stalemate!")
+      case Drawn(drawMode) => {
+        display(drawMode.toString)
       }
       case default => {
         TODO.throwRuntimeEx(event.toString)
