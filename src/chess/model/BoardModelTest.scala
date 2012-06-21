@@ -416,19 +416,19 @@ object BoardModelTest extends Test with TestUtils with Main {
     pb(Black, Rook(), "a2")
 
     val bm = new BoardModel(pb, Nil, Nil)
-/* Move black to ensure lastColour is set */
+    /* Move black to ensure lastColour is set */
     bm.move("a2b2")
 
     // TODO: Encapsulate event capture in a class and reuse in other tests
     var events: List[BoardChanged] = Nil
     val s = new Object with BoardChangedSubscriber {
       def onBoardChanged(event: BoardChanged) {
-        events ::= event
+        events = events ::: List(event)
       }
     }
     bm.subscribe(s)
     bm.move(None)
-    assertEquals(List(Stalemated()), events, "When no move was offered stalemate was detected")
+    assertEquals(List(Drawn(WinModes.Stalemate)), events, "When no move was offered stalemate was detected")
     assertTrue(bm.isCompleted, "On stalemate the game is completed")
     assertFalse(bm.isWon, "On stalemate the game was not won")
     assertTrue(bm.isDrawn, "On stalemate the game was drawn")
