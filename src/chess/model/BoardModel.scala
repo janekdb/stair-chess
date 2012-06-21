@@ -5,7 +5,7 @@ import chess.model.ex.IllegalMoveException
 import chess.model.ex.InvalidStalemateException
 import chess.model.ex.UnconsideredMovesStalemateException
 import chess.util.UnhandledCaseException
-import WinModes.WinMode
+import GameOutcomeModes.GameOutcomeMode
 
 // TODO: End game when the last n positions have been repeated checking for the value of n
 //   when only two kings
@@ -42,10 +42,11 @@ class BoardModel {
     for ((colour, piece, position) <- placements) place(colour, piece, position)
   }
 
-  case class GameOutcome(winMode: WinMode, winner: Option[Colour]) {
-    def isCheckMate: Boolean = winMode == WinModes.CheckMate
-    def isResigned: Boolean = winMode == WinModes.Resignation
-    def isStalemate: Boolean = winMode == WinModes.Stalemate
+  // TODO: Rename to gameOutcomeMode
+  case class GameOutcome(winMode: GameOutcomeMode, winner: Option[Colour]) {
+    def isCheckMate: Boolean = winMode == GameOutcomeModes.CheckMate
+    def isResigned: Boolean = winMode == GameOutcomeModes.Resignation
+    def isStalemate: Boolean = winMode == GameOutcomeModes.Stalemate
   }
 
   var gameOutcome: Option[GameOutcome] = None
@@ -73,8 +74,8 @@ class BoardModel {
     subscribers.foreach { _.onBoardChanged(PiecePlaced(colour, piece, position)) }    
   }
 
-  private def setGameOutcome(winMode: WinMode, winnerOpt: Option[Colour]) {
-    this.gameOutcome = Some(GameOutcome(winMode, winnerOpt))
+  private def setGameOutcome(gameOutcomeMode: GameOutcomeMode, winnerOpt: Option[Colour]) {
+    this.gameOutcome = Some(GameOutcome(gameOutcomeMode, winnerOpt))
   }
 
   private var lastColour: Option[Colour] = None
@@ -103,19 +104,19 @@ class BoardModel {
     val (events: List[BoardChanged], outcomeOpt) = optMove match {
       case Some(Resign(colour)) => {
         // TODO: Remove this redundant setWinState call
-        setGameOutcome(WinModes.Resignation, Some(colour.opposite))
-        (List(Resigned(colour)), Some(GameOutcome(WinModes.Resignation, Some(colour.opposite))))
+        setGameOutcome(GameOutcomeModes.Resignation, Some(colour.opposite))
+        (List(Resigned(colour)), Some(GameOutcome(GameOutcomeModes.Resignation, Some(colour.opposite))))
       }
       case None => {
         // TODO: Remove this redundant setWinState call
-        setGameOutcome(WinModes.Stalemate, None)
-        (List(), Some(GameOutcome(WinModes.Stalemate, None)))
+        setGameOutcome(GameOutcomeModes.Stalemate, None)
+        (List(), Some(GameOutcome(GameOutcomeModes.Stalemate, None)))
       }
       case default => {
         val move = optMove.get
         val colour = optColour.get
         val e = conf.applyMove(move)
-        val outcomeOption = if (checkForCheckMate(colour.opposite)) Some(GameOutcome(WinModes.CheckMate, Some(colour))) else None
+        val outcomeOption = if (checkForCheckMate(colour.opposite)) Some(GameOutcome(GameOutcomeModes.CheckMate, Some(colour))) else None
         (e, outcomeOption)
       }
     }
@@ -124,7 +125,7 @@ class BoardModel {
       setGameOutcome(g.winMode, g.winner)
     }
     val wonEvent = if (isWon) List(Won(gameOutcome.get.winner.get, gameOutcome.get.winMode)) else Nil
-    val drawnEvent = if (isDrawn) List(Drawn(WinModes.Stalemate)) else Nil
+    val drawnEvent = if (isDrawn) List(Drawn(GameOutcomeModes.Stalemate)) else Nil
     for (s <- subscribers; e <- events ::: wonEvent ::: drawnEvent) { s.onBoardChanged(e) }
 
     lastColour = optColour
