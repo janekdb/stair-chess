@@ -73,8 +73,7 @@ class BoardModel {
     subscribers.foreach { _.onBoardChanged(PiecePlaced(colour, piece, position)) }    
   }
 
-  // TODO: Rename to setGameOutcome
-  private def setWinState(winMode: WinMode, winnerOpt: Option[Colour]) {
+  private def setGameOutcome(winMode: WinMode, winnerOpt: Option[Colour]) {
     this.gameOutcome = Some(GameOutcome(winMode, winnerOpt))
   }
 
@@ -104,12 +103,12 @@ class BoardModel {
     val (events: List[BoardChanged], outcomeOpt) = optMove match {
       case Some(Resign(colour)) => {
         // TODO: Remove this redundant setWinState call
-        setWinState(WinModes.Resignation, Some(colour.opposite))
+        setGameOutcome(WinModes.Resignation, Some(colour.opposite))
         (List(Resigned(colour)), Some(GameOutcome(WinModes.Resignation, Some(colour.opposite))))
       }
       case None => {
         // TODO: Remove this redundant setWinState call
-        setWinState(WinModes.Stalemate, None)
+        setGameOutcome(WinModes.Stalemate, None)
         (List(), Some(GameOutcome(WinModes.Stalemate, None)))
       }
       case default => {
@@ -122,7 +121,7 @@ class BoardModel {
     }
     if (outcomeOpt.isDefined) {
       val g = outcomeOpt.get
-      setWinState(g.winMode, g.winner)
+      setGameOutcome(g.winMode, g.winner)
     }
     val wonEvent = if (isWon) List(Won(gameOutcome.get.winner.get, gameOutcome.get.winMode)) else Nil
     val drawnEvent = if (isDrawn) List(Drawn(WinModes.Stalemate)) else Nil
