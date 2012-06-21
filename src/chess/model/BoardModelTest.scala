@@ -314,16 +314,11 @@ object BoardModelTest extends Test with TestUtils with Main {
     pb(White, Pawn(), "f2")
 
     val bm = new BoardModel(pb, Nil, Nil)
-    var events: List[BoardChanged] = Nil
-    val s = new Object with BoardChangedSubscriber {
-      def onBoardChanged(event: BoardChanged) {
-        events ::= event
-      }
-    }
+    val s = newEventCapturer
     bm.subscribe(s)
     bm.move(MovePiece(queenStart, queenEnd))
-    assertFalse(events contains Won(White, WinModes.CheckMate), "The list of event should not include Won")
-    assertEquals(List(PieceMoved(queenStart, queenEnd)), events, "The list of events should be comprised of one PieceMoved event")
+    assertFalse(s.events contains Won(White, WinModes.CheckMate), "The list of event should not include Won")
+    assertEquals(List(PieceMoved(queenStart, queenEnd)), s.events, "The list of events should be comprised of one PieceMoved event")
   }
 
   private def enPassantAllowed {
@@ -419,16 +414,11 @@ object BoardModelTest extends Test with TestUtils with Main {
     /* Move black to ensure lastColour is set */
     bm.move("a2b2")
 
-    // TODO: Encapsulate event capture in a class and reuse in other tests
-    var events: List[BoardChanged] = Nil
-    val s = new Object with BoardChangedSubscriber {
-      def onBoardChanged(event: BoardChanged) {
-        events = events ::: List(event)
-      }
-    }
+    val s = newEventCapturer
+
     bm.subscribe(s)
     bm.move(None)
-    assertEquals(List(Drawn(WinModes.Stalemate)), events, "When no move was offered stalemate was detected")
+    assertEquals(List(Drawn(WinModes.Stalemate)), s.events, "When no move was offered stalemate was detected")
     assertTrue(bm.isCompleted, "On stalemate the game is completed")
     assertFalse(bm.isWon, "On stalemate the game was not won")
     assertTrue(bm.isDrawn, "On stalemate the game was drawn")
@@ -467,5 +457,12 @@ positions and moves do not matter – they can be the same or different. The rule 
   */
 
   private def getKings = (White, King(), new Position("e1")) :: (Black, King(), new Position("e8")) :: Nil
+
+  private def newEventCapturer = new Object with BoardChangedSubscriber {
+    var events: List[BoardChanged] = Nil
+    def onBoardChanged(event: BoardChanged) {
+      events = events ::: List(event)
+    }
+  }
 
 }
