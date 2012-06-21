@@ -1,12 +1,11 @@
 package chess.model
 
-import chess.util.UnhandledCaseException
-import chess.util.TODO
-import chess.model.ex.IllegalMoveException
-import WinModes.WinMode
-import chess.model.ex.InvalidStalemateException
 import chess.model.ex.EarlyStalemateException
+import chess.model.ex.IllegalMoveException
+import chess.model.ex.InvalidStalemateException
 import chess.model.ex.UnconsideredMovesStalemateException
+import chess.util.UnhandledCaseException
+import WinModes.WinMode
 
 // TODO: End game when the last n positions have been repeated checking for the value of n
 //   when only two kings
@@ -102,7 +101,7 @@ class BoardModel {
       case default => Some(extractColour(optMove.get))
     }
 
-    val (events, outcomeOpt) = optMove match {
+    val (events: List[BoardChanged], outcomeOpt) = optMove match {
       case Some(Resign(colour)) => {
         // TODO: Remove this redundant setWinState call
         setWinState(WinModes.Resignation, Some(colour.opposite))
@@ -111,7 +110,7 @@ class BoardModel {
       case None => {
         // TODO: Remove this redundant setWinState call
         setWinState(WinModes.Stalemate, None)
-        (List(Stalemated()), Some(GameOutcome(WinModes.Stalemate, None)))
+        (List(), Some(GameOutcome(WinModes.Stalemate, None)))
       }
       case default => {
         val move = optMove.get
@@ -125,9 +124,9 @@ class BoardModel {
       val g = outcomeOpt.get
       setWinState(g.winMode, g.winner)
     }
-    // TODO: Add Drawn() event to allow for Stalemate.
     val wonEvent = if (isWon) List(Won(gameOutcome.get.winner.get, gameOutcome.get.winMode)) else Nil
-    for (s <- subscribers; e <- events ::: wonEvent) { s.onBoardChanged(e) }
+    val drawnEvent = if (isDrawn) List(Drawn(WinModes.Stalemate)) else Nil
+    for (s <- subscribers; e <- events ::: wonEvent ::: drawnEvent) { s.onBoardChanged(e) }
 
     lastColour = optColour
   }
