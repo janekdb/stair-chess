@@ -1,6 +1,6 @@
 package chess.ui
 
-import chess.model.{ BoardModel, BoardChangedSubscriber, Configuration, GridConfiguration, Colour, Move, Piece, Position, Promote, Resign, WinModes }
+import chess.model.{ BoardModel, BoardChangedSubscriber, Configuration, GridConfiguration, Colour, Move, Piece, Position, Promote, Resign, GameOutcomeModes }
 import chess.model.Colours.{ Black, White }
 import chess.model.{ Rook, Knight, Bishop, Queen, King, Pawn }
 import chess.model.{ Castle, MovePiece }

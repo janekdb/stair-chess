@@ -1,6 +1,6 @@
 package chess.model
 
-import WinModes.WinMode
+import GameOutcomeModes.GameOutcomeMode
 
 abstract class BoardChanged()
 
@@ -14,5 +14,5 @@ case class PieceMovedCapturing(start: Position, end: Position, captured: Positio
 case class Resigned(colour: Colour) extends BoardChanged
 case class Castled(king: PieceMoved, rook: PieceMoved) extends BoardChanged
 case class Promoted(pawn: Position, replacement: Piece) extends BoardChanged
-case class Won(colour: Colour, winMode: WinMode) extends BoardChanged
-case class Drawn(drawMode: WinMode) extends BoardChanged
+case class Won(colour: Colour, winMode: GameOutcomeMode) extends BoardChanged
+case class Drawn(drawMode: GameOutcomeMode) extends BoardChanged

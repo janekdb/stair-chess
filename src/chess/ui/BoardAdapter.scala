@@ -14,7 +14,7 @@ import chess.model.Position
 import chess.model.Promoted
 import chess.model.Resigned
 import chess.model.Won
-import chess.model.WinModes
+import chess.model.GameOutcomeModes
 import chess.util.TODO
 import chess.model.Drawn
 

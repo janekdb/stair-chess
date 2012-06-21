@@ -1,7 +1,7 @@
 package chess.model
 
 import Colours.{ Black, White }
-import WinModes.WinMode
+import GameOutcomeModes.GameOutcomeMode
 import ex._
 import test.{ Main, Test, TestUtils }
 import chess.util.TODO
@@ -221,7 +221,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     val bm = new BoardModel(pb, Nil, Nil)
 
     // TODO: Convert this test to use a verifying BoardChangedSubscriber possibly a mock
-    var actual: List[(Colour, WinModes.WinMode)] = Nil
+    var actual: List[(Colour, GameOutcomeModes.GameOutcomeMode)] = Nil
 
     val s = new BoardChangedSubscriber {
       def onBoardChanged(event: BoardChanged) {
@@ -239,7 +239,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     assertEquals(1, actual.size, "One BoardChanged event was fired: " + actual.size)
     val (colour, winMode) = actual.head
     assertEquals(Black, colour)
-    assertEquals(WinModes.CheckMate, winMode)
+    assertEquals(GameOutcomeModes.CheckMate, winMode)
   }
 
   private def checkWithNonCapturingEscapeIsDetected {
@@ -317,7 +317,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     val s = newEventCapturer
     bm.subscribe(s)
     bm.move(MovePiece(queenStart, queenEnd))
-    assertFalse(s.events contains Won(White, WinModes.CheckMate), "The list of event should not include Won")
+    assertFalse(s.events contains Won(White, GameOutcomeModes.CheckMate), "The list of event should not include Won")
     assertEquals(List(PieceMoved(queenStart, queenEnd)), s.events, "The list of events should be comprised of one PieceMoved event")
   }
 
@@ -418,7 +418,7 @@ object BoardModelTest extends Test with TestUtils with Main {
 
     bm.subscribe(s)
     bm.move(None)
-    assertEquals(List(Drawn(WinModes.Stalemate)), s.events, "When no move was offered stalemate was detected")
+    assertEquals(List(Drawn(GameOutcomeModes.Stalemate)), s.events, "When no move was offered stalemate was detected")
     assertTrue(bm.isCompleted, "On stalemate the game is completed")
     assertFalse(bm.isWon, "On stalemate the game was not won")
     assertTrue(bm.isDrawn, "On stalemate the game was drawn")
