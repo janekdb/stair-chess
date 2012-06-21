@@ -1,6 +1,5 @@
 package chess.ui
 import java.util.concurrent.TimeUnit
-
 import chess.model.BoardChanged
 import chess.model.BoardChangedSubscriber
 import chess.model.Castled
@@ -14,10 +13,10 @@ import chess.model.PiecePlaced
 import chess.model.Position
 import chess.model.Promoted
 import chess.model.Resigned
-import chess.model.Stalemated
 import chess.model.Won
 import chess.model.WinModes
 import chess.util.TODO
+import chess.model.Drawn
 
 class BoardAdapter(val board: Board) extends BoardChangedSubscriber with ConfigurationChangedSubscriber {
 
@@ -53,7 +52,6 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
         clearSquare(captured)
         clearSquare(start)
         setPiece(end, makeLabel(colour, piece))
-
         delay(100)
       }
       case Promoted(position, piece) => {
@@ -76,8 +74,8 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
       case Won(colour, winMode) => {
         board.showWon(colour.toString, winMode.toString)
       }
-      case Stalemated() => {
-        board.showDrawn(WinModes.Stalemate.toString)
+      case Drawn(drawMode) => {
+        board.showDrawn(drawMode.toString)
       }
       case default => TODO.throwRuntimeEx("Unhandled case: " + event)
     }
