@@ -90,7 +90,7 @@ class BoardModel {
     } else {
       if (lastColour.isEmpty) throw new EarlyStalemateException
       val moves = moveExplorer.legalMoves(lastColour.get.opposite)
-      if (moves.nonEmpty) throw new UnconsideredMovesStalemateException
+      if (moves.nonEmpty) throw new UnconsideredMovesStalemateException(moves)
     }
 
     /* Extract the last colour before the configuration is changed. */
