@@ -73,8 +73,8 @@ class BoardModel {
     subscribers.foreach { _.onBoardChanged(PiecePlaced(colour, piece, position)) }    
   }
 
-  private def setGameOutcome(gameOutcomeMode: GameOutcomeMode, winnerOpt: Option[Colour]) {
-    this.gameOutcome = Some(GameOutcome(gameOutcomeMode, winnerOpt))
+  private def setGameOutcome(gameOutcome: GameOutcome) {
+    this.gameOutcome = Some(gameOutcome)
   }
 
   private var lastColour: Option[Colour] = None
@@ -116,9 +116,7 @@ class BoardModel {
       }
     }
     if (outcomeOpt.isDefined) {
-      val g = outcomeOpt.get
-      // TODO: Add overloaded single arg setGameOutcome method
-      setGameOutcome(g.gameOutcomeMode, g.winner)
+      setGameOutcome(outcomeOpt.get)
     }
     val wonEvent = if (isWon) List(Won(gameOutcome.get.winner.get, gameOutcome.get.gameOutcomeMode)) else Nil
     val drawnEvent = if (isDrawn) List(Drawn(GameOutcomeModes.Stalemate)) else Nil
