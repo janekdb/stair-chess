@@ -42,11 +42,10 @@ class BoardModel {
     for ((colour, piece, position) <- placements) place(colour, piece, position)
   }
 
-  // TODO: Rename to gameOutcomeMode
-  case class GameOutcome(winMode: GameOutcomeMode, winner: Option[Colour]) {
-    def isCheckMate: Boolean = winMode == GameOutcomeModes.CheckMate
-    def isResigned: Boolean = winMode == GameOutcomeModes.Resignation
-    def isStalemate: Boolean = winMode == GameOutcomeModes.Stalemate
+  case class GameOutcome(gameOutcomeMode: GameOutcomeMode, winner: Option[Colour]) {
+    def isCheckMate: Boolean = gameOutcomeMode == GameOutcomeModes.CheckMate
+    def isResigned: Boolean = gameOutcomeMode == GameOutcomeModes.Resignation
+    def isStalemate: Boolean = gameOutcomeMode == GameOutcomeModes.Stalemate
   }
 
   var gameOutcome: Option[GameOutcome] = None
@@ -122,9 +121,9 @@ class BoardModel {
     }
     if (outcomeOpt.isDefined) {
       val g = outcomeOpt.get
-      setGameOutcome(g.winMode, g.winner)
+      setGameOutcome(g.gameOutcomeMode, g.winner)
     }
-    val wonEvent = if (isWon) List(Won(gameOutcome.get.winner.get, gameOutcome.get.winMode)) else Nil
+    val wonEvent = if (isWon) List(Won(gameOutcome.get.winner.get, gameOutcome.get.gameOutcomeMode)) else Nil
     val drawnEvent = if (isDrawn) List(Drawn(GameOutcomeModes.Stalemate)) else Nil
     for (s <- subscribers; e <- events ::: wonEvent ::: drawnEvent) { s.onBoardChanged(e) }
 
