@@ -102,13 +102,9 @@ class BoardModel {
 
     val (events: List[BoardChanged], outcomeOpt) = optMove match {
       case Some(Resign(colour)) => {
-        // TODO: Remove this redundant setWinState call
-        setGameOutcome(GameOutcomeModes.Resignation, Some(colour.opposite))
         (List(Resigned(colour)), Some(GameOutcome(GameOutcomeModes.Resignation, Some(colour.opposite))))
       }
       case None => {
-        // TODO: Remove this redundant setWinState call
-        setGameOutcome(GameOutcomeModes.Stalemate, None)
         (List(), Some(GameOutcome(GameOutcomeModes.Stalemate, None)))
       }
       case default => {
@@ -121,6 +117,7 @@ class BoardModel {
     }
     if (outcomeOpt.isDefined) {
       val g = outcomeOpt.get
+      // TODO: Add overloaded single arg setGameOutcome method
       setGameOutcome(g.gameOutcomeMode, g.winner)
     }
     val wonEvent = if (isWon) List(Won(gameOutcome.get.winner.get, gameOutcome.get.gameOutcomeMode)) else Nil
