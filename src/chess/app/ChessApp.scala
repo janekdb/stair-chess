@@ -50,7 +50,7 @@ object ChessApp {
     val playerSelector = new PlayerSelector(white, black)
 
     while (!board.isCompleted) {
-      board.move(playerSelector.next.getMove)
+      board.move(playerSelector.next.getMove(board.getConfiguration))
     }
   }
 

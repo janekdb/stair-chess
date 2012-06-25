@@ -32,8 +32,11 @@ class BoardModel {
   private val conf: Configuration = new GridConfiguration
   private val moveExplorer: MoveExplorer = new StandardMoveExplorer(conf)
 
+  /** @return a copy of the current Configuration */
+  def getConfiguration = conf.copyOf
+
   def getMoveExplorer = moveExplorer
-  
+
   def this(placements: List[(Colour, Piece, Position)], subscribers: List[BoardChangedSubscriber], confChangedSubscribers: List[ConfigurationChangedSubscriber]) {
     this
     subscribers foreach subscribe
