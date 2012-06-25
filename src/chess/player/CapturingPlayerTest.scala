@@ -26,7 +26,7 @@ object CapturingPlayerTest extends Test with TestUtils with Main {
     conf.add("a1", White, Rook())
     conf.add("a2", Black, Pawn())
     val rp = newPlayer(conf)
-    val move = rp.getMove
+    val move = rp.getMove(conf.copyOf)
     assertNotNull(move, "A move should be available")
     assertEquals(Some(new MovePieceCapturing("a1", "a2")), move, "The capturing moves should have been selected")
   }

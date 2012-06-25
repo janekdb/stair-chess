@@ -2,6 +2,7 @@ package chess.player
 
 import chess.model.{ BoardModel, Castle, Colour, Move, MovePiece, Position, Promote, Resign, Short, Long, Queen }
 import chess.model.Promote
+import chess.model.Configuration
 
 class Human(val board: BoardModel, val colour: Colour) extends Player {
 
@@ -13,7 +14,7 @@ class Human(val board: BoardModel, val colour: Colour) extends Player {
       "g8f6"
     )
     
-  def getMove: Option[Move] = {
+  def getMove(configuration: Configuration): Option[Move] = {
     val m :: ms = moves
     moves = ms
     Some(m)
