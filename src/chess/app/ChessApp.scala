@@ -30,6 +30,7 @@ import chess.player.CapturingPlayer
 // TODO: Add a player that prefers to check the opponents king
 // TODO: Add a tournament mode
 // TODO: Add an interactive mode
+// TODO: Look for a way to be more functional
 object ChessApp {
   def main(args: Array[String]) {
 
