@@ -3,13 +3,14 @@ import chess.model.Colour
 import chess.model.Move
 import chess.model.MoveExplorer
 import chess.model.Capturing
+import chess.model.Configuration
 
 /**
  * A player that selects at random preferring capturing moves.
  */
 class CapturingPlayer(val colour: Colour, val explorer: MoveExplorer) extends Player {
 
-  def getMove: Option[Move] = {
+  def getMove(configuration: Configuration): Option[Move] = {
     val moves = explorer.legalMoves(colour)
     if (moves.isEmpty) {
       None
