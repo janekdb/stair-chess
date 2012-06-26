@@ -26,11 +26,16 @@ object CheckingPlayerTest extends Test with TestUtils with Main {
     addWhiteKing(conf)
     addBlackKing(conf)
     conf.add("c4", White, Knight())
-    // TODO: Add pawn to check next
+    conf.add("g5", White, Pawn())
     val rp = newPlayer(conf)
     val expectedKnightMove = new MovePiece("c4d6")
     assertEquals(Some(expectedKnightMove), rp.getMove(conf.copyOf), "A checking move should have been picked")
-    conf.applyMove(expectedKnightMove)
+    /* Do not capture the king */
+    conf.applyMove(new MovePiece("c4b2"))
+    /* Move the black king to a location where the white pawn can check it on the next move */
+    conf.applyMove(new MovePiece("e8f7"))
+    val expectedPawnMove = new MovePiece("g5g6")
+    assertEquals(Some(expectedPawnMove), rp.getMove(conf.copyOf), "A checking move should have been picked")
   }
 
   private def newPlayer(conf: Configuration): Player = {
