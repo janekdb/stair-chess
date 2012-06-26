@@ -26,16 +26,32 @@ import chess.model.ConfigurationView
 import chess.ui.Board
 import chess.ui.BoardAdapter
 import chess.player.CapturingPlayer
+import chess.player.CheckingPlayer
+import chess.player.Player
+import chess.model.Colour
+import chess.model.MoveExplorer
 
-// TODO: Add a player that prefers to check the opponents king
-// TODO: Add a tournament mode
+// ->TODO: Add a tournament mode
 // TODO: Add an interactive mode
 // TODO: Look for a way to be more functional
+// TODO: Add player that moves pieces out of danger
 object ChessApp {
   def main(args: Array[String]) {
 
     runTests
 
+    //    val white = new CheckingPlayer(Colours.White, board.getMoveExplorer)
+    //    val black = new CheckingPlayer(Colours.Black, board.getMoveExplorer)
+    //    val white = new CapturingPlayer(Colours.White, board.getMoveExplorer)
+    //    val black = new RandomPlayer(Colours.Black, board.getMoveExplorer)
+    //    val white = new DumbPlayer(Library.scholarsMate.whiteMoves)
+    //    val black = new DumbPlayer(Library.scholarsMate.blackMoves)
+    // TODO: For the tournament loop over all combinations of players
+    val playerGenerator = ((colour: Colour, explorer: MoveExplorer) => new CheckingPlayer(colour, explorer))
+    play(playerGenerator)
+  }
+
+  private def play(playerGenerator: (Colour, MoveExplorer) => Player) {
     val ui = new UI
     val boardAdapter = new BoardAdapter(SwingBoard.createAndShowBoard())
     val board = new BoardModel(BoardModel.standardPlacements, List(ui, boardAdapter), List(boardAdapter))
@@ -43,18 +59,19 @@ object ChessApp {
     /* The UI listens for changes and renders them immediately */
     ui.showBoard
 
-    val white = new CapturingPlayer(Colours.White, board.getMoveExplorer)
-    val black = new RandomPlayer(Colours.Black, board.getMoveExplorer)
-    //    val white = new DumbPlayer(Library.scholarsMate.whiteMoves)
-    //    val black = new DumbPlayer(Library.scholarsMate.blackMoves)
+    val white = playerGenerator(Colours.White, board.getMoveExplorer)
+    val black = playerGenerator(Colours.Black, board.getMoveExplorer)
     val playerSelector = new PlayerSelector(white, black)
 
     while (!board.isCompleted) {
       board.move(playerSelector.next.getMove(board.getConfiguration))
     }
+
+    // TODO: Close Board after completion or 400 moves
   }
 
   def runTests {
     AllTests.runAllTests
   }
 }
+
