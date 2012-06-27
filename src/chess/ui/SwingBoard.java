@@ -116,8 +116,8 @@ public class SwingBoard extends JFrame implements Board {
 	 * Create the GUI and show it. For thread safety, this method is invoked
 	 * from the event dispatch thread.
 	 */
-	private static SwingBoard createAndShowGUI() {
 		// Create and set up the window.
+	private static SwingBoard createAndShowGUI() {
 		SwingBoard frame = new SwingBoard("Stair Chess");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Set up the content pane.
@@ -190,5 +190,9 @@ public class SwingBoard extends JFrame implements Board {
 
 	public void showDrawn(final String drawMode) {
 		setTitle(String.format("Drawn with %s", drawMode));
+	}
+
+	public void close(){
+		super.dispose();
 	}
 }

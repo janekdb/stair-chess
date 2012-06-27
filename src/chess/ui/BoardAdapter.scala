@@ -85,4 +85,8 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
     val ps = piece.toString
     (colour.toString + "-" + ps.substring(0, ps.length - 2)).toLowerCase
   }
+
+  def close {
+    board.close()
+  }
 }

@@ -12,4 +12,7 @@ public interface Board {
 	void showWon(final String colour, final String wonMode);
 
 	void showDrawn(final String drawnMode);
+
+	/** Close the UI */
+	void close();
 }
