@@ -8,6 +8,7 @@ import chess.model.{ BoardChanged, Castled, PieceMoved, PieceMovedCapturing, Pie
 import chess.util.TODO
 import chess.model.Drawn
 
+// TODO: Rename UI to TextUI
 class UI extends BoardChangedSubscriber {
 
   private var moveCount = 0
@@ -54,6 +55,7 @@ class UI extends BoardChangedSubscriber {
       }
     }
     render
+    // TODO: Fix use of event count as move count
     moveCount += 1
     display("UI: Move completed: " + moveCount + ": " + event.toString)
     display("")
