@@ -52,6 +52,8 @@ object ChessApp {
     play(playerGenerator)
   }
 
+  private val MAX_MOVES = 200
+
   private def play(playerGenerator: (Colour, MoveExplorer) => Player) {
     val outcomeListener = new Object with BoardChangedSubscriber {
       var winner: Option[Colour] = None
@@ -77,19 +79,33 @@ object ChessApp {
     val black = playerGenerator(Colours.Black, board.getMoveExplorer)
     val playerSelector = new PlayerSelector(white, black)
 
-    while (!board.isCompleted) {
+    // TODO: Functionalise this maybe as a lazy seq from which the first MAX_MOVES are taken
+    var moveCount = 0
+    while (!board.isCompleted && moveCount < MAX_MOVES) {
       board.move(playerSelector.next.getMove(board.getConfiguration))
+      moveCount += 1
     }
+
+    val isAborted = moveCount == MAX_MOVES
 
     if (outcomeListener.winner.isDefined) {
       // TODO: Record the win
     } else if (outcomeListener.isDrawn) {
       // TODO: Record the drawn
-    } else {
+    } else if (isAborted){
+      // TODO: Record the abort as a draw
+    }
+    else {
       throw new AssertionError("Game completed in neither a win or draw")
     }
-    // TODO: Close Board after completion or 400 moves
+
+    /* Let the spectators note the final position. */
+    delay
+
+    boardAdapter.close
   }
+
+  private def delay { TimeUnit.SECONDS.sleep(10) }
 
   def runTests {
     AllTests.runAllTests
