@@ -30,6 +30,7 @@ import chess.player.CheckingPlayer
 import chess.player.Player
 import chess.model.Colour
 import chess.model.MoveExplorer
+import chess.model.Drawn
 
 // ->TODO: Add a tournament mode
 // TODO: Add an interactive mode
@@ -52,9 +53,22 @@ object ChessApp {
   }
 
   private def play(playerGenerator: (Colour, MoveExplorer) => Player) {
+    val outcomeListener = new Object with BoardChangedSubscriber {
+      var winner: Option[Colour] = None
+      var isDrawn: Boolean = false
+      def onBoardChanged(event: BoardChanged) {
+        println("outcomeListener: " + event)
+        event match {
+          case Won(colour, _) => winner = Some(colour)
+          case Drawn(_) => isDrawn = true
+          case default => Unit
+        }
+      }
+    }
+
     val ui = new UI
     val boardAdapter = new BoardAdapter(SwingBoard.createAndShowBoard())
-    val board = new BoardModel(BoardModel.standardPlacements, List(ui, boardAdapter), List(boardAdapter))
+    val board = new BoardModel(BoardModel.standardPlacements, List(ui, boardAdapter, outcomeListener), List(boardAdapter))
 
     /* The UI listens for changes and renders them immediately */
     ui.showBoard
@@ -67,6 +81,13 @@ object ChessApp {
       board.move(playerSelector.next.getMove(board.getConfiguration))
     }
 
+    if (outcomeListener.winner.isDefined) {
+      // TODO: Record the win
+    } else if (outcomeListener.isDrawn) {
+      // TODO: Record the drawn
+    } else {
+      throw new AssertionError("Game completed in neither a win or draw")
+    }
     // TODO: Close Board after completion or 400 moves
   }
 
