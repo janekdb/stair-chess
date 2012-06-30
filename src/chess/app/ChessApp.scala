@@ -36,6 +36,8 @@ import chess.model.Drawn
 // TODO: Add an interactive mode
 // TODO: Look for a way to be more functional
 // TODO: Add player that moves pieces out of danger
+// TODO: Drawn when only two Kings
+// TODO: Drawn in other situations apart from two Kings where checkmate is not possible
 object ChessApp {
   def main(args: Array[String]) {
 
@@ -48,18 +50,21 @@ object ChessApp {
     //    val white = new DumbPlayer(Library.scholarsMate.whiteMoves)
     //    val black = new DumbPlayer(Library.scholarsMate.blackMoves)
     // TODO: For the tournament loop over all combinations of players
-    val playerGenerator = ((colour: Colour, explorer: MoveExplorer) => new CheckingPlayer(colour, explorer))
-    play(playerGenerator)
+    val playerGenerator1 = ((colour: Colour, explorer: MoveExplorer) => new CheckingPlayer(colour, explorer))
+    val playerGenerator2 = ((colour: Colour, explorer: MoveExplorer) => new CapturingPlayer(colour, explorer))
+    val playerGenerator3 = ((colour: Colour, explorer: MoveExplorer) => new RandomPlayer(colour, explorer))
+    val generators = playerGenerator1 :: playerGenerator2 :: playerGenerator3 :: List()
+    for (wpg <- generators; bpg <- generators)
+      play(wpg, bpg)
   }
 
-  private val MAX_MOVES = 200
+  private val MAX_MOVES = 500
 
-  private def play(playerGenerator: (Colour, MoveExplorer) => Player) {
+  private def play(whitePlayerGenerator: (Colour, MoveExplorer) => Player, blackPlayerGenerator: (Colour, MoveExplorer) => Player) {
     val outcomeListener = new Object with BoardChangedSubscriber {
       var winner: Option[Colour] = None
       var isDrawn: Boolean = false
       def onBoardChanged(event: BoardChanged) {
-        println("outcomeListener: " + event)
         event match {
           case Won(colour, _) => winner = Some(colour)
           case Drawn(_) => isDrawn = true
@@ -75,8 +80,8 @@ object ChessApp {
     /* The UI listens for changes and renders them immediately */
     ui.showBoard
 
-    val white = playerGenerator(Colours.White, board.getMoveExplorer)
-    val black = playerGenerator(Colours.Black, board.getMoveExplorer)
+    val white = whitePlayerGenerator(Colours.White, board.getMoveExplorer)
+    val black = blackPlayerGenerator(Colours.Black, board.getMoveExplorer)
     val playerSelector = new PlayerSelector(white, black)
 
     // TODO: Functionalise this maybe as a lazy seq from which the first MAX_MOVES are taken
