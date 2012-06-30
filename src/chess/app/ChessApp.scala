@@ -31,6 +31,7 @@ import chess.player.Player
 import chess.model.Colour
 import chess.model.MoveExplorer
 import chess.model.Drawn
+import scala.collection.mutable.HashMap
 
 // ->TODO: Add a tournament mode
 // TODO: Add an interactive mode
@@ -39,9 +40,20 @@ import chess.model.Drawn
 // TODO: Drawn when only two Kings
 // TODO: Drawn in other situations apart from two Kings where checkmate is not possible
 object ChessApp {
+
+  //  implicit def intWithTimes(n: Int): Unit = new {
+  //    def times(f: => Unit) = 1 to n foreach { _ => f }
+  //  }
+
+  private def times(n: Int)(code: => Unit) {
+    for (i <- 1 to n) code
+  }
+
   def main(args: Array[String]) {
 
     runTests
+
+    val scoreCard = new ScoreCard
 
     //    val white = new CheckingPlayer(Colours.White, board.getMoveExplorer)
     //    val black = new CheckingPlayer(Colours.Black, board.getMoveExplorer)
@@ -54,13 +66,20 @@ object ChessApp {
     val playerGenerator2 = ((colour: Colour, explorer: MoveExplorer) => new CapturingPlayer(colour, explorer))
     val playerGenerator3 = ((colour: Colour, explorer: MoveExplorer) => new RandomPlayer(colour, explorer))
     val generators = playerGenerator1 :: playerGenerator2 :: playerGenerator3 :: List()
-    for (wpg <- generators; bpg <- generators)
-      play(wpg, bpg)
+    times(1000) {
+      for (wpg <- generators; bpg <- generators)
+        try {
+          play(scoreCard, wpg, bpg)
+        } catch {
+          // TODO: Remove this try/catch when the Castling error in defect-4.txt is fixed
+          case e: Exception => println(e)
+        }
+    }
   }
 
   private val MAX_MOVES = 500
 
-  private def play(whitePlayerGenerator: (Colour, MoveExplorer) => Player, blackPlayerGenerator: (Colour, MoveExplorer) => Player) {
+  private def play(scoreCard: ScoreCard, whitePlayerGenerator: (Colour, MoveExplorer) => Player, blackPlayerGenerator: (Colour, MoveExplorer) => Player) {
     val outcomeListener = new Object with BoardChangedSubscriber {
       var winner: Option[Colour] = None
       var isDrawn: Boolean = false
@@ -94,13 +113,14 @@ object ChessApp {
     val isAborted = moveCount == MAX_MOVES
 
     if (outcomeListener.winner.isDefined) {
-      // TODO: Record the win
+      val colour = outcomeListener.winner.get
+      val player = (if (colour == Colours.White) white else black).getClass().toString
+      scoreCard.addWin(player)
     } else if (outcomeListener.isDrawn) {
       // TODO: Record the drawn
-    } else if (isAborted){
+    } else if (isAborted) {
       // TODO: Record the abort as a draw
-    }
-    else {
+    } else {
       throw new AssertionError("Game completed in neither a win or draw")
     }
 
@@ -117,3 +137,12 @@ object ChessApp {
   }
 }
 
+private class ScoreCard {
+  val scores = new HashMap[String, Int]() { override def default(k: String) = 0 }
+
+  def addWin(player: String) {
+    println("Adding win for " + player)
+    scores(player) = scores(player) + 1
+    println("Scores: " + scores)
+  }
+}
