@@ -55,8 +55,12 @@ class UI extends BoardChangedSubscriber {
       }
     }
     render
-    // TODO: Fix use of event count as move count
-    moveCount += 1
+    // TODO: Stop special casing Promoted and PiecePlaced by adding a property to the BoardMoved to indicate when it is the first change for a move
+    event match {
+      case Promoted(_, _) => Unit
+      case PiecePlaced(_, _, _) => Unit
+      case default => moveCount += 1
+    }
     display("UI: Move completed: " + moveCount + ": " + event.toString)
     display("")
   }
