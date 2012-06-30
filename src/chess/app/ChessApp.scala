@@ -16,7 +16,7 @@ import chess.model.Resigned
 import chess.model.Won
 import chess.player.RandomPlayer
 import chess.ui.SwingBoard
-import chess.ui.UI
+import chess.ui.TextUI
 import chess.util.PlayerSelector
 import chess.util.TODO
 import test.AllTests
@@ -73,7 +73,7 @@ object ChessApp {
       }
     }
 
-    val ui = new UI
+    val ui = new TextUI
     val boardAdapter = new BoardAdapter(SwingBoard.createAndShowBoard())
     val board = new BoardModel(BoardModel.standardPlacements, List(ui, boardAdapter, outcomeListener), List(boardAdapter))
 
