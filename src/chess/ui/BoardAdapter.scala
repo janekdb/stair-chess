@@ -45,14 +45,14 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
         val (colour, piece, _) = configuration.getExistingPiece(end)
         clearSquare(start)
         setPiece(end, makeLabel(colour, piece))
-        delay(100)
+        delay(25)
       }
       case PieceMovedCapturing(start, end, captured) => {
         val (colour, piece, _) = configuration.getExistingPiece(end)
         clearSquare(captured)
         clearSquare(start)
         setPiece(end, makeLabel(colour, piece))
-        delay(100)
+        delay(25)
       }
       case Promoted(position, piece) => {
         val (colour, piece, _) = configuration.getExistingPiece(position)
