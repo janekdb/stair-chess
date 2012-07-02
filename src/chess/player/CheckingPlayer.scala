@@ -8,7 +8,7 @@ import chess.model.StandardMoveExplorer
 /**
  * A player that will always check if possible
  */
-class CheckingPlayer(val colour: Colour, val explorer: MoveExplorer) extends Player {
+class CheckingPlayer(val colour: Colour, val explorer: MoveExplorer, val explorerFactory: Configuration => MoveExplorer) extends Player {
 
   def getMove(configuration: Configuration): Option[Move] = {
     val moves = explorer.legalMoves(colour)
@@ -25,8 +25,7 @@ class CheckingPlayer(val colour: Colour, val explorer: MoveExplorer) extends Pla
     moves filter { m =>
       val conf = configuration.copyOf
       conf.applyMove(m)
-      // TODO: Add MoveExplorerFactory to primary constructor or use MoveExplorer companion object to provide default implementation
-      val e = new StandardMoveExplorer(conf)
+      val e = explorerFactory(conf)
       e.kingInCheck(colour.opposite)
     }
   }

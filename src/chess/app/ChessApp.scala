@@ -32,6 +32,7 @@ import chess.model.Colour
 import chess.model.MoveExplorer
 import chess.model.Drawn
 import scala.collection.mutable.HashMap
+import chess.model.StandardMoveExplorer
 
 //Scores: Map(class chess.player.RandomPlayer -> 36, class chess.player.CapturingP
 //layer -> 230, class chess.player.CheckingPlayer -> 103)
@@ -70,7 +71,8 @@ object ChessApp {
     //    val white = new DumbPlayer(Library.scholarsMate.whiteMoves)
     //    val black = new DumbPlayer(Library.scholarsMate.blackMoves)
     // TODO: For the tournament loop over all combinations of players
-    val playerGenerator1 = ((colour: Colour, explorer: MoveExplorer) => new CheckingPlayer(colour, explorer))
+    val explorerFactory = (conf: Configuration) => new StandardMoveExplorer(conf)
+    val playerGenerator1 = ((colour: Colour, explorer: MoveExplorer) => new CheckingPlayer(colour, explorer, explorerFactory))
     val playerGenerator2 = ((colour: Colour, explorer: MoveExplorer) => new CapturingPlayer(colour, explorer))
     val playerGenerator3 = ((colour: Colour, explorer: MoveExplorer) => new RandomPlayer(colour, explorer))
     val generators = playerGenerator1 :: playerGenerator2 :: playerGenerator3 :: List()

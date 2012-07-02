@@ -39,8 +39,9 @@ object CheckingPlayerTest extends Test with TestUtils with Main {
   }
 
   private def newPlayer(conf: Configuration): Player = {
+    val explorerFactory = (conf: Configuration) => new StandardMoveExplorer(conf)
     val explorer: MoveExplorer = new StandardMoveExplorer(conf)
-    new CheckingPlayer(White, explorer)
+    new CheckingPlayer(White, explorer, explorerFactory)
   }
 
   private def addWhiteKing(conf: Configuration) {
