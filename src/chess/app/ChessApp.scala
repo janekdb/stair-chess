@@ -33,12 +33,20 @@ import chess.model.MoveExplorer
 import chess.model.Drawn
 import scala.collection.mutable.HashMap
 
+//Scores: Map(class chess.player.RandomPlayer -> 36, class chess.player.CapturingP
+//layer -> 230, class chess.player.CheckingPlayer -> 103)
+
 // ->TODO: Add a tournament mode
 // TODO: Add an interactive mode
 // TODO: Look for a way to be more functional
 // TODO: Add player that moves pieces out of danger
 // TODO: Drawn when only two Kings
 // TODO: Drawn in other situations apart from two Kings where checkmate is not possible
+// TODO: Add stalemate avoidance
+// TODO: Add combining player that prefers checking then capturing
+// TODO: Mixin a piece value source to influence capturing player
+// TODO: Add a developed position preferring player
+// TODO: Add a defensive player
 object ChessApp {
 
   //  implicit def intWithTimes(n: Int): Unit = new {
@@ -68,16 +76,20 @@ object ChessApp {
     val generators = playerGenerator1 :: playerGenerator2 :: playerGenerator3 :: List()
     times(1000) {
       for (wpg <- generators; bpg <- generators)
+        // TODO: Skip same player versus same player in if clause
         try {
-          play(scoreCard, wpg, bpg)
+          if (wpg != bpg) {
+            play(scoreCard, wpg, bpg)
+          }
         } catch {
           // TODO: Remove this try/catch when the Castling error in defect-4.txt is fixed
           case e: Exception => println(e)
+          case e @ default => println("default: " + e)
         }
     }
   }
 
-  private val MAX_MOVES = 500
+  private val MAX_MOVES = 400
 
   private def play(scoreCard: ScoreCard, whitePlayerGenerator: (Colour, MoveExplorer) => Player, blackPlayerGenerator: (Colour, MoveExplorer) => Player) {
     val outcomeListener = new Object with BoardChangedSubscriber {
@@ -124,6 +136,8 @@ object ChessApp {
       throw new AssertionError("Game completed in neither a win or draw")
     }
 
+    println("Scores: " + scoreCard)
+
     /* Let the spectators note the final position. */
     delay
 
@@ -143,6 +157,7 @@ private class ScoreCard {
   def addWin(player: String) {
     println("Adding win for " + player)
     scores(player) = scores(player) + 1
-    println("Scores: " + scores)
   }
+
+  override def toString = scores.toString
 }
