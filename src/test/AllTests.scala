@@ -16,6 +16,8 @@ object AllTests {
     tests ::= RandomPlayerTest
     tests ::= CapturingPlayerTest
     tests ::= CheckingPlayerTest
+    import chess.app._
+    tests ::= ScoreCardTest
     println("AllTests: tests.size: " + tests.size)
     tests
   }
