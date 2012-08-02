@@ -31,13 +31,14 @@ import chess.player.Player
 import chess.model.Colour
 import chess.model.MoveExplorer
 import chess.model.Drawn
-import scala.collection.mutable.HashMap
 import chess.model.StandardMoveExplorer
 
 //Scores: Map(class chess.player.RandomPlayer -> 36, class chess.player.CapturingP
 //layer -> 230, class chess.player.CheckingPlayer -> 103)
 
-// ->TODO: Add a tournament mode
+// TODO: -> Add a tournament mode
+// TODO: --> Format score card as table
+// TODO: --> Score as tournament
 // TODO: Add an interactive mode
 // TODO: Look for a way to be more functional
 // TODO: Add player that moves pieces out of danger
@@ -62,8 +63,6 @@ object ChessApp {
 
     runTests
 
-    val scoreCard = new ScoreCard
-
     //    val white = new CheckingPlayer(Colours.White, board.getMoveExplorer)
     //    val black = new CheckingPlayer(Colours.Black, board.getMoveExplorer)
     //    val white = new CapturingPlayer(Colours.White, board.getMoveExplorer)
@@ -76,6 +75,10 @@ object ChessApp {
     val playerGenerator2 = ((colour: Colour, explorer: MoveExplorer) => new CapturingPlayer(colour, explorer))
     val playerGenerator3 = ((colour: Colour, explorer: MoveExplorer) => new RandomPlayer(colour, explorer))
     val generators = playerGenerator1 :: playerGenerator2 :: playerGenerator3 :: List()
+
+    /* TODO: Stop duplicating player names be using a player category label that is not part of the player instance. */
+    val scoreCard = new ScoreCard(Set("CheckingPlayer", "CapturingPlayer", "RandomPlayer"))
+
     times(1000) {
       for (wpg <- generators; bpg <- generators)
         // TODO: Skip same player versus same player in if clause
@@ -128,17 +131,18 @@ object ChessApp {
 
     if (outcomeListener.winner.isDefined) {
       val colour = outcomeListener.winner.get
-      val player = (if (colour == Colours.White) white else black).getClass().toString
-      scoreCard.addWin(player)
+      val (winner, loser) = if (colour == Colours.White) (white, black) else (black, white)
+      scoreCard.addWin(winner, loser)
     } else if (outcomeListener.isDrawn) {
-      // TODO: Record the drawn
+      scoreCard.addDraw(white, black)
     } else if (isAborted) {
-      // TODO: Record the abort as a draw
+      scoreCard.addDraw(white, black)
     } else {
       throw new AssertionError("Game completed in neither a win or draw")
     }
 
-    println("Scores: " + scoreCard)
+    println("Scores:")
+    scoreCard.displayScores
 
     /* Let the spectators note the final position. */
     delay
@@ -146,20 +150,10 @@ object ChessApp {
     boardAdapter.close
   }
 
-  private def delay { TimeUnit.SECONDS.sleep(10) }
+  private def delay { TimeUnit.SECONDS.sleep(1) }
 
   def runTests {
     AllTests.runAllTests
   }
 }
 
-private class ScoreCard {
-  val scores = new HashMap[String, Int]() { override def default(k: String) = 0 }
-
-  def addWin(player: String) {
-    println("Adding win for " + player)
-    scores(player) = scores(player) + 1
-  }
-
-  override def toString = scores.toString
-}
