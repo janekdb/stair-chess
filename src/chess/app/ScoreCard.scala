@@ -47,13 +47,4 @@ class ScoreCard(players: Set[String]) {
     }
     draws.toList.sorted(ordering)
   }
-
-  override def toString = wins.toString
-
-  // TODO: Remove this method
-  def displayScores {
-    wins.foreach {
-      case (k, v) => println(k + ": " + v)
-    }
-  }
 }
