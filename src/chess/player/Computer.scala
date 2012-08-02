@@ -14,6 +14,8 @@ class Computer(val board: BoardModel, val colour: Colour) extends Player {
       "h5f7"
     )
 
+  def getName = "Computer"
+
   def getMove(configuration: Configuration): Option[Move] = {
     val m :: ms = moves
     moves = ms

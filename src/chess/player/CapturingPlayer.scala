@@ -10,6 +10,8 @@ import chess.model.Configuration
  */
 class CapturingPlayer(val colour: Colour, val explorer: MoveExplorer) extends Player {
 
+  def getName = "CapturingPlayer"
+
   def getMove(configuration: Configuration): Option[Move] = {
     val moves = explorer.legalMoves(colour)
     if (moves.isEmpty) {

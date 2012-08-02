@@ -9,6 +9,8 @@ import chess.model.Colour
  */
 class RandomPlayer(val colour: Colour, val explorer: MoveExplorer) extends Player {
 
+  def getName = "RandomPlayer"
+
   def getMove(configuration: Configuration): Option[Move] = {
     val moves = explorer.legalMoves(colour)
     if (moves.isEmpty) {

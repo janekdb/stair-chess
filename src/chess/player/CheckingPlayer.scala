@@ -10,6 +10,8 @@ import chess.model.StandardMoveExplorer
  */
 class CheckingPlayer(val colour: Colour, val explorer: MoveExplorer, val explorerFactory: Configuration => MoveExplorer) extends Player {
 
+  def getName = "CheckingPlayer"
+
   def getMove(configuration: Configuration): Option[Move] = {
     val moves = explorer.legalMoves(colour)
     if (moves.isEmpty) {
