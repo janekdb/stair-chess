@@ -4,26 +4,22 @@ import scala.collection.mutable.HashMap
 
 import chess.player.Player
 
-class ScoreCard {
-  val wins = new HashMap[String, Int]() { override def default(k: String) = 0 }
-  val draws = new HashMap[String, Int]() { override def default(k: String) = 0 }
+  // TODO: Move ScoreCard into suitable package
+class ScoreCard(players: Set[String]) {
+
+  val wins = new HashMap[String, Int]()
+  val draws = new HashMap[String, Int]()
+
+  players.foreach(p => wins.put(p, 0))
+  players.foreach(p => draws.put(p, 0))
 
   def addWin(winner: Player, loser: Player) {
-    println("Adding win for " + winner)
-
     wins(winner.getName) = wins(winner.getName) + 1
-    wins(loser.getName) = wins(loser.getName) + 0
-
-    draws(winner.getName) = draws(winner.getName) + 0
-    draws(loser.getName) = draws(loser.getName) + 0
   }
 
   def addDraw(player1: Player, player2: Player) {
     draws(player1.getName) = draws(player1.getName) + 1
     draws(player2.getName) = draws(player2.getName) + 1
-
-    wins(player1.getName) = wins(player1.getName) + 0
-    wins(player2.getName) = wins(player2.getName) + 0
   }
 
   def getWins: List[(String, Int)] = {
@@ -52,15 +48,9 @@ class ScoreCard {
     draws.toList.sorted(ordering)
   }
 
-  def getAbandons: List[(String, Int)] = {
-    List()
-  }
-
   override def toString = wins.toString
 
   // TODO: Remove this method
-  // TODO: Display victory scores first ordered by highest number of wins
-  // TODO: Move ScoreCard into suitable package
   def displayScores {
     wins.foreach {
       case (k, v) => println(k + ": " + v)
