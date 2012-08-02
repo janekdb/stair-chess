@@ -94,7 +94,7 @@ object ChessApp {
     }
   }
 
-  private val MAX_MOVES = 400
+  private val MAX_MOVES = 200
 
   private def play(scoreCard: ScoreCard, whitePlayerGenerator: (Colour, MoveExplorer) => Player, blackPlayerGenerator: (Colour, MoveExplorer) => Player) {
     val outcomeListener = new Object with BoardChangedSubscriber {
@@ -142,15 +142,22 @@ object ChessApp {
     }
 
     println("Scores:")
-    scoreCard.displayScores
+    println("Wins:")
+    scoreCard.getWins.foreach {
+      case (name, count) => println(name + ": " + count)
+    }
+    println("Draws:")
+    scoreCard.getDraws.foreach {
+      case (name, count) => println(name + ": " + count)
+    }
 
     /* Let the spectators note the final position. */
-    delay
+    delay(4)
 
     boardAdapter.close
   }
 
-  private def delay { TimeUnit.SECONDS.sleep(1) }
+  private def delay(count: Int = 1) { TimeUnit.SECONDS.sleep(count) }
 
   def runTests {
     AllTests.runAllTests
