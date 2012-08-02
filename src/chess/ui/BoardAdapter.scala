@@ -73,6 +73,7 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
       }
       case Won(colour, winMode) => {
         board.showWon(colour.toString, winMode.toString)
+        delay(10)
       }
       case Drawn(drawMode) => {
         board.showDrawn(drawMode.toString)
