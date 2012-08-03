@@ -37,7 +37,6 @@ import chess.model.StandardMoveExplorer
 //layer -> 230, class chess.player.CheckingPlayer -> 103)
 
 // TODO: -> Add a tournament mode
-// TODO: --> Format score card as table
 // TODO: --> Score as tournament
 // TODO: Add an interactive mode
 // TODO: Look for a way to be more functional
@@ -141,14 +140,20 @@ object ChessApp {
       throw new AssertionError("Game completed in neither a win or draw")
     }
 
+    // TODO: Extract score card display into dedicated class
     println("Scores:")
     println("Wins:")
+
+    val maxNameWidth = scoreCard.players.foldLeft(0) { (i, name) => i max name.length }
+    val pad = (s: String) => { s.padTo(maxNameWidth, ' ') }
+    val printScore = (name: String, score: Int) => println(pad(name) + " : " + "%3d" format score)
+
     scoreCard.getWins.foreach {
-      case (name, count) => println(name + ": " + count)
+      case (name, score) => printScore(name, score)
     }
     println("Draws:")
     scoreCard.getDraws.foreach {
-      case (name, count) => println(name + ": " + count)
+      case (name, score) => printScore(name, score)
     }
 
     /* Let the spectators note the final position. */
