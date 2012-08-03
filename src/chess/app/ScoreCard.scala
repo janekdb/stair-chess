@@ -5,7 +5,7 @@ import scala.collection.mutable.HashMap
 import chess.player.Player
 
   // TODO: Move ScoreCard into suitable package
-class ScoreCard(players: Set[String]) {
+class ScoreCard(val players: Set[String]) {
 
   val wins = new HashMap[String, Int]()
   val draws = new HashMap[String, Int]()
