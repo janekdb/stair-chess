@@ -79,12 +79,9 @@ object ChessApp {
     val scoreCard = new ScoreCard(Set("CheckingPlayer", "CapturingPlayer", "RandomPlayer"))
 
     times(1000) {
-      for (wpg <- generators; bpg <- generators)
-        // TODO: Skip same player versus same player in if clause
+      for (wpg <- generators; bpg <- generators; if wpg != bpg)
         try {
-          if (wpg != bpg) {
-            play(scoreCard, wpg, bpg)
-          }
+          play(scoreCard, wpg, bpg)
         } catch {
           // TODO: Remove this try/catch when the Castling error in defect-4.txt is fixed
           case e: Exception => println(e)
