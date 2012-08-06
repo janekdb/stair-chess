@@ -36,8 +36,9 @@ import chess.model.StandardMoveExplorer
 //Scores: Map(class chess.player.RandomPlayer -> 36, class chess.player.CapturingP
 //layer -> 230, class chess.player.CheckingPlayer -> 103)
 
-// TODO: -> Add a tournament mode
-// TODO: --> Score as tournament
+// TODO: ->Fix defect-5.txt
+// TODO: Add a tournament mode
+// TODO: Score as tournament
 // TODO: Add an interactive mode
 // TODO: Look for a way to be more functional
 // TODO: Add player that moves pieces out of danger
@@ -80,13 +81,7 @@ object ChessApp {
 
     times(1000) {
       for (wpg <- generators; bpg <- generators; if wpg != bpg)
-        try {
-          play(scoreCard, wpg, bpg)
-        } catch {
-          // TODO: Remove this try/catch when the Castling error in defect-4.txt is fixed
-          case e: Exception => println(e)
-          case e @ default => println("default: " + e)
-        }
+        play(scoreCard, wpg, bpg)
     }
   }
 
@@ -154,7 +149,7 @@ object ChessApp {
     }
 
     /* Let the spectators note the final position. */
-    delay(4)
+    delay(1)
 
     boardAdapter.close
   }
