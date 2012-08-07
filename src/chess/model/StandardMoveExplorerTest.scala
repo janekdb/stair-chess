@@ -572,7 +572,6 @@ private def rejectPromoteCapturingThatWouldNotCapture {
     assertTrue(moves contains EnPassant("d5", "e6"), "En passant was in the list of acceptable moves")
   }
 
-  
   /* legalMoves: end*/
   
   private def placeKings(conf: Configuration) {
