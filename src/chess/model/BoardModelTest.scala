@@ -6,7 +6,6 @@ import ex._
 import test.{ Main, Test, TestUtils }
 import chess.util.TODO
 import scala.collection.mutable.ListBuffer
-import chess.ui.UI
 
 object BoardModelTest extends Test with TestUtils with Main {
 
@@ -36,6 +35,9 @@ object BoardModelTest extends Test with TestUtils with Main {
     /* Repeated configurations */
     // TODO: LOW: Allow draw to be claimed
     // repeatedConfigurationsIsDetected
+
+    /* Defects */
+    confirmDefect5IsFixed
 
   }
 
@@ -455,6 +457,59 @@ typically with one of the kings being put into perpetual check. The intermediate
 positions and moves do not matter – they can be the same or different. The rule applies to positions, not moves.
   private def repeatedConfigurationsIsDetected = fail
   */
+
+  /* Defects */
+
+  private def confirmDefect5IsFixed {
+    val bm = new BoardModel(BoardModel.standardPlacements, Nil, Nil)
+    var moves = List[Move]()
+    moves ::= new MovePiece("g2g4")
+    moves ::= new MovePiece("f7f5")
+    moves ::= new MovePiece("f2f3")
+    moves ::= new MovePiece("b8c6")
+    moves ::= new MovePiece("c2c3")
+    moves ::= new MovePiece("d7d6")
+    moves ::= new MovePiece("a2a3")
+    moves ::= new MovePiece("g7g5")
+    moves ::= new MovePiece("a3a4")
+    moves ::= new MovePiece("f5f4")
+    moves ::= new MovePiece("h2h4")
+    moves ::= new MovePiece("c6b8")
+    moves ::= new MovePiece("e2e4")
+    moves ::= new MovePiece("b8a6")
+    moves ::= new MovePiece("f1b5")
+    moves ::= new MovePiece("c7c6")
+    moves ::= new MovePieceCapturing("b5", "c6")
+    moves ::= new MovePiece("c8d7")
+    moves ::= new MovePieceCapturing("c6", "d7")
+    moves ::= new MovePiece("e8f7")
+    moves ::= new MovePiece("d7e6")
+    moves ::= new MovePiece("f7e8")
+    moves ::= new MovePiece("e6f7")
+    moves ::= new MovePiece("e8d7")
+    moves ::= new MovePiece("f7e8")
+    moves ::= new MovePiece("d7c8")
+    moves ::= new MovePiece("e8d7")
+    moves ::= new MovePiece("c8b8")
+    moves ::= new MovePiece("d7c8")
+    moves ::= new MovePiece("b8c7")
+    moves ::= new MovePieceCapturing("c8", "b7")
+    moves ::= new MovePieceCapturing("g5", "h4")
+    moves ::= new MovePiece("b2b3")
+    moves ::= new MovePiece("d8b8")
+    moves ::= new MovePiece("b7d5")
+    moves ::= new MovePiece("b8e8")
+    moves ::= new MovePieceCapturing("d5", "g8")
+    moves ::= new MovePiece("h7h6")
+    moves ::= new MovePiece("c3c4")
+    moves ::= new MovePiece("c7b6")
+    moves ::= new MovePiece("c4c5")
+    moves ::= new MovePieceCapturing("d6", "c5")
+    moves ::= new MovePiece("a4a5")
+    moves ::= new Castle(Black, Long)
+    for (move <- moves)
+      bm.move(move)
+  }
 
   private def getKings = (White, King(), new Position("e1")) :: (Black, King(), new Position("e8")) :: Nil
 
