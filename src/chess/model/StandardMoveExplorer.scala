@@ -237,7 +237,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
 
   def kingInCheck(colour: Colour): Boolean = {
     val kings = conf.locatePieces(colour, King())
-    assert(kings.size == 1, "One king should be present for: " + colour)
+    assert(kings.size == 1, "One king should be present for: " + colour + " but these kings were found: " + kings)
     val king = kings.head
     val opponentPositions = conf.locatePieces(colour.opposite)
     opponentPositions.exists(p =>
