@@ -270,6 +270,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
         moves = moveList ::: moves
     }
 
+    // TODO: Add test to confirm long and short castling is rejected if either piece is not the expected piece to correct defect 5
     /*
      * Only add castling if the king and rooks are at the correct positions because
      * rejectIllegalMove does not explicitly check the pieces are present.
