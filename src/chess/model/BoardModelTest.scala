@@ -37,7 +37,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     // repeatedConfigurationsIsDetected
 
     /* Defects */
-    confirmDefect5IsFixed
+    confirmNotResponsibleForDefect5
 
   }
 
@@ -460,7 +460,7 @@ positions and moves do not matter – they can be the same or different. The rule 
 
   /* Defects */
 
-  private def confirmDefect5IsFixed {
+  private def confirmNotResponsibleForDefect5 {
     val bm = new BoardModel(BoardModel.standardPlacements, Nil, Nil)
     var moves = List[Move]()
     moves ::= new MovePiece("g2g4")
@@ -506,9 +506,21 @@ positions and moves do not matter – they can be the same or different. The rule 
     moves ::= new MovePiece("c4c5")
     moves ::= new MovePieceCapturing("d6", "c5")
     moves ::= new MovePiece("a4a5")
-    moves ::= new Castle(Black, Long)
-    for (move <- moves)
+    for (move <- moves.reverse) {
       bm.move(move)
+    }
+    val move = new Castle(Black, Long)
+    assertExceptionThrown(move + " should be rejected", classOf[InvalidParticipantsException]) {
+      bm.move(move)
+    }
+  }
+
+  private def log(move: Move){
+    println(move)
+  }
+
+  private def log(rows: List[List[(Colour, Piece)]]) {
+    rows.foreach { println _ }
   }
 
   private def getKings = (White, King(), new Position("e1")) :: (Black, King(), new Position("e8")) :: Nil
