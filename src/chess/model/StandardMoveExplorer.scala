@@ -271,6 +271,8 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
     }
 
     // TODO: Add test to confirm long and short castling is rejected if either piece is not the expected piece to correct defect 5
+    // TODO: Add test that the colour of the pieces that are castling is correct
+    // TODO: Share the move list for defect 5 from BoardModelTest for use in StandardMoveExplorerTest
     /*
      * Only add castling if the king and rooks are at the correct positions because
      * rejectIllegalMove does not explicitly check the pieces are present.
