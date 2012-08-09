@@ -3,7 +3,8 @@ package chess.model.ex
 import chess.model.MovePiece
 import chess.model.Move
 import chess.model.Position
-
+import chess.model.Colour
+import chess.model.Piece
 
 abstract class IllegalMoveException(move: Move) extends RuntimeException("Illegal move: " + move.toString())
 
@@ -19,6 +20,10 @@ class AttackedPositionException(move: Move, attackedPosition: Position) extends 
 
 class UnreachablePositionException(move: Move, legalPositions: Set[Position]) extends IllegalMoveException(move) {
   override def toString(): String = "Position was unreachable: " + move + ", legal positions: " + legalPositions
+}
+
+class InvalidParticipantsException(move: Move, participants: List[(Colour, Piece)]) extends IllegalMoveException(move) {
+  override def toString(): String = "Invalid participants for move: " + move + ", participants: " + participants
 }
 
 class CheckedOwnKing(move: Move) extends IllegalMoveException(move) {
