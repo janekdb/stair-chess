@@ -54,8 +54,12 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     shortCastlingNotConsideredWhenStartPositionsIncorrect
     longCastlingNotConsideredWhenStartPositionsIncorrect
     castlingNotConsideredWhenEitherPieceIsNotOwnPiece
+    castlingNotConsiderWhenOutsidePieceIsNotRook
+    castlingNotConsiderWhenInsidePieceIsNotKing
     enPassantSelected
 
+    /* Defects */
+    defect5IsFixed
   }
 
   private def acceptMovePieceThatWouldNotCapture {
@@ -557,6 +561,27 @@ private def rejectPromoteCapturingThatWouldNotCapture {
     assertEquals(List(), moves, "When no castling was possible no castling was considered")
   }
 
+  private def castlingNotConsiderWhenOutsidePieceIsNotRook {
+    val conf: Configuration = new GridConfiguration
+    conf.add("a1", White, Knight())
+    conf.add("e1", White, King())
+    conf.add("h1", White, Bishop())
+    val e = new StandardMoveExplorer(conf)
+    val moves = e.legalMoves(White) filter { case a: Castle => true case default => false }
+    assertEquals(List(), moves, "When the outside piece was not a rook no castling was considered")
+  }
+
+  private def castlingNotConsiderWhenInsidePieceIsNotKing {
+    val conf: Configuration = new GridConfiguration
+    conf.add("a1", White, Rook())
+    conf.add("d1", White, King())
+    conf.add("e1", White, Queen())
+    conf.add("h1", White, Rook())
+    val e = new StandardMoveExplorer(conf)
+    val moves = e.legalMoves(White) filter { case a: Castle => true case default => false }
+    assertEquals(List(), moves, "When the inside piece was not a king  no castling was considered")
+  }
+
   private def enPassantSelected {
     val conf: Configuration = new GridConfiguration
     placeKings(conf)
@@ -573,10 +598,32 @@ private def rejectPromoteCapturingThatWouldNotCapture {
   }
 
   /* legalMoves: end*/
+
+  /* defect: start */
+
+  private def defect5IsFixed {
+    val conf: Configuration = new GridConfiguration
+    placeAll(conf)
+    for (move <- DefectFixture.defect5Moves) {
+      conf.applyMove(move)
+    }
+    val e = new StandardMoveExplorer(conf)
+    val move = DefectFixture.defect5FinalMove
+    assertExceptionThrown(move + " should be rejected", classOf[InvalidParticipantException]) {
+      e.rejectIllegalMove(move)
+    }
+  }
+
+  /* defect: end */
   
   private def placeKings(conf: Configuration) {
     conf.add("e1", White, King())
     conf.add("e8", Black, King())
+  }
+
+  private def placeAll(conf: Configuration) {
+        for ((colour, piece, position) <- BoardModel.standardPlacements)
+          conf.add(position, colour, piece)
   }
 
 }
