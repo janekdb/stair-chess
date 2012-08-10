@@ -22,8 +22,8 @@ class UnreachablePositionException(move: Move, legalPositions: Set[Position]) ex
   override def toString(): String = "Position was unreachable: " + move + ", legal positions: " + legalPositions
 }
 
-class InvalidParticipantsException(move: Move, participants: List[(Colour, Piece)]) extends IllegalMoveException(move) {
-  override def toString(): String = "Invalid participants for move: " + move + ", participants: " + participants
+class InvalidParticipantException(move: Move, participant: Piece) extends IllegalMoveException(move) {
+  override def toString(): String = "Invalid participant for move: " + move + ", participant: " + participant
 }
 
 class CheckedOwnKing(move: Move) extends IllegalMoveException(move) {
