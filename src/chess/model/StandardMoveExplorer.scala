@@ -7,6 +7,7 @@ import chess.model.ex.{
   CheckedOwnKing,
   IllegalMoveException,
   InterveningPieceException,
+  InvalidParticipantException,
   NonCapturingMoveException,
   PreviouslyMovedException,
   UnreachablePositionException
@@ -191,6 +192,17 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
             case default => Unit
           }
         }
+
+        /* Disallow if the pieces are not a rook and king in the correct positions */
+        List((rook, Rook()), (king, King())).foreach {
+          case (p, t) => {
+            val (_, piece, _) = conf.getExistingPiece(p)
+            if (piece != t) {
+              throw new InvalidParticipantException(move, piece)
+            }
+          }
+        }
+
         /* Disallow if there are any pieces between the rook and king */
         val interveningPositions = Position.getInterveningPositions(king, rook)
         interveningPositions.foreach { p =>
