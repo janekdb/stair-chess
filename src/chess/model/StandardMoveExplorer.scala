@@ -20,7 +20,7 @@ import chess.model.ex.NonPromotingPawnAdvance
  */
 class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
 
-  private implicit def tuple2list(t: Tuple2[Position, Position]) = List(t._2, t._2)
+  private implicit def tuple2list(t: Tuple2[Position, Position]) = List(t._1, t._2)
 
   /**
    * @return The set of possible positions excluding moves that would result in 1. the move escaping from the board edges,
@@ -185,21 +185,20 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
 
         val ((king, kingEnd), (rook, _)) = castlingType.getPositions(row)
 
+        /* Disallow if the pieces are not a rook and king in the correct positions */
+        List((rook, Rook()), (king, King())).foreach {
+          case (p, t) =>
+            val (_, piece, _) = conf.getExistingPiece(p)
+            if (piece != t) {
+              throw new InvalidParticipantException(move, piece)
+            }
+        }
+
         /* Disallow if either piece has already been moved. */
         (king, rook).foreach { p =>
           conf.getExistingPiece(p) match {
             case (_, _, Some(_)) => throw new PreviouslyMovedException(move)
             case default => Unit
-          }
-        }
-
-        /* Disallow if the pieces are not a rook and king in the correct positions */
-        List((rook, Rook()), (king, King())).foreach {
-          case (p, t) => {
-            val (_, piece, _) = conf.getExistingPiece(p)
-            if (piece != t) {
-              throw new InvalidParticipantException(move, piece)
-            }
           }
         }
 
