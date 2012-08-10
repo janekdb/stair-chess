@@ -36,7 +36,6 @@ import chess.model.StandardMoveExplorer
 //Scores: Map(class chess.player.RandomPlayer -> 36, class chess.player.CapturingP
 //layer -> 230, class chess.player.CheckingPlayer -> 103)
 
-// TODO: ->Fix defect-5.txt
 // TODO: Add a tournament mode
 // TODO: Score as tournament
 // TODO: Add an interactive mode
