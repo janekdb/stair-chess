@@ -12,6 +12,7 @@ class TextUI extends BoardChangedSubscriber {
   private var moveCount = 0
 
   def onBoardChanged(event: BoardChanged): Unit = {
+
     event match {
       case Castled(king, rook) => {
           conf.move(king.start, king.end)
@@ -59,19 +60,8 @@ class TextUI extends BoardChangedSubscriber {
       case PiecePlaced(_, _, _) => Unit
       case default => moveCount += 1
     }
-    // TODO: Fix late display of move compared to SwingBoard
     display("TextUI: Move completed: " + moveCount + ": " + event.toString)
     display("")
-  }
-
-  // TODO: UI: Visualise board and pieces
-  def showBoard {
-    for (row <- conf.getRows) {
-      for (square <- row) {
-        print("|_")
-      }
-      println
-    }
   }
 
   private def render {
