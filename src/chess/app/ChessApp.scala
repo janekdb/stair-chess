@@ -101,10 +101,7 @@ object ChessApp {
 
     val ui = new TextUI
     val boardAdapter = new BoardAdapter(SwingBoard.createAndShowBoard())
-    val board = new BoardModel(BoardModel.standardPlacements, List(ui, boardAdapter, outcomeListener), List(boardAdapter))
-
-    /* The UI listens for changes and renders them immediately */
-    ui.showBoard
+    val board = new BoardModel(BoardModel.standardPlacements, List(boardAdapter, ui, outcomeListener), List(boardAdapter))
 
     val white = whitePlayerGenerator(Colours.White, board.getMoveExplorer)
     val black = blackPlayerGenerator(Colours.Black, board.getMoveExplorer)
