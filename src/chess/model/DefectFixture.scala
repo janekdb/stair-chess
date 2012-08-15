@@ -1,6 +1,6 @@
 package chess.model
 
-import Colours.Black
+import Colours.{Black, White}
 
 object DefectFixture {
 
@@ -56,4 +56,40 @@ object DefectFixture {
 
   /* This move should be rejected after playing the defect5Moves moves */
   val defect5FinalMove = new Castle(Black, Long)
+
+  var defect6Moves = List[Move]()
+  defect6Moves ::= new MovePiece("d2d4")
+  defect6Moves ::= new MovePiece("d7d6")
+  defect6Moves ::= new MovePiece("d1d2")
+  defect6Moves ::= new MovePiece("e7e6")
+  defect6Moves ::= new MovePiece("g1h3")
+  defect6Moves ::= new MovePiece("f7f5")
+  defect6Moves ::= new MovePiece("h3g5")
+  defect6Moves ::= new MovePieceCapturing("g7", "g5")
+  defect6Moves ::= new MovePiece("b2b4")
+  defect6Moves ::= new MovePiece("b7b5")
+  defect6Moves ::= new MovePiece("a2a4")
+  defect6Moves ::= new MovePieceCapturing("b5", "a4")
+  defect6Moves ::= new MovePiece("b1c3")
+  defect6Moves ::= new MovePiece("g8h6")
+  defect6Moves ::= new MovePiece("f2f4")
+  defect6Moves ::= new MovePieceCapturing("g5", "f4")
+  defect6Moves ::= new MovePiece("g2g4")
+  defect6Moves ::= new MovePieceCapturing("f4", "g3")
+  defect6Moves ::= new MovePiece("a1b1")
+  defect6Moves ::= new MovePieceCapturing("g3", "h2")
+  defect6Moves ::= new MovePiece("c3d1")
+  defect6Moves ::= new MovePiece("d6d5")
+  defect6Moves ::= new MovePiece("e2e3")
+  defect6Moves ::= new MovePieceCapturing("f8", "b4")
+  defect6Moves ::= new MovePiece("f1b5")
+  defect6Moves ::= new MovePiece("c8d7")
+  defect6Moves ::= new MovePieceCapturing("b5", "d7")
+  defect6Moves ::= new MovePieceCapturing("d8", "d7")
+  defect6Moves = defect6Moves.reverse
+
+  /* This move should be rejected after playing the defect6Moves moves */
+  val defect6FinalMove = new Castle(White, Short)
+
+
 }
