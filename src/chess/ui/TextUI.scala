@@ -1,7 +1,6 @@
 package chess.ui
 
-import chess.model.{ BoardModel, BoardChangedSubscriber, Configuration, GridConfiguration, Colour, Move, Piece, Position, Promote, Resign, GameOutcomeModes }
-import chess.model.Colours.{ Black, White }
+import chess.model.{ BoardModel, BoardChangedSubscriber, Configuration, ConfigurationView, GridConfiguration, Colour, Move, Piece, Position, Promote, Resign, GameOutcomeModes }
 import chess.model.{ Rook, Knight, Bishop, Queen, King, Pawn }
 import chess.model.{ Castle, MovePiece }
 import chess.model.{ BoardChanged, Castled, PieceMoved, PieceMovedCapturing, PiecePlaced, Promoted, Resigned, Won }
@@ -60,6 +59,7 @@ class TextUI extends BoardChangedSubscriber {
       case PiecePlaced(_, _, _) => Unit
       case default => moveCount += 1
     }
+    // TODO: Fix late display of move compared to SwingBoard
     display("TextUI: Move completed: " + moveCount + ": " + event.toString)
     display("")
   }
@@ -74,38 +74,10 @@ class TextUI extends BoardChangedSubscriber {
     }
   }
 
-  val symbols = Map[Piece, String](Rook() -> "R", Knight() -> "N", Bishop() -> "B", King() -> "K", Queen() -> "Q", Pawn() -> "P")
-
-  /* Black is lowercase */
-  private def render: Unit = {
-    def printColumnLabels = println("  abcdefgh")
-    printColumnLabels
-    val rows = conf.getRows.reverse
-    var rowNum = rows.size
-    for (row <- rows) {
-      print(rowNum + " ")
-      rowNum = rowNum - 1
-      for (square <- row) {
-        val symbol =
-          square match {
-            /* Middle dot: U+00B7 */
-            case null => "·"
-            case (c: Colour, p: Piece) => {
-              val col = colourise(c)_
-              symbols.get(p) match { case Some(s) => col(s) case None => assert(false) }
-            }
-            case _ => "?"
-          }
-        print(symbol)
-      }
-      println
-    }
-    printColumnLabels
+  private def render {
+    val lines = ConfigurationView.getTextRepresentation(conf)
+    for (line <- lines) println(line)
     println
-  }
-
-  private def colourise(c: Colour)(symbol: String): String = {
-    c match { case White => symbol case Black => symbol.toLowerCase }
   }
 
   private def display(s: String): Unit = { println(s) }
