@@ -37,3 +37,62 @@ trait ConfigurationView {
   }
 
 }
+
+object ConfigurationView {
+
+  import chess.model.Colours.{ Black, White }
+
+  private val symbols = Map[Piece, String](Rook() -> "R", Knight() -> "N", Bishop() -> "B", King() -> "K", Queen() -> "Q", Pawn() -> "P")
+
+  private def colourise(c: Colour)(symbol: String): String = {
+    c match { case White => symbol case Black => symbol.toLowerCase }
+  }
+
+  // TODO: Remove mutable variables from getTextRepresentation
+  /*  */
+  /**
+   * Return a text representation formatted as a grid with row and column labels.
+   * Black starts at the top and is represented by lowercase letters.
+   * <pre>
+		  abcdefgh
+		8 rnbqkbnr
+		7 ·p·pp·pp
+		6 ··p·····
+		5 ·····p··
+		4 ·p·····P
+		3 N··P····
+		2 P·P·PPP·
+		1 R·BQKBNR
+		  abcdefgh
+   * </pre>
+   */
+  def getTextRepresentation(confView: ConfigurationView): List[String] = {
+    var lines: List[String] = List()
+    val COLUMN_LABELS = "  abcdefgh"
+    lines ::= COLUMN_LABELS
+    val rows = confView.getRows.reverse
+    var rowNum = rows.size
+    for (row <- rows) {
+      var line = ""
+      line = line + rowNum + " "
+      rowNum = rowNum - 1
+      for (square <- row) {
+        val symbol =
+          square match {
+            /* Middle dot: U+00B7 */
+            case null => "·"
+            case (c: Colour, p: Piece) => {
+              val col = colourise(c)_
+              symbols.get(p) match { case Some(s) => col(s) case None => assert(false) }
+            }
+            case _ => "?"
+          }
+        line = line + symbol
+      }
+      lines ::= line
+    }
+    lines ::= COLUMN_LABELS
+    lines.reverse
+  }
+
+}
