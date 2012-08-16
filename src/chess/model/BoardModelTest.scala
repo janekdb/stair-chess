@@ -38,7 +38,7 @@ object BoardModelTest extends Test with TestUtils with Main {
 
     /* Defects */
     confirmNotResponsibleForDefect5
-
+    confirmNotResponsibleForDefect6
   }
 
   implicit def placementBuilder2List(pb: PlacementsBuilder) = pb.asList
@@ -471,11 +471,28 @@ positions and moves do not matter – they can be the same or different. The rule 
     }
   }
 
-  private def log(move: Move){
+  private def confirmNotResponsibleForDefect6 {
+	  val bm = new BoardModel(BoardModel.standardPlacements, Nil, Nil)
+	  for (move <- DefectFixture.defect6Moves) {
+		  log(move)
+		  bm.move(move)
+		  log(ConfigurationView.getTextRepresentation(bm.getConfiguration))
+		  println
+	  }
+	  val move = DefectFixture.defect6FinalMove
+	  assertExceptionThrown(move + " should be rejected", classOf[InvalidParticipantException]) {
+		  log(move)
+		  bm.move(move)
+		  println
+	  }
+	  fail("Correct expected exception class")
+  }
+
+  private def log(move: Move) {
     println(move)
   }
 
-  private def log(rows: List[List[(Colour, Piece)]]) {
+  private def log(rows: List[String]) {
     rows.foreach { println _ }
   }
 
