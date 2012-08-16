@@ -75,7 +75,7 @@ object DefectFixture {
   defect6Moves ::= new MovePiece("f2f4")
   defect6Moves ::= new MovePieceCapturing("g5", "f4")
   defect6Moves ::= new MovePiece("g2g4")
-  defect6Moves ::= new MovePieceCapturing("f4", "g3")
+  defect6Moves ::= new EnPassant("f4", "g3")
   defect6Moves ::= new MovePiece("a1b1")
   defect6Moves ::= new MovePieceCapturing("g3", "h2")
   defect6Moves ::= new MovePiece("c3d1")
