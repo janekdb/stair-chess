@@ -26,11 +26,12 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
     this.configuration = event
   }
 
+  // TODO: Extract delay logic into new BoardChangedSubscriber
   def onBoardChanged(event: BoardChanged) {
 
     def clearSquare(p: Position) = board.clearSquare(p.getCol, p.getRow)
     def setPiece(p: Position, piece: String) = board.setPiece(p.getCol, p.getRow, piece)
-    val DELAY_FACTOR = 1;
+    val DELAY_FACTOR = 100;
 
     def delay(d: Int) { TimeUnit.MILLISECONDS.sleep(d * DELAY_FACTOR) }
 
@@ -73,10 +74,11 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
       }
       case Won(colour, winMode) => {
         board.showWon(colour.toString, winMode.toString)
-        delay(10)
+        delay(100)
       }
       case Drawn(drawMode) => {
         board.showDrawn(drawMode.toString)
+        delay(100)
       }
       case default => TODO.throwRuntimeEx("Unhandled case: " + event)
     }
