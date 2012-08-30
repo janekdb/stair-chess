@@ -29,7 +29,6 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     getBasicPositionsExcludesEnPassantWhenNotDoubleAdvance
     getBasicPositionsExcludesEnPassantWhenNotAdjacentColumn
     getBasicPositionsExcludesEnPassantWhenNotFifthRow
-
     rejectIllegalMoveAllowsValidEnPassant
     rejectIllegalMoveRejectsNotAdjacentColumnEnPassant
     rejectIllegalMoveRejectsNotDoubleAdvanceEnPassant
@@ -37,6 +36,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     
     rejectIllegalMoveAllowsCastlingWhenRookOnlyCrossingAttackedSquare
     rejectIllegalMoveRejectsCastlingWhenKingCrossingAttackedSquare
+    rejectIllegalMoveRejectsCastlingWhenKingCrossingSquareAttackedByPawn
     rejectIllegalMoveRejectsReCastling
 
     rejectIllegalMoveAllowsResigning
@@ -360,6 +360,21 @@ private def rejectPromoteCapturingThatWouldNotCapture {
     }
   }
 
+  /* Confirm the fault exhibited by defect 6 is fixed. */
+  private def rejectIllegalMoveRejectsCastlingWhenKingCrossingSquareAttackedByPawn {
+    val conf = new GridConfiguration
+    placeAll(conf)
+    for (move <- DefectFixture.defect6Moves) {
+      conf.applyMove(move)
+    }
+    val e = new StandardMoveExplorer(conf)
+    assertExceptionThrown("Castling should be rejected when the king would end on a square attacked by a pawn", classOf[AttackedPositionException]) {
+      val move = DefectFixture.defect6FinalMove
+      e.rejectIllegalMove(move)
+      render(conf)
+    }
+  }
+
   private def rejectIllegalMoveRejectsReCastling {
     val conf = new GridConfiguration
     val moveExplorer = new StandardMoveExplorer(conf)
@@ -624,6 +639,12 @@ private def rejectPromoteCapturingThatWouldNotCapture {
   private def placeAll(conf: Configuration) {
         for ((colour, piece, position) <- BoardModel.standardPlacements)
           conf.add(position, colour, piece)
+  }
+
+  private def render(conf: ConfigurationView) {
+    val lines = ConfigurationView.getTextRepresentation(conf)
+    for (line <- lines) println(line)
+    println
   }
 
 }
