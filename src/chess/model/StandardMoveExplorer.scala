@@ -23,11 +23,24 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
   private implicit def tuple2list(t: Tuple2[Position, Position]) = List(t._1, t._2)
 
   /**
+   * The set of attacked positions including empty squares that would be attacked by a pawn
+   * if an opposition piece were present
+   */
+  private def getAttackedPositions(position: Position): Set[Position] = {
+    getEndPositions(position, pawnAttackingMoveAllowed _)
+  }
+
+  def getBasicPositions(position: Position): Set[Position] = {
+    getEndPositions(position, pawnMoveAllowed _)
+  }
+
+  /**
    * @return The set of possible positions excluding moves that would result in 1. the move escaping from the board edges,
    * or 2. A non-Knight jumping over a piece, or 3. A piece taking another piece of the same colour.
    * Further restrictions on moves are imposed by {@link #rejectIllegalMove}
    */
-  def getBasicPositions(position: Position): Set[Position] = {
+  def getEndPositions(position: Position,
+    pawnMovePredicate: (Position, (Int, Int)) => Boolean): Set[Position] = {
     val (colour, piece, _) = conf.getExistingPiece(position)
 
     val vectors = piece.movements(colour)
@@ -41,7 +54,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
     var basicPositions = Set[Position]()
 
     val moveAllowed = piece match {
-      case Pawn() => pawnMoveAllowed _
+      case Pawn() => pawnMovePredicate
       case default => anyMoveAllowed _
     }
 
@@ -67,8 +80,8 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
 
   private def anyMoveAllowed(startPosition: Position, d: (Int, Int)) = true
 
-  private def pawnMoveAllowed(startPosition: Position, d: (Int, Int)) = {
-    val (dCol, dRow) = d
+  private def pawnMoveAllowed(startPosition: Position, vector: (Int, Int)) = {
+    val (dCol, dRow) = vector
     if (pawnDiagonal(dCol, dRow)) {
       /* Can only take if piece present or en passant possible. The client code will check for the colour */
       val p = startPosition.offset(dCol, dRow)
@@ -100,6 +113,22 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
           !conf.exists(p)
         }
       }
+    } else {
+      throw new AssertionError("All pawn moves handled")
+    }
+  }
+
+  /* Allow pawn attacking moves as normal but also allow attacks on empty squares. Do not include
+   * forward moves because these are not attacking moves. */
+  private def pawnAttackingMoveAllowed(startPosition: Position, vector: (Int, Int)) = {
+
+    val (dCol, dRow) = vector
+    if (pawnDiagonal(dCol, dRow)) {
+      true
+    } else if (pawnForward(dCol, dRow)) {
+      false
+    } else if (pawnForwardTwo(dCol, dRow)) {
+      false
     } else {
       throw new AssertionError("All pawn moves handled")
     }
@@ -213,7 +242,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
         val exposedPositions = king :: kingEnd :: Position.getInterveningPositions(king, kingEnd) toSet
         val opponentPositions = conf locatePieces colour.opposite
         opponentPositions.foreach { p =>
-          val attackedPositions = getBasicPositions(p)
+          val attackedPositions = getAttackedPositions(p)
           val i = exposedPositions intersect attackedPositions
           if (i.nonEmpty) {
             throw new AttackedPositionException(move, i.head)
