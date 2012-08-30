@@ -1,0 +1,410 @@
+The white king castles into check and is then not found in the checkmate test.
+
+  abcdefgh
+8 rnbqkbnr
+7 pppppppp
+6 ········
+5 ········
+4 ···P····
+3 ········
+2 PPP·PPPP
+1 RNBQKBNR
+  abcdefgh
+
+TextUI: Move completed: 1: PieceMoved(d2,d4)
+
+  abcdefgh
+8 rnbqkbnr
+7 ppp·pppp
+6 ···p····
+5 ········
+4 ···P····
+3 ········
+2 PPP·PPPP
+1 RNBQKBNR
+  abcdefgh
+
+TextUI: Move completed: 2: PieceMoved(d7,d6)
+
+  abcdefgh
+8 rnbqkbnr
+7 ppp·pppp
+6 ···p····
+5 ········
+4 ···P····
+3 ········
+2 PPPQPPPP
+1 RNB·KBNR
+  abcdefgh
+
+TextUI: Move completed: 3: PieceMoved(d1,d2)
+
+  abcdefgh
+8 rnbqkbnr
+7 ppp··ppp
+6 ···pp···
+5 ········
+4 ···P····
+3 ········
+2 PPPQPPPP
+1 RNB·KBNR
+  abcdefgh
+
+TextUI: Move completed: 4: PieceMoved(e7,e6)
+
+  abcdefgh
+8 rnbqkbnr
+7 ppp··ppp
+6 ···pp···
+5 ········
+4 ···P····
+3 ·······N
+2 PPPQPPPP
+1 RNB·KB·R
+  abcdefgh
+
+TextUI: Move completed: 5: PieceMoved(g1,h3)
+
+  abcdefgh
+8 rnbqkbnr
+7 ppp···pp
+6 ···pp···
+5 ·····p··
+4 ···P····
+3 ·······N
+2 PPPQPPPP
+1 RNB·KB·R
+  abcdefgh
+
+TextUI: Move completed: 6: PieceMoved(f7,f5)
+
+  abcdefgh
+8 rnbqkbnr
+7 ppp···pp
+6 ···pp···
+5 ·····pN·
+4 ···P····
+3 ········
+2 PPPQPPPP
+1 RNB·KB·R
+  abcdefgh
+
+TextUI: Move completed: 7: PieceMoved(h3,g5)
+
+  abcdefgh
+8 rnbqkbnr
+7 ppp····p
+6 ···pp···
+5 ·····pp·
+4 ···P····
+3 ········
+2 PPPQPPPP
+1 RNB·KB·R
+  abcdefgh
+
+TextUI: Move completed: 8: PieceMovedCapturing(g7,g5,g5)
+
+  abcdefgh
+8 rnbqkbnr
+7 ppp····p
+6 ···pp···
+5 ·····pp·
+4 ·P·P····
+3 ········
+2 P·PQPPPP
+1 RNB·KB·R
+  abcdefgh
+
+TextUI: Move completed: 9: PieceMoved(b2,b4)
+
+  abcdefgh
+8 rnbqkbnr
+7 p·p····p
+6 ···pp···
+5 ·p···pp·
+4 ·P·P····
+3 ········
+2 P·PQPPPP
+1 RNB·KB·R
+  abcdefgh
+
+TextUI: Move completed: 10: PieceMoved(b7,b5)
+
+  abcdefgh
+8 rnbqkbnr
+7 p·p····p
+6 ···pp···
+5 ·p···pp·
+4 PP·P····
+3 ········
+2 ··PQPPPP
+1 RNB·KB·R
+  abcdefgh
+
+TextUI: Move completed: 11: PieceMoved(a2,a4)
+
+  abcdefgh
+8 rnbqkbnr
+7 p·p····p
+6 ···pp···
+5 ·····pp·
+4 pP·P····
+3 ········
+2 ··PQPPPP
+1 RNB·KB·R
+  abcdefgh
+
+TextUI: Move completed: 12: PieceMovedCapturing(b5,a4,a4)
+
+  abcdefgh
+8 rnbqkbnr
+7 p·p····p
+6 ···pp···
+5 ·····pp·
+4 pP·P····
+3 ··N·····
+2 ··PQPPPP
+1 R·B·KB·R
+  abcdefgh
+
+TextUI: Move completed: 13: PieceMoved(b1,c3)
+
+  abcdefgh
+8 rnbqkb·r
+7 p·p····p
+6 ···pp··n
+5 ·····pp·
+4 pP·P····
+3 ··N·····
+2 ··PQPPPP
+1 R·B·KB·R
+  abcdefgh
+
+TextUI: Move completed: 14: PieceMoved(g8,h6)
+
+  abcdefgh
+8 rnbqkb·r
+7 p·p····p
+6 ···pp··n
+5 ·····pp·
+4 pP·P·P··
+3 ··N·····
+2 ··PQP·PP
+1 R·B·KB·R
+  abcdefgh
+
+TextUI: Move completed: 15: PieceMoved(f2,f4)
+
+  abcdefgh
+8 rnbqkb·r
+7 p·p····p
+6 ···pp··n
+5 ·····p··
+4 pP·P·p··
+3 ··N·····
+2 ··PQP·PP
+1 R·B·KB·R
+  abcdefgh
+
+TextUI: Move completed: 16: PieceMovedCapturing(g5,f4,f4)
+
+  abcdefgh
+8 rnbqkb·r
+7 p·p····p
+6 ···pp··n
+5 ·····p··
+4 pP·P·pP·
+3 ··N·····
+2 ··PQP··P
+1 R·B·KB·R
+  abcdefgh
+
+TextUI: Move completed: 17: PieceMoved(g2,g4)
+
+  abcdefgh
+8 rnbqkb·r
+7 p·p····p
+6 ···pp··n
+5 ·····p··
+4 pP·P····
+3 ··N···p·
+2 ··PQP··P
+1 R·B·KB·R
+  abcdefgh
+
+TextUI: Move completed: 18: PieceMovedCapturing(f4,g3,g4)
+
+  abcdefgh
+8 rnbqkb·r
+7 p·p····p
+6 ···pp··n
+5 ·····p··
+4 pP·P····
+3 ··N···p·
+2 ··PQP··P
+1 ·RB·KB·R
+  abcdefgh
+
+TextUI: Move completed: 19: PieceMoved(a1,b1)
+
+  abcdefgh
+8 rnbqkb·r
+7 p·p····p
+6 ···pp··n
+5 ·····p··
+4 pP·P····
+3 ··N·····
+2 ··PQP··p
+1 ·RB·KB·R
+  abcdefgh
+
+TextUI: Move completed: 20: PieceMovedCapturing(g3,h2,h2)
+
+  abcdefgh
+8 rnbqkb·r
+7 p·p····p
+6 ···pp··n
+5 ·····p··
+4 pP·P····
+3 ········
+2 ··PQP··p
+1 ·RBNKB·R
+  abcdefgh
+
+TextUI: Move completed: 21: PieceMoved(c3,d1)
+
+  abcdefgh
+8 rnbqkb·r
+7 p·p····p
+6 ····p··n
+5 ···p·p··
+4 pP·P····
+3 ········
+2 ··PQP··p
+1 ·RBNKB·R
+  abcdefgh
+
+TextUI: Move completed: 22: PieceMoved(d6,d5)
+
+  abcdefgh
+8 rnbqkb·r
+7 p·p····p
+6 ····p··n
+5 ···p·p··
+4 pP·P····
+3 ····P···
+2 ··PQ···p
+1 ·RBNKB·R
+  abcdefgh
+
+TextUI: Move completed: 23: PieceMoved(e2,e3)
+
+  abcdefgh
+8 rnbqk··r
+7 p·p····p
+6 ····p··n
+5 ···p·p··
+4 pb·P····
+3 ····P···
+2 ··PQ···p
+1 ·RBNKB·R
+  abcdefgh
+
+TextUI: Move completed: 24: PieceMovedCapturing(f8,b4,b4)
+
+  abcdefgh
+8 rnbqk··r
+7 p·p····p
+6 ····p··n
+5 ·B·p·p··
+4 pb·P····
+3 ····P···
+2 ··PQ···p
+1 ·RBNK··R
+  abcdefgh
+
+TextUI: Move completed: 25: PieceMoved(f1,b5)
+
+  abcdefgh
+8 rn·qk··r
+7 p·pb···p
+6 ····p··n
+5 ·B·p·p··
+4 pb·P····
+3 ····P···
+2 ··PQ···p
+1 ·RBNK··R
+  abcdefgh
+
+TextUI: Move completed: 26: PieceMoved(c8,d7)
+
+  abcdefgh
+8 rn·qk··r
+7 p·pB···p
+6 ····p··n
+5 ···p·p··
+4 pb·P····
+3 ····P···
+2 ··PQ···p
+1 ·RBNK··R
+  abcdefgh
+
+TextUI: Move completed: 27: PieceMovedCapturing(b5,d7,d7)
+
+  abcdefgh
+8 rn··k··r
+7 p·pq···p
+6 ····p··n
+5 ···p·p··
+4 pb·P····
+3 ····P···
+2 ··PQ···p
+1 ·RBNK··R
+  abcdefgh
+
+TextUI: Move completed: 28: PieceMovedCapturing(d8,d7,d7)
+
+  abcdefgh
+8 rn··k··r
+7 p·pq···p
+6 ····p··n
+5 ···p·p··
+4 pb·P····
+3 ····P···
+2 ··PQ···p
+1 ·RBN·RK·
+  abcdefgh
+
+TextUI: Move completed: 29: Castled(PieceMoved(e1,g1),PieceMoved(h1,f1))
+
+Exception in thread "main" java.lang.AssertionError: assertion failed: One king 
+should be present for: White but these kings were found: List()
+	at scala.Predef$.assert(Predef.scala:103)
+	at chess.model.StandardMoveExplorer.kingInCheck(StandardMoveExplorer.scala:251)
+	at chess.model.BoardModel.checkForCheckMate(BoardModel.scala:145)
+	at chess.model.BoardModel.move(BoardModel.scala:117)
+	at chess.app.ChessApp$.chess$app$ChessApp$$play(ChessApp.scala:116)
+	at chess.app.ChessApp$$anonfun$main$1$$anonfun$apply$mcV$sp$1$$anonfun$apply$2.
+apply(ChessApp.scala:83)
+	at chess.app.ChessApp$$anonfun$main$1$$anonfun$apply$mcV$sp$1$$anonfun$apply$2.
+apply(ChessApp.scala:82)
+	at scala.collection.TraversableLike$WithFilter$$anonfun$foreach$1.apply(Travers
+ableLike.scala:704)
+	at scala.collection.LinearSeqOptimized$class.foreach(LinearSeqOptimized.scala:5
+9)
+	at scala.collection.immutable.List.foreach(List.scala:45)
+	at scala.collection.TraversableLike$WithFilter.foreach(TraversableLike.scala:70
+3)
+	at chess.app.ChessApp$$anonfun$main$1$$anonfun$apply$mcV$sp$1.apply(ChessApp.sc
+ala:82)
+	at chess.app.ChessApp$$anonfun$main$1$$anonfun$apply$mcV$sp$1.apply(ChessApp.sc
+ala:82)
+	at scala.collection.LinearSeqOptimized$class.foreach(LinearSeqOptimized.scala:5
+9)
+	at scala.collection.immutable.List.foreach(List.scala:45)
+	at chess.app.ChessApp$$anonfun$main$1.apply$mcV$sp(ChessApp.scala:82)
+	at chess.app.ChessApp$$anonfun$times$1.apply$mcVI$sp(ChessApp.scala:58)
+	at scala.collection.immutable.Range.foreach$mVc$sp(Range.scala:75)
+	at chess.app.ChessApp$.times(ChessApp.scala:58)
+	at chess.app.ChessApp$.main(ChessApp.scala:81)
+	at chess.app.ChessApp.main(ChessApp.scala)

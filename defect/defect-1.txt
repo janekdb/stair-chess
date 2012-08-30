@@ -1,0 +1,1830 @@
+This is not checkmate because the black king can capture the queen.
+
+AllTests: tests.size: 6
+Moving: MovePiece(g7,g8)
+Moving: MovePiece(a7,a6)
+Moving: MovePiece(a6,a4)
+Moving: Castle(White,Long)
+Moving: Castle(White,Long)
+Moving: Castle(White,Long)
+Moving: Castle(White,Long)
+Moving: Castle(White,Long)
+Moving: Castle(White,Long)
+Moving: Castle(White,Long)
+Moving: Castle(White,Long)
+Moving: Castle(White,Long)
+Moving: MovePiece(e8,e7)
+Moving: MovePiece(d1,d2)
+Moving: MovePiece(e7,e8)
+Moving: MovePiece(d2,a2)
+Moving: MovePiece(e8,e7)
+Moving: MovePiece(a2,a1)
+Moving: MovePiece(c1,d1)
+Moving: MovePiece(e7,e8)
+Moving: MovePiece(d1,e1)
+Moving: MovePiece(e8,e7)
+Moving: Castle(White,Long)
+Moving: MovePiece(e2,h2)
+Moving: MovePiece(c7,a7)
+Moving: MovePiece(d7,b7)
+Moving: MovePiece(e4,e5)
+Moving: MovePiece(d7,d5)
+Moving: EnPassant(e5,d6)
+Moving: MovePiece(d7,d5)
+Moving: MovePiece(e4,e5)
+Moving: MovePiece(e8,d8)
+Moving: MovePiece(e5,d6)
+Board: PiecePlaced(White,Rook(),a1)
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 ········
+1 R·······
+  abcdefgh
+
+UI: Move completed: PiecePlaced(White,Rook(),a1)
+
+Board: PiecePlaced(White,Knight(),b1)
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 ········
+1 RN······
+  abcdefgh
+
+UI: Move completed: PiecePlaced(White,Knight(),b1)
+
+Board: PiecePlaced(White,Bishop(),c1)
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 ········
+1 RNB·····
+  abcdefgh
+
+UI: Move completed: PiecePlaced(White,Bishop(),c1)
+
+Board: PiecePlaced(White,Queen(),d1)
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 ········
+1 RNBQ····
+  abcdefgh
+
+UI: Move completed: PiecePlaced(White,Queen(),d1)
+
+Board: PiecePlaced(White,King(),e1)
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 ········
+1 RNBQK···
+  abcdefgh
+
+UI: Move completed: PiecePlaced(White,King(),e1)
+
+Board: PiecePlaced(White,Bishop(),f1)
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 ········
+1 RNBQKB··
+  abcdefgh
+
+UI: Move completed: PiecePlaced(White,Bishop(),f1)
+
+Board: PiecePlaced(White,Knight(),g1)
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 ········
+1 RNBQKBN·
+  abcdefgh
+
+UI: Move completed: PiecePlaced(White,Knight(),g1)
+
+Board: PiecePlaced(White,Rook(),h1)
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 ········
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(White,Rook(),h1)
+
+Board: PiecePlaced(White,Pawn(),a2)
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 P·······
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(White,Pawn(),a2)
+
+Board: PiecePlaced(White,Pawn(),b2)
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 PP······
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(White,Pawn(),b2)
+
+Board: PiecePlaced(White,Pawn(),c2)
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPP·····
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(White,Pawn(),c2)
+
+Board: PiecePlaced(White,Pawn(),d2)
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPP····
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(White,Pawn(),d2)
+
+Board: PiecePlaced(White,Pawn(),e2)
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPP···
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(White,Pawn(),e2)
+
+Board: PiecePlaced(White,Pawn(),f2)
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPP··
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(White,Pawn(),f2)
+
+Board: PiecePlaced(White,Pawn(),g2)
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPP·
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(White,Pawn(),g2)
+
+Board: PiecePlaced(White,Pawn(),h2)
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(White,Pawn(),h2)
+
+Board: PiecePlaced(Black,Pawn(),a7)
+  abcdefgh
+8 ········
+7 p·······
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(Black,Pawn(),a7)
+
+Board: PiecePlaced(Black,Pawn(),b7)
+  abcdefgh
+8 ········
+7 pp······
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(Black,Pawn(),b7)
+
+Board: PiecePlaced(Black,Pawn(),c7)
+  abcdefgh
+8 ········
+7 ppp·····
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(Black,Pawn(),c7)
+
+Board: PiecePlaced(Black,Pawn(),d7)
+  abcdefgh
+8 ········
+7 pppp····
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(Black,Pawn(),d7)
+
+Board: PiecePlaced(Black,Pawn(),e7)
+  abcdefgh
+8 ········
+7 ppppp···
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(Black,Pawn(),e7)
+
+Board: PiecePlaced(Black,Pawn(),f7)
+  abcdefgh
+8 ········
+7 pppppp··
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(Black,Pawn(),f7)
+
+Board: PiecePlaced(Black,Pawn(),g7)
+  abcdefgh
+8 ········
+7 ppppppp·
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(Black,Pawn(),g7)
+
+Board: PiecePlaced(Black,Pawn(),h7)
+  abcdefgh
+8 ········
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(Black,Pawn(),h7)
+
+Board: PiecePlaced(Black,Rook(),a8)
+  abcdefgh
+8 r·······
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(Black,Rook(),a8)
+
+Board: PiecePlaced(Black,Knight(),b8)
+  abcdefgh
+8 rn······
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(Black,Knight(),b8)
+
+Board: PiecePlaced(Black,Bishop(),c8)
+  abcdefgh
+8 rnb·····
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(Black,Bishop(),c8)
+
+Board: PiecePlaced(Black,Queen(),d8)
+  abcdefgh
+8 rnbq····
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(Black,Queen(),d8)
+
+Board: PiecePlaced(Black,King(),e8)
+  abcdefgh
+8 rnbqk···
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(Black,King(),e8)
+
+Board: PiecePlaced(Black,Bishop(),f8)
+  abcdefgh
+8 rnbqkb··
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(Black,Bishop(),f8)
+
+Board: PiecePlaced(Black,Knight(),g8)
+  abcdefgh
+8 rnbqkbn·
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(Black,Knight(),g8)
+
+Board: PiecePlaced(Black,Rook(),h8)
+  abcdefgh
+8 rnbqkbnr
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PiecePlaced(Black,Rook(),h8)
+
+|_|_|_|_|_|_|_|_
+|_|_|_|_|_|_|_|_
+|_|_|_|_|_|_|_|_
+|_|_|_|_|_|_|_|_
+|_|_|_|_|_|_|_|_
+|_|_|_|_|_|_|_|_
+|_|_|_|_|_|_|_|_
+|_|_|_|_|_|_|_|_
+Moving: MovePiece(e2,e3)
+Board: PieceMoved(e2,e3)
+  abcdefgh
+8 rnbqkbnr
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ····P···
+2 PPPP·PPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(e2,e3)
+
+Moving: MovePiece(e7,e6)
+Board: PieceMoved(e7,e6)
+  abcdefgh
+8 rnbqkbnr
+7 pppp·ppp
+6 ····p···
+5 ········
+4 ········
+3 ····P···
+2 PPPP·PPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(e7,e6)
+
+Moving: MovePiece(g2,g3)
+Board: PieceMoved(g2,g3)
+  abcdefgh
+8 rnbqkbnr
+7 pppp·ppp
+6 ····p···
+5 ········
+4 ········
+3 ····P·P·
+2 PPPP·P·P
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(g2,g3)
+
+Moving: MovePiece(b7,b5)
+Board: PieceMoved(b7,b5)
+  abcdefgh
+8 rnbqkbnr
+7 p·pp·ppp
+6 ····p···
+5 ·p······
+4 ········
+3 ····P·P·
+2 PPPP·P·P
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(b7,b5)
+
+Moving: MovePiece(e1,e2)
+Board: PieceMoved(e1,e2)
+  abcdefgh
+8 rnbqkbnr
+7 p·pp·ppp
+6 ····p···
+5 ·p······
+4 ········
+3 ····P·P·
+2 PPPPKP·P
+1 RNBQ·BNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(e1,e2)
+
+Moving: MovePiece(d8,f6)
+Board: PieceMoved(d8,f6)
+  abcdefgh
+8 rnb·kbnr
+7 p·pp·ppp
+6 ····pq··
+5 ·p······
+4 ········
+3 ····P·P·
+2 PPPPKP·P
+1 RNBQ·BNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(d8,f6)
+
+Moving: MovePiece(h2,h3)
+Board: PieceMoved(h2,h3)
+  abcdefgh
+8 rnb·kbnr
+7 p·pp·ppp
+6 ····pq··
+5 ·p······
+4 ········
+3 ····P·PP
+2 PPPPKP··
+1 RNBQ·BNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(h2,h3)
+
+Moving: MovePiece(f6,f3)
+Board: PieceMoved(f6,f3)
+  abcdefgh
+8 rnb·kbnr
+7 p·pp·ppp
+6 ····p···
+5 ·p······
+4 ········
+3 ····PqPP
+2 PPPPKP··
+1 RNBQ·BNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(f6,f3)
+
+Moving: MovePieceCapturing(g1,f3)
+Board: PieceMovedTaking(g1,f3,f3)
+  abcdefgh
+8 rnb·kbnr
+7 p·pp·ppp
+6 ····p···
+5 ·p······
+4 ········
+3 ····PNPP
+2 PPPPKP··
+1 RNBQ·B·R
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(g1,f3,f3)
+
+Moving: MovePiece(c7,c6)
+Board: PieceMoved(c7,c6)
+  abcdefgh
+8 rnb·kbnr
+7 p··p·ppp
+6 ··p·p···
+5 ·p······
+4 ········
+3 ····PNPP
+2 PPPPKP··
+1 RNBQ·B·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(c7,c6)
+
+Moving: MovePiece(g3,g4)
+Board: PieceMoved(g3,g4)
+  abcdefgh
+8 rnb·kbnr
+7 p··p·ppp
+6 ··p·p···
+5 ·p······
+4 ······P·
+3 ····PN·P
+2 PPPPKP··
+1 RNBQ·B·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(g3,g4)
+
+Moving: MovePiece(a7,a5)
+Board: PieceMoved(a7,a5)
+  abcdefgh
+8 rnb·kbnr
+7 ···p·ppp
+6 ··p·p···
+5 pp······
+4 ······P·
+3 ····PN·P
+2 PPPPKP··
+1 RNBQ·B·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(a7,a5)
+
+Moving: MovePiece(h3,h4)
+Board: PieceMoved(h3,h4)
+  abcdefgh
+8 rnb·kbnr
+7 ···p·ppp
+6 ··p·p···
+5 pp······
+4 ······PP
+3 ····PN··
+2 PPPPKP··
+1 RNBQ·B·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(h3,h4)
+
+Moving: MovePiece(h7,h5)
+Board: PieceMoved(h7,h5)
+  abcdefgh
+8 rnb·kbnr
+7 ···p·pp·
+6 ··p·p···
+5 pp·····p
+4 ······PP
+3 ····PN··
+2 PPPPKP··
+1 RNBQ·B·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(h7,h5)
+
+Moving: MovePiece(f3,e1)
+Board: PieceMoved(f3,e1)
+  abcdefgh
+8 rnb·kbnr
+7 ···p·pp·
+6 ··p·p···
+5 pp·····p
+4 ······PP
+3 ····P···
+2 PPPPKP··
+1 RNBQNB·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(f3,e1)
+
+Moving: MovePiece(h8,h6)
+Board: PieceMoved(h8,h6)
+  abcdefgh
+8 rnb·kbn·
+7 ···p·pp·
+6 ··p·p··r
+5 pp·····p
+4 ······PP
+3 ····P···
+2 PPPPKP··
+1 RNBQNB·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(h8,h6)
+
+Moving: MovePiece(h1,g1)
+Board: PieceMoved(h1,g1)
+  abcdefgh
+8 rnb·kbn·
+7 ···p·pp·
+6 ··p·p··r
+5 pp·····p
+4 ······PP
+3 ····P···
+2 PPPPKP··
+1 RNBQNBR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(h1,g1)
+
+Moving: MovePiece(e8,d8)
+Board: PieceMoved(e8,d8)
+  abcdefgh
+8 rnbk·bn·
+7 ···p·pp·
+6 ··p·p··r
+5 pp·····p
+4 ······PP
+3 ····P···
+2 PPPPKP··
+1 RNBQNBR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(e8,d8)
+
+Moving: MovePiece(e3,e4)
+Board: PieceMoved(e3,e4)
+  abcdefgh
+8 rnbk·bn·
+7 ···p·pp·
+6 ··p·p··r
+5 pp·····p
+4 ····P·PP
+3 ········
+2 PPPPKP··
+1 RNBQNBR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(e3,e4)
+
+Moving: MovePiece(b8,a6)
+Board: PieceMoved(b8,a6)
+  abcdefgh
+8 r·bk·bn·
+7 ···p·pp·
+6 n·p·p··r
+5 pp·····p
+4 ····P·PP
+3 ········
+2 PPPPKP··
+1 RNBQNBR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(b8,a6)
+
+Moving: MovePiece(e2,d3)
+Board: PieceMoved(e2,d3)
+  abcdefgh
+8 r·bk·bn·
+7 ···p·pp·
+6 n·p·p··r
+5 pp·····p
+4 ····P·PP
+3 ···K····
+2 PPPP·P··
+1 RNBQNBR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(e2,d3)
+
+Moving: MovePiece(a8,b8)
+Board: PieceMoved(a8,b8)
+  abcdefgh
+8 ·rbk·bn·
+7 ···p·pp·
+6 n·p·p··r
+5 pp·····p
+4 ····P·PP
+3 ···K····
+2 PPPP·P··
+1 RNBQNBR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(a8,b8)
+
+Moving: MovePiece(b2,b4)
+Board: PieceMoved(b2,b4)
+  abcdefgh
+8 ·rbk·bn·
+7 ···p·pp·
+6 n·p·p··r
+5 pp·····p
+4 ·P··P·PP
+3 ···K····
+2 P·PP·P··
+1 RNBQNBR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(b2,b4)
+
+Moving: MovePiece(c6,c5)
+Board: PieceMoved(c6,c5)
+  abcdefgh
+8 ·rbk·bn·
+7 ···p·pp·
+6 n···p··r
+5 ppp····p
+4 ·P··P·PP
+3 ···K····
+2 P·PP·P··
+1 RNBQNBR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(c6,c5)
+
+Moving: MovePiece(c2,c4)
+Board: PieceMoved(c2,c4)
+  abcdefgh
+8 ·rbk·bn·
+7 ···p·pp·
+6 n···p··r
+5 ppp····p
+4 ·PP·P·PP
+3 ···K····
+2 P··P·P··
+1 RNBQNBR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(c2,c4)
+
+Moving: MovePieceCapturing(c5,b4)
+Board: PieceMovedTaking(c5,b4,b4)
+  abcdefgh
+8 ·rbk·bn·
+7 ···p·pp·
+6 n···p··r
+5 pp·····p
+4 ·pP·P·PP
+3 ···K····
+2 P··P·P··
+1 RNBQNBR·
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(c5,b4,b4)
+
+Moving: MovePiece(e1,f3)
+Board: PieceMoved(e1,f3)
+  abcdefgh
+8 ·rbk·bn·
+7 ···p·pp·
+6 n···p··r
+5 pp·····p
+4 ·pP·P·PP
+3 ···K·N··
+2 P··P·P··
+1 RNBQ·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(e1,f3)
+
+Moving: MovePiece(c8,b7)
+Board: PieceMoved(c8,b7)
+  abcdefgh
+8 ·r·k·bn·
+7 ·b·p·pp·
+6 n···p··r
+5 pp·····p
+4 ·pP·P·PP
+3 ···K·N··
+2 P··P·P··
+1 RNBQ·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(c8,b7)
+
+Moving: MovePiece(d3,d4)
+Board: PieceMoved(d3,d4)
+  abcdefgh
+8 ·r·k·bn·
+7 ·b·p·pp·
+6 n···p··r
+5 pp·····p
+4 ·pPKP·PP
+3 ·····N··
+2 P··P·P··
+1 RNBQ·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(d3,d4)
+
+Moving: MovePiece(f7,f6)
+Board: PieceMoved(f7,f6)
+  abcdefgh
+8 ·r·k·bn·
+7 ·b·p··p·
+6 n···pp·r
+5 pp·····p
+4 ·pPKP·PP
+3 ·····N··
+2 P··P·P··
+1 RNBQ·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(f7,f6)
+
+Moving: MovePiece(d2,d3)
+Board: PieceMoved(d2,d3)
+  abcdefgh
+8 ·r·k·bn·
+7 ·b·p··p·
+6 n···pp·r
+5 pp·····p
+4 ·pPKP·PP
+3 ···P·N··
+2 P····P··
+1 RNBQ·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(d2,d3)
+
+Moving: MovePiece(g8,e7)
+Board: PieceMoved(g8,e7)
+  abcdefgh
+8 ·r·k·b··
+7 ·b·pn·p·
+6 n···pp·r
+5 pp·····p
+4 ·pPKP·PP
+3 ···P·N··
+2 P····P··
+1 RNBQ·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(g8,e7)
+
+Moving: MovePiece(a2,a4)
+Board: PieceMoved(a2,a4)
+  abcdefgh
+8 ·r·k·b··
+7 ·b·pn·p·
+6 n···pp·r
+5 pp·····p
+4 PpPKP·PP
+3 ···P·N··
+2 ·····P··
+1 RNBQ·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(a2,a4)
+
+Moving: MovePiece(g7,g5)
+Board: PieceMoved(g7,g5)
+  abcdefgh
+8 ·r·k·b··
+7 ·b·pn···
+6 n···pp·r
+5 pp····pp
+4 PpPKP·PP
+3 ···P·N··
+2 ·····P··
+1 RNBQ·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(g7,g5)
+
+Moving: MovePieceCapturing(c4,b5)
+Board: PieceMovedTaking(c4,b5,b5)
+  abcdefgh
+8 ·r·k·b··
+7 ·b·pn···
+6 n···pp·r
+5 pP····pp
+4 Pp·KP·PP
+3 ···P·N··
+2 ·····P··
+1 RNBQ·BR·
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(c4,b5,b5)
+
+Moving: MovePiece(b8,a8)
+Board: PieceMoved(b8,a8)
+  abcdefgh
+8 r··k·b··
+7 ·b·pn···
+6 n···pp·r
+5 pP····pp
+4 Pp·KP·PP
+3 ···P·N··
+2 ·····P··
+1 RNBQ·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(b8,a8)
+
+Moving: MovePiece(c1,a3)
+Board: PieceMoved(c1,a3)
+  abcdefgh
+8 r··k·b··
+7 ·b·pn···
+6 n···pp·r
+5 pP····pp
+4 Pp·KP·PP
+3 B··P·N··
+2 ·····P··
+1 RN·Q·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(c1,a3)
+
+Moving: MovePiece(f6,f5)
+Board: PieceMoved(f6,f5)
+  abcdefgh
+8 r··k·b··
+7 ·b·pn···
+6 n···p··r
+5 pP···ppp
+4 Pp·KP·PP
+3 B··P·N··
+2 ·····P··
+1 RN·Q·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(f6,f5)
+
+rejected move: MovePiece(d4,c5): The move left the players own King in check: Mo
+vePiece(d4,c5)
+rejected move: MovePiece(d4,c3): The move left the players own King in check: Mo
+vePiece(d4,c3)
+Moving: MovePiece(d4,e3)
+Board: PieceMoved(d4,e3)
+  abcdefgh
+8 r··k·b··
+7 ·b·pn···
+6 n···p··r
+5 pP···ppp
+4 Pp··P·PP
+3 B··PKN··
+2 ·····P··
+1 RN·Q·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(d4,e3)
+
+Moving: MovePiece(b4,b3)
+Board: PieceMoved(b4,b3)
+  abcdefgh
+8 r··k·b··
+7 ·b·pn···
+6 n···p··r
+5 pP···ppp
+4 P···P·PP
+3 Bp·PKN··
+2 ·····P··
+1 RN·Q·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(b4,b3)
+
+Moving: MovePieceCapturing(g4,f5)
+Board: PieceMovedTaking(g4,f5,f5)
+  abcdefgh
+8 r··k·b··
+7 ·b·pn···
+6 n···p··r
+5 pP···Ppp
+4 P···P··P
+3 Bp·PKN··
+2 ·····P··
+1 RN·Q·BR·
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(g4,f5,f5)
+
+Moving: MovePieceCapturing(e6,f5)
+Board: PieceMovedTaking(e6,f5,f5)
+  abcdefgh
+8 r··k·b··
+7 ·b·pn···
+6 n······r
+5 pP···ppp
+4 P···P··P
+3 Bp·PKN··
+2 ·····P··
+1 RN·Q·BR·
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(e6,f5,f5)
+
+rejected move: MovePiece(e3,f4): The move left the players own King in check: Mo
+vePiece(e3,f4)
+Moving: MovePiece(e3,e2)
+Board: PieceMoved(e3,e2)
+  abcdefgh
+8 r··k·b··
+7 ·b·pn···
+6 n······r
+5 pP···ppp
+4 P···P··P
+3 Bp·P·N··
+2 ····KP··
+1 RN·Q·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(e3,e2)
+
+Moving: MovePiece(a8,c8)
+Board: PieceMoved(a8,c8)
+  abcdefgh
+8 ··rk·b··
+7 ·b·pn···
+6 n······r
+5 pP···ppp
+4 P···P··P
+3 Bp·P·N··
+2 ····KP··
+1 RN·Q·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(a8,c8)
+
+Moving: MovePiece(e2,e3)
+Board: PieceMoved(e2,e3)
+  abcdefgh
+8 ··rk·b··
+7 ·b·pn···
+6 n······r
+5 pP···ppp
+4 P···P··P
+3 Bp·PKN··
+2 ·····P··
+1 RN·Q·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(e2,e3)
+
+Moving: MovePiece(b7,a8)
+Board: PieceMoved(b7,a8)
+  abcdefgh
+8 b·rk·b··
+7 ···pn···
+6 n······r
+5 pP···ppp
+4 P···P··P
+3 Bp·PKN··
+2 ·····P··
+1 RN·Q·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(b7,a8)
+
+Moving: MovePiece(a1,a2)
+Board: PieceMoved(a1,a2)
+  abcdefgh
+8 b·rk·b··
+7 ···pn···
+6 n······r
+5 pP···ppp
+4 P···P··P
+3 Bp·PKN··
+2 R····P··
+1 ·N·Q·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(a1,a2)
+
+Moving: MovePiece(g5,g4)
+Board: PieceMoved(g5,g4)
+  abcdefgh
+8 b·rk·b··
+7 ···pn···
+6 n······r
+5 pP···p·p
+4 P···P·pP
+3 Bp·PKN··
+2 R····P··
+1 ·N·Q·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(g5,g4)
+
+Moving: MovePiece(a2,d2)
+Board: PieceMoved(a2,d2)
+  abcdefgh
+8 b·rk·b··
+7 ···pn···
+6 n······r
+5 pP···p·p
+4 P···P·pP
+3 Bp·PKN··
+2 ···R·P··
+1 ·N·Q·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(a2,d2)
+
+Moving: MovePiece(f8,g7)
+Board: PieceMoved(f8,g7)
+  abcdefgh
+8 b·rk····
+7 ···pn·b·
+6 n······r
+5 pP···p·p
+4 P···P·pP
+3 Bp·PKN··
+2 ···R·P··
+1 ·N·Q·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(f8,g7)
+
+Moving: MovePiece(d2,b2)
+Board: PieceMoved(d2,b2)
+  abcdefgh
+8 b·rk····
+7 ···pn·b·
+6 n······r
+5 pP···p·p
+4 P···P·pP
+3 Bp·PKN··
+2 ·R···P··
+1 ·N·Q·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(d2,b2)
+
+Moving: MovePiece(e7,g8)
+Board: PieceMoved(e7,g8)
+  abcdefgh
+8 b·rk··n·
+7 ···p··b·
+6 n······r
+5 pP···p·p
+4 P···P·pP
+3 Bp·PKN··
+2 ·R···P··
+1 ·N·Q·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(e7,g8)
+
+Moving: MovePiece(e3,f4)
+Board: PieceMoved(e3,f4)
+  abcdefgh
+8 b·rk··n·
+7 ···p··b·
+6 n······r
+5 pP···p·p
+4 P···PKpP
+3 Bp·P·N··
+2 ·R···P··
+1 ·N·Q·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(e3,f4)
+
+Moving: MovePiece(a6,b4)
+Board: PieceMoved(a6,b4)
+  abcdefgh
+8 b·rk··n·
+7 ···p··b·
+6 ·······r
+5 pP···p·p
+4 Pn··PKpP
+3 Bp·P·N··
+2 ·R···P··
+1 ·N·Q·BR·
+  abcdefgh
+
+UI: Move completed: PieceMoved(a6,b4)
+
+Moving: MovePiece(g1,g2)
+Board: PieceMoved(g1,g2)
+  abcdefgh
+8 b·rk··n·
+7 ···p··b·
+6 ·······r
+5 pP···p·p
+4 Pn··PKpP
+3 Bp·P·N··
+2 ·R···PR·
+1 ·N·Q·B··
+  abcdefgh
+
+UI: Move completed: PieceMoved(g1,g2)
+
+Moving: MovePieceCapturing(a8,e4)
+Board: PieceMovedTaking(a8,e4,e4)
+  abcdefgh
+8 ··rk··n·
+7 ···p··b·
+6 ·······r
+5 pP···p·p
+4 Pn··bKpP
+3 Bp·P·N··
+2 ·R···PR·
+1 ·N·Q·B··
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(a8,e4,e4)
+
+Moving: MovePiece(b2,d2)
+Board: PieceMoved(b2,d2)
+  abcdefgh
+8 ··rk··n·
+7 ···p··b·
+6 ·······r
+5 pP···p·p
+4 Pn··bKpP
+3 Bp·P·N··
+2 ···R·PR·
+1 ·N·Q·B··
+  abcdefgh
+
+UI: Move completed: PieceMoved(b2,d2)
+
+Moving: MovePieceCapturing(g4,f3)
+Board: PieceMovedTaking(g4,f3,f3)
+  abcdefgh
+8 ··rk··n·
+7 ···p··b·
+6 ·······r
+5 pP···p·p
+4 Pn··bK·P
+3 Bp·P·p··
+2 ···R·PR·
+1 ·N·Q·B··
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(g4,f3,f3)
+
+Moving: MovePiece(d2,a2)
+Board: PieceMoved(d2,a2)
+  abcdefgh
+8 ··rk··n·
+7 ···p··b·
+6 ·······r
+5 pP···p·p
+4 Pn··bK·P
+3 Bp·P·p··
+2 R····PR·
+1 ·N·Q·B··
+  abcdefgh
+
+UI: Move completed: PieceMoved(d2,a2)
+
+Moving: MovePiece(d8,e8)
+Board: PieceMoved(d8,e8)
+  abcdefgh
+8 ··r·k·n·
+7 ···p··b·
+6 ·······r
+5 pP···p·p
+4 Pn··bK·P
+3 Bp·P·p··
+2 R····PR·
+1 ·N·Q·B··
+  abcdefgh
+
+UI: Move completed: PieceMoved(d8,e8)
+
+Moving: MovePiece(f1,e2)
+Board: PieceMoved(f1,e2)
+  abcdefgh
+8 ··r·k·n·
+7 ···p··b·
+6 ·······r
+5 pP···p·p
+4 Pn··bK·P
+3 Bp·P·p··
+2 R···BPR·
+1 ·N·Q····
+  abcdefgh
+
+UI: Move completed: PieceMoved(f1,e2)
+
+Moving: MovePieceCapturing(f3,e2)
+Board: PieceMovedTaking(f3,e2,e2)
+  abcdefgh
+8 ··r·k·n·
+7 ···p··b·
+6 ·······r
+5 pP···p·p
+4 Pn··bK·P
+3 Bp·P····
+2 R···pPR·
+1 ·N·Q····
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(f3,e2,e2)
+
+Moving: MovePieceCapturing(d1,b3)
+Board: PieceMovedTaking(d1,b3,b3)
+  abcdefgh
+8 ··r·k·n·
+7 ···p··b·
+6 ·······r
+5 pP···p·p
+4 Pn··bK·P
+3 BQ·P····
+2 R···pPR·
+1 ·N······
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(d1,b3,b3)
+
+Moving: MovePiece(g7,f8)
+Board: PieceMoved(g7,f8)
+  abcdefgh
+8 ··r·kbn·
+7 ···p····
+6 ·······r
+5 pP···p·p
+4 Pn··bK·P
+3 BQ·P····
+2 R···pPR·
+1 ·N······
+  abcdefgh
+
+UI: Move completed: PieceMoved(g7,f8)
+
+Moving: MovePiece(d3,d4)
+Board: PieceMoved(d3,d4)
+  abcdefgh
+8 ··r·kbn·
+7 ···p····
+6 ·······r
+5 pP···p·p
+4 Pn·PbK·P
+3 BQ······
+2 R···pPR·
+1 ·N······
+  abcdefgh
+
+UI: Move completed: PieceMoved(d3,d4)
+
+Moving: MovePiece(e4,c2)
+Board: PieceMoved(e4,c2)
+  abcdefgh
+8 ··r·kbn·
+7 ···p····
+6 ·······r
+5 pP···p·p
+4 Pn·P·K·P
+3 BQ······
+2 R·b·pPR·
+1 ·N······
+  abcdefgh
+
+UI: Move completed: PieceMoved(e4,c2)
+
+Moving: MovePiece(b5,b6)
+Board: PieceMoved(b5,b6)
+  abcdefgh
+8 ··r·kbn·
+7 ···p····
+6 ·P·····r
+5 p····p·p
+4 Pn·P·K·P
+3 BQ······
+2 R·b·pPR·
+1 ·N······
+  abcdefgh
+
+UI: Move completed: PieceMoved(b5,b6)
+
+Moving: MovePiece(b4,d3)
+Board: PieceMoved(b4,d3)
+  abcdefgh
+8 ··r·kbn·
+7 ···p····
+6 ·P·····r
+5 p····p·p
+4 P··P·K·P
+3 BQ·n····
+2 R·b·pPR·
+1 ·N······
+  abcdefgh
+
+UI: Move completed: PieceMoved(b4,d3)
+
+rejected move: MovePieceCapturing(a2,c2): The move left the players own King in 
+check: MovePieceCapturing(a2,c2)
+rejected move: MovePiece(a2,a1): The move left the players own King in check: Mo
+vePiece(a2,a1)
+rejected move: MovePiece(a2,b2): The move left the players own King in check: Mo
+vePiece(a2,b2)
+rejected move: MovePiece(b1,d2): The move left the players own King in check: Mo
+vePiece(b1,d2)
+rejected move: MovePiece(b1,c3): The move left the players own King in check: Mo
+vePiece(b1,c3)
+rejected move: MovePiece(f4,g4): The move left the players own King in check: Mo
+vePiece(f4,g4)
+Moving: MovePieceCapturing(f4,f5)
+Board: PieceMovedTaking(f4,f5,f5)
+  abcdefgh
+8 ··r·kbn·
+7 ···p····
+6 ·P·····r
+5 p····K·p
+4 P··P···P
+3 BQ·n····
+2 R·b·pPR·
+1 ·N······
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(f4,f5,f5)
+
+Moving: MovePiece(h6,g6)
+Board: PieceMoved(h6,g6)
+  abcdefgh
+8 ··r·kbn·
+7 ···p····
+6 ·P····r·
+5 p····K·p
+4 P··P···P
+3 BQ·n····
+2 R·b·pPR·
+1 ·N······
+  abcdefgh
+
+UI: Move completed: PieceMoved(h6,g6)
+
+Moving: MovePiece(g2,g3)
+Board: PieceMoved(g2,g3)
+  abcdefgh
+8 ··r·kbn·
+7 ···p····
+6 ·P····r·
+5 p····K·p
+4 P··P···P
+3 BQ·n··R·
+2 R·b·pP··
+1 ·N······
+  abcdefgh
+
+UI: Move completed: PieceMoved(g2,g3)
+
+Moving: MovePiece(g6,g7)
+Board: PieceMoved(g6,g7)
+  abcdefgh
+8 ··r·kbn·
+7 ···p··r·
+6 ·P······
+5 p····K·p
+4 P··P···P
+3 BQ·n··R·
+2 R·b·pP··
+1 ·N······
+  abcdefgh
+
+UI: Move completed: PieceMoved(g6,g7)
+
+Moving: MovePiece(a2,b2)
+Board: PieceMoved(a2,b2)
+  abcdefgh
+8 ··r·kbn·
+7 ···p··r·
+6 ·P······
+5 p····K·p
+4 P··P···P
+3 BQ·n··R·
+2 ·Rb·pP··
+1 ·N······
+  abcdefgh
+
+UI: Move completed: PieceMoved(a2,b2)
+
+rejected move: MovePiece(e8,e7): The move left the players own King in check: Mo
+vePiece(e8,e7)
+Moving: MovePiece(e8,d8)
+Board: PieceMoved(e8,d8)
+  abcdefgh
+8 ··rk·bn·
+7 ···p··r·
+6 ·P······
+5 p····K·p
+4 P··P···P
+3 BQ·n··R·
+2 ·Rb·pP··
+1 ·N······
+  abcdefgh
+
+UI: Move completed: PieceMoved(e8,d8)
+
+rejected move: MovePiece(f5,e6): The move left the players own King in check: Mo
+vePiece(f5,e6)
+rejected move: MovePiece(f5,f6): The move left the players own King in check: Mo
+vePiece(f5,f6)
+rejected move: MovePiece(f5,g6): The move left the players own King in check: Mo
+vePiece(f5,g6)
+rejected move: MovePiece(f5,g4): The move left the players own King in check: Mo
+vePiece(f5,g4)
+rejected move: MovePiece(f5,e5): The move left the players own King in check: Mo
+vePiece(f5,e5)
+rejected move: MovePiece(f5,f4): The move left the players own King in check: Mo
+vePiece(f5,f4)
+Moving: MovePiece(f5,e4)
+Board: PieceMoved(f5,e4)
+  abcdefgh
+8 ··rk·bn·
+7 ···p··r·
+6 ·P······
+5 p······p
+4 P··PK··P
+3 BQ·n··R·
+2 ·Rb·pP··
+1 ·N······
+  abcdefgh
+
+UI: Move completed: PieceMoved(f5,e4)
+
+Moving: MovePieceCapturing(c2,b1)
+Board: PieceMovedTaking(c2,b1,b1)
+  abcdefgh
+8 ··rk·bn·
+7 ···p··r·
+6 ·P······
+5 p······p
+4 P··PK··P
+3 BQ·n··R·
+2 ·R··pP··
+1 ·b······
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(c2,b1,b1)
+
+rejected move: MovePieceCapturing(e4,d3): The move left the players own King in 
+check: MovePieceCapturing(e4,d3)
+Moving: MovePiece(e4,e3)
+Board: PieceMoved(e4,e3)
+  abcdefgh
+8 ··rk·bn·
+7 ···p··r·
+6 ·P······
+5 p······p
+4 P··P···P
+3 BQ·nK·R·
+2 ·R··pP··
+1 ·b······
+  abcdefgh
+
+UI: Move completed: PieceMoved(e4,e3)
+
+Moving: MovePieceCapturing(f8,a3)
+Board: PieceMovedTaking(f8,a3,a3)
+  abcdefgh
+8 ··rk··n·
+7 ···p··r·
+6 ·P······
+5 p······p
+4 P··P···P
+3 bQ·nK·R·
+2 ·R··pP··
+1 ·b······
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(f8,a3,a3)
+
+Moving: MovePieceCapturing(e3,e2)
+Board: PieceMovedTaking(e3,e2,e2)
+  abcdefgh
+8 ··rk··n·
+7 ···p··r·
+6 ·P······
+5 p······p
+4 P··P···P
+3 bQ·n··R·
+2 ·R··KP··
+1 ·b······
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(e3,e2,e2)
+
+Moving: MovePiece(a3,e7)
+Board: PieceMoved(a3,e7)
+  abcdefgh
+8 ··rk··n·
+7 ···pb·r·
+6 ·P······
+5 p······p
+4 P··P···P
+3 ·Q·n··R·
+2 ·R··KP··
+1 ·b······
+  abcdefgh
+
+UI: Move completed: PieceMoved(a3,e7)
+
+Moving: MovePiece(d4,d5)
+Board: PieceMoved(d4,d5)
+  abcdefgh
+8 ··rk··n·
+7 ···pb·r·
+6 ·P······
+5 p··P···p
+4 P······P
+3 ·Q·n··R·
+2 ·R··KP··
+1 ·b······
+  abcdefgh
+
+UI: Move completed: PieceMoved(d4,d5)
+
+Moving: MovePiece(g8,f6)
+Board: PieceMoved(g8,f6)
+  abcdefgh
+8 ··rk····
+7 ···pb·r·
+6 ·P···n··
+5 p··P···p
+4 P······P
+3 ·Q·n··R·
+2 ·R··KP··
+1 ·b······
+  abcdefgh
+
+UI: Move completed: PieceMoved(g8,f6)
+
+Moving: MovePiece(b6,b7)
+Board: PieceMoved(b6,b7)
+  abcdefgh
+8 ··rk····
+7 ·P·pb·r·
+6 ·····n··
+5 p··P···p
+4 P······P
+3 ·Q·n··R·
+2 ·R··KP··
+1 ·b······
+  abcdefgh
+
+UI: Move completed: PieceMoved(b6,b7)
+
+Moving: MovePiece(b1,c2)
+Board: PieceMoved(b1,c2)
+  abcdefgh
+8 ··rk····
+7 ·P·pb·r·
+6 ·····n··
+5 p··P···p
+4 P······P
+3 ·Q·n··R·
+2 ·Rb·KP··
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(b1,c2)
+
+Moving: PromoteCapturing(b7,c8,Queen())
+Board: PieceMovedTaking(b7,c8,c8)
+Board: Promoted(c8,Queen())
+Board: Won(White,CheckMate)
+  abcdefgh
+8 ··Pk····
+7 ···pb·r·
+6 ·····n··
+5 p··P···p
+4 P······P
+3 ·Q·n··R·
+2 ·Rb·KP··
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(b7,c8,c8)
+
+  abcdefgh
+8 ··Qk····
+7 ···pb·r·
+6 ·····n··
+5 p··P···p
+4 P······P
+3 ·Q·n··R·
+2 ·Rb·KP··
+1 ········
+  abcdefgh
+
+UI: Move completed: Promoted(c8,Queen())
+
+CheckMate! White wins
+  abcdefgh
+8 ··Qk····
+7 ···pb·r·
+6 ·····n··
+5 p··P···p
+4 P······P
+3 ·Q·n··R·
+2 ·Rb·KP··
+1 ········
+  abcdefgh
+
+UI: Move completed: Won(White,CheckMate)
+

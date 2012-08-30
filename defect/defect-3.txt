@@ -1,0 +1,912 @@
+AllTests: tests.size: 8
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 ········
+1 R·······
+  abcdefgh
+
+UI: Move completed: 1: PiecePlaced(White,Rook(),a1)
+
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 ········
+1 RN······
+  abcdefgh
+
+UI: Move completed: 2: PiecePlaced(White,Knight(),b1)
+
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 ········
+1 RNB·····
+  abcdefgh
+
+UI: Move completed: 3: PiecePlaced(White,Bishop(),c1)
+
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 ········
+1 RNBQ····
+  abcdefgh
+
+UI: Move completed: 4: PiecePlaced(White,Queen(),d1)
+
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 ········
+1 RNBQK···
+  abcdefgh
+
+UI: Move completed: 5: PiecePlaced(White,King(),e1)
+
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 ········
+1 RNBQKB··
+  abcdefgh
+
+UI: Move completed: 6: PiecePlaced(White,Bishop(),f1)
+
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 ········
+1 RNBQKBN·
+  abcdefgh
+
+UI: Move completed: 7: PiecePlaced(White,Knight(),g1)
+
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 ········
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 8: PiecePlaced(White,Rook(),h1)
+
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 P·······
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 9: PiecePlaced(White,Pawn(),a2)
+
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 PP······
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 10: PiecePlaced(White,Pawn(),b2)
+
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPP·····
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 11: PiecePlaced(White,Pawn(),c2)
+
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPP····
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 12: PiecePlaced(White,Pawn(),d2)
+
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPP···
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 13: PiecePlaced(White,Pawn(),e2)
+
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPP··
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 14: PiecePlaced(White,Pawn(),f2)
+
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPP·
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 15: PiecePlaced(White,Pawn(),g2)
+
+  abcdefgh
+8 ········
+7 ········
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 16: PiecePlaced(White,Pawn(),h2)
+
+  abcdefgh
+8 ········
+7 p·······
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 17: PiecePlaced(Black,Pawn(),a7)
+
+  abcdefgh
+8 ········
+7 pp······
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 18: PiecePlaced(Black,Pawn(),b7)
+
+  abcdefgh
+8 ········
+7 ppp·····
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 19: PiecePlaced(Black,Pawn(),c7)
+
+  abcdefgh
+8 ········
+7 pppp····
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 20: PiecePlaced(Black,Pawn(),d7)
+
+  abcdefgh
+8 ········
+7 ppppp···
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 21: PiecePlaced(Black,Pawn(),e7)
+
+  abcdefgh
+8 ········
+7 pppppp··
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 22: PiecePlaced(Black,Pawn(),f7)
+
+  abcdefgh
+8 ········
+7 ppppppp·
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 23: PiecePlaced(Black,Pawn(),g7)
+
+  abcdefgh
+8 ········
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 24: PiecePlaced(Black,Pawn(),h7)
+
+  abcdefgh
+8 r·······
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 25: PiecePlaced(Black,Rook(),a8)
+
+  abcdefgh
+8 rn······
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 26: PiecePlaced(Black,Knight(),b8)
+
+  abcdefgh
+8 rnb·····
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 27: PiecePlaced(Black,Bishop(),c8)
+
+  abcdefgh
+8 rnbq····
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 28: PiecePlaced(Black,Queen(),d8)
+
+  abcdefgh
+8 rnbqk···
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 29: PiecePlaced(Black,King(),e8)
+
+  abcdefgh
+8 rnbqkb··
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 30: PiecePlaced(Black,Bishop(),f8)
+
+  abcdefgh
+8 rnbqkbn·
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 31: PiecePlaced(Black,Knight(),g8)
+
+  abcdefgh
+8 rnbqkbnr
+7 pppppppp
+6 ········
+5 ········
+4 ········
+3 ········
+2 PPPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 32: PiecePlaced(Black,Rook(),h8)
+
+|_|_|_|_|_|_|_|_
+|_|_|_|_|_|_|_|_
+|_|_|_|_|_|_|_|_
+|_|_|_|_|_|_|_|_
+|_|_|_|_|_|_|_|_
+|_|_|_|_|_|_|_|_
+|_|_|_|_|_|_|_|_
+|_|_|_|_|_|_|_|_
+  abcdefgh
+8 rnbqkbnr
+7 pppppppp
+6 ········
+5 ········
+4 P·······
+3 ········
+2 ·PPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 33: PieceMoved(a2,a4)
+
+  abcdefgh
+8 r·bqkbnr
+7 pppppppp
+6 n·······
+5 ········
+4 P·······
+3 ········
+2 ·PPPPPPP
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: 34: PieceMoved(b8,a6)
+
+  abcdefgh
+8 r·bqkbnr
+7 pppppppp
+6 n·······
+5 ········
+4 P·······
+3 ·····N··
+2 ·PPPPPPP
+1 RNBQKB·R
+  abcdefgh
+
+UI: Move completed: 35: PieceMoved(g1,f3)
+
+  abcdefgh
+8 r·bqkbnr
+7 pppppp·p
+6 n·····p·
+5 ········
+4 P·······
+3 ·····N··
+2 ·PPPPPPP
+1 RNBQKB·R
+  abcdefgh
+
+UI: Move completed: 36: PieceMoved(g7,g6)
+
+  abcdefgh
+8 r·bqkbnr
+7 pppppp·p
+6 n·····p·
+5 ········
+4 P··N····
+3 ········
+2 ·PPPPPPP
+1 RNBQKB·R
+  abcdefgh
+
+UI: Move completed: 37: PieceMoved(f3,d4)
+
+  abcdefgh
+8 r·bqkbnr
+7 ppppp··p
+6 n·····p·
+5 ·····p··
+4 P··N····
+3 ········
+2 ·PPPPPPP
+1 RNBQKB·R
+  abcdefgh
+
+UI: Move completed: 38: PieceMoved(f7,f5)
+
+  abcdefgh
+8 r·bqkbnr
+7 ppppp··p
+6 n·····p·
+5 ·····p··
+4 P·······
+3 ·N······
+2 ·PPPPPPP
+1 RNBQKB·R
+  abcdefgh
+
+UI: Move completed: 39: PieceMoved(d4,b3)
+
+  abcdefgh
+8 r·bqkbnr
+7 ppppp··p
+6 ······p·
+5 ··n··p··
+4 P·······
+3 ·N······
+2 ·PPPPPPP
+1 RNBQKB·R
+  abcdefgh
+
+UI: Move completed: 40: PieceMoved(a6,c5)
+
+  abcdefgh
+8 r·bqkbnr
+7 ppppp··p
+6 ······p·
+5 ··n··p··
+4 P·····P·
+3 ·N······
+2 ·PPPPP·P
+1 RNBQKB·R
+  abcdefgh
+
+UI: Move completed: 41: PieceMoved(g2,g4)
+
+  abcdefgh
+8 r·bqkbnr
+7 ppppp··p
+6 ······p·
+5 ·····p··
+4 P·····P·
+3 ·N·n····
+2 ·PPPPP·P
+1 RNBQKB·R
+  abcdefgh
+
+UI: Move completed: 42: PieceMoved(c5,d3)
+
+  abcdefgh
+8 r·bqkbnr
+7 ppppp··p
+6 ······p·
+5 ·····p··
+4 P·····P·
+3 ·N·P····
+2 ·PPP·P·P
+1 RNBQKB·R
+  abcdefgh
+
+UI: Move completed: 43: PieceMovedCapturing(e2,d3,d3)
+
+  abcdefgh
+8 r·bq·bnr
+7 pppppk·p
+6 ······p·
+5 ·····p··
+4 P·····P·
+3 ·N·P····
+2 ·PPP·P·P
+1 RNBQKB·R
+  abcdefgh
+
+UI: Move completed: 44: PieceMoved(e8,f7)
+
+  abcdefgh
+8 r·bq·bnr
+7 pppppk·p
+6 ······p·
+5 ·····p··
+4 P·····P·
+3 ·N·P····
+2 RPPP·P·P
+1 ·NBQKB·R
+  abcdefgh
+
+UI: Move completed: 45: PieceMoved(a1,a2)
+
+  abcdefgh
+8 r·bq·bnr
+7 pppppk·p
+6 ······p·
+5 ········
+4 P·····p·
+3 ·N·P····
+2 RPPP·P·P
+1 ·NBQKB·R
+  abcdefgh
+
+UI: Move completed: 46: PieceMovedCapturing(f5,g4,g4)
+
+  abcdefgh
+8 r·bq·bnr
+7 pppppk·p
+6 ······p·
+5 ········
+4 P·····p·
+3 ·N·P·Q··
+2 RPPP·P·P
+1 ·NB·KB·R
+  abcdefgh
+
+UI: Move completed: 47: PieceMoved(d1,f3)
+
+  abcdefgh
+8 r·bq·bnr
+7 pppppk·p
+6 ······p·
+5 ········
+4 P·······
+3 ·N·P·p··
+2 RPPP·P·P
+1 ·NB·KB·R
+  abcdefgh
+
+UI: Move completed: 48: PieceMovedCapturing(g4,f3,f3)
+
+  abcdefgh
+8 r·bq·bnr
+7 pppppk·p
+6 ······p·
+5 ········
+4 P·······
+3 ···P·p··
+2 RPPP·P·P
+1 NNB·KB·R
+  abcdefgh
+
+UI: Move completed: 49: PieceMoved(b3,a1)
+
+  abcdefgh
+8 r·bq·bnr
+7 pppppk·p
+6 ········
+5 ······p·
+4 P·······
+3 ···P·p··
+2 RPPP·P·P
+1 NNB·KB·R
+  abcdefgh
+
+UI: Move completed: 50: PieceMoved(g6,g5)
+
+  abcdefgh
+8 r·bq·bnr
+7 pppppk·p
+6 ········
+5 ······p·
+4 P·······
+3 ·N·P·p··
+2 RPPP·P·P
+1 ·NB·KB·R
+  abcdefgh
+
+UI: Move completed: 51: PieceMoved(a1,b3)
+
+  abcdefgh
+8 r·bq·bnr
+7 ppp·pk·p
+6 ···p····
+5 ······p·
+4 P·······
+3 ·N·P·p··
+2 RPPP·P·P
+1 ·NB·KB·R
+  abcdefgh
+
+UI: Move completed: 52: PieceMoved(d7,d6)
+
+  abcdefgh
+8 r·bq·bnr
+7 ppp·pk·p
+6 ···p····
+5 ······p·
+4 P·P·····
+3 ·N·P·p··
+2 RP·P·P·P
+1 ·NB·KB·R
+  abcdefgh
+
+UI: Move completed: 53: PieceMoved(c2,c4)
+
+  abcdefgh
+8 r·bq·bnr
+7 ·pp·pk·p
+6 ···p····
+5 p·····p·
+4 P·P·····
+3 ·N·P·p··
+2 RP·P·P·P
+1 ·NB·KB·R
+  abcdefgh
+
+UI: Move completed: 54: PieceMoved(a7,a5)
+
+  abcdefgh
+8 r·bq·bnr
+7 ·pp·pk·p
+6 ···p····
+5 p·····p·
+4 P·PN····
+3 ···P·p··
+2 RP·P·P·P
+1 ·NB·KB·R
+  abcdefgh
+
+UI: Move completed: 55: PieceMoved(b3,d4)
+
+  abcdefgh
+8 r·bq·bnr
+7 ·p··pk·p
+6 ···p····
+5 p·p···p·
+4 P·PN····
+3 ···P·p··
+2 RP·P·P·P
+1 ·NB·KB·R
+  abcdefgh
+
+UI: Move completed: 56: PieceMoved(c7,c5)
+
+  abcdefgh
+8 r·bq·bnr
+7 ·p··pk·p
+6 ···pN···
+5 p·p···p·
+4 P·P·····
+3 ···P·p··
+2 RP·P·P·P
+1 ·NB·KB·R
+  abcdefgh
+
+UI: Move completed: 57: PieceMoved(d4,e6)
+
+  abcdefgh
+8 r·b·qbnr
+7 ·p··pk·p
+6 ···pN···
+5 p·p···p·
+4 P·P·····
+3 ···P·p··
+2 RP·P·P·P
+1 ·NB·KB·R
+  abcdefgh
+
+UI: Move completed: 58: PieceMoved(d8,e8)
+
+  abcdefgh
+8 r·b·qbnr
+7 ·p··pk·p
+6 ···p····
+5 p·p···N·
+4 P·P·····
+3 ···P·p··
+2 RP·P·P·P
+1 ·NB·KB·R
+  abcdefgh
+
+UI: Move completed: 59: PieceMovedCapturing(e6,g5,g5)
+
+  abcdefgh
+8 r·b·qbnr
+7 ·p··p·kp
+6 ···p····
+5 p·p···N·
+4 P·P·····
+3 ···P·p··
+2 RP·P·P·P
+1 ·NB·KB·R
+  abcdefgh
+
+UI: Move completed: 60: PieceMoved(f7,g7)
+
+  abcdefgh
+8 r·b·qbnr
+7 ·p··p·kp
+6 ···pN···
+5 p·p·····
+4 P·P·····
+3 ···P·p··
+2 RP·P·P·P
+1 ·NB·KB·R
+  abcdefgh
+
+UI: Move completed: 61: PieceMoved(g5,e6)
+
+  abcdefgh
+8 r···qbnr
+7 ·p··p·kp
+6 ···pb···
+5 p·p·····
+4 P·P·····
+3 ···P·p··
+2 RP·P·P·P
+1 ·NB·KB·R
+  abcdefgh
+
+UI: Move completed: 62: PieceMovedCapturing(c8,e6,e6)
+
+  abcdefgh
+8 r···qbnr
+7 ·p··p·kp
+6 ···pb···
+5 p·p·····
+4 P·P·····
+3 ···P·p··
+2 RP·P·P·P
+1 ·NB·KBR·
+  abcdefgh
+
+UI: Move completed: 63: PieceMoved(h1,g1)
+
+  abcdefgh
+8 r···qbnr
+7 ·p··p·kp
+6 ···p····
+5 p·p·····
+4 P·P···b·
+3 ···P·p··
+2 RP·P·P·P
+1 ·NB·KBR·
+  abcdefgh
+
+UI: Move completed: 64: PieceMoved(e6,g4)
+
+  abcdefgh
+8 r···qbnr
+7 ·p··p·kp
+6 ···p····
+5 p·p·····
+4 P·P···R·
+3 ···P·p··
+2 RP·P·P·P
+1 ·NB·KB··
+  abcdefgh
+
+UI: Move completed: 65: PieceMovedCapturing(g1,g4,g4)
+
+  abcdefgh
+8 r···qbnr
+7 ·p··p··p
+6 ···p···k
+5 p·p·····
+4 P·P···R·
+3 ···P·p··
+2 RP·P·P·P
+1 ·NB·KB··
+  abcdefgh
+
+UI: Move completed: 66: PieceMoved(g7,h6)
+
+  abcdefgh
+8 r···qbnr
+7 ·p··p··p
+6 ···p···k
+5 p·p·····
+4 P·P····R
+3 ···P·p··
+2 RP·P·P·P
+1 ·NB·KB··
+  abcdefgh
+
+UI: Move completed: 67: PieceMoved(g4,h4)
+
+  abcdefgh
+8 ··qr·bnr
+7 ·p··p··p
+6 ···p···k
+5 p·p·····
+4 P·P····R
+3 ···P·p··
+2 RP·P·P·P
+1 ·NB·KB··
+  abcdefgh
+
+UI: Move completed: 68: Castled(PieceMoved(e8,c8),PieceMoved(a8,d8))
+
+Exception in thread "main" java.lang.AssertionError: assertion failed: One king 
+should be present for: Black
+	at scala.Predef$.assert(Predef.scala:103)
+	at chess.model.StandardMoveExplorer.kingInCheck(StandardMoveExplorer.scala:240)
+	at chess.player.CheckingPlayer$$anonfun$checkingMoves$1.apply(CheckingPlayer.sc
+ala:30)
+	at chess.player.CheckingPlayer$$anonfun$checkingMoves$1.apply(CheckingPlayer.sc
+ala:25)
+	at scala.collection.TraversableLike$$anonfun$filter$1.apply(TraversableLike.sca
+la:213)
+	at scala.collection.LinearSeqOptimized$class.foreach(LinearSeqOptimized.scala:5
+9)
+	at scala.collection.immutable.List.foreach(List.scala:45)
+	at scala.collection.TraversableLike$class.filter(TraversableLike.scala:212)
+	at scala.collection.immutable.List.filter(List.scala:45)
+	at chess.player.CheckingPlayer.checkingMoves(CheckingPlayer.scala:25)
+	at chess.player.CheckingPlayer.getMove(CheckingPlayer.scala:18)
+	at chess.app.ChessApp$.main(ChessApp.scala:55)
+	at chess.app.ChessApp.main(ChessApp.scala)

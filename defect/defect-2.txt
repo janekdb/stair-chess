@@ -1,0 +1,3724 @@
+This is not checkmate because the black king can capture the queen.
+
+6 ·······n
+5 p·······
+4 ·P····P·
+3 ········
+2 P·PPPP·P
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(a7,a5)
+
+Moving: MovePiece(c2,c4)
+Board: PieceMoved(c2,c4)
+  abcdefgh
+8 rnbqkb·r
+7 ·ppppppp
+6 ·······n
+5 p·······
+4 ·PP···P·
+3 ········
+2 P··PPP·P
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(c2,c4)
+
+Moving: MovePiece(g7,g6)
+Board: PieceMoved(g7,g6)
+  abcdefgh
+8 rnbqkb·r
+7 ·ppppp·p
+6 ······pn
+5 p·······
+4 ·PP···P·
+3 ········
+2 P··PPP·P
+1 RNBQKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(g7,g6)
+
+Moving: MovePiece(c1,b2)
+Board: PieceMoved(c1,b2)
+  abcdefgh
+8 rnbqkb·r
+7 ·ppppp·p
+6 ······pn
+5 p·······
+4 ·PP···P·
+3 ········
+2 PB·PPP·P
+1 RN·QKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(c1,b2)
+
+Moving: MovePiece(d7,d5)
+Board: PieceMoved(d7,d5)
+  abcdefgh
+8 rnbqkb·r
+7 ·pp·pp·p
+6 ······pn
+5 p··p····
+4 ·PP···P·
+3 ········
+2 PB·PPP·P
+1 RN·QKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(d7,d5)
+
+Moving: MovePiece(d2,d3)
+Board: PieceMoved(d2,d3)
+  abcdefgh
+8 rnbqkb·r
+7 ·pp·pp·p
+6 ······pn
+5 p··p····
+4 ·PP···P·
+3 ···P····
+2 PB··PP·P
+1 RN·QKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(d2,d3)
+
+Moving: MovePiece(f8,g7)
+Board: PieceMoved(f8,g7)
+  abcdefgh
+8 rnbqk··r
+7 ·pp·ppbp
+6 ······pn
+5 p··p····
+4 ·PP···P·
+3 ···P····
+2 PB··PP·P
+1 RN·QKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(f8,g7)
+
+Moving: MovePiece(b2,f6)
+Board: PieceMoved(b2,f6)
+  abcdefgh
+8 rnbqk··r
+7 ·pp·ppbp
+6 ·····Bpn
+5 p··p····
+4 ·PP···P·
+3 ···P····
+2 P···PP·P
+1 RN·QKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(b2,f6)
+
+Moving: MovePieceCapturing(a5,b4)
+Board: PieceMovedTaking(a5,b4,b4)
+  abcdefgh
+8 rnbqk··r
+7 ·pp·ppbp
+6 ·····Bpn
+5 ···p····
+4 ·pP···P·
+3 ···P····
+2 P···PP·P
+1 RN·QKBNR
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(a5,b4,b4)
+
+Moving: MovePiece(f2,f3)
+Board: PieceMoved(f2,f3)
+  abcdefgh
+8 rnbqk··r
+7 ·pp·ppbp
+6 ·····Bpn
+5 ···p····
+4 ·pP···P·
+3 ···P·P··
+2 P···P··P
+1 RN·QKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(f2,f3)
+
+Moving: MovePiece(b8,c6)
+Board: PieceMoved(b8,c6)
+  abcdefgh
+8 r·bqk··r
+7 ·pp·ppbp
+6 ··n··Bpn
+5 ···p····
+4 ·pP···P·
+3 ···P·P··
+2 P···P··P
+1 RN·QKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(b8,c6)
+
+Moving: MovePiece(b1,a3)
+Board: PieceMoved(b1,a3)
+  abcdefgh
+8 r·bqk··r
+7 ·pp·ppbp
+6 ··n··Bpn
+5 ···p····
+4 ·pP···P·
+3 N··P·P··
+2 P···P··P
+1 R··QKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(b1,a3)
+
+Moving: MovePiece(h6,g8)
+Board: PieceMoved(h6,g8)
+  abcdefgh
+8 r·bqk·nr
+7 ·pp·ppbp
+6 ··n··Bp·
+5 ···p····
+4 ·pP···P·
+3 N··P·P··
+2 P···P··P
+1 R··QKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(h6,g8)
+
+Moving: MovePieceCapturing(c4,d5)
+Board: PieceMovedTaking(c4,d5,d5)
+  abcdefgh
+8 r·bqk·nr
+7 ·pp·ppbp
+6 ··n··Bp·
+5 ···P····
+4 ·p····P·
+3 N··P·P··
+2 P···P··P
+1 R··QKBNR
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(c4,d5,d5)
+
+Moving: MovePiece(c6,e5)
+Board: PieceMoved(c6,e5)
+  abcdefgh
+8 r·bqk·nr
+7 ·pp·ppbp
+6 ·····Bp·
+5 ···Pn···
+4 ·p····P·
+3 N··P·P··
+2 P···P··P
+1 R··QKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(c6,e5)
+
+Moving: MovePiece(f3,f4)
+Board: PieceMoved(f3,f4)
+  abcdefgh
+8 r·bqk·nr
+7 ·pp·ppbp
+6 ·····Bp·
+5 ···Pn···
+4 ·p···PP·
+3 N··P····
+2 P···P··P
+1 R··QKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(f3,f4)
+
+Moving: MovePiece(g6,g5)
+Board: PieceMoved(g6,g5)
+  abcdefgh
+8 r·bqk·nr
+7 ·pp·ppbp
+6 ·····B··
+5 ···Pn·p·
+4 ·p···PP·
+3 N··P····
+2 P···P··P
+1 R··QKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(g6,g5)
+
+Moving: MovePiece(d5,d6)
+Board: PieceMoved(d5,d6)
+  abcdefgh
+8 r·bqk·nr
+7 ·pp·ppbp
+6 ···P·B··
+5 ····n·p·
+4 ·p···PP·
+3 N··P····
+2 P···P··P
+1 R··QKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(d5,d6)
+
+Moving: MovePiece(e8,d7)
+Board: PieceMoved(e8,d7)
+  abcdefgh
+8 r·bq··nr
+7 ·ppkppbp
+6 ···P·B··
+5 ····n·p·
+4 ·p···PP·
+3 N··P····
+2 P···P··P
+1 R··QKBNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(e8,d7)
+
+Moving: MovePiece(e1,f2)
+Board: PieceMoved(e1,f2)
+  abcdefgh
+8 r·bq··nr
+7 ·ppkppbp
+6 ···P·B··
+5 ····n·p·
+4 ·p···PP·
+3 N··P····
+2 P···PK·P
+1 R··Q·BNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(e1,f2)
+
+Moving: MovePiece(a8,a7)
+Board: PieceMoved(a8,a7)
+  abcdefgh
+8 ··bq··nr
+7 rppkppbp
+6 ···P·B··
+5 ····n·p·
+4 ·p···PP·
+3 N··P····
+2 P···PK·P
+1 R··Q·BNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(a8,a7)
+
+Moving: MovePieceCapturing(f6,e7)
+Board: PieceMovedTaking(f6,e7,e7)
+  abcdefgh
+8 ··bq··nr
+7 rppkBpbp
+6 ···P····
+5 ····n·p·
+4 ·p···PP·
+3 N··P····
+2 P···PK·P
+1 R··Q·BNR
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(f6,e7,e7)
+
+Moving: MovePiece(g8,f6)
+Board: PieceMoved(g8,f6)
+  abcdefgh
+8 ··bq···r
+7 rppkBpbp
+6 ···P·n··
+5 ····n·p·
+4 ·p···PP·
+3 N··P····
+2 P···PK·P
+1 R··Q·BNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(g8,f6)
+
+Moving: MovePieceCapturing(d6,c7)
+Board: PieceMovedTaking(d6,c7,c7)
+  abcdefgh
+8 ··bq···r
+7 rpPkBpbp
+6 ·····n··
+5 ····n·p·
+4 ·p···PP·
+3 N··P····
+2 P···PK·P
+1 R··Q·BNR
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(d6,c7,c7)
+
+Moving: MovePiece(f6,g8)
+Board: PieceMoved(f6,g8)
+  abcdefgh
+8 ··bq··nr
+7 rpPkBpbp
+6 ········
+5 ····n·p·
+4 ·p···PP·
+3 N··P····
+2 P···PK·P
+1 R··Q·BNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(f6,g8)
+
+Moving: MovePiece(f4,f5)
+Board: PieceMoved(f4,f5)
+  abcdefgh
+8 ··bq··nr
+7 rpPkBpbp
+6 ········
+5 ····nPp·
+4 ·p····P·
+3 N··P····
+2 P···PK·P
+1 R··Q·BNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(f4,f5)
+
+Moving: MovePiece(b4,b3)
+Board: PieceMoved(b4,b3)
+  abcdefgh
+8 ··bq··nr
+7 rpPkBpbp
+6 ········
+5 ····nPp·
+4 ······P·
+3 Np·P····
+2 P···PK·P
+1 R··Q·BNR
+  abcdefgh
+
+UI: Move completed: PieceMoved(b4,b3)
+
+Moving: MovePiece(g1,f3)
+Board: PieceMoved(g1,f3)
+  abcdefgh
+8 ··bq··nr
+7 rpPkBpbp
+6 ········
+5 ····nPp·
+4 ······P·
+3 Np·P·N··
+2 P···PK·P
+1 R··Q·B·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(g1,f3)
+
+Moving: MovePieceCapturing(f7,f5)
+Board: PieceMovedTaking(f7,f5,f5)
+  abcdefgh
+8 ··bq··nr
+7 rpPkB·bp
+6 ········
+5 ····npp·
+4 ······P·
+3 Np·P·N··
+2 P···PK·P
+1 R··Q·B·R
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(f7,f5,f5)
+
+Moving: MovePiece(a3,b5)
+Board: PieceMoved(a3,b5)
+  abcdefgh
+8 ··bq··nr
+7 rpPkB·bp
+6 ········
+5 ·N··npp·
+4 ······P·
+3 ·p·P·N··
+2 P···PK·P
+1 R··Q·B·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(a3,b5)
+
+Moving: MovePieceCapturing(e5,d3)
+Board: PieceMovedTaking(e5,d3,d3)
+  abcdefgh
+8 ··bq··nr
+7 rpPkB·bp
+6 ········
+5 ·N···pp·
+4 ······P·
+3 ·p·n·N··
+2 P···PK·P
+1 R··Q·B·R
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(e5,d3,d3)
+
+rejected move: MovePiece(a2,a4): The move left the players own King in check: Mo
+vePiece(a2,a4)
+rejected move: MovePiece(a2,a3): The move left the players own King in check: Mo
+vePiece(a2,a3)
+rejected move: MovePieceCapturing(a2,b3): The move left the players own King in 
+check: MovePieceCapturing(a2,b3)
+rejected move: MovePiece(h2,h3): The move left the players own King in check: Mo
+vePiece(h2,h3)
+rejected move: MovePiece(h2,h4): The move left the players own King in check: Mo
+vePiece(h2,h4)
+rejected move: MovePiece(e2,e4): The move left the players own King in check: Mo
+vePiece(e2,e4)
+rejected move: MovePiece(e2,e3): The move left the players own King in check: Mo
+vePiece(e2,e3)
+Moving: MovePieceCapturing(e2,d3)
+Board: PieceMovedTaking(e2,d3,d3)
+  abcdefgh
+8 ··bq··nr
+7 rpPkB·bp
+6 ········
+5 ·N···pp·
+4 ······P·
+3 ·p·P·N··
+2 P····K·P
+1 R··Q·B·R
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(e2,d3,d3)
+
+Moving: MovePieceCapturing(b7,b5)
+Board: PieceMovedTaking(b7,b5,b5)
+  abcdefgh
+8 ··bq··nr
+7 r·PkB·bp
+6 ········
+5 ·p···pp·
+4 ······P·
+3 ·p·P·N··
+2 P····K·P
+1 R··Q·B·R
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(b7,b5,b5)
+
+Moving: MovePiece(h2,h4)
+Board: PieceMoved(h2,h4)
+  abcdefgh
+8 ··bq··nr
+7 r·PkB·bp
+6 ········
+5 ·p···pp·
+4 ······PP
+3 ·p·P·N··
+2 P····K··
+1 R··Q·B·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(h2,h4)
+
+Moving: MovePiece(d7,e8)
+Board: PieceMoved(d7,e8)
+  abcdefgh
+8 ··bqk·nr
+7 r·P·B·bp
+6 ········
+5 ·p···pp·
+4 ······PP
+3 ·p·P·N··
+2 P····K··
+1 R··Q·B·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(d7,e8)
+
+Moving: MovePiece(a1,b1)
+Board: PieceMoved(a1,b1)
+  abcdefgh
+8 ··bqk·nr
+7 r·P·B·bp
+6 ········
+5 ·p···pp·
+4 ······PP
+3 ·p·P·N··
+2 P····K··
+1 ·R·Q·B·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(a1,b1)
+
+Moving: MovePiece(f5,f4)
+Board: PieceMoved(f5,f4)
+  abcdefgh
+8 ··bqk·nr
+7 r·P·B·bp
+6 ········
+5 ·p····p·
+4 ·····pPP
+3 ·p·P·N··
+2 P····K··
+1 ·R·Q·B·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(f5,f4)
+
+Moving: PromoteCapturing(c7,d8,Queen())
+Board: PieceMovedTaking(c7,d8,d8)
+Board: Promoted(d8,Queen())
+  abcdefgh
+8 ··bPk·nr
+7 r···B·bp
+6 ········
+5 ·p····p·
+4 ·····pPP
+3 ·p·P·N··
+2 P····K··
+1 ·R·Q·B·R
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(c7,d8,d8)
+
+  abcdefgh
+8 ··bQk·nr
+7 r···B·bp
+6 ········
+5 ·p····p·
+4 ·····pPP
+3 ·p·P·N··
+2 P····K··
+1 ·R·Q·B·R
+  abcdefgh
+
+UI: Move completed: Promoted(d8,Queen())
+
+rejected move: MovePiece(b5,b4): The move left the players own King in check: Mo
+vePiece(b5,b4)
+rejected move: MovePieceCapturing(b3,a2): The move left the players own King in 
+check: MovePieceCapturing(b3,a2)
+rejected move: MovePiece(b3,b2): The move left the players own King in check: Mo
+vePiece(b3,b2)
+rejected move: MovePiece(h7,h6): The move left the players own King in check: Mo
+vePiece(h7,h6)
+rejected move: MovePiece(h7,h5): The move left the players own King in check: Mo
+vePiece(h7,h5)
+rejected move: MovePiece(g7,c3): The move left the players own King in check: Mo
+vePiece(g7,c3)
+rejected move: MovePiece(g7,h6): The move left the players own King in check: Mo
+vePiece(g7,h6)
+rejected move: MovePiece(g7,f8): The move left the players own King in check: Mo
+vePiece(g7,f8)
+rejected move: MovePiece(g7,a1): The move left the players own King in check: Mo
+vePiece(g7,a1)
+rejected move: MovePiece(g7,f6): The move left the players own King in check: Mo
+vePiece(g7,f6)
+rejected move: MovePiece(g7,d4): The move left the players own King in check: Mo
+vePiece(g7,d4)
+rejected move: MovePiece(g7,b2): The move left the players own King in check: Mo
+vePiece(g7,b2)
+rejected move: MovePiece(g7,e5): The move left the players own King in check: Mo
+vePiece(g7,e5)
+rejected move: MovePiece(a7,c7): The move left the players own King in check: Mo
+vePiece(a7,c7)
+rejected move: MovePiece(a7,a8): The move left the players own King in check: Mo
+vePiece(a7,a8)
+rejected move: MovePiece(a7,a6): The move left the players own King in check: Mo
+vePiece(a7,a6)
+rejected move: MovePiece(a7,d7): The move left the players own King in check: Mo
+vePiece(a7,d7)
+rejected move: MovePiece(a7,b7): The move left the players own King in check: Mo
+vePiece(a7,b7)
+rejected move: MovePiece(a7,a4): The move left the players own King in check: Mo
+vePiece(a7,a4)
+rejected move: MovePiece(a7,a3): The move left the players own King in check: Mo
+vePiece(a7,a3)
+rejected move: MovePiece(a7,a5): The move left the players own King in check: Mo
+vePiece(a7,a5)
+rejected move: MovePieceCapturing(a7,e7): The move left the players own King in 
+check: MovePieceCapturing(a7,e7)
+rejected move: MovePieceCapturing(a7,a2): The move left the players own King in 
+check: MovePieceCapturing(a7,a2)
+rejected move: MovePiece(g8,h6): The move left the players own King in check: Mo
+vePiece(g8,h6)
+rejected move: MovePiece(g8,f6): The move left the players own King in check: Mo
+vePiece(g8,f6)
+rejected move: MovePieceCapturing(g8,e7): The move left the players own King in 
+check: MovePieceCapturing(g8,e7)
+rejected move: MovePieceCapturing(g5,h4): The move left the players own King in 
+check: MovePieceCapturing(g5,h4)
+rejected move: MovePieceCapturing(e8,e7): The move left the players own King in 
+check: MovePieceCapturing(e8,e7)
+rejected move: MovePiece(e8,f8): The move left the players own King in check: Mo
+vePiece(e8,f8)
+rejected move: MovePiece(e8,d7): The move left the players own King in check: Mo
+vePiece(e8,d7)
+Moving: MovePiece(e8,f7)
+Board: PieceMoved(e8,f7)
+  abcdefgh
+8 ··bQ··nr
+7 r···Bkbp
+6 ········
+5 ·p····p·
+4 ·····pPP
+3 ·p·P·N··
+2 P····K··
+1 ·R·Q·B·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(e8,f7)
+
+Moving: MovePieceCapturing(b1,b3)
+Board: PieceMovedTaking(b1,b3,b3)
+  abcdefgh
+8 ··bQ··nr
+7 r···Bkbp
+6 ········
+5 ·p····p·
+4 ·····pPP
+3 ·R·P·N··
+2 P····K··
+1 ···Q·B·R
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(b1,b3,b3)
+
+Moving: MovePiece(h7,h6)
+Board: PieceMoved(h7,h6)
+  abcdefgh
+8 ··bQ··nr
+7 r···Bkb·
+6 ·······p
+5 ·p····p·
+4 ·····pPP
+3 ·R·P·N··
+2 P····K··
+1 ···Q·B·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(h7,h6)
+
+Moving: MovePiece(f2,g1)
+Board: PieceMoved(f2,g1)
+  abcdefgh
+8 ··bQ··nr
+7 r···Bkb·
+6 ·······p
+5 ·p····p·
+4 ·····pPP
+3 ·R·P·N··
+2 P·······
+1 ···Q·BKR
+  abcdefgh
+
+UI: Move completed: PieceMoved(f2,g1)
+
+Moving: MovePiece(h6,h5)
+Board: PieceMoved(h6,h5)
+  abcdefgh
+8 ··bQ··nr
+7 r···Bkb·
+6 ········
+5 ·p····pp
+4 ·····pPP
+3 ·R·P·N··
+2 P·······
+1 ···Q·BKR
+  abcdefgh
+
+UI: Move completed: PieceMoved(h6,h5)
+
+Moving: MovePiece(e7,a3)
+Board: PieceMoved(e7,a3)
+  abcdefgh
+8 ··bQ··nr
+7 r····kb·
+6 ········
+5 ·p····pp
+4 ·····pPP
+3 BR·P·N··
+2 P·······
+1 ···Q·BKR
+  abcdefgh
+
+UI: Move completed: PieceMoved(e7,a3)
+
+Moving: MovePiece(b5,b4)
+Board: PieceMoved(b5,b4)
+  abcdefgh
+8 ··bQ··nr
+7 r····kb·
+6 ········
+5 ······pp
+4 ·p···pPP
+3 BR·P·N··
+2 P·······
+1 ···Q·BKR
+  abcdefgh
+
+UI: Move completed: PieceMoved(b5,b4)
+
+Moving: MovePiece(f1,g2)
+Board: PieceMoved(f1,g2)
+  abcdefgh
+8 ··bQ··nr
+7 r····kb·
+6 ········
+5 ······pp
+4 ·p···pPP
+3 BR·P·N··
+2 P·····B·
+1 ···Q··KR
+  abcdefgh
+
+UI: Move completed: PieceMoved(f1,g2)
+
+Moving: MovePiece(g8,f6)
+Board: PieceMoved(g8,f6)
+  abcdefgh
+8 ··bQ···r
+7 r····kb·
+6 ·····n··
+5 ······pp
+4 ·p···pPP
+3 BR·P·N··
+2 P·····B·
+1 ···Q··KR
+  abcdefgh
+
+UI: Move completed: PieceMoved(g8,f6)
+
+Moving: MovePiece(h1,h3)
+Board: PieceMoved(h1,h3)
+  abcdefgh
+8 ··bQ···r
+7 r····kb·
+6 ·····n··
+5 ······pp
+4 ·p···pPP
+3 BR·P·N·R
+2 P·····B·
+1 ···Q··K·
+  abcdefgh
+
+UI: Move completed: PieceMoved(h1,h3)
+
+Moving: MovePiece(c8,f5)
+Board: PieceMoved(c8,f5)
+  abcdefgh
+8 ···Q···r
+7 r····kb·
+6 ·····n··
+5 ·····bpp
+4 ·p···pPP
+3 BR·P·N·R
+2 P·····B·
+1 ···Q··K·
+  abcdefgh
+
+UI: Move completed: PieceMoved(c8,f5)
+
+Moving: MovePieceCapturing(b3,b4)
+Board: PieceMovedTaking(b3,b4,b4)
+  abcdefgh
+8 ···Q···r
+7 r····kb·
+6 ·····n··
+5 ·····bpp
+4 ·R···pPP
+3 B··P·N·R
+2 P·····B·
+1 ···Q··K·
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(b3,b4,b4)
+
+Moving: MovePiece(a7,c7)
+Board: PieceMoved(a7,c7)
+  abcdefgh
+8 ···Q···r
+7 ··r··kb·
+6 ·····n··
+5 ·····bpp
+4 ·R···pPP
+3 B··P·N·R
+2 P·····B·
+1 ···Q··K·
+  abcdefgh
+
+UI: Move completed: PieceMoved(a7,c7)
+
+Moving: MovePiece(g1,f2)
+Board: PieceMoved(g1,f2)
+  abcdefgh
+8 ···Q···r
+7 ··r··kb·
+6 ·····n··
+5 ·····bpp
+4 ·R···pPP
+3 B··P·N·R
+2 P····KB·
+1 ···Q····
+  abcdefgh
+
+UI: Move completed: PieceMoved(g1,f2)
+
+rejected move: MovePiece(f7,f8): The move left the players own King in check: Mo
+vePiece(f7,f8)
+rejected move: MovePiece(f7,e7): The move left the players own King in check: Mo
+vePiece(f7,e7)
+Moving: MovePiece(f7,g6)
+Board: PieceMoved(f7,g6)
+  abcdefgh
+8 ···Q···r
+7 ··r···b·
+6 ·····nk·
+5 ·····bpp
+4 ·R···pPP
+3 B··P·N·R
+2 P····KB·
+1 ···Q····
+  abcdefgh
+
+UI: Move completed: PieceMoved(f7,g6)
+
+Moving: MovePiece(g2,h1)
+Board: PieceMoved(g2,h1)
+  abcdefgh
+8 ···Q···r
+7 ··r···b·
+6 ·····nk·
+5 ·····bpp
+4 ·R···pPP
+3 B··P·N·R
+2 P····K··
+1 ···Q···B
+  abcdefgh
+
+UI: Move completed: PieceMoved(g2,h1)
+
+Moving: MovePiece(c7,c1)
+Board: PieceMoved(c7,c1)
+  abcdefgh
+8 ···Q···r
+7 ······b·
+6 ·····nk·
+5 ·····bpp
+4 ·R···pPP
+3 B··P·N·R
+2 P····K··
+1 ··rQ···B
+  abcdefgh
+
+UI: Move completed: PieceMoved(c7,c1)
+
+Moving: MovePiece(f3,e1)
+Board: PieceMoved(f3,e1)
+  abcdefgh
+8 ···Q···r
+7 ······b·
+6 ·····nk·
+5 ·····bpp
+4 ·R···pPP
+3 B··P···R
+2 P····K··
+1 ··rQN··B
+  abcdefgh
+
+UI: Move completed: PieceMoved(f3,e1)
+
+Moving: MovePiece(f5,c8)
+Board: PieceMoved(f5,c8)
+  abcdefgh
+8 ··bQ···r
+7 ······b·
+6 ·····nk·
+5 ······pp
+4 ·R···pPP
+3 B··P···R
+2 P····K··
+1 ··rQN··B
+  abcdefgh
+
+UI: Move completed: PieceMoved(f5,c8)
+
+Moving: MovePiece(h1,a8)
+Board: PieceMoved(h1,a8)
+  abcdefgh
+8 B·bQ···r
+7 ······b·
+6 ·····nk·
+5 ······pp
+4 ·R···pPP
+3 B··P···R
+2 P····K··
+1 ··rQN···
+  abcdefgh
+
+UI: Move completed: PieceMoved(h1,a8)
+
+Moving: MovePieceCapturing(g5,h4)
+Board: PieceMovedTaking(g5,h4,h4)
+  abcdefgh
+8 B·bQ···r
+7 ······b·
+6 ·····nk·
+5 ·······p
+4 ·R···pPp
+3 B··P···R
+2 P····K··
+1 ··rQN···
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(g5,h4,h4)
+
+Moving: MovePiece(d8,e8)
+Board: PieceMoved(d8,e8)
+  abcdefgh
+8 B·b·Q··r
+7 ······b·
+6 ·····nk·
+5 ·······p
+4 ·R···pPp
+3 B··P···R
+2 P····K··
+1 ··rQN···
+  abcdefgh
+
+UI: Move completed: PieceMoved(d8,e8)
+
+rejected move: MovePiece(c1,c4): The move left the players own King in check: Mo
+vePiece(c1,c4)
+rejected move: MovePiece(c1,c2): The move left the players own King in check: Mo
+vePiece(c1,c2)
+rejected move: MovePiece(c1,c6): The move left the players own King in check: Mo
+vePiece(c1,c6)
+rejected move: MovePiece(c1,c5): The move left the players own King in check: Mo
+vePiece(c1,c5)
+rejected move: MovePiece(c1,c7): The move left the players own King in check: Mo
+vePiece(c1,c7)
+rejected move: MovePiece(c1,a1): The move left the players own King in check: Mo
+vePiece(c1,a1)
+rejected move: MovePiece(c1,b1): The move left the players own King in check: Mo
+vePiece(c1,b1)
+rejected move: MovePieceCapturing(c1,d1): The move left the players own King in 
+check: MovePieceCapturing(c1,d1)
+rejected move: MovePiece(c1,c3): The move left the players own King in check: Mo
+vePiece(c1,c3)
+rejected move: MovePiece(f4,f3): The move left the players own King in check: Mo
+vePiece(f4,f3)
+Moving: MovePiece(g6,h6)
+Board: PieceMoved(g6,h6)
+  abcdefgh
+8 B·b·Q··r
+7 ······b·
+6 ·····n·k
+5 ·······p
+4 ·R···pPp
+3 B··P···R
+2 P····K··
+1 ··rQN···
+  abcdefgh
+
+UI: Move completed: PieceMoved(g6,h6)
+
+Moving: MovePiece(g4,g5)
+Board: PieceMoved(g4,g5)
+  abcdefgh
+8 B·b·Q··r
+7 ······b·
+6 ·····n·k
+5 ······Pp
+4 ·R···p·p
+3 B··P···R
+2 P····K··
+1 ··rQN···
+  abcdefgh
+
+UI: Move completed: PieceMoved(g4,g5)
+
+rejected move: MovePiece(g7,f8): The move left the players own King in check: Mo
+vePiece(g7,f8)
+Moving: MovePieceCapturing(h6,g5)
+Board: PieceMovedTaking(h6,g5,g5)
+  abcdefgh
+8 B·b·Q··r
+7 ······b·
+6 ·····n··
+5 ······kp
+4 ·R···p·p
+3 B··P···R
+2 P····K··
+1 ··rQN···
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(h6,g5,g5)
+
+Moving: MovePieceCapturing(a3,c1)
+Board: PieceMovedTaking(a3,c1,c1)
+  abcdefgh
+8 B·b·Q··r
+7 ······b·
+6 ·····n··
+5 ······kp
+4 ·R···p·p
+3 ···P···R
+2 P····K··
+1 ··BQN···
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(a3,c1,c1)
+
+Moving: MovePiece(g5,f5)
+Board: PieceMoved(g5,f5)
+  abcdefgh
+8 B·b·Q··r
+7 ······b·
+6 ·····n··
+5 ·····k·p
+4 ·R···p·p
+3 ···P···R
+2 P····K··
+1 ··BQN···
+  abcdefgh
+
+UI: Move completed: PieceMoved(g5,f5)
+
+Moving: MovePiece(b4,b6)
+Board: PieceMoved(b4,b6)
+  abcdefgh
+8 B·b·Q··r
+7 ······b·
+6 ·R···n··
+5 ·····k·p
+4 ·····p·p
+3 ···P···R
+2 P····K··
+1 ··BQN···
+  abcdefgh
+
+UI: Move completed: PieceMoved(b4,b6)
+
+Moving: MovePiece(f4,f3)
+Board: PieceMoved(f4,f3)
+  abcdefgh
+8 B·b·Q··r
+7 ······b·
+6 ·R···n··
+5 ·····k·p
+4 ·······p
+3 ···P·p·R
+2 P····K··
+1 ··BQN···
+  abcdefgh
+
+UI: Move completed: PieceMoved(f4,f3)
+
+Moving: MovePiece(e8,f7)
+Board: PieceMoved(e8,f7)
+  abcdefgh
+8 B·b····r
+7 ·····Qb·
+6 ·R···n··
+5 ·····k·p
+4 ·······p
+3 ···P·p·R
+2 P····K··
+1 ··BQN···
+  abcdefgh
+
+UI: Move completed: PieceMoved(e8,f7)
+
+Moving: MovePiece(h8,d8)
+Board: PieceMoved(h8,d8)
+  abcdefgh
+8 B·br····
+7 ·····Qb·
+6 ·R···n··
+5 ·····k·p
+4 ·······p
+3 ···P·p·R
+2 P····K··
+1 ··BQN···
+  abcdefgh
+
+UI: Move completed: PieceMoved(h8,d8)
+
+Moving: MovePiece(a2,a3)
+Board: PieceMoved(a2,a3)
+  abcdefgh
+8 B·br····
+7 ·····Qb·
+6 ·R···n··
+5 ·····k·p
+4 ·······p
+3 P··P·p·R
+2 ·····K··
+1 ··BQN···
+  abcdefgh
+
+UI: Move completed: PieceMoved(a2,a3)
+
+Moving: MovePiece(g7,f8)
+Board: PieceMoved(g7,f8)
+  abcdefgh
+8 B·br·b··
+7 ·····Q··
+6 ·R···n··
+5 ·····k·p
+4 ·······p
+3 P··P·p·R
+2 ·····K··
+1 ··BQN···
+  abcdefgh
+
+UI: Move completed: PieceMoved(g7,f8)
+
+Moving: MovePiece(c1,h6)
+Board: PieceMoved(c1,h6)
+  abcdefgh
+8 B·br·b··
+7 ·····Q··
+6 ·R···n·B
+5 ·····k·p
+4 ·······p
+3 P··P·p·R
+2 ·····K··
+1 ···QN···
+  abcdefgh
+
+UI: Move completed: PieceMoved(c1,h6)
+
+rejected move: MovePiece(f6,g8): The move left the players own King in check: Mo
+vePiece(f6,g8)
+rejected move: MovePiece(f6,d5): The move left the players own King in check: Mo
+vePiece(f6,d5)
+rejected move: MovePiece(f6,g4): The move left the players own King in check: Mo
+vePiece(f6,g4)
+rejected move: MovePiece(f6,h7): The move left the players own King in check: Mo
+vePiece(f6,h7)
+rejected move: MovePiece(f6,e8): The move left the players own King in check: Mo
+vePiece(f6,e8)
+rejected move: MovePiece(f6,e4): The move left the players own King in check: Mo
+vePiece(f6,e4)
+rejected move: MovePiece(f6,d7): The move left the players own King in check: Mo
+vePiece(f6,d7)
+rejected move: MovePiece(f5,e6): The move left the players own King in check: Mo
+vePiece(f5,e6)
+Moving: MovePiece(f5,g4)
+Board: PieceMoved(f5,g4)
+  abcdefgh
+8 B·br·b··
+7 ·····Q··
+6 ·R···n·B
+5 ·······p
+4 ······kp
+3 P··P·p·R
+2 ·····K··
+1 ···QN···
+  abcdefgh
+
+UI: Move completed: PieceMoved(f5,g4)
+
+Moving: MovePiece(b6,b3)
+Board: PieceMoved(b6,b3)
+  abcdefgh
+8 B·br·b··
+7 ·····Q··
+6 ·····n·B
+5 ·······p
+4 ······kp
+3 PR·P·p·R
+2 ·····K··
+1 ···QN···
+  abcdefgh
+
+UI: Move completed: PieceMoved(b6,b3)
+
+Moving: MovePiece(f6,e8)
+Board: PieceMoved(f6,e8)
+  abcdefgh
+8 B·brnb··
+7 ·····Q··
+6 ·······B
+5 ·······p
+4 ······kp
+3 PR·P·p·R
+2 ·····K··
+1 ···QN···
+  abcdefgh
+
+UI: Move completed: PieceMoved(f6,e8)
+
+Moving: MovePiece(a3,a4)
+Board: PieceMoved(a3,a4)
+  abcdefgh
+8 B·brnb··
+7 ·····Q··
+6 ·······B
+5 ·······p
+4 P·····kp
+3 ·R·P·p·R
+2 ·····K··
+1 ···QN···
+  abcdefgh
+
+UI: Move completed: PieceMoved(a3,a4)
+
+Moving: MovePiece(c8,d7)
+Board: PieceMoved(c8,d7)
+  abcdefgh
+8 B··rnb··
+7 ···b·Q··
+6 ·······B
+5 ·······p
+4 P·····kp
+3 ·R·P·p·R
+2 ·····K··
+1 ···QN···
+  abcdefgh
+
+UI: Move completed: PieceMoved(c8,d7)
+
+Moving: MovePiece(h3,h1)
+Board: PieceMoved(h3,h1)
+  abcdefgh
+8 B··rnb··
+7 ···b·Q··
+6 ·······B
+5 ·······p
+4 P·····kp
+3 ·R·P·p··
+2 ·····K··
+1 ···QN··R
+  abcdefgh
+
+UI: Move completed: PieceMoved(h3,h1)
+
+Moving: MovePiece(f8,c5)
+Board: PieceMoved(f8,c5)
+  abcdefgh
+8 B··rn···
+7 ···b·Q··
+6 ·······B
+5 ··b····p
+4 P·····kp
+3 ·R·P·p··
+2 ·····K··
+1 ···QN··R
+  abcdefgh
+
+UI: Move completed: PieceMoved(f8,c5)
+
+rejected move: MovePiece(h1,h2): The move left the players own King in check: Mo
+vePiece(h1,h2)
+rejected move: MovePiece(h1,h3): The move left the players own King in check: Mo
+vePiece(h1,h3)
+rejected move: MovePieceCapturing(h1,h4): The move left the players own King in 
+check: MovePieceCapturing(h1,h4)
+rejected move: MovePiece(h1,g1): The move left the players own King in check: Mo
+vePiece(h1,g1)
+rejected move: MovePiece(h1,f1): The move left the players own King in check: Mo
+vePiece(h1,f1)
+rejected move: MovePiece(f7,f4): The move left the players own King in check: Mo
+vePiece(f7,f4)
+rejected move: MovePiece(f7,e7): The move left the players own King in check: Mo
+vePiece(f7,e7)
+rejected move: MovePiece(f7,e6): The move left the players own King in check: Mo
+vePiece(f7,e6)
+rejected move: MovePieceCapturing(f7,f3): The move left the players own King in 
+check: MovePieceCapturing(f7,f3)
+rejected move: MovePieceCapturing(f7,e8): The move left the players own King in 
+check: MovePieceCapturing(f7,e8)
+rejected move: MovePiece(f7,g8): The move left the players own King in check: Mo
+vePiece(f7,g8)
+rejected move: MovePiece(f7,c4): The move left the players own King in check: Mo
+vePiece(f7,c4)
+rejected move: MovePiece(f7,f8): The move left the players own King in check: Mo
+vePiece(f7,f8)
+rejected move: MovePiece(f7,h7): The move left the players own King in check: Mo
+vePiece(f7,h7)
+rejected move: MovePiece(f7,f6): The move left the players own King in check: Mo
+vePiece(f7,f6)
+rejected move: MovePiece(f7,d5): The move left the players own King in check: Mo
+vePiece(f7,d5)
+rejected move: MovePiece(f7,g7): The move left the players own King in check: Mo
+vePiece(f7,g7)
+rejected move: MovePieceCapturing(f7,h5): The move left the players own King in 
+check: MovePieceCapturing(f7,h5)
+rejected move: MovePiece(f7,f5): The move left the players own King in check: Mo
+vePiece(f7,f5)
+rejected move: MovePieceCapturing(f7,d7): The move left the players own King in 
+check: MovePieceCapturing(f7,d7)
+rejected move: MovePiece(f7,g6): The move left the players own King in check: Mo
+vePiece(f7,g6)
+rejected move: MovePiece(h6,f8): The move left the players own King in check: Mo
+vePiece(h6,f8)
+rejected move: MovePiece(h6,g5): The move left the players own King in check: Mo
+vePiece(h6,g5)
+Moving: MovePiece(h6,e3)
+Board: PieceMoved(h6,e3)
+  abcdefgh
+8 B··rn···
+7 ···b·Q··
+6 ········
+5 ··b····p
+4 P·····kp
+3 ·R·PBp··
+2 ·····K··
+1 ···QN··R
+  abcdefgh
+
+UI: Move completed: PieceMoved(h6,e3)
+
+Moving: MovePiece(e8,c7)
+Board: PieceMoved(e8,c7)
+  abcdefgh
+8 B··r····
+7 ··nb·Q··
+6 ········
+5 ··b····p
+4 P·····kp
+3 ·R·PBp··
+2 ·····K··
+1 ···QN··R
+  abcdefgh
+
+UI: Move completed: PieceMoved(e8,c7)
+
+Moving: MovePiece(a4,a5)
+Board: PieceMoved(a4,a5)
+  abcdefgh
+8 B··r····
+7 ··nb·Q··
+6 ········
+5 P·b····p
+4 ······kp
+3 ·R·PBp··
+2 ·····K··
+1 ···QN··R
+  abcdefgh
+
+UI: Move completed: PieceMoved(a4,a5)
+
+rejected move: MovePiece(g4,g3): The move left the players own King in check: Mo
+vePiece(g4,g3)
+rejected move: MovePiece(g4,f5): The move left the players own King in check: Mo
+vePiece(g4,f5)
+rejected move: MovePiece(g4,h3): The move left the players own King in check: Mo
+vePiece(g4,h3)
+rejected move: MovePiece(g4,g5): The move left the players own King in check: Mo
+vePiece(g4,g5)
+rejected move: MovePiece(g4,f4): The move left the players own King in check: Mo
+vePiece(g4,f4)
+Moving: MovePiece(d8,e8)
+Board: PieceMoved(d8,e8)
+  abcdefgh
+8 B···r···
+7 ··nb·Q··
+6 ········
+5 P·b····p
+4 ······kp
+3 ·R·PBp··
+2 ·····K··
+1 ···QN··R
+  abcdefgh
+
+UI: Move completed: PieceMoved(d8,e8)
+
+Moving: MovePiece(a8,e4)
+Board: PieceMoved(a8,e4)
+  abcdefgh
+8 ····r···
+7 ··nb·Q··
+6 ········
+5 P·b····p
+4 ····B·kp
+3 ·R·PBp··
+2 ·····K··
+1 ···QN··R
+  abcdefgh
+
+UI: Move completed: PieceMoved(a8,e4)
+
+Moving: MovePiece(c7,b5)
+Board: PieceMoved(c7,b5)
+  abcdefgh
+8 ····r···
+7 ···b·Q··
+6 ········
+5 Pnb····p
+4 ····B·kp
+3 ·R·PBp··
+2 ·····K··
+1 ···QN··R
+  abcdefgh
+
+UI: Move completed: PieceMoved(c7,b5)
+
+rejected move: MovePieceCapturing(f2,f3): The move left the players own King in 
+check: MovePieceCapturing(f2,f3)
+Moving: MovePiece(f2,g1)
+Board: PieceMoved(f2,g1)
+  abcdefgh
+8 ····r···
+7 ···b·Q··
+6 ········
+5 Pnb····p
+4 ····B·kp
+3 ·R·PBp··
+2 ········
+1 ···QN·KR
+  abcdefgh
+
+UI: Move completed: PieceMoved(f2,g1)
+
+Moving: MovePiece(h4,h3)
+Board: PieceMoved(h4,h3)
+  abcdefgh
+8 ····r···
+7 ···b·Q··
+6 ········
+5 Pnb····p
+4 ····B·k·
+3 ·R·PBp·p
+2 ········
+1 ···QN·KR
+  abcdefgh
+
+UI: Move completed: PieceMoved(h4,h3)
+
+Moving: MovePiece(g1,f1)
+Board: PieceMoved(g1,f1)
+  abcdefgh
+8 ····r···
+7 ···b·Q··
+6 ········
+5 Pnb····p
+4 ····B·k·
+3 ·R·PBp·p
+2 ········
+1 ···QNK·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(g1,f1)
+
+Moving: MovePiece(e8,a8)
+Board: PieceMoved(e8,a8)
+  abcdefgh
+8 r·······
+7 ···b·Q··
+6 ········
+5 Pnb····p
+4 ····B·k·
+3 ·R·PBp·p
+2 ········
+1 ···QNK·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(e8,a8)
+
+Moving: MovePiece(e3,h6)
+Board: PieceMoved(e3,h6)
+  abcdefgh
+8 r·······
+7 ···b·Q··
+6 ·······B
+5 Pnb····p
+4 ····B·k·
+3 ·R·P·p·p
+2 ········
+1 ···QNK·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(e3,h6)
+
+Moving: MovePiece(g4,h4)
+Board: PieceMoved(g4,h4)
+  abcdefgh
+8 r·······
+7 ···b·Q··
+6 ·······B
+5 Pnb····p
+4 ····B··k
+3 ·R·P·p·p
+2 ········
+1 ···QNK·R
+  abcdefgh
+
+UI: Move completed: PieceMoved(g4,h4)
+
+Moving: MovePieceCapturing(h1,h3)
+Board: PieceMovedTaking(h1,h3,h3)
+  abcdefgh
+8 r·······
+7 ···b·Q··
+6 ·······B
+5 Pnb····p
+4 ····B··k
+3 ·R·P·p·R
+2 ········
+1 ···QNK··
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(h1,h3,h3)
+
+rejected move: MovePiece(b5,a7): The move left the players own King in check: Mo
+vePiece(b5,a7)
+rejected move: MovePiece(b5,d4): The move left the players own King in check: Mo
+vePiece(b5,d4)
+rejected move: MovePiece(b5,d6): The move left the players own King in check: Mo
+vePiece(b5,d6)
+rejected move: MovePiece(b5,a3): The move left the players own King in check: Mo
+vePiece(b5,a3)
+rejected move: MovePiece(b5,c7): The move left the players own King in check: Mo
+vePiece(b5,c7)
+rejected move: MovePiece(b5,c3): The move left the players own King in check: Mo
+vePiece(b5,c3)
+Moving: MovePieceCapturing(d7,h3)
+Board: PieceMovedTaking(d7,h3,h3)
+  abcdefgh
+8 r·······
+7 ·····Q··
+6 ·······B
+5 Pnb····p
+4 ····B··k
+3 ·R·P·p·b
+2 ········
+1 ···QNK··
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(d7,h3,h3)
+
+rejected move: MovePiece(d1,e2): The move left the players own King in check: Mo
+vePiece(d1,e2)
+rejected move: MovePiece(d1,b1): The move left the players own King in check: Mo
+vePiece(d1,b1)
+rejected move: MovePieceCapturing(d1,f3): The move left the players own King in 
+check: MovePieceCapturing(d1,f3)
+rejected move: MovePiece(d1,a1): The move left the players own King in check: Mo
+vePiece(d1,a1)
+rejected move: MovePiece(d1,d2): The move left the players own King in check: Mo
+vePiece(d1,d2)
+rejected move: MovePiece(d1,c1): The move left the players own King in check: Mo
+vePiece(d1,c1)
+rejected move: MovePiece(d1,c2): The move left the players own King in check: Mo
+vePiece(d1,c2)
+Moving: MovePiece(e1,g2)
+Board: PieceMoved(e1,g2)
+  abcdefgh
+8 r·······
+7 ·····Q··
+6 ·······B
+5 Pnb····p
+4 ····B··k
+3 ·R·P·p·b
+2 ······N·
+1 ···Q·K··
+  abcdefgh
+
+UI: Move completed: PieceMoved(e1,g2)
+
+rejected move: MovePiece(c5,f8): The move left the players own King in check: Mo
+vePiece(c5,f8)
+rejected move: MovePiece(c5,e7): The move left the players own King in check: Mo
+vePiece(c5,e7)
+rejected move: MovePiece(c5,a3): The move left the players own King in check: Mo
+vePiece(c5,a3)
+rejected move: MovePiece(c5,b6): The move left the players own King in check: Mo
+vePiece(c5,b6)
+rejected move: MovePiece(c5,b4): The move left the players own King in check: Mo
+vePiece(c5,b4)
+rejected move: MovePiece(c5,g1): The move left the players own King in check: Mo
+vePiece(c5,g1)
+rejected move: MovePiece(c5,d4): The move left the players own King in check: Mo
+vePiece(c5,d4)
+rejected move: MovePiece(c5,a7): The move left the players own King in check: Mo
+vePiece(c5,a7)
+rejected move: MovePiece(c5,e3): The move left the players own King in check: Mo
+vePiece(c5,e3)
+rejected move: MovePiece(c5,d6): The move left the players own King in check: Mo
+vePiece(c5,d6)
+rejected move: MovePiece(c5,f2): The move left the players own King in check: Mo
+vePiece(c5,f2)
+rejected move: MovePiece(a8,a7): The move left the players own King in check: Mo
+vePiece(a8,a7)
+rejected move: MovePiece(a8,h8): The move left the players own King in check: Mo
+vePiece(a8,h8)
+rejected move: MovePiece(a8,c8): The move left the players own King in check: Mo
+vePiece(a8,c8)
+rejected move: MovePiece(a8,e8): The move left the players own King in check: Mo
+vePiece(a8,e8)
+rejected move: MovePiece(a8,d8): The move left the players own King in check: Mo
+vePiece(a8,d8)
+rejected move: MovePiece(a8,a6): The move left the players own King in check: Mo
+vePiece(a8,a6)
+rejected move: MovePiece(a8,b8): The move left the players own King in check: Mo
+vePiece(a8,b8)
+rejected move: MovePieceCapturing(a8,a5): The move left the players own King in 
+check: MovePieceCapturing(a8,a5)
+rejected move: MovePiece(a8,f8): The move left the players own King in check: Mo
+vePiece(a8,f8)
+rejected move: MovePiece(a8,g8): The move left the players own King in check: Mo
+vePiece(a8,g8)
+rejected move: MovePiece(h3,c8): The move left the players own King in check: Mo
+vePiece(h3,c8)
+rejected move: MovePiece(h3,g4): The move left the players own King in check: Mo
+vePiece(h3,g4)
+Moving: MovePieceCapturing(h3,g2)
+Board: PieceMovedTaking(h3,g2,g2)
+  abcdefgh
+8 r·······
+7 ·····Q··
+6 ·······B
+5 Pnb····p
+4 ····B··k
+3 ·R·P·p··
+2 ······b·
+1 ···Q·K··
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(h3,g2,g2)
+
+rejected move: MovePiece(a5,a6): The move left the players own King in check: Mo
+vePiece(a5,a6)
+rejected move: MovePieceCapturing(f1,g2): The move left the players own King in 
+check: MovePieceCapturing(f1,g2)
+Moving: MovePiece(f1,e1)
+Board: PieceMoved(f1,e1)
+  abcdefgh
+8 r·······
+7 ·····Q··
+6 ·······B
+5 Pnb····p
+4 ····B··k
+3 ·R·P·p··
+2 ······b·
+1 ···QK···
+  abcdefgh
+
+UI: Move completed: PieceMoved(f1,e1)
+
+Moving: MovePiece(g2,h1)
+Board: PieceMoved(g2,h1)
+  abcdefgh
+8 r·······
+7 ·····Q··
+6 ·······B
+5 Pnb····p
+4 ····B··k
+3 ·R·P·p··
+2 ········
+1 ···QK··b
+  abcdefgh
+
+UI: Move completed: PieceMoved(g2,h1)
+
+Moving: MovePiece(h6,f4)
+Board: PieceMoved(h6,f4)
+  abcdefgh
+8 r·······
+7 ·····Q··
+6 ········
+5 Pnb····p
+4 ····BB·k
+3 ·R·P·p··
+2 ········
+1 ···QK··b
+  abcdefgh
+
+UI: Move completed: PieceMoved(h6,f4)
+
+Moving: MovePiece(f3,f2)
+Board: PieceMoved(f3,f2)
+  abcdefgh
+8 r·······
+7 ·····Q··
+6 ········
+5 Pnb····p
+4 ····BB·k
+3 ·R·P····
+2 ·····p··
+1 ···QK··b
+  abcdefgh
+
+UI: Move completed: PieceMoved(f3,f2)
+
+rejected move: MovePiece(a5,a6): The move left the players own King in check: Mo
+vePiece(a5,a6)
+rejected move: MovePiece(f4,c1): The move left the players own King in check: Mo
+vePiece(f4,c1)
+rejected move: MovePiece(f4,e5): The move left the players own King in check: Mo
+vePiece(f4,e5)
+rejected move: MovePiece(f4,e3): The move left the players own King in check: Mo
+vePiece(f4,e3)
+rejected move: MovePiece(f4,h6): The move left the players own King in check: Mo
+vePiece(f4,h6)
+rejected move: MovePiece(f4,d6): The move left the players own King in check: Mo
+vePiece(f4,d6)
+rejected move: MovePiece(f4,b8): The move left the players own King in check: Mo
+vePiece(f4,b8)
+rejected move: MovePiece(f4,g5): The move left the players own King in check: Mo
+vePiece(f4,g5)
+rejected move: MovePiece(f4,c7): The move left the players own King in check: Mo
+vePiece(f4,c7)
+rejected move: MovePiece(f4,d2): The move left the players own King in check: Mo
+vePiece(f4,d2)
+rejected move: MovePiece(f4,h2): The move left the players own King in check: Mo
+vePiece(f4,h2)
+rejected move: MovePiece(f4,g3): The move left the players own King in check: Mo
+vePiece(f4,g3)
+rejected move: MovePieceCapturing(b3,b5): The move left the players own King in 
+check: MovePieceCapturing(b3,b5)
+rejected move: MovePiece(b3,a3): The move left the players own King in check: Mo
+vePiece(b3,a3)
+rejected move: MovePiece(b3,b2): The move left the players own King in check: Mo
+vePiece(b3,b2)
+rejected move: MovePiece(b3,c3): The move left the players own King in check: Mo
+vePiece(b3,c3)
+rejected move: MovePiece(b3,b1): The move left the players own King in check: Mo
+vePiece(b3,b1)
+rejected move: MovePiece(b3,b4): The move left the players own King in check: Mo
+vePiece(b3,b4)
+rejected move: MovePiece(d1,c2): The move left the players own King in check: Mo
+vePiece(d1,c2)
+rejected move: MovePieceCapturing(d1,h5): The move left the players own King in 
+check: MovePieceCapturing(d1,h5)
+rejected move: MovePiece(d1,g4): The move left the players own King in check: Mo
+vePiece(d1,g4)
+rejected move: MovePiece(d1,a1): The move left the players own King in check: Mo
+vePiece(d1,a1)
+rejected move: MovePiece(d1,b1): The move left the players own King in check: Mo
+vePiece(d1,b1)
+rejected move: MovePiece(d1,d2): The move left the players own King in check: Mo
+vePiece(d1,d2)
+rejected move: MovePiece(d1,e2): The move left the players own King in check: Mo
+vePiece(d1,e2)
+rejected move: MovePiece(d1,c1): The move left the players own King in check: Mo
+vePiece(d1,c1)
+rejected move: MovePiece(d1,f3): The move left the players own King in check: Mo
+vePiece(d1,f3)
+rejected move: MovePieceCapturing(e4,a8): The move left the players own King in 
+check: MovePieceCapturing(e4,a8)
+rejected move: MovePiece(e4,c6): The move left the players own King in check: Mo
+vePiece(e4,c6)
+rejected move: MovePiece(e4,f3): The move left the players own King in check: Mo
+vePiece(e4,f3)
+rejected move: MovePieceCapturing(e4,h1): The move left the players own King in 
+check: MovePieceCapturing(e4,h1)
+rejected move: MovePiece(e4,f5): The move left the players own King in check: Mo
+vePiece(e4,f5)
+rejected move: MovePiece(e4,h7): The move left the players own King in check: Mo
+vePiece(e4,h7)
+rejected move: MovePiece(e4,d5): The move left the players own King in check: Mo
+vePiece(e4,d5)
+rejected move: MovePiece(e4,b7): The move left the players own King in check: Mo
+vePiece(e4,b7)
+rejected move: MovePiece(e4,g2): The move left the players own King in check: Mo
+vePiece(e4,g2)
+rejected move: MovePiece(e4,g6): The move left the players own King in check: Mo
+vePiece(e4,g6)
+rejected move: MovePiece(d3,d4): The move left the players own King in check: Mo
+vePiece(d3,d4)
+rejected move: MovePiece(f7,f8): The move left the players own King in check: Mo
+vePiece(f7,f8)
+rejected move: MovePiece(f7,g8): The move left the players own King in check: Mo
+vePiece(f7,g8)
+rejected move: MovePiece(f7,d7): The move left the players own King in check: Mo
+vePiece(f7,d7)
+rejected move: MovePiece(f7,b7): The move left the players own King in check: Mo
+vePiece(f7,b7)
+rejected move: MovePiece(f7,h7): The move left the players own King in check: Mo
+vePiece(f7,h7)
+rejected move: MovePiece(f7,f5): The move left the players own King in check: Mo
+vePiece(f7,f5)
+rejected move: MovePiece(f7,c7): The move left the players own King in check: Mo
+vePiece(f7,c7)
+rejected move: MovePiece(f7,g7): The move left the players own King in check: Mo
+vePiece(f7,g7)
+rejected move: MovePiece(f7,c4): The move left the players own King in check: Mo
+vePiece(f7,c4)
+rejected move: MovePiece(f7,a7): The move left the players own King in check: Mo
+vePiece(f7,a7)
+rejected move: MovePiece(f7,e8): The move left the players own King in check: Mo
+vePiece(f7,e8)
+rejected move: MovePiece(f7,f6): The move left the players own King in check: Mo
+vePiece(f7,f6)
+rejected move: MovePiece(f7,e7): The move left the players own King in check: Mo
+vePiece(f7,e7)
+rejected move: MovePiece(f7,e6): The move left the players own King in check: Mo
+vePiece(f7,e6)
+rejected move: MovePieceCapturing(f7,h5): The move left the players own King in 
+check: MovePieceCapturing(f7,h5)
+rejected move: MovePiece(f7,g6): The move left the players own King in check: Mo
+vePiece(f7,g6)
+rejected move: MovePiece(f7,d5): The move left the players own King in check: Mo
+vePiece(f7,d5)
+Moving: MovePiece(e1,d2)
+Board: PieceMoved(e1,d2)
+  abcdefgh
+8 r·······
+7 ·····Q··
+6 ········
+5 Pnb····p
+4 ····BB·k
+3 ·R·P····
+2 ···K·p··
+1 ···Q···b
+  abcdefgh
+
+UI: Move completed: PieceMoved(e1,d2)
+
+Moving: MovePiece(a8,d8)
+Board: PieceMoved(a8,d8)
+  abcdefgh
+8 ···r····
+7 ·····Q··
+6 ········
+5 Pnb····p
+4 ····BB·k
+3 ·R·P····
+2 ···K·p··
+1 ···Q···b
+  abcdefgh
+
+UI: Move completed: PieceMoved(a8,d8)
+
+Moving: MovePiece(f4,c7)
+Board: PieceMoved(f4,c7)
+  abcdefgh
+8 ···r····
+7 ··B··Q··
+6 ········
+5 Pnb····p
+4 ····B··k
+3 ·R·P····
+2 ···K·p··
+1 ···Q···b
+  abcdefgh
+
+UI: Move completed: PieceMoved(f4,c7)
+
+Moving: Promote(f2,f1,Queen())
+Board: PieceMoved(f2,f1)
+Board: Promoted(f1,Queen())
+  abcdefgh
+8 ···r····
+7 ··B··Q··
+6 ········
+5 Pnb····p
+4 ····B··k
+3 ·R·P····
+2 ···K····
+1 ···Q·p·b
+  abcdefgh
+
+UI: Move completed: PieceMoved(f2,f1)
+
+  abcdefgh
+8 ···r····
+7 ··B··Q··
+6 ········
+5 Pnb····p
+4 ····B··k
+3 ·R·P····
+2 ···K····
+1 ···Q·q·b
+  abcdefgh
+
+UI: Move completed: Promoted(f1,Queen())
+
+Moving: MovePiece(c7,g3)
+Board: PieceMoved(c7,g3)
+  abcdefgh
+8 ···r····
+7 ·····Q··
+6 ········
+5 Pnb····p
+4 ····B··k
+3 ·R·P··B·
+2 ···K····
+1 ···Q·q·b
+  abcdefgh
+
+UI: Move completed: PieceMoved(c7,g3)
+
+rejected move: MovePiece(h1,g2): The move left the players own King in check: Mo
+vePiece(h1,g2)
+rejected move: MovePieceCapturing(h1,e4): The move left the players own King in 
+check: MovePieceCapturing(h1,e4)
+rejected move: MovePiece(h1,f3): The move left the players own King in check: Mo
+vePiece(h1,f3)
+rejected move: MovePiece(c5,e3): The move left the players own King in check: Mo
+vePiece(c5,e3)
+rejected move: MovePiece(c5,g1): The move left the players own King in check: Mo
+vePiece(c5,g1)
+rejected move: MovePiece(c5,e7): The move left the players own King in check: Mo
+vePiece(c5,e7)
+rejected move: MovePiece(c5,f2): The move left the players own King in check: Mo
+vePiece(c5,f2)
+rejected move: MovePiece(c5,d6): The move left the players own King in check: Mo
+vePiece(c5,d6)
+rejected move: MovePiece(c5,a3): The move left the players own King in check: Mo
+vePiece(c5,a3)
+rejected move: MovePiece(c5,a7): The move left the players own King in check: Mo
+vePiece(c5,a7)
+rejected move: MovePiece(c5,d4): The move left the players own King in check: Mo
+vePiece(c5,d4)
+rejected move: MovePiece(c5,b4): The move left the players own King in check: Mo
+vePiece(c5,b4)
+rejected move: MovePiece(c5,f8): The move left the players own King in check: Mo
+vePiece(c5,f8)
+rejected move: MovePiece(c5,b6): The move left the players own King in check: Mo
+vePiece(c5,b6)
+rejected move: MovePiece(d8,d4): The move left the players own King in check: Mo
+vePiece(d8,d4)
+rejected move: MovePiece(d8,f8): The move left the players own King in check: Mo
+vePiece(d8,f8)
+rejected move: MovePiece(d8,g8): The move left the players own King in check: Mo
+vePiece(d8,g8)
+rejected move: MovePieceCapturing(d8,d3): The move left the players own King in 
+check: MovePieceCapturing(d8,d3)
+rejected move: MovePiece(d8,d7): The move left the players own King in check: Mo
+vePiece(d8,d7)
+rejected move: MovePiece(d8,c8): The move left the players own King in check: Mo
+vePiece(d8,c8)
+rejected move: MovePiece(d8,b8): The move left the players own King in check: Mo
+vePiece(d8,b8)
+rejected move: MovePiece(d8,e8): The move left the players own King in check: Mo
+vePiece(d8,e8)
+rejected move: MovePiece(d8,d6): The move left the players own King in check: Mo
+vePiece(d8,d6)
+rejected move: MovePiece(d8,a8): The move left the players own King in check: Mo
+vePiece(d8,a8)
+rejected move: MovePiece(d8,d5): The move left the players own King in check: Mo
+vePiece(d8,d5)
+rejected move: MovePiece(d8,h8): The move left the players own King in check: Mo
+vePiece(d8,h8)
+rejected move: MovePieceCapturing(f1,d3): The move left the players own King in 
+check: MovePieceCapturing(f1,d3)
+rejected move: MovePieceCapturing(f1,d1): The move left the players own King in 
+check: MovePieceCapturing(f1,d1)
+rejected move: MovePiece(f1,f2): The move left the players own King in check: Mo
+vePiece(f1,f2)
+rejected move: MovePiece(f1,e2): The move left the players own King in check: Mo
+vePiece(f1,e2)
+rejected move: MovePiece(f1,f5): The move left the players own King in check: Mo
+vePiece(f1,f5)
+rejected move: MovePiece(f1,f6): The move left the players own King in check: Mo
+vePiece(f1,f6)
+rejected move: MovePiece(f1,f4): The move left the players own King in check: Mo
+vePiece(f1,f4)
+rejected move: MovePiece(f1,g1): The move left the players own King in check: Mo
+vePiece(f1,g1)
+rejected move: MovePiece(f1,g2): The move left the players own King in check: Mo
+vePiece(f1,g2)
+rejected move: MovePieceCapturing(f1,f7): The move left the players own King in 
+check: MovePieceCapturing(f1,f7)
+rejected move: MovePiece(f1,h3): The move left the players own King in check: Mo
+vePiece(f1,h3)
+rejected move: MovePiece(f1,e1): The move left the players own King in check: Mo
+vePiece(f1,e1)
+rejected move: MovePiece(f1,f3): The move left the players own King in check: Mo
+vePiece(f1,f3)
+rejected move: MovePiece(b5,a3): The move left the players own King in check: Mo
+vePiece(b5,a3)
+rejected move: MovePiece(b5,d6): The move left the players own King in check: Mo
+vePiece(b5,d6)
+rejected move: MovePiece(b5,d4): The move left the players own King in check: Mo
+vePiece(b5,d4)
+rejected move: MovePiece(b5,c7): The move left the players own King in check: Mo
+vePiece(b5,c7)
+rejected move: MovePiece(b5,a7): The move left the players own King in check: Mo
+vePiece(b5,a7)
+rejected move: MovePiece(b5,c3): The move left the players own King in check: Mo
+vePiece(b5,c3)
+Moving: MovePieceCapturing(h4,g3)
+Board: PieceMovedTaking(h4,g3,g3)
+  abcdefgh
+8 ···r····
+7 ·····Q··
+6 ········
+5 Pnb····p
+4 ····B···
+3 ·R·P··k·
+2 ···K····
+1 ···Q·q·b
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(h4,g3,g3)
+
+Moving: MovePiece(f7,e8)
+Board: PieceMoved(f7,e8)
+  abcdefgh
+8 ···rQ···
+7 ········
+6 ········
+5 Pnb····p
+4 ····B···
+3 ·R·P··k·
+2 ···K····
+1 ···Q·q·b
+  abcdefgh
+
+UI: Move completed: PieceMoved(f7,e8)
+
+Moving: MovePiece(d8,a8)
+Board: PieceMoved(d8,a8)
+  abcdefgh
+8 r···Q···
+7 ········
+6 ········
+5 Pnb····p
+4 ····B···
+3 ·R·P··k·
+2 ···K····
+1 ···Q·q·b
+  abcdefgh
+
+UI: Move completed: PieceMoved(d8,a8)
+
+rejected move: MovePiece(d2,c3): The move left the players own King in check: Mo
+vePiece(d2,c3)
+rejected move: MovePiece(d2,e2): The move left the players own King in check: Mo
+vePiece(d2,e2)
+rejected move: MovePiece(d2,e1): The move left the players own King in check: Mo
+vePiece(d2,e1)
+rejected move: MovePiece(d2,e3): The move left the players own King in check: Mo
+vePiece(d2,e3)
+Moving: MovePiece(d2,c1)
+Board: PieceMoved(d2,c1)
+  abcdefgh
+8 r···Q···
+7 ········
+6 ········
+5 Pnb····p
+4 ····B···
+3 ·R·P··k·
+2 ········
+1 ··KQ·q·b
+  abcdefgh
+
+UI: Move completed: PieceMoved(d2,c1)
+
+Moving: MovePiece(f1,e2)
+Board: PieceMoved(f1,e2)
+  abcdefgh
+8 r···Q···
+7 ········
+6 ········
+5 Pnb····p
+4 ····B···
+3 ·R·P··k·
+2 ····q···
+1 ··KQ···b
+  abcdefgh
+
+UI: Move completed: PieceMoved(f1,e2)
+
+Moving: MovePiece(d1,e1)
+Board: PieceMoved(d1,e1)
+  abcdefgh
+8 r···Q···
+7 ········
+6 ········
+5 Pnb····p
+4 ····B···
+3 ·R·P··k·
+2 ····q···
+1 ··K·Q··b
+  abcdefgh
+
+UI: Move completed: PieceMoved(d1,e1)
+
+rejected move: MovePiece(h5,h4): The move left the players own King in check: Mo
+vePiece(h5,h4)
+rejected move: MovePiece(e2,f1): The move left the players own King in check: Mo
+vePiece(e2,f1)
+rejected move: MovePiece(e2,d2): The move left the players own King in check: Mo
+vePiece(e2,d2)
+rejected move: MovePiece(e2,b2): The move left the players own King in check: Mo
+vePiece(e2,b2)
+rejected move: MovePiece(e2,h2): The move left the players own King in check: Mo
+vePiece(e2,h2)
+rejected move: MovePiece(e2,f3): The move left the players own King in check: Mo
+vePiece(e2,f3)
+Moving: MovePieceCapturing(e2,e1)
+Board: PieceMovedTaking(e2,e1,e1)
+  abcdefgh
+8 r···Q···
+7 ········
+6 ········
+5 Pnb····p
+4 ····B···
+3 ·R·P··k·
+2 ········
+1 ··K·q··b
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(e2,e1,e1)
+
+rejected move: MovePiece(d3,d4): The move left the players own King in check: Mo
+vePiece(d3,d4)
+rejected move: MovePiece(a5,a6): The move left the players own King in check: Mo
+vePiece(a5,a6)
+rejected move: MovePiece(b3,a3): The move left the players own King in check: Mo
+vePiece(b3,a3)
+rejected move: MovePiece(b3,b2): The move left the players own King in check: Mo
+vePiece(b3,b2)
+rejected move: MovePiece(b3,b4): The move left the players own King in check: Mo
+vePiece(b3,b4)
+rejected move: MovePiece(b3,b1): The move left the players own King in check: Mo
+vePiece(b3,b1)
+rejected move: MovePieceCapturing(b3,b5): The move left the players own King in 
+check: MovePieceCapturing(b3,b5)
+rejected move: MovePiece(b3,c3): The move left the players own King in check: Mo
+vePiece(b3,c3)
+rejected move: MovePieceCapturing(e8,a8): The move left the players own King in 
+check: MovePieceCapturing(e8,a8)
+rejected move: MovePiece(e8,b8): The move left the players own King in check: Mo
+vePiece(e8,b8)
+rejected move: MovePiece(e8,f8): The move left the players own King in check: Mo
+vePiece(e8,f8)
+rejected move: MovePiece(e8,e7): The move left the players own King in check: Mo
+vePiece(e8,e7)
+rejected move: MovePiece(e8,e5): The move left the players own King in check: Mo
+vePiece(e8,e5)
+rejected move: MovePiece(e8,c8): The move left the players own King in check: Mo
+vePiece(e8,c8)
+rejected move: MovePiece(e8,d7): The move left the players own King in check: Mo
+vePiece(e8,d7)
+rejected move: MovePiece(e8,h8): The move left the players own King in check: Mo
+vePiece(e8,h8)
+rejected move: MovePiece(e8,e6): The move left the players own King in check: Mo
+vePiece(e8,e6)
+rejected move: MovePiece(e8,g6): The move left the players own King in check: Mo
+vePiece(e8,g6)
+rejected move: MovePiece(e8,d8): The move left the players own King in check: Mo
+vePiece(e8,d8)
+rejected move: MovePiece(e8,f7): The move left the players own King in check: Mo
+vePiece(e8,f7)
+rejected move: MovePiece(e8,g8): The move left the players own King in check: Mo
+vePiece(e8,g8)
+rejected move: MovePiece(e8,c6): The move left the players own King in check: Mo
+vePiece(e8,c6)
+rejected move: MovePieceCapturing(e8,h5): The move left the players own King in 
+check: MovePieceCapturing(e8,h5)
+rejected move: MovePieceCapturing(e8,b5): The move left the players own King in 
+check: MovePieceCapturing(e8,b5)
+Moving: MovePiece(c1,b2)
+Board: PieceMoved(c1,b2)
+  abcdefgh
+8 r···Q···
+7 ········
+6 ········
+5 Pnb····p
+4 ····B···
+3 ·R·P··k·
+2 ·K······
+1 ····q··b
+  abcdefgh
+
+UI: Move completed: PieceMoved(c1,b2)
+
+Moving: MovePiece(c5,a7)
+Board: PieceMoved(c5,a7)
+  abcdefgh
+8 r···Q···
+7 b·······
+6 ········
+5 Pn·····p
+4 ····B···
+3 ·R·P··k·
+2 ·K······
+1 ····q··b
+  abcdefgh
+
+UI: Move completed: PieceMoved(c5,a7)
+
+Moving: MovePiece(d3,d4)
+Board: PieceMoved(d3,d4)
+  abcdefgh
+8 r···Q···
+7 b·······
+6 ········
+5 Pn·····p
+4 ···PB···
+3 ·R····k·
+2 ·K······
+1 ····q··b
+  abcdefgh
+
+UI: Move completed: PieceMoved(d3,d4)
+
+rejected move: MovePiece(h1,g2): The move left the players own King in check: Mo
+vePiece(h1,g2)
+Moving: MovePiece(h1,f3)
+Board: PieceMoved(h1,f3)
+  abcdefgh
+8 r···Q···
+7 b·······
+6 ········
+5 Pn·····p
+4 ···PB···
+3 ·R···bk·
+2 ·K······
+1 ····q···
+  abcdefgh
+
+UI: Move completed: PieceMoved(h1,f3)
+
+Moving: MovePieceCapturing(b3,b5)
+Board: PieceMovedTaking(b3,b5,b5)
+  abcdefgh
+8 r···Q···
+7 b·······
+6 ········
+5 PR·····p
+4 ···PB···
+3 ·····bk·
+2 ·K······
+1 ····q···
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(b3,b5,b5)
+
+Moving: MovePiece(e1,c1)
+Board: PieceMoved(e1,c1)
+  abcdefgh
+8 r···Q···
+7 b·······
+6 ········
+5 PR·····p
+4 ···PB···
+3 ·····bk·
+2 ·K······
+1 ··q·····
+  abcdefgh
+
+UI: Move completed: PieceMoved(e1,c1)
+
+rejected move: MovePiece(a5,a6): The move left the players own King in check: Mo
+vePiece(a5,a6)
+rejected move: MovePiece(d4,d5): The move left the players own King in check: Mo
+vePiece(d4,d5)
+rejected move: MovePiece(e4,f5): The move left the players own King in check: Mo
+vePiece(e4,f5)
+rejected move: MovePiece(e4,d3): The move left the players own King in check: Mo
+vePiece(e4,d3)
+rejected move: MovePiece(e4,c6): The move left the players own King in check: Mo
+vePiece(e4,c6)
+rejected move: MovePiece(e4,h7): The move left the players own King in check: Mo
+vePiece(e4,h7)
+rejected move: MovePiece(e4,d5): The move left the players own King in check: Mo
+vePiece(e4,d5)
+rejected move: MovePiece(e4,b7): The move left the players own King in check: Mo
+vePiece(e4,b7)
+rejected move: MovePiece(e4,b1): The move left the players own King in check: Mo
+vePiece(e4,b1)
+rejected move: MovePieceCapturing(e4,f3): The move left the players own King in 
+check: MovePieceCapturing(e4,f3)
+rejected move: MovePieceCapturing(e4,a8): The move left the players own King in 
+check: MovePieceCapturing(e4,a8)
+rejected move: MovePiece(e4,g6): The move left the players own King in check: Mo
+vePiece(e4,g6)
+rejected move: MovePiece(e4,c2): The move left the players own King in check: Mo
+vePiece(e4,c2)
+rejected move: MovePiece(b2,c3): The move left the players own King in check: Mo
+vePiece(b2,c3)
+rejected move: MovePiece(b2,c2): The move left the players own King in check: Mo
+vePiece(b2,c2)
+rejected move: MovePiece(b2,a1): The move left the players own King in check: Mo
+vePiece(b2,a1)
+Moving: MovePiece(b2,a2)
+Board: PieceMoved(b2,a2)
+  abcdefgh
+8 r···Q···
+7 b·······
+6 ········
+5 PR·····p
+4 ···PB···
+3 ·····bk·
+2 K·······
+1 ··q·····
+  abcdefgh
+
+UI: Move completed: PieceMoved(b2,a2)
+
+Moving: MovePiece(a7,c5)
+Board: PieceMoved(a7,c5)
+  abcdefgh
+8 r···Q···
+7 ········
+6 ········
+5 PRb····p
+4 ···PB···
+3 ·····bk·
+2 K·······
+1 ··q·····
+  abcdefgh
+
+UI: Move completed: PieceMoved(a7,c5)
+
+Moving: MovePiece(e4,f5)
+Board: PieceMoved(e4,f5)
+  abcdefgh
+8 r···Q···
+7 ········
+6 ········
+5 PRb··B·p
+4 ···P····
+3 ·····bk·
+2 K·······
+1 ··q·····
+  abcdefgh
+
+UI: Move completed: PieceMoved(e4,f5)
+
+Moving: MovePiece(f3,c6)
+Board: PieceMoved(f3,c6)
+  abcdefgh
+8 r···Q···
+7 ········
+6 ··b·····
+5 PRb··B·p
+4 ···P····
+3 ······k·
+2 K·······
+1 ··q·····
+  abcdefgh
+
+UI: Move completed: PieceMoved(f3,c6)
+
+rejected move: MovePiece(a2,a3): The move left the players own King in check: Mo
+vePiece(a2,a3)
+rejected move: MovePiece(a2,b1): The move left the players own King in check: Mo
+vePiece(a2,b1)
+rejected move: MovePiece(a2,b2): The move left the players own King in check: Mo
+vePiece(a2,b2)
+rejected move: MovePiece(a2,a1): The move left the players own King in check: Mo
+vePiece(a2,a1)
+Moving: MovePiece(a2,b3)
+Board: PieceMoved(a2,b3)
+  abcdefgh
+8 r···Q···
+7 ········
+6 ··b·····
+5 PRb··B·p
+4 ···P····
+3 ·K····k·
+2 ········
+1 ··q·····
+  abcdefgh
+
+UI: Move completed: PieceMoved(a2,b3)
+
+Moving: MovePiece(g3,f2)
+Board: PieceMoved(g3,f2)
+  abcdefgh
+8 r···Q···
+7 ········
+6 ··b·····
+5 PRb··B·p
+4 ···P····
+3 ·K······
+2 ·····k··
+1 ··q·····
+  abcdefgh
+
+UI: Move completed: PieceMoved(g3,f2)
+
+Moving: MovePiece(f5,d3)
+Board: PieceMoved(f5,d3)
+  abcdefgh
+8 r···Q···
+7 ········
+6 ··b·····
+5 PRb····p
+4 ···P····
+3 ·K·B····
+2 ·····k··
+1 ··q·····
+  abcdefgh
+
+UI: Move completed: PieceMoved(f5,d3)
+
+Moving: MovePiece(c5,d6)
+Board: PieceMoved(c5,d6)
+  abcdefgh
+8 r···Q···
+7 ········
+6 ··bb····
+5 PR·····p
+4 ···P····
+3 ·K·B····
+2 ·····k··
+1 ··q·····
+  abcdefgh
+
+UI: Move completed: PieceMoved(c5,d6)
+
+Moving: MovePieceCapturing(b5,h5)
+Board: PieceMovedTaking(b5,h5,h5)
+  abcdefgh
+8 r···Q···
+7 ········
+6 ··bb····
+5 P······R
+4 ···P····
+3 ·K·B····
+2 ·····k··
+1 ··q·····
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(b5,h5,h5)
+
+rejected move: MovePiece(f2,f1): The move left the players own King in check: Mo
+vePiece(f2,f1)
+Moving: MovePiece(f2,g1)
+Board: PieceMoved(f2,g1)
+  abcdefgh
+8 r···Q···
+7 ········
+6 ··bb····
+5 P······R
+4 ···P····
+3 ·K·B····
+2 ········
+1 ··q···k·
+  abcdefgh
+
+UI: Move completed: PieceMoved(f2,g1)
+
+rejected move: MovePiece(b3,b4): The move left the players own King in check: Mo
+vePiece(b3,b4)
+rejected move: MovePiece(b3,c2): The move left the players own King in check: Mo
+vePiece(b3,c2)
+rejected move: MovePiece(b3,a3): The move left the players own King in check: Mo
+vePiece(b3,a3)
+rejected move: MovePiece(b3,a4): The move left the players own King in check: Mo
+vePiece(b3,a4)
+rejected move: MovePiece(b3,c3): The move left the players own King in check: Mo
+vePiece(b3,c3)
+rejected move: MovePiece(b3,c4): The move left the players own King in check: Mo
+vePiece(b3,c4)
+Moving: MovePiece(b3,a2)
+Board: PieceMoved(b3,a2)
+  abcdefgh
+8 r···Q···
+7 ········
+6 ··bb····
+5 P······R
+4 ···P····
+3 ···B····
+2 K·······
+1 ··q···k·
+  abcdefgh
+
+UI: Move completed: PieceMoved(b3,a2)
+
+Moving: MovePieceCapturing(a8,a5)
+Board: PieceMovedTaking(a8,a5,a5)
+  abcdefgh
+8 ····Q···
+7 ········
+6 ··bb····
+5 r······R
+4 ···P····
+3 ···B····
+2 K·······
+1 ··q···k·
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(a8,a5,a5)
+
+rejected move: MovePiece(e8,h8): The move left the players own King in check: Mo
+vePiece(e8,h8)
+rejected move: MovePiece(e8,f8): The move left the players own King in check: Mo
+vePiece(e8,f8)
+rejected move: MovePiece(e8,a8): The move left the players own King in check: Mo
+vePiece(e8,a8)
+rejected move: MovePieceCapturing(e8,c6): The move left the players own King in 
+check: MovePieceCapturing(e8,c6)
+rejected move: MovePiece(e8,f7): The move left the players own King in check: Mo
+vePiece(e8,f7)
+rejected move: MovePiece(e8,e2): The move left the players own King in check: Mo
+vePiece(e8,e2)
+rejected move: MovePiece(e8,e5): The move left the players own King in check: Mo
+vePiece(e8,e5)
+rejected move: MovePiece(e8,b8): The move left the players own King in check: Mo
+vePiece(e8,b8)
+rejected move: MovePiece(e8,d7): The move left the players own King in check: Mo
+vePiece(e8,d7)
+rejected move: MovePiece(e8,e3): The move left the players own King in check: Mo
+vePiece(e8,e3)
+rejected move: MovePiece(e8,e1): The move left the players own King in check: Mo
+vePiece(e8,e1)
+rejected move: MovePiece(e8,d8): The move left the players own King in check: Mo
+vePiece(e8,d8)
+rejected move: MovePiece(e8,g8): The move left the players own King in check: Mo
+vePiece(e8,g8)
+rejected move: MovePiece(e8,e4): The move left the players own King in check: Mo
+vePiece(e8,e4)
+rejected move: MovePiece(e8,g6): The move left the players own King in check: Mo
+vePiece(e8,g6)
+rejected move: MovePiece(e8,e7): The move left the players own King in check: Mo
+vePiece(e8,e7)
+rejected move: MovePiece(e8,c8): The move left the players own King in check: Mo
+vePiece(e8,c8)
+rejected move: MovePiece(e8,e6): The move left the players own King in check: Mo
+vePiece(e8,e6)
+rejected move: MovePiece(a2,a1): The move left the players own King in check: Mo
+vePiece(a2,a1)
+rejected move: MovePiece(a2,b2): The move left the players own King in check: Mo
+vePiece(a2,b2)
+rejected move: MovePiece(a2,a3): The move left the players own King in check: Mo
+vePiece(a2,a3)
+Moving: MovePiece(a2,b3)
+Board: PieceMoved(a2,b3)
+  abcdefgh
+8 ····Q···
+7 ········
+6 ··bb····
+5 r······R
+4 ···P····
+3 ·K·B····
+2 ········
+1 ··q···k·
+  abcdefgh
+
+UI: Move completed: PieceMoved(a2,b3)
+
+Moving: MovePiece(d6,f4)
+Board: PieceMoved(d6,f4)
+  abcdefgh
+8 ····Q···
+7 ········
+6 ··b·····
+5 r······R
+4 ···P·b··
+3 ·K·B····
+2 ········
+1 ··q···k·
+  abcdefgh
+
+UI: Move completed: PieceMoved(d6,f4)
+
+Moving: MovePiece(d3,h7)
+Board: PieceMoved(d3,h7)
+  abcdefgh
+8 ····Q···
+7 ·······B
+6 ··b·····
+5 r······R
+4 ···P·b··
+3 ·K······
+2 ········
+1 ··q···k·
+  abcdefgh
+
+UI: Move completed: PieceMoved(d3,h7)
+
+Moving: MovePiece(a5,a7)
+Board: PieceMoved(a5,a7)
+  abcdefgh
+8 ····Q···
+7 r······B
+6 ··b·····
+5 ·······R
+4 ···P·b··
+3 ·K······
+2 ········
+1 ··q···k·
+  abcdefgh
+
+UI: Move completed: PieceMoved(a5,a7)
+
+rejected move: MovePiece(b3,a4): The move left the players own King in check: Mo
+vePiece(b3,a4)
+rejected move: MovePiece(b3,b2): The move left the players own King in check: Mo
+vePiece(b3,b2)
+rejected move: MovePiece(b3,c4): The move left the players own King in check: Mo
+vePiece(b3,c4)
+rejected move: MovePiece(b3,c2): The move left the players own King in check: Mo
+vePiece(b3,c2)
+Moving: MovePiece(b3,b4)
+Board: PieceMoved(b3,b4)
+  abcdefgh
+8 ····Q···
+7 r······B
+6 ··b·····
+5 ·······R
+4 ·K·P·b··
+3 ········
+2 ········
+1 ··q···k·
+  abcdefgh
+
+UI: Move completed: PieceMoved(b3,b4)
+
+Moving: MovePiece(f4,e5)
+Board: PieceMoved(f4,e5)
+  abcdefgh
+8 ····Q···
+7 r······B
+6 ··b·····
+5 ····b··R
+4 ·K·P····
+3 ········
+2 ········
+1 ··q···k·
+  abcdefgh
+
+UI: Move completed: PieceMoved(f4,e5)
+
+Moving: MovePieceCapturing(e8,c6)
+Board: PieceMovedTaking(e8,c6,c6)
+  abcdefgh
+8 ········
+7 r······B
+6 ··Q·····
+5 ····b··R
+4 ·K·P····
+3 ········
+2 ········
+1 ··q···k·
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(e8,c6,c6)
+
+Moving: MovePiece(a7,c7)
+Board: PieceMoved(a7,c7)
+  abcdefgh
+8 ········
+7 ··r····B
+6 ··Q·····
+5 ····b··R
+4 ·K·P····
+3 ········
+2 ········
+1 ··q···k·
+  abcdefgh
+
+UI: Move completed: PieceMoved(a7,c7)
+
+Moving: MovePiece(h7,e4)
+Board: PieceMoved(h7,e4)
+  abcdefgh
+8 ········
+7 ··r·····
+6 ··Q·····
+5 ····b··R
+4 ·K·PB···
+3 ········
+2 ········
+1 ··q···k·
+  abcdefgh
+
+UI: Move completed: PieceMoved(h7,e4)
+
+Moving: MovePiece(c7,c8)
+Board: PieceMoved(c7,c8)
+  abcdefgh
+8 ··r·····
+7 ········
+6 ··Q·····
+5 ····b··R
+4 ·K·PB···
+3 ········
+2 ········
+1 ··q···k·
+  abcdefgh
+
+UI: Move completed: PieceMoved(c7,c8)
+
+Moving: MovePiece(c6,h6)
+Board: PieceMoved(c6,h6)
+  abcdefgh
+8 ··r·····
+7 ········
+6 ·······Q
+5 ····b··R
+4 ·K·PB···
+3 ········
+2 ········
+1 ··q···k·
+  abcdefgh
+
+UI: Move completed: PieceMoved(c6,h6)
+
+Moving: MovePiece(c1,b2)
+Board: PieceMoved(c1,b2)
+  abcdefgh
+8 ··r·····
+7 ········
+6 ·······Q
+5 ····b··R
+4 ·K·PB···
+3 ········
+2 ·q······
+1 ······k·
+  abcdefgh
+
+UI: Move completed: PieceMoved(c1,b2)
+
+rejected move: MovePiece(h5,h3): The move left the players own King in check: Mo
+vePiece(h5,h3)
+rejected move: MovePiece(h5,h4): The move left the players own King in check: Mo
+vePiece(h5,h4)
+rejected move: MovePiece(h5,h1): The move left the players own King in check: Mo
+vePiece(h5,h1)
+rejected move: MovePiece(h5,g5): The move left the players own King in check: Mo
+vePiece(h5,g5)
+rejected move: MovePiece(h5,f5): The move left the players own King in check: Mo
+vePiece(h5,f5)
+rejected move: MovePieceCapturing(h5,e5): The move left the players own King in 
+check: MovePieceCapturing(h5,e5)
+rejected move: MovePiece(h5,h2): The move left the players own King in check: Mo
+vePiece(h5,h2)
+rejected move: MovePiece(h6,d2): The move left the players own King in check: Mo
+vePiece(h6,d2)
+rejected move: MovePiece(h6,c6): The move left the players own King in check: Mo
+vePiece(h6,c6)
+rejected move: MovePiece(h6,g6): The move left the players own King in check: Mo
+vePiece(h6,g6)
+rejected move: MovePiece(h6,d6): The move left the players own King in check: Mo
+vePiece(h6,d6)
+rejected move: MovePiece(h6,c1): The move left the players own King in check: Mo
+vePiece(h6,c1)
+rejected move: MovePiece(h6,g7): The move left the players own King in check: Mo
+vePiece(h6,g7)
+rejected move: MovePiece(h6,e3): The move left the players own King in check: Mo
+vePiece(h6,e3)
+rejected move: MovePiece(h6,h8): The move left the players own King in check: Mo
+vePiece(h6,h8)
+rejected move: MovePiece(h6,f4): The move left the players own King in check: Mo
+vePiece(h6,f4)
+rejected move: MovePiece(h6,f8): The move left the players own King in check: Mo
+vePiece(h6,f8)
+rejected move: MovePiece(h6,f6): The move left the players own King in check: Mo
+vePiece(h6,f6)
+rejected move: MovePiece(h6,h7): The move left the players own King in check: Mo
+vePiece(h6,h7)
+rejected move: MovePiece(h6,e6): The move left the players own King in check: Mo
+vePiece(h6,e6)
+rejected move: MovePiece(h6,a6): The move left the players own King in check: Mo
+vePiece(h6,a6)
+rejected move: MovePiece(h6,g5): The move left the players own King in check: Mo
+vePiece(h6,g5)
+rejected move: MovePiece(h6,b6): The move left the players own King in check: Mo
+vePiece(h6,b6)
+rejected move: MovePiece(d4,d5): The move left the players own King in check: Mo
+vePiece(d4,d5)
+rejected move: MovePieceCapturing(d4,e5): The move left the players own King in 
+check: MovePieceCapturing(d4,e5)
+rejected move: MovePiece(e4,h1): The move left the players own King in check: Mo
+vePiece(e4,h1)
+rejected move: MovePiece(e4,b7): The move left the players own King in check: Mo
+vePiece(e4,b7)
+rejected move: MovePiece(e4,c6): The move left the players own King in check: Mo
+vePiece(e4,c6)
+rejected move: MovePiece(e4,g2): The move left the players own King in check: Mo
+vePiece(e4,g2)
+rejected move: MovePiece(e4,d5): The move left the players own King in check: Mo
+vePiece(e4,d5)
+rejected move: MovePiece(e4,c2): The move left the players own King in check: Mo
+vePiece(e4,c2)
+rejected move: MovePiece(e4,a8): The move left the players own King in check: Mo
+vePiece(e4,a8)
+rejected move: MovePiece(e4,f5): The move left the players own King in check: Mo
+vePiece(e4,f5)
+rejected move: MovePiece(e4,b1): The move left the players own King in check: Mo
+vePiece(e4,b1)
+rejected move: MovePiece(e4,d3): The move left the players own King in check: Mo
+vePiece(e4,d3)
+rejected move: MovePiece(e4,h7): The move left the players own King in check: Mo
+vePiece(e4,h7)
+rejected move: MovePiece(e4,g6): The move left the players own King in check: Mo
+vePiece(e4,g6)
+rejected move: MovePiece(e4,f3): The move left the players own King in check: Mo
+vePiece(e4,f3)
+rejected move: MovePiece(b4,c5): The move left the players own King in check: Mo
+vePiece(b4,c5)
+rejected move: MovePiece(b4,b3): The move left the players own King in check: Mo
+vePiece(b4,b3)
+Moving: MovePiece(b4,a4)
+Board: PieceMoved(b4,a4)
+  abcdefgh
+8 ··r·····
+7 ········
+6 ·······Q
+5 ····b··R
+4 K··PB···
+3 ········
+2 ·q······
+1 ······k·
+  abcdefgh
+
+UI: Move completed: PieceMoved(b4,a4)
+
+rejected move: MovePiece(g1,g2): The move left the players own King in check: Mo
+vePiece(g1,g2)
+Moving: MovePiece(g1,f2)
+Board: PieceMoved(g1,f2)
+  abcdefgh
+8 ··r·····
+7 ········
+6 ·······Q
+5 ····b··R
+4 K··PB···
+3 ········
+2 ·q···k··
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(g1,f2)
+
+Moving: MovePiece(h6,c6)
+Board: PieceMoved(h6,c6)
+  abcdefgh
+8 ··r·····
+7 ········
+6 ··Q·····
+5 ····b··R
+4 K··PB···
+3 ········
+2 ·q···k··
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(h6,c6)
+
+Moving: MovePiece(e5,d6)
+Board: PieceMoved(e5,d6)
+  abcdefgh
+8 ··r·····
+7 ········
+6 ··Qb····
+5 ·······R
+4 K··PB···
+3 ········
+2 ·q···k··
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(e5,d6)
+
+Moving: MovePiece(h5,h8)
+Board: PieceMoved(h5,h8)
+  abcdefgh
+8 ··r····R
+7 ········
+6 ··Qb····
+5 ········
+4 K··PB···
+3 ········
+2 ·q···k··
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(h5,h8)
+
+Moving: MovePiece(c8,b8)
+Board: PieceMoved(c8,b8)
+  abcdefgh
+8 ·r·····R
+7 ········
+6 ··Qb····
+5 ········
+4 K··PB···
+3 ········
+2 ·q···k··
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(c8,b8)
+
+Moving: MovePiece(h8,h6)
+Board: PieceMoved(h8,h6)
+  abcdefgh
+8 ·r······
+7 ········
+6 ··Qb···R
+5 ········
+4 K··PB···
+3 ········
+2 ·q···k··
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(h8,h6)
+
+Moving: MovePiece(b2,c1)
+Board: PieceMoved(b2,c1)
+  abcdefgh
+8 ·r······
+7 ········
+6 ··Qb···R
+5 ········
+4 K··PB···
+3 ········
+2 ·····k··
+1 ··q·····
+  abcdefgh
+
+UI: Move completed: PieceMoved(b2,c1)
+
+Moving: MovePiece(d4,d5)
+Board: PieceMoved(d4,d5)
+  abcdefgh
+8 ·r······
+7 ········
+6 ··Qb···R
+5 ···P····
+4 K···B···
+3 ········
+2 ·····k··
+1 ··q·····
+  abcdefgh
+
+UI: Move completed: PieceMoved(d4,d5)
+
+Moving: MovePiece(c1,h1)
+Board: PieceMoved(c1,h1)
+  abcdefgh
+8 ·r······
+7 ········
+6 ··Qb···R
+5 ···P····
+4 K···B···
+3 ········
+2 ·····k··
+1 ·······q
+  abcdefgh
+
+UI: Move completed: PieceMoved(c1,h1)
+
+Moving: MovePiece(e4,g2)
+Board: PieceMoved(e4,g2)
+  abcdefgh
+8 ·r······
+7 ········
+6 ··Qb···R
+5 ···P····
+4 K·······
+3 ········
+2 ·····kB·
+1 ·······q
+  abcdefgh
+
+UI: Move completed: PieceMoved(e4,g2)
+
+Moving: MovePiece(d6,e5)
+Board: PieceMoved(d6,e5)
+  abcdefgh
+8 ·r······
+7 ········
+6 ··Q····R
+5 ···Pb···
+4 K·······
+3 ········
+2 ·····kB·
+1 ·······q
+  abcdefgh
+
+UI: Move completed: PieceMoved(d6,e5)
+
+Moving: MovePiece(c6,c7)
+Board: PieceMoved(c6,c7)
+  abcdefgh
+8 ·r······
+7 ··Q·····
+6 ·······R
+5 ···Pb···
+4 K·······
+3 ········
+2 ·····kB·
+1 ·······q
+  abcdefgh
+
+UI: Move completed: PieceMoved(c6,c7)
+
+Moving: MovePiece(h1,h4)
+Board: PieceMoved(h1,h4)
+  abcdefgh
+8 ·r······
+7 ··Q·····
+6 ·······R
+5 ···Pb···
+4 K······q
+3 ········
+2 ·····kB·
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(h1,h4)
+
+rejected move: MovePiece(c7,b7): The move left the players own King in check: Mo
+vePiece(c7,b7)
+rejected move: MovePiece(c7,g7): The move left the players own King in check: Mo
+vePiece(c7,g7)
+rejected move: MovePieceCapturing(c7,e5): The move left the players own King in 
+check: MovePieceCapturing(c7,e5)
+Moving: MovePiece(c7,c4)
+Board: PieceMoved(c7,c4)
+  abcdefgh
+8 ·r······
+7 ········
+6 ·······R
+5 ···Pb···
+4 K·Q····q
+3 ········
+2 ·····kB·
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(c7,c4)
+
+Moving: MovePiece(b8,b4)
+Board: PieceMoved(b8,b4)
+  abcdefgh
+8 ········
+7 ········
+6 ·······R
+5 ···Pb···
+4 KrQ····q
+3 ········
+2 ·····kB·
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(b8,b4)
+
+rejected move: MovePiece(c4,c5): The move left the players own King in check: Mo
+vePiece(c4,c5)
+rejected move: MovePiece(c4,f4): The move left the players own King in check: Mo
+vePiece(c4,f4)
+rejected move: MovePieceCapturing(c4,h4): The move left the players own King in 
+check: MovePieceCapturing(c4,h4)
+rejected move: MovePiece(c4,g4): The move left the players own King in check: Mo
+vePiece(c4,g4)
+rejected move: MovePiece(c4,c6): The move left the players own King in check: Mo
+vePiece(c4,c6)
+rejected move: MovePiece(c4,c2): The move left the players own King in check: Mo
+vePiece(c4,c2)
+rejected move: MovePiece(c4,a2): The move left the players own King in check: Mo
+vePiece(c4,a2)
+rejected move: MovePiece(c4,a6): The move left the players own King in check: Mo
+vePiece(c4,a6)
+rejected move: MovePiece(c4,d3): The move left the players own King in check: Mo
+vePiece(c4,d3)
+rejected move: MovePiece(c4,d4): The move left the players own King in check: Mo
+vePiece(c4,d4)
+rejected move: MovePiece(c4,b5): The move left the players own King in check: Mo
+vePiece(c4,b5)
+rejected move: MovePiece(c4,c8): The move left the players own King in check: Mo
+vePiece(c4,c8)
+Moving: MovePieceCapturing(c4,b4)
+Board: PieceMovedTaking(c4,b4,b4)
+  abcdefgh
+8 ········
+7 ········
+6 ·······R
+5 ···Pb···
+4 KQ·····q
+3 ········
+2 ·····kB·
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(c4,b4,b4)
+
+Moving: MovePiece(h4,e7)
+Board: PieceMoved(h4,e7)
+  abcdefgh
+8 ········
+7 ····q···
+6 ·······R
+5 ···Pb···
+4 KQ······
+3 ········
+2 ·····kB·
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(h4,e7)
+
+Moving: MovePiece(d5,d6)
+Board: PieceMoved(d5,d6)
+  abcdefgh
+8 ········
+7 ····q···
+6 ···P···R
+5 ····b···
+4 KQ······
+3 ········
+2 ·····kB·
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(d5,d6)
+
+Moving: MovePiece(e7,g7)
+Board: PieceMoved(e7,g7)
+  abcdefgh
+8 ········
+7 ······q·
+6 ···P···R
+5 ····b···
+4 KQ······
+3 ········
+2 ·····kB·
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(e7,g7)
+
+Moving: MovePiece(d6,d7)
+Board: PieceMoved(d6,d7)
+  abcdefgh
+8 ········
+7 ···P··q·
+6 ·······R
+5 ····b···
+4 KQ······
+3 ········
+2 ·····kB·
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(d6,d7)
+
+Moving: MovePiece(e5,b2)
+Board: PieceMoved(e5,b2)
+  abcdefgh
+8 ········
+7 ···P··q·
+6 ·······R
+5 ········
+4 KQ······
+3 ········
+2 ·b···kB·
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(e5,b2)
+
+Moving: MovePiece(g2,c6)
+Board: PieceMoved(g2,c6)
+  abcdefgh
+8 ········
+7 ···P··q·
+6 ··B····R
+5 ········
+4 KQ······
+3 ········
+2 ·b···k··
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(g2,c6)
+
+Moving: MovePiece(f2,g3)
+Board: PieceMoved(f2,g3)
+  abcdefgh
+8 ········
+7 ···P··q·
+6 ··B····R
+5 ········
+4 KQ······
+3 ······k·
+2 ·b······
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(f2,g3)
+
+Moving: MovePiece(c6,b5)
+Board: PieceMoved(c6,b5)
+  abcdefgh
+8 ········
+7 ···P··q·
+6 ·······R
+5 ·B······
+4 KQ······
+3 ······k·
+2 ·b······
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(c6,b5)
+
+rejected move: MovePiece(g3,h4): The move left the players own King in check: Mo
+vePiece(g3,h4)
+Moving: MovePiece(g3,g2)
+Board: PieceMoved(g3,g2)
+  abcdefgh
+8 ········
+7 ···P··q·
+6 ·······R
+5 ·B······
+4 KQ······
+3 ········
+2 ·b····k·
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(g3,g2)
+
+Moving: Promote(d7,d8,Queen())
+Board: PieceMoved(d7,d8)
+Board: Promoted(d8,Queen())
+  abcdefgh
+8 ···P····
+7 ······q·
+6 ·······R
+5 ·B······
+4 KQ······
+3 ········
+2 ·b····k·
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(d7,d8)
+
+  abcdefgh
+8 ···Q····
+7 ······q·
+6 ·······R
+5 ·B······
+4 KQ······
+3 ········
+2 ·b····k·
+1 ········
+  abcdefgh
+
+UI: Move completed: Promoted(d8,Queen())
+
+Moving: MovePiece(g7,d7)
+Board: PieceMoved(g7,d7)
+  abcdefgh
+8 ···Q····
+7 ···q····
+6 ·······R
+5 ·B······
+4 KQ······
+3 ········
+2 ·b····k·
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(g7,d7)
+
+Moving: MovePiece(d8,h8)
+Board: PieceMoved(d8,h8)
+  abcdefgh
+8 ·······Q
+7 ···q····
+6 ·······R
+5 ·B······
+4 KQ······
+3 ········
+2 ·b····k·
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(d8,h8)
+
+rejected move: MovePiece(g2,h3): The move left the players own King in check: Mo
+vePiece(g2,h3)
+Moving: MovePiece(g2,g3)
+Board: PieceMoved(g2,g3)
+  abcdefgh
+8 ·······Q
+7 ···q····
+6 ·······R
+5 ·B······
+4 KQ······
+3 ······k·
+2 ·b······
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(g2,g3)
+
+rejected move: MovePiece(a4,a3): The move left the players own King in check: Mo
+vePiece(a4,a3)
+Moving: MovePiece(a4,b3)
+Board: PieceMoved(a4,b3)
+  abcdefgh
+8 ·······Q
+7 ···q····
+6 ·······R
+5 ·B······
+4 ·Q······
+3 ·K····k·
+2 ·b······
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(a4,b3)
+
+Moving: MovePieceCapturing(d7,b5)
+Board: PieceMovedTaking(d7,b5,b5)
+  abcdefgh
+8 ·······Q
+7 ········
+6 ·······R
+5 ·q······
+4 ·Q······
+3 ·K····k·
+2 ·b······
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(d7,b5,b5)
+
+Moving: MovePiece(h6,f6)
+Board: PieceMoved(h6,f6)
+  abcdefgh
+8 ·······Q
+7 ········
+6 ·····R··
+5 ·q······
+4 ·Q······
+3 ·K····k·
+2 ·b······
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(h6,f6)
+
+Moving: MovePiece(b5,e5)
+Board: PieceMoved(b5,e5)
+  abcdefgh
+8 ·······Q
+7 ········
+6 ·····R··
+5 ····q···
+4 ·Q······
+3 ·K····k·
+2 ·b······
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(b5,e5)
+
+Moving: MovePiece(f6,f3)
+Board: PieceMoved(f6,f3)
+  abcdefgh
+8 ·······Q
+7 ········
+6 ········
+5 ····q···
+4 ·Q······
+3 ·K···Rk·
+2 ·b······
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(f6,f3)
+
+rejected move: MovePiece(b2,d4): The move left the players own King in check: Mo
+vePiece(b2,d4)
+rejected move: MovePiece(b2,a3): The move left the players own King in check: Mo
+vePiece(b2,a3)
+rejected move: MovePiece(b2,c3): The move left the players own King in check: Mo
+vePiece(b2,c3)
+rejected move: MovePiece(b2,a1): The move left the players own King in check: Mo
+vePiece(b2,a1)
+rejected move: MovePiece(b2,c1): The move left the players own King in check: Mo
+vePiece(b2,c1)
+rejected move: MovePiece(g3,f2): The move left the players own King in check: Mo
+vePiece(g3,f2)
+rejected move: MovePiece(g3,g4): The move left the players own King in check: Mo
+vePiece(g3,g4)
+rejected move: MovePiece(g3,h4): The move left the players own King in check: Mo
+vePiece(g3,h4)
+Moving: MovePieceCapturing(g3,f3)
+Board: PieceMovedTaking(g3,f3,f3)
+  abcdefgh
+8 ·······Q
+7 ········
+6 ········
+5 ····q···
+4 ·Q······
+3 ·K···k··
+2 ·b······
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMovedTaking(g3,f3,f3)
+
+Moving: MovePiece(b3,c4)
+Board: PieceMoved(b3,c4)
+  abcdefgh
+8 ·······Q
+7 ········
+6 ········
+5 ····q···
+4 ·QK·····
+3 ·····k··
+2 ·b······
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(b3,c4)
+
+Moving: MovePiece(e5,g3)
+Board: PieceMoved(e5,g3)
+  abcdefgh
+8 ·······Q
+7 ········
+6 ········
+5 ········
+4 ·QK·····
+3 ·····kq·
+2 ·b······
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(e5,g3)
+
+Moving: MovePiece(b4,b6)
+Board: PieceMoved(b4,b6)
+  abcdefgh
+8 ·······Q
+7 ········
+6 ·Q······
+5 ········
+4 ··K·····
+3 ·····kq·
+2 ·b······
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(b4,b6)
+
+Moving: MovePiece(g3,g5)
+Board: PieceMoved(g3,g5)
+  abcdefgh
+8 ·······Q
+7 ········
+6 ·Q······
+5 ······q·
+4 ··K·····
+3 ·····k··
+2 ·b······
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(g3,g5)
+
+rejected move: MovePiece(c4,d4): The move left the players own King in check: Mo
+vePiece(c4,d4)
+rejected move: MovePiece(c4,c5): The move left the players own King in check: Mo
+vePiece(c4,c5)
+rejected move: MovePiece(c4,d5): The move left the players own King in check: Mo
+vePiece(c4,d5)
+Moving: MovePiece(c4,b3)
+Board: PieceMoved(c4,b3)
+  abcdefgh
+8 ·······Q
+7 ········
+6 ·Q······
+5 ······q·
+4 ········
+3 ·K···k··
+2 ·b······
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(c4,b3)
+
+Moving: MovePiece(g5,g6)
+Board: PieceMoved(g5,g6)
+  abcdefgh
+8 ·······Q
+7 ········
+6 ·Q····q·
+5 ········
+4 ········
+3 ·K···k··
+2 ·b······
+1 ········
+  abcdefgh
+
+UI: Move completed: PieceMoved(g5,g6)
+
+Moving: MovePiece(b6,g1)
+Board: PieceMoved(b6,g1)
+  abcdefgh
+8 ·······Q
+7 ········
+6 ······q·
+5 ········
+4 ········
+3 ·K···k··
+2 ·b······
+1 ······Q·
+  abcdefgh
+
+UI: Move completed: PieceMoved(b6,g1)
+
+rejected move: MovePiece(f3,e3): The move left the players own King in check: Mo
+vePiece(f3,e3)
+rejected move: MovePiece(f3,g2): The move left the players own King in check: Mo
+vePiece(f3,g2)
+rejected move: MovePiece(f3,g4): The move left the players own King in check: Mo
+vePiece(f3,g4)
+Moving: MovePiece(f3,e2)
+Board: PieceMoved(f3,e2)
+  abcdefgh
+8 ·······Q
+7 ········
+6 ······q·
+5 ········
+4 ········
+3 ·K······
+2 ·b··k···
+1 ······Q·
+  abcdefgh
+
+UI: Move completed: PieceMoved(f3,e2)
+
+Moving: MovePiece(h8,h3)
+Board: PieceMoved(h8,h3)
+  abcdefgh
+8 ········
+7 ········
+6 ······q·
+5 ········
+4 ········
+3 ·K·····Q
+2 ·b··k···
+1 ······Q·
+  abcdefgh
+
+UI: Move completed: PieceMoved(h8,h3)
+
+Moving: MovePiece(e2,d2)
+Board: PieceMoved(e2,d2)
+  abcdefgh
+8 ········
+7 ········
+6 ······q·
+5 ········
+4 ········
+3 ·K·····Q
+2 ·b·k····
+1 ······Q·
+  abcdefgh
+
+UI: Move completed: PieceMoved(e2,d2)
+
+Moving: MovePiece(h3,h2)
+Board: PieceMoved(h3,h2)
+  abcdefgh
+8 ········
+7 ········
+6 ······q·
+5 ········
+4 ········
+3 ·K······
+2 ·b·k···Q
+1 ······Q·
+  abcdefgh
+
+UI: Move completed: PieceMoved(h3,h2)
+
+rejected move: MovePiece(d2,e2): The move left the players own King in check: Mo
+vePiece(d2,e2)
+rejected move: MovePiece(d2,c3): The move left the players own King in check: Mo
+vePiece(d2,c3)
+rejected move: MovePiece(d2,e1): The move left the players own King in check: Mo
+vePiece(d2,e1)
+rejected move: MovePiece(d2,e3): The move left the players own King in check: Mo
+vePiece(d2,e3)
+rejected move: MovePiece(d2,d1): The move left the players own King in check: Mo
+vePiece(d2,d1)
+rejected move: MovePiece(d2,c1): The move left the players own King in check: Mo
+vePiece(d2,c1)
+rejected move: MovePiece(d2,c2): The move left the players own King in check: Mo
+vePiece(d2,c2)
+Moving: MovePiece(d2,d3)
+Board: PieceMoved(d2,d3)
+  abcdefgh
+8 ········
+7 ········
+6 ······q·
+5 ········
+4 ········
+3 ·K·k····
+2 ·b·····Q
+1 ······Q·
+  abcdefgh
+
+UI: Move completed: PieceMoved(d2,d3)
+
+rejected move: MovePiece(b3,c2): The move left the players own King in check: Mo
+vePiece(b3,c2)
+rejected move: MovePiece(b3,a3): The move left the players own King in check: Mo
+vePiece(b3,a3)
+rejected move: MovePiece(b3,c3): The move left the players own King in check: Mo
+vePiece(b3,c3)
+Moving: MovePiece(b3,b4)
+Board: PieceMoved(b3,b4)
+  abcdefgh
+8 ········
+7 ········
+6 ······q·
+5 ········
+4 ·K······
+3 ···k····
+2 ·b·····Q
+1 ······Q·
+  abcdefgh
+
+UI: Move completed: PieceMoved(b3,b4)
+
+Moving: MovePiece(b2,c1)
+Board: PieceMoved(b2,c1)
+  abcdefgh
+8 ········
+7 ········
+6 ······q·
+5 ········
+4 ·K······
+3 ···k····
+2 ·······Q
+1 ··b···Q·
+  abcdefgh
+
+UI: Move completed: PieceMoved(b2,c1)
+
+Moving: MovePiece(g1,e3)
+Board: PieceMoved(g1,e3)
+Board: Won(White,CheckMate)
+  abcdefgh
+8 ········
+7 ········
+6 ······q·
+5 ········
+4 ·K······
+3 ···kQ···
+2 ·······Q
+1 ··b·····
+  abcdefgh
+
+UI: Move completed: PieceMoved(g1,e3)
+
+CheckMate! White wins
+  abcdefgh
+8 ········
+7 ········
+6 ······q·
+5 ········
+4 ·K······
+3 ···kQ···
+2 ·······Q
+1 ··b·····
+  abcdefgh
+
+UI: Move completed: Won(White,CheckMate)
+
