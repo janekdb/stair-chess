@@ -474,18 +474,13 @@ positions and moves do not matter – they can be the same or different. The rule 
   private def confirmNotResponsibleForDefect6 {
 	  val bm = new BoardModel(BoardModel.standardPlacements, Nil, Nil)
 	  for (move <- DefectFixture.defect6Moves) {
-		  log(move)
 		  bm.move(move)
-		  log(ConfigurationView.getTextRepresentation(bm.getConfiguration))
-		  println
 	  }
 	  val move = DefectFixture.defect6FinalMove
-	  assertExceptionThrown(move + " should be rejected", classOf[InvalidParticipantException]) {
-		  log(move)
+	  assertExceptionThrown(move + " should be rejected", classOf[AttackedPositionException]) {
 		  bm.move(move)
 		  println
 	  }
-	  fail("Correct expected exception class")
   }
 
   private def log(move: Move) {
