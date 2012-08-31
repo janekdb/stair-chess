@@ -32,6 +32,7 @@ import chess.model.Colour
 import chess.model.MoveExplorer
 import chess.model.Drawn
 import chess.model.StandardMoveExplorer
+import chess.ui.DelayingSubscriber
 
 //Scores: Map(class chess.player.RandomPlayer -> 36, class chess.player.CapturingP
 //layer -> 230, class chess.player.CheckingPlayer -> 103)
@@ -101,7 +102,8 @@ object ChessApp {
 
     val ui = new TextUI
     val boardAdapter = new BoardAdapter(SwingBoard.createAndShowBoard())
-    val board = new BoardModel(BoardModel.standardPlacements, List(boardAdapter, ui, outcomeListener), List(boardAdapter))
+    val delayingSubscriber = new DelayingSubscriber
+    val board = new BoardModel(BoardModel.standardPlacements, List(boardAdapter, ui, outcomeListener, delayingSubscriber), List(boardAdapter))
 
     val white = whitePlayerGenerator(Colours.White, board.getMoveExplorer)
     val black = blackPlayerGenerator(Colours.Black, board.getMoveExplorer)
