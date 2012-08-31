@@ -26,40 +26,32 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
     this.configuration = event
   }
 
-  // TODO: Extract delay logic into new BoardChangedSubscriber
   def onBoardChanged(event: BoardChanged) {
 
     def clearSquare(p: Position) = board.clearSquare(p.getCol, p.getRow)
     def setPiece(p: Position, piece: String) = board.setPiece(p.getCol, p.getRow, piece)
-    val DELAY_FACTOR = 100;
-
-    def delay(d: Int) { TimeUnit.MILLISECONDS.sleep(d * DELAY_FACTOR) }
 
     event match {
 
       /* Assume the consumer of BoardChangeEvent has access to the board configuration. */
       case PiecePlaced(colour, piece, position) => {
         setPiece(position, makeLabel(colour, piece))
-        delay(2)
       }
       case PieceMoved(start, end) => {
         val (colour, piece, _) = configuration.getExistingPiece(end)
         clearSquare(start)
         setPiece(end, makeLabel(colour, piece))
-        delay(25)
       }
       case PieceMovedCapturing(start, end, captured) => {
         val (colour, piece, _) = configuration.getExistingPiece(end)
         clearSquare(captured)
         clearSquare(start)
         setPiece(end, makeLabel(colour, piece))
-        delay(25)
       }
       case Promoted(position, piece) => {
         val (colour, piece, _) = configuration.getExistingPiece(position)
         val promotedLabel = makeLabel(colour, piece)
         setPiece(position, promotedLabel)
-        delay(100)
       }
       case Castled(king, rook) => {
         for (pm <- List(king, rook)) {
@@ -74,11 +66,9 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
       }
       case Won(colour, winMode) => {
         board.showWon(colour.toString, winMode.toString)
-        delay(100)
       }
       case Drawn(drawMode) => {
         board.showDrawn(drawMode.toString)
-        delay(100)
       }
       case default => TODO.throwRuntimeEx("Unhandled case: " + event)
     }
