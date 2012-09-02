@@ -1,0 +1,40 @@
+2012-09-01
+Scores:
+Wins:
+CapturingPlayer : 518
+CheckingPlayer  : 339
+RandomPlayer    :  84
+Draws:
+CapturingPlayer : 3447
+CheckingPlayer  : 3327
+RandomPlayer    : 3344
+
+Scores:
+Wins:
+CapturingPlayer : 476
+CheckingPlayer  : 333
+RandomPlayer    :  54
+Draws:
+CapturingPlayer : 3491
+CheckingPlayer  : 3386
+RandomPlayer    : 3397
+
+Scores:
+Wins:
+CapturingPlayer : 482
+CheckingPlayer  : 311
+RandomPlayer    :  70
+Draws:
+CapturingPlayer : 3484
+CheckingPlayer  : 3397
+RandomPlayer    : 3393
+
+Scores:
+Wins:
+CapturingPlayer : 497
+CheckingPlayer  : 347
+RandomPlayer    :  78
+Draws:
+CapturingPlayer : 3461
+CheckingPlayer  : 3323
+RandomPlayer    : 3372
