@@ -2,7 +2,7 @@ package chess.model
 
 import GameOutcomeModes.GameOutcomeMode
 
-abstract class BoardChanged()
+abstract class BoardChanged
 
 /* Assume the consumer of BoardChangeEvent has access to the board configuration. */
 case class PiecePlaced(colour: Colour, piece: Piece, position: Position) extends BoardChanged
