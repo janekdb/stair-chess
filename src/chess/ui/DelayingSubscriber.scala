@@ -15,20 +15,20 @@ import chess.model.Castled
 /** A subscriber that slows the display */
 class DelayingSubscriber extends BoardChangedSubscriber {
 
-  val DELAY_FACTOR = 10;
+  val DELAY_FACTOR = 1;
 
   private def delay(d: Int) { TimeUnit.MILLISECONDS.sleep(d * DELAY_FACTOR) }
 
   def onBoardChanged(event: BoardChanged) {
     val delayFor =
       event match {
-        case _: PiecePlaced => 2
-        case _: PieceMoved => 25
-        case _: PieceMovedCapturing => 25
+        case _: PiecePlaced => 1
+        case _: PieceMoved => 1
+        case _: PieceMovedCapturing => 1
         case _: Promoted => 100
         case _: Castled => 100
         case _: Resigned => 1000
-        case _: Won => 100
+        case _: Won => 500
         case _: Drawn => 100
         case default => {
           assert(false, "Unhandled case: " + event)
