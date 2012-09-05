@@ -54,14 +54,21 @@ class TextUI extends BoardChangedSubscriber {
       }
     }
     render
-    // TODO: Stop special casing Promoted and PiecePlaced by adding a property to the BoardMoved to indicate when it is the first change for a move
+    // TODO: ->Stop special casing Promoted and PiecePlaced by adding a move count subscriber or separating PiecePlaced, Won, Drawn into a new type to allow a new subscriber
     event match {
-      case Promoted(_, _) => Unit
-      case PiecePlaced(_, _, _) => Unit
+      case _ : Promoted => Unit
+      case _ : PiecePlaced => Unit
+      case _ : Won => Unit
+      case _ : Drawn => Unit
       case default => moveCount += 1
     }
     display("TextUI: Move completed: " + moveCount + ": " + event.toString)
     display("")
+    // TODO: --->Remove this
+    if (event.isInstanceOf[Won]) {
+      TODO.throwRuntimeEx("Remove once it has been determined moveCount is incorrect")
+    }
+
   }
 
   private def render {
