@@ -6,6 +6,7 @@ import chess.model.ex.InvalidStalemateException
 import chess.model.ex.UnconsideredMovesStalemateException
 import chess.util.UnhandledCaseException
 import GameOutcomeModes.GameOutcomeMode
+import chess.util.TODO
 
 // TODO: End game when the last n positions have been repeated checking for the value of n
 //   when only two kings
@@ -27,7 +28,7 @@ import GameOutcomeModes.GameOutcomeMode
  *
  * With White at the top of a grid that hangs down the coordinate of a square is (column 1-8, row 1-8).
  */
-class BoardModel {
+class BoardModel(var gameChangedSubscribers: List[GameChangedSubscriber]) {
 
   private val conf: Configuration = new GridConfiguration
   private val moveExplorer: MoveExplorer = new StandardMoveExplorer(conf)
@@ -37,8 +38,10 @@ class BoardModel {
 
   def getMoveExplorer = moveExplorer
 
-  def this(placements: List[(Colour, Piece, Position)], subscribers: List[BoardChangedSubscriber], confChangedSubscribers: List[ConfigurationChangedSubscriber]) {
-    this
+  def this(placements: List[(Colour, Piece, Position)], subscribers: List[BoardChangedSubscriber], confChangedSubscribers: List[ConfigurationChangedSubscriber], 
+      gameChangedSubscribers: List[GameChangedSubscriber]) {
+    this(gameChangedSubscribers)
+    // TODO: Add the board subscribers to the  primary constructor
     subscribers foreach subscribe
     val confView = new DelegatingConfigurationView(conf)
     confChangedSubscribers foreach { _.onConfigurationChanged(confView) }
@@ -121,9 +124,11 @@ class BoardModel {
     if (outcomeOpt.isDefined) {
       setGameOutcome(outcomeOpt.get)
     }
+    for (s <- subscribers; e <- events) { s.onBoardChanged(e) }
+
     val wonEvent = if (isWon) List(Won(gameOutcome.get.winner.get, gameOutcome.get.gameOutcomeMode)) else Nil
     val drawnEvent = if (isDrawn) List(Drawn(GameOutcomeModes.Stalemate)) else Nil
-    for (s <- subscribers; e <- events ::: wonEvent ::: drawnEvent) { s.onBoardChanged(e) }
+    for (s <- gameChangedSubscribers; e <- Nil ::: wonEvent ::: drawnEvent) { s.onGameChanged(e) }
 
     lastColour = optColour
   }
@@ -161,7 +166,10 @@ class BoardModel {
 
   private var subscribers: List[BoardChangedSubscriber] = Nil
 
+  // TODO: Confirm the subscriber method cannot be replaced with a primary constructor argument
   def subscribe(subscriber: BoardChangedSubscriber) { subscribers ::= subscriber }
+
+  def subscribe(subscriber: GameChangedSubscriber) { gameChangedSubscribers ::= subscriber}
 
 }
 
