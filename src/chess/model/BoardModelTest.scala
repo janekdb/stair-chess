@@ -55,7 +55,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     pb(Black, Queen(), "g7")
     pb(Black, King(), "g8")
 
-    val bm = new BoardModel(pb, Nil, Nil)
+    val bm = new BoardModel(pb, Nil, Nil, Nil)
 
     try {
       bm.move("g7g8")
@@ -74,7 +74,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     pb(Black, Queen(), "f8")
     pb(getKings)
 
-    val bm = new BoardModel(pb, Nil, Nil)
+    val bm = new BoardModel(pb, Nil, Nil, Nil)
 
     bm.move("a7a6")
     try {
@@ -94,7 +94,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     pb(White, Rook(), "a1")
     pb(White, King(), "e1")
 
-    val bm = new BoardModel(pb, Nil, Nil)
+    val bm = new BoardModel(pb, Nil, Nil, Nil)
 
     bm.move(Castle(White, Long))
   }
@@ -106,7 +106,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     pb(White, King(), "e1")
     pb(Black, Knight(), "a8")
 
-    val bm = new BoardModel(pb, Nil, Nil)
+    val bm = new BoardModel(pb, Nil, Nil, Nil)
     bm.move(Castle(White, Long))
   }
 
@@ -118,7 +118,7 @@ object BoardModelTest extends Test with TestUtils with Main {
 
     pb(White, Bishop(), "c1")
 
-    val bm = new BoardModel(pb, Nil, Nil)
+    val bm = new BoardModel(pb, Nil, Nil, Nil)
 
     try {
       bm.move(Castle(White, Long))
@@ -142,7 +142,7 @@ object BoardModelTest extends Test with TestUtils with Main {
       pb(Black, Rook(), file + "8")
       pb(Black, King(), "h8")
 
-      val bm = new BoardModel(pb, Nil, Nil)
+      val bm = new BoardModel(pb, Nil, Nil, Nil)
 
       assertExceptionThrown("Castling the king over an attacked square should be rejected", classOf[AttackedPositionException]) {
         bm.move(Castle(White, Long))
@@ -163,7 +163,7 @@ object BoardModelTest extends Test with TestUtils with Main {
       pb(Black, Rook(), file + "8")
       pb(Black, King(), "h8")
 
-      val bm = new BoardModel(pb, Nil, Nil)
+      val bm = new BoardModel(pb, Nil, Nil, Nil)
 
       bm.move(Castle(White, Long))
     }
@@ -176,7 +176,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     pb(White, King(), "e1")
     pb(Black, King(), "e8")
 
-    val bm = new BoardModel(pb, Nil, Nil)
+    val bm = new BoardModel(pb, Nil, Nil, Nil)
 
     bm.move(Castle(White, Long))
     bm.move("e8e7")
@@ -201,7 +201,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     pb(White, King(), "e1")
     pb(Black, Rook(), "e7")
 
-    val bm = new BoardModel(pb, Nil, Nil)
+    val bm = new BoardModel(pb, Nil, Nil, Nil)
 
     try {
       bm.move("e2h2")
@@ -220,13 +220,13 @@ object BoardModelTest extends Test with TestUtils with Main {
     pb(Black, Rook(), "b8")
     pb(Black, Rook(), "c7")
 
-    val bm = new BoardModel(pb, Nil, Nil)
+    val bm = new BoardModel(pb, Nil, Nil, Nil)
 
     // TODO: Convert this test to use a verifying BoardChangedSubscriber possibly a mock
     var actual: List[(Colour, GameOutcomeModes.GameOutcomeMode)] = Nil
 
-    val s = new BoardChangedSubscriber {
-      def onBoardChanged(event: BoardChanged) {
+    val s = new GameChangedSubscriber {
+      def onGameChanged(event: GameChanged) {
         event match {
           case Won(colour, wonMode) => actual = (colour, wonMode) :: actual
           case default => Unit
@@ -252,7 +252,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     pb(Black, Rook(), "c8")
     pb(Black, Rook(), "d7")
 
-    val bm = new BoardModel(pb, Nil, Nil)
+    val bm = new BoardModel(pb, Nil, Nil, Nil)
 
     var pieceMoved = false
     var eventCount = 0
@@ -315,7 +315,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     pb(White, King(), "e2")
     pb(White, Pawn(), "f2")
 
-    val bm = new BoardModel(pb, Nil, Nil)
+    val bm = new BoardModel(pb, Nil, Nil, Nil)
     val s = newEventCapturer
     bm.subscribe(s)
     bm.move(MovePiece(queenStart, queenEnd))
@@ -332,7 +332,7 @@ object BoardModelTest extends Test with TestUtils with Main {
 
     pb(getKings)
 
-    val bm = new BoardModel(pb, Nil, Nil)
+    val bm = new BoardModel(pb, Nil, Nil, Nil)
 
     var pieceMovedCapturing: PieceMovedCapturing = null
     val s = new Object with BoardChangedSubscriber {
@@ -371,7 +371,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     /* The pawn that white will attempt to capture with en-passant */
     pb(Black, Pawn(), "d7")
 
-    val bm = new BoardModel(pb, Nil, Nil)
+    val bm = new BoardModel(pb, Nil, Nil, Nil)
 
     bm.move("d7d5")
     bm.move("e4e5")
@@ -392,7 +392,7 @@ object BoardModelTest extends Test with TestUtils with Main {
         events ::= event
       }
     }
-    val bm = new BoardModel(List(), Nil, List(listener))
+    val bm = new BoardModel(List(), Nil, List(listener), Nil)
     assertEquals(1, events.size, "The list of recieved events should have had one element")
     assertTrue(events(0).isInstanceOf[ConfigurationView], "The events should have been an instance of ConfigurationView but was: " + events(0).getClass)
   }
@@ -412,11 +412,11 @@ object BoardModelTest extends Test with TestUtils with Main {
     pb(Black, Rook(), "f8")
     pb(Black, Rook(), "a2")
 
-    val bm = new BoardModel(pb, Nil, Nil)
+    val bm = new BoardModel(pb, Nil, Nil, Nil)
     /* Move black to ensure lastColour is set */
     bm.move("a2b2")
 
-    val s = newEventCapturer
+    val s = newGameChangedEventCapturer
 
     bm.subscribe(s)
     bm.move(None)
@@ -432,7 +432,7 @@ object BoardModelTest extends Test with TestUtils with Main {
   private def invalidStalemateIsRejected {
     val pb = new PlacementsBuilder
     pb(getKings)
-    val bm = new BoardModel(pb, Nil, Nil)
+    val bm = new BoardModel(pb, Nil, Nil, Nil)
     bm.move("e8e7")
     assertExceptionThrown("Invalid  stalemate indication was rejected", classOf[UnconsideredMovesStalemateException]) {
           bm.move(None)
@@ -461,7 +461,7 @@ positions and moves do not matter – they can be the same or different. The rule 
   /* Defects */
 
   private def confirmNotResponsibleForDefect5 {
-    val bm = new BoardModel(BoardModel.standardPlacements, Nil, Nil)
+    val bm = new BoardModel(BoardModel.standardPlacements, Nil, Nil, Nil)
     for (move <- DefectFixture.defect5Moves) {
       bm.move(move)
     }
@@ -472,7 +472,7 @@ positions and moves do not matter – they can be the same or different. The rule 
   }
 
   private def confirmNotResponsibleForDefect6 {
-	  val bm = new BoardModel(BoardModel.standardPlacements, Nil, Nil)
+	  val bm = new BoardModel(BoardModel.standardPlacements, Nil, Nil, Nil)
 	  for (move <- DefectFixture.defect6Moves) {
 		  bm.move(move)
 	  }
@@ -496,6 +496,13 @@ positions and moves do not matter – they can be the same or different. The rule 
   private def newEventCapturer = new Object with BoardChangedSubscriber {
     var events: List[BoardChanged] = Nil
     def onBoardChanged(event: BoardChanged) {
+      events = events ::: List(event)
+    }
+  }
+
+  private def newGameChangedEventCapturer = new Object with GameChangedSubscriber {
+    var events: List[GameChanged]	= Nil
+    def onGameChanged(event: GameChanged) {
       events = events ::: List(event)
     }
   }
