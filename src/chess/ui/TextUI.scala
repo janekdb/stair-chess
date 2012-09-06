@@ -3,15 +3,38 @@ package chess.ui
 import chess.model.{ BoardModel, BoardChangedSubscriber, Configuration, ConfigurationView, GridConfiguration, Colour, Move, Piece, Position, Promote, Resign, GameOutcomeModes }
 import chess.model.{ Rook, Knight, Bishop, Queen, King, Pawn }
 import chess.model.{ Castle, MovePiece }
-import chess.model.{ BoardChanged, Castled, PieceMoved, PieceMovedCapturing, PiecePlaced, Promoted, Resigned, Won }
+import chess.model.{ BoardChanged, Castled, PieceMoved, PieceMovedCapturing, PiecePlaced, Promoted, Resigned }
 import chess.util.TODO
+import chess.model.GameChanged
+import chess.model.GameChangedSubscriber
+import chess.model.Won
 import chess.model.Drawn
 
-class TextUI extends BoardChangedSubscriber {
+class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
 
   private var moveCount = 0
 
-  def onBoardChanged(event: BoardChanged): Unit = {
+  def onGameChanged(event: GameChanged) {
+
+    event match {
+      case Won(winner, winMode) => {
+        // TODO: UI: Visualize won game
+        display(winMode + "! " + winner + " wins")
+      }
+      case Drawn(drawMode) => {
+        display(drawMode.toString)
+      }
+      case default => {
+        TODO.throwRuntimeEx(event.toString)
+      }
+    }
+    // TODO: --->Remove this
+    if (event.isInstanceOf[Won]) {
+      TODO.throwRuntimeEx("Remove this after GameChanged event is in use wherever Won or Drawn was used")
+    }
+  }
+
+  def onBoardChanged(event: BoardChanged) {
 
     event match {
       case Castled(king, rook) => {
@@ -42,13 +65,6 @@ class TextUI extends BoardChangedSubscriber {
           case default => throw new RuntimeException("More than one King was found for " + colour + ": " + positions)
         }
       }
-      case Won(winner, winMode) => {
-        // TODO: UI: Visualize won game
-        display(winMode + "! " + winner + " wins")
-      }
-      case Drawn(drawMode) => {
-        display(drawMode.toString)
-      }
       case default => {
         TODO.throwRuntimeEx(event.toString)
       }
@@ -58,16 +74,10 @@ class TextUI extends BoardChangedSubscriber {
     event match {
       case _ : Promoted => Unit
       case _ : PiecePlaced => Unit
-      case _ : Won => Unit
-      case _ : Drawn => Unit
       case default => moveCount += 1
     }
     display("TextUI: Move completed: " + moveCount + ": " + event.toString)
     display("")
-    // TODO: --->Remove this
-    if (event.isInstanceOf[Won]) {
-      TODO.throwRuntimeEx("Remove once it has been determined moveCount is incorrect")
-    }
 
   }
 
