@@ -2,6 +2,8 @@ package chess.ui
 import java.util.concurrent.TimeUnit
 import chess.model.BoardChanged
 import chess.model.BoardChangedSubscriber
+import chess.model.GameChanged
+import chess.model.GameChangedSubscriber
 import chess.model.Castled
 import chess.model.Colour
 import chess.model.ConfigurationChangedSubscriber
@@ -13,17 +15,29 @@ import chess.model.PiecePlaced
 import chess.model.Position
 import chess.model.Promoted
 import chess.model.Resigned
-import chess.model.Won
 import chess.model.GameOutcomeModes
 import chess.util.TODO
+import chess.model.Won
 import chess.model.Drawn
 
-class BoardAdapter(val board: Board) extends BoardChangedSubscriber with ConfigurationChangedSubscriber {
+class BoardAdapter(val board: Board) extends BoardChangedSubscriber with ConfigurationChangedSubscriber with GameChangedSubscriber {
 
   var configuration: ConfigurationView = null
 
   def onConfigurationChanged(event: ConfigurationView) {
     this.configuration = event
+  }
+
+  def onGameChanged(event: GameChanged) {
+    event match {
+      case Won(colour, winMode) => {
+        board.showWon(colour.toString, winMode.toString)
+      }
+      case Drawn(drawMode) => {
+        board.showDrawn(drawMode.toString)
+      }
+      case default => TODO.throwRuntimeEx("Unhandled case: " + event)
+    }
   }
 
   def onBoardChanged(event: BoardChanged) {
@@ -63,12 +77,6 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
       case Resigned(colour) => {
         // TODO: UI: Improve resignation visualisation with a popup dialog
         throw new RuntimeException(colour + " has resigned")
-      }
-      case Won(colour, winMode) => {
-        board.showWon(colour.toString, winMode.toString)
-      }
-      case Drawn(drawMode) => {
-        board.showDrawn(drawMode.toString)
       }
       case default => TODO.throwRuntimeEx("Unhandled case: " + event)
     }
