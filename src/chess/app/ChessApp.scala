@@ -13,7 +13,6 @@ import chess.model.PiecePlaced
 import chess.model.Position
 import chess.model.Promoted
 import chess.model.Resigned
-import chess.model.Won
 import chess.player.RandomPlayer
 import chess.ui.SwingBoard
 import chess.ui.TextUI
@@ -30,9 +29,12 @@ import chess.player.CheckingPlayer
 import chess.player.Player
 import chess.model.Colour
 import chess.model.MoveExplorer
-import chess.model.Drawn
 import chess.model.StandardMoveExplorer
 import chess.ui.DelayingSubscriber
+import chess.model.GameChangedSubscriber
+import chess.model.GameChanged
+import chess.model.Won
+import chess.model.Drawn
 
 //Scores: Map(class chess.player.RandomPlayer -> 36, class chess.player.CapturingP
 //layer -> 230, class chess.player.CheckingPlayer -> 103)
@@ -88,10 +90,10 @@ object ChessApp {
   private val MAX_MOVES = 200
 
   private def play(scoreCard: ScoreCard, whitePlayerGenerator: (Colour, MoveExplorer) => Player, blackPlayerGenerator: (Colour, MoveExplorer) => Player) {
-    val outcomeListener = new Object with BoardChangedSubscriber {
+    val outcomeListener = new Object with GameChangedSubscriber {
       var winner: Option[Colour] = None
       var isDrawn: Boolean = false
-      def onBoardChanged(event: BoardChanged) {
+      def onGameChanged(event: GameChanged) {
         event match {
           case Won(colour, _) => winner = Some(colour)
           case Drawn(_) => isDrawn = true
@@ -102,8 +104,8 @@ object ChessApp {
 
     val ui = new TextUI
     val boardAdapter = new BoardAdapter(SwingBoard.createAndShowBoard())
-    val delayingSubscriber = new DelayingSubscriber
-    val board = new BoardModel(BoardModel.standardPlacements, List(boardAdapter, ui, outcomeListener, delayingSubscriber), List(boardAdapter))
+    val boardChangedSubscribers = List(boardAdapter, ui, new DelayingSubscriber)
+    val board = new BoardModel(BoardModel.standardPlacements, boardChangedSubscribers, List(boardAdapter), List(ui, outcomeListener))
 
     val white = whitePlayerGenerator(Colours.White, board.getMoveExplorer)
     val black = blackPlayerGenerator(Colours.Black, board.getMoveExplorer)
