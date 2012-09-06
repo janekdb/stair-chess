@@ -1,7 +1,5 @@
 package chess.model
 
-import GameOutcomeModes.GameOutcomeMode
-
 abstract class BoardChanged
 
 /* Assume the consumer of BoardChangeEvent has access to the board configuration. */
@@ -14,5 +12,3 @@ case class PieceMovedCapturing(start: Position, end: Position, captured: Positio
 case class Resigned(colour: Colour) extends BoardChanged
 case class Castled(king: PieceMoved, rook: PieceMoved) extends BoardChanged
 case class Promoted(pawn: Position, replacement: Piece) extends BoardChanged
-case class Won(colour: Colour, winMode: GameOutcomeMode) extends BoardChanged
-case class Drawn(drawMode: GameOutcomeMode) extends BoardChanged
