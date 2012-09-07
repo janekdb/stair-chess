@@ -76,7 +76,7 @@ class BoardModel(var gameChangedSubscribers: List[GameChangedSubscriber]) {
     assert(position != null)
     assert(conf != null)
     conf.add(position, colour, piece)
-    subscribers.foreach { _.onBoardChanged(PiecePlaced(colour, piece, position)) }    
+    boardChangedSubscribers.foreach { _.onBoardChanged(PiecePlaced(colour, piece, position)) }
   }
 
   private def setGameOutcome(gameOutcome: GameOutcome) {
@@ -124,7 +124,7 @@ class BoardModel(var gameChangedSubscribers: List[GameChangedSubscriber]) {
     if (outcomeOpt.isDefined) {
       setGameOutcome(outcomeOpt.get)
     }
-    for (s <- subscribers; e <- events) { s.onBoardChanged(e) }
+    for (s <- boardChangedSubscribers; e <- events) { s.onBoardChanged(e) }
 
     val wonEvent = if (isWon) List(Won(gameOutcome.get.winner.get, gameOutcome.get.gameOutcomeMode)) else Nil
     val drawnEvent = if (isDrawn) List(Drawn(GameOutcomeModes.Stalemate)) else Nil
@@ -164,10 +164,10 @@ class BoardModel(var gameChangedSubscribers: List[GameChangedSubscriber]) {
 
   // Events
 
-  private var subscribers: List[BoardChangedSubscriber] = Nil
+  private var boardChangedSubscribers: List[BoardChangedSubscriber] = Nil
 
   // TODO: Confirm the subscriber method cannot be replaced with a primary constructor argument
-  def subscribe(subscriber: BoardChangedSubscriber) { subscribers ::= subscriber }
+  def subscribe(subscriber: BoardChangedSubscriber) { boardChangedSubscribers ::= subscriber }
 
   def subscribe(subscriber: GameChangedSubscriber) { gameChangedSubscribers ::= subscriber}
 
