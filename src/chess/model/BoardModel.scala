@@ -28,7 +28,7 @@ import chess.util.TODO
  *
  * With White at the top of a grid that hangs down the coordinate of a square is (column 1-8, row 1-8).
  */
-class BoardModel(var gameChangedSubscribers: List[GameChangedSubscriber]) {
+class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var gameChangedSubscribers: List[GameChangedSubscriber]) {
 
   private val conf: Configuration = new GridConfiguration
   private val moveExplorer: MoveExplorer = new StandardMoveExplorer(conf)
@@ -38,11 +38,9 @@ class BoardModel(var gameChangedSubscribers: List[GameChangedSubscriber]) {
 
   def getMoveExplorer = moveExplorer
 
-  def this(placements: List[(Colour, Piece, Position)], subscribers: List[BoardChangedSubscriber], confChangedSubscribers: List[ConfigurationChangedSubscriber], 
+  def this(placements: List[(Colour, Piece, Position)], boardChangedSubscribers: List[BoardChangedSubscriber], confChangedSubscribers: List[ConfigurationChangedSubscriber], 
       gameChangedSubscribers: List[GameChangedSubscriber]) {
-    this(gameChangedSubscribers)
-    // TODO: Add the board subscribers to the  primary constructor
-    subscribers foreach subscribe
+    this(boardChangedSubscribers, gameChangedSubscribers)
     val confView = new DelegatingConfigurationView(conf)
     confChangedSubscribers foreach { _.onConfigurationChanged(confView) }
     for ((colour, piece, position) <- placements) place(colour, piece, position)
@@ -164,9 +162,6 @@ class BoardModel(var gameChangedSubscribers: List[GameChangedSubscriber]) {
 
   // Events
 
-  private var boardChangedSubscribers: List[BoardChangedSubscriber] = Nil
-
-  // TODO: Confirm the subscriber method cannot be replaced with a primary constructor argument
   def subscribe(subscriber: BoardChangedSubscriber) { boardChangedSubscribers ::= subscriber }
 
   def subscribe(subscriber: GameChangedSubscriber) { gameChangedSubscribers ::= subscriber}
