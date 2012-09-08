@@ -74,7 +74,7 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
     assert(position != null)
     assert(conf != null)
     conf.add(position, colour, piece)
-    boardChangedSubscribers.foreach { _.onBoardChanged(PiecePlaced(colour, piece, position)) }
+    boardChangedSubscribers.foreach { _.onBoardChanged(List(PiecePlaced(colour, piece, position))) }
   }
 
   private def setGameOutcome(gameOutcome: GameOutcome) {
@@ -122,7 +122,7 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
     if (outcomeOpt.isDefined) {
       setGameOutcome(outcomeOpt.get)
     }
-    for (s <- boardChangedSubscribers; e <- events) { s.onBoardChanged(e) }
+    for (s <- boardChangedSubscribers) { s.onBoardChanged(events) }
 
     val wonEvent = if (isWon) List(Won(gameOutcome.get.winner.get, gameOutcome.get.gameOutcomeMode)) else Nil
     val drawnEvent = if (isDrawn) List(Drawn(GameOutcomeModes.Stalemate)) else Nil
