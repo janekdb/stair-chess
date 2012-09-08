@@ -40,7 +40,11 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
     }
   }
 
-  def onBoardChanged(event: BoardChanged) {
+  def onBoardChanged(events: List[BoardChanged]) {
+    events foreach onBoardChanged _
+  }
+
+  private def onBoardChanged(event: BoardChanged) {
 
     def clearSquare(p: Position) = board.clearSquare(p.getCol, p.getRow)
     def setPiece(p: Position, piece: String) = board.setPiece(p.getCol, p.getRow, piece)
