@@ -34,7 +34,18 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
     }
   }
 
-  def onBoardChanged(event: BoardChanged) {
+  def onBoardChanged(events: List[BoardChanged]) {
+    events foreach onBoardChanged _
+    // TODO: ->Stop special casing PiecePlaced
+    events match {
+      case List(PiecePlaced(_, _, _)) => Unit
+      case default => moveCount += 1
+    }
+    display("TextUI: Move completed: " + moveCount + ": " + events.toString)
+    display("")
+  }
+
+  private def onBoardChanged(event: BoardChanged) {
 
     event match {
       case Castled(king, rook) => {
@@ -70,15 +81,6 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
       }
     }
     render
-    // TODO: ->Stop special casing Promoted and PiecePlaced by adding a move count subscriber or separating PiecePlaced, Won, Drawn into a new type to allow a new subscriber
-    event match {
-      case _ : Promoted => Unit
-      case _ : PiecePlaced => Unit
-      case default => moveCount += 1
-    }
-    display("TextUI: Move completed: " + moveCount + ": " + event.toString)
-    display("")
-
   }
 
   private def render {
