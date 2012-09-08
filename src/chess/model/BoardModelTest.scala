@@ -257,11 +257,13 @@ object BoardModelTest extends Test with TestUtils with Main {
     var pieceMoved = false
     var eventCount = 0
     val s = new Object with BoardChangedSubscriber {
-      def onBoardChanged(event: BoardChanged) {
-        eventCount += 1
-        event match {
-          case PieceMoved(_, _) => pieceMoved = true
-          case default => fail("Unexpected event: " + event)
+      def onBoardChanged(events: List[BoardChanged]) {
+        for (event <- events) {
+          eventCount += 1
+          event match {
+            case PieceMoved(_, _) => pieceMoved = true
+            case default => fail("Unexpected event: " + event)
+          }
         }
       }
     }
@@ -336,10 +338,12 @@ object BoardModelTest extends Test with TestUtils with Main {
 
     var pieceMovedCapturing: PieceMovedCapturing = null
     val s = new Object with BoardChangedSubscriber {
-      def onBoardChanged(event: BoardChanged) {
-        event match {
-          case e @ PieceMovedCapturing(_, _, _) => pieceMovedCapturing = e
-          case default => fail("Unexpected event: " + event)
+      def onBoardChanged(events: List[BoardChanged]) {
+        for(event <- events) {
+          event match {
+            case e @ PieceMovedCapturing(_, _, _) => pieceMovedCapturing = e
+            case default => fail("Unexpected event: " + event)
+          }
         }
       }
     }
@@ -495,8 +499,8 @@ positions and moves do not matter – they can be the same or different. The rule 
 
   private def newEventCapturer = new Object with BoardChangedSubscriber {
     var events: List[BoardChanged] = Nil
-    def onBoardChanged(event: BoardChanged) {
-      events = events ::: List(event)
+    def onBoardChanged(events: List[BoardChanged]) {
+      this.events = this.events ::: events
     }
   }
 
