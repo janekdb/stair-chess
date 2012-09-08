@@ -2,5 +2,8 @@ package chess.model
 
 trait BoardChangedSubscriber {
 
-  def onBoardChanged(event: BoardChanged)
+  /**
+   * @param events The parts comprising a single move.
+   */
+  def onBoardChanged(events: List[BoardChanged])
 }
