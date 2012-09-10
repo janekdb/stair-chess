@@ -266,6 +266,9 @@ object BoardModelTest extends Test with TestUtils with Main {
           }
         }
       }
+      def onPiecePlaced(event: PiecePlaced) {
+        assert(false)
+      }
     }
 
     bm.subscribe(s)
@@ -345,6 +348,9 @@ object BoardModelTest extends Test with TestUtils with Main {
             case default => fail("Unexpected event: " + event)
           }
         }
+      }
+      def onPiecePlaced(event: PiecePlaced) {
+        assert(false)
       }
     }
 
@@ -501,6 +507,9 @@ positions and moves do not matter – they can be the same or different. The rule 
     var events: List[BoardChanged] = Nil
     def onBoardChanged(events: List[BoardChanged]) {
       this.events = this.events ::: events
+    }
+    def onPiecePlaced(event: PiecePlaced) {
+      assert(false)
     }
   }
 
