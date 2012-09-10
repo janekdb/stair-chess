@@ -44,17 +44,15 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
     events foreach onBoardChanged _
   }
 
+  private def setPiece(p: Position, piece: String) = board.setPiece(p.getCol, p.getRow, piece)
+
   private def onBoardChanged(event: BoardChanged) {
 
     def clearSquare(p: Position) = board.clearSquare(p.getCol, p.getRow)
-    def setPiece(p: Position, piece: String) = board.setPiece(p.getCol, p.getRow, piece)
 
     event match {
 
       /* Assume the consumer of BoardChangeEvent has access to the board configuration. */
-      case PiecePlaced(colour, piece, position) => {
-        setPiece(position, makeLabel(colour, piece))
-      }
       case PieceMoved(start, end) => {
         val (colour, piece, _) = configuration.getExistingPiece(end)
         clearSquare(start)
@@ -84,6 +82,10 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
       }
       case default => TODO.throwRuntimeEx("Unhandled case: " + event)
     }
+  }
+
+  def onPiecePlaced(event: PiecePlaced) {
+    setPiece(event.position, makeLabel(event.colour, event.piece))
   }
 
   private def makeLabel(colour: Colour, piece: Piece): String = {
