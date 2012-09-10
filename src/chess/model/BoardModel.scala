@@ -74,7 +74,7 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
     assert(position != null)
     assert(conf != null)
     conf.add(position, colour, piece)
-    boardChangedSubscribers.foreach { _.onBoardChanged(List(PiecePlaced(colour, piece, position))) }
+    boardChangedSubscribers.foreach { _.onPiecePlaced(PiecePlaced(colour, piece, position)) }
   }
 
   private def setGameOutcome(gameOutcome: GameOutcome) {
