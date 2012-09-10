@@ -3,7 +3,6 @@ package chess.model
 abstract class BoardChanged
 
 /* Assume the consumer of BoardChangeEvent has access to the board configuration. */
-case class PiecePlaced(colour: Colour, piece: Piece, position: Position) extends BoardChanged
 case class PieceMoved(start: Position, end: Position) extends BoardChanged {
   def this(move: (Position, Position)) = this(move._1, move._2)
 }
