@@ -36,11 +36,7 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
 
   def onBoardChanged(events: List[BoardChanged]) {
     events foreach onBoardChanged _
-    // TODO: ->Stop special casing PiecePlaced
-    events match {
-      case List(PiecePlaced(_, _, _)) => Unit
-      case default => moveCount += 1
-    }
+    moveCount += 1
     display("TextUI: Move completed: " + moveCount + ": " + events.toString)
     display("")
   }
@@ -61,9 +57,6 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
         conf.remove(captured)
         conf.move(start, end)
       }
-      case PiecePlaced(colour, piece, position) => {
-        conf.add(position, colour, piece)
-      }
       case Promoted(position, replacementPiece) => {
         conf.replace(position, replacementPiece)
       }
@@ -80,6 +73,11 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
         TODO.throwRuntimeEx(event.toString)
       }
     }
+    render
+  }
+
+  def onPiecePlaced(event: PiecePlaced) {
+    conf.add(event.position, event.colour, event.piece)
     render
   }
 
