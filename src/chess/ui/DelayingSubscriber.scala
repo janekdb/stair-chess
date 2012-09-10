@@ -41,7 +41,6 @@ class DelayingSubscriber extends BoardChangedSubscriber with GameChangedSubscrib
   private def onBoardChanged(event: BoardChanged) {
     val delayFor =
       event match {
-        case _: PiecePlaced => 1
         case _: PieceMoved => 1
         case _: PieceMovedCapturing => 1
         case _: Promoted => 100
@@ -55,4 +54,9 @@ class DelayingSubscriber extends BoardChangedSubscriber with GameChangedSubscrib
       }
     delay(delayFor)
   }
+
+  def onPiecePlaced(event: PiecePlaced) {
+    delay(1)
+  }
+
 }
