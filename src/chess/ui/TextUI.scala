@@ -28,10 +28,6 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
         TODO.throwRuntimeEx(event.toString)
       }
     }
-    // TODO: --->Remove this
-    if (event.isInstanceOf[Won]) {
-      TODO.throwRuntimeEx("Remove this after GameChanged event is in use wherever Won or Drawn was used")
-    }
   }
 
   def onBoardChanged(events: List[BoardChanged]) {
