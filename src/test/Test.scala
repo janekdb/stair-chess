@@ -48,6 +48,11 @@ trait Test {
 
   }
 
+  def assertIsInstanceOf[T <: Any](expectedType: Class[T], actual: Any, message: String) {
+    assertNotNull(actual, message)
+    assertEquals(expectedType, actual.getClass, message)
+  }
+
   def assertExceptionThrown[T <: Exception](assertion: String, expectedException: Class[T])(b: => Unit) {
     var thrown = false
     var correctType = false
