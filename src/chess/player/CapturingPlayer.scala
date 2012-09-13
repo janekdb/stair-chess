@@ -5,6 +5,8 @@ import chess.model.MoveExplorer
 import chess.model.Capturing
 import chess.model.Configuration
 
+// TODO: Mixin a piece value source to influence capturing player
+
 /**
  * A player that selects at random preferring capturing moves.
  */
