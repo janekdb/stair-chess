@@ -48,7 +48,6 @@ import chess.model.Drawn
 // TODO: Drawn in other situations apart from two Kings where checkmate is not possible
 // TODO: Add stalemate avoidance
 // TODO: Add combining player that prefers checking then capturing
-// TODO: Mixin a piece value source to influence capturing player
 // TODO: Add a developed position preferring player
 // TODO: Add a defensive player
 object ChessApp {
