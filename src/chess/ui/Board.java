@@ -1,6 +1,5 @@
 package chess.ui;
 
-// TODO: Consider removing this interface and using just BoardChangedSubscriber
 public interface Board {
 
 	/** 1-based */
