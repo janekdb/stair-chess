@@ -27,6 +27,7 @@ object CapturingPlayerTest extends Test with TestUtils with Main {
     conf.add("a2", Black, Pawn())
     val rp = newPlayer(conf)
     val move = rp.getMove(conf.copyOf)
+    // TODO: Convert player tests using assertNotNull to testing for Some() following ShellPlayerTest
     assertNotNull(move, "A move should be available")
     assertEquals(Some(new MovePieceCapturing("a1", "a2")), move, "The capturing moves should have been selected")
   }
