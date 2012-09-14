@@ -28,7 +28,6 @@ object ShellPlayerTest extends Test with TestUtils with Main {
     conf.add("c1", White, Bishop())
     val mr = new Object with MoveRanker {
       def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {
-        // TODO: Locate a library method to partition the list of moves
         val knightMoves = moves filter {
           case move: SimpleMove => {
             val (_, piece, _) = conf.getExistingPiece(move.start)
@@ -38,7 +37,7 @@ object ShellPlayerTest extends Test with TestUtils with Main {
         }
         assert(knightMoves.length > 0)
         // TODO: Find a way to subtract one  list from another
-        val otherMoves = moves filter { move => !knightMoves.contains(move) }
+        val otherMoves = moves filterNot { move => knightMoves.contains(move) }
         List(knightMoves, otherMoves)
       }
     }
