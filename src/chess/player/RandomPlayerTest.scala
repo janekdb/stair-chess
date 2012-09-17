@@ -41,9 +41,4 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     val explorer: MoveExplorer = new StandardMoveExplorer(conf)
     new RandomPlayer(colour, explorer)
   }
-
-  private def addWhiteKing(conf: Configuration) {
-	  /* The King is required to allow the kingInCheck method to complete. */
-	  conf.add("e1", White, King())
-  }
 }

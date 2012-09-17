@@ -44,14 +44,4 @@ object CheckingPlayerTest extends Test with TestUtils with Main {
     new CheckingPlayer(White, explorer, explorerFactory)
   }
 
-  private def addWhiteKing(conf: Configuration) {
-    /* The King is required to allow the kingInCheck method to complete. */
-    conf.add("e1", White, King())
-  }
-
-  private def addBlackKing(conf: Configuration) {
-    /* The King is required to allow the kingInCheck method to complete. */
-    conf.add("e8", Black, King())
-  }
-
 }

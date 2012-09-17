@@ -37,9 +37,4 @@ object CapturingPlayerTest extends Test with TestUtils with Main {
     new CapturingPlayer(White, explorer)
   }
 
-  private def addWhiteKing(conf: Configuration) {
-    /* The King is required to allow the kingInCheck method to complete. */
-    conf.add("e1", White, King())
-  }
-
 }

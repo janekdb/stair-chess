@@ -10,9 +10,8 @@ import test.Main
 import test.Test
 import test.TestUtils
 
-// TODO: Add shell player that can be configured with a filter and a move grouper
 // TODO: Mixin a piece value source to influence capturing player
-
+// TODO: Modify MoveRanker to require each move to be scored rather than partitioned
 object ShellPlayerTest extends Test with TestUtils with Main {
 
   def runTests {
@@ -36,8 +35,7 @@ object ShellPlayerTest extends Test with TestUtils with Main {
           case default => false
         }
         assert(knightMoves.length > 0)
-        // TODO: Find a way to subtract one  list from another
-        val otherMoves = moves filterNot { move => knightMoves.contains(move) }
+        val otherMoves = moves filterNot { knightMoves.contains }
         List(knightMoves, otherMoves)
       }
     }
@@ -53,11 +51,6 @@ object ShellPlayerTest extends Test with TestUtils with Main {
   private def newShellPlayer(conf: Configuration, moveRanker: MoveRanker): Player = {
     val explorer: MoveExplorer = new StandardMoveExplorer(conf)
     new ShellPlayer(White, explorer, moveRanker)
-  }
-
-  private def addWhiteKing(conf: Configuration) {
-    /* The King is required to allow the kingInCheck method to complete. */
-    conf.add("e1", White, King())
   }
 
 }
