@@ -44,10 +44,9 @@ import chess.model.Drawn
 // TODO: Add an interactive mode
 // TODO: Look for a way to be more functional
 // TODO: Add player that moves pieces out of danger
-// TODO: Drawn when only two Kings
+// TODO: Force draw when only two Kings
 // TODO: Drawn in other situations apart from two Kings where checkmate is not possible
 // TODO: Add stalemate avoidance
-// TODO: Add combining player that prefers checking then capturing
 // TODO: Add a developed position preferring player
 // TODO: Add a defensive player
 object ChessApp {
