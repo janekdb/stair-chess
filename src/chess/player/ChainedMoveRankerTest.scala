@@ -34,15 +34,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
             List(rookMoves, nonRookMoves)
           else {
             val m :: ms = moves
-            // TODO: Extract isRook into common function
-            val isRook = m match {
-              case sm: SimpleMove => {
-                val (_, piece, _) = conf.getExistingPiece(sm.start)
-                piece == Rook()
-              }
-              case default => false
-            }
-            if (isRook)
+            if (isRook(conf, m))
               iter(ms, m :: rookMoves, nonRookMoves)
             else
               iter(ms, rookMoves, m :: nonRookMoves)
@@ -53,16 +45,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     }
     val longestRanker = new Object with MoveRanker {
       def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {
-        // TODO: Extract length calculation into common method
-        def length(move: Move): Int = {
-          move match {
-            // TODO: Add a length property to SimpleMove or maybe to Move
-            case sm: SimpleMove =>
-              (sm.start.col - sm.end.col).abs max (sm.start.row - sm.end.row).abs
-            case default => 0
-          }
-        }
-        moves.groupBy(length).toList.sortBy(_._1).map(_._2).reverse
+        moves.groupBy(length(conf)).toList.sortBy(_._1).map(_._2).reverse
       }
     }
     val moveRanker: MoveRanker = new ChainedMoveRanker(rookRanker, longestRanker)
@@ -87,28 +70,14 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
       "Expected at least four lists to allow for the fundamental divisions of " +
         "{rooks, long}, {rooks, short}, {non-rooks, long}, {non-rooks, short}")
 
+    def assertListNotEmpty(list: List[Any]) = assertTrue(list.size > 0, "List should not be empty")
     /* Test sequence is descending by the ranker criteria */
     def verifyDescending(m: List[Move], n: List[Move], ms: List[List[Move]]) {
-      assertTrue(m.size > 0, "List should not be empty")
-      assertTrue(n.size > 0, "List should not be empty")
-      def extractDiscriminator(move: Move): (Int, Int) = {
-        // TODO: Extract isRook into common function
-        val isRook = move match {
-          case sm: SimpleMove => {
-            val (_, piece, _) = conf.getExistingPiece(sm.start)
-            piece == Rook()
-          }
-          case default => false
-        }
-        // TODO: Extract length calculation into common method
-        val length = move match {
-          // TODO: Add a length property to SimpleMove or maybe to Move
-          case sm: SimpleMove =>
-            (sm.start.col - sm.end.col).abs max (sm.start.row - sm.end.row).abs
-          case default => 0
-        }
-        (if (isRook) 1 else 0, length)
-      }
+      assertListNotEmpty(m)
+      assertListNotEmpty(n)
+
+      def extractDiscriminator(move: Move): (Int, Int) = (if (isRook(conf, move)) 1 else 0, length(conf)(move))
+      
       /* Verify each move of the same ranking has the same discriminator */
       val d = extractDiscriminator(m.head)
       assertTrue(m.tail.forall(extractDiscriminator(_) == d), "Equally ranked moves should have the same discrimintor")
@@ -139,5 +108,20 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
   private def print(rankedMoves: List[List[Move]]) {
     println("rankedMoves:")
     for (moves <- rankedMoves) println(moves)
+  }
+
+  private def isRook(conf: ConfigurationView, move: Move) = move match {
+    case sm: SimpleMove => {
+      val (_, piece, _) = conf.getExistingPiece(sm.start)
+      piece == Rook()
+    }
+    case default => false
+  }
+
+  // TODO: Add a length property to SimpleMove or maybe to Move
+  private def length(conf: ConfigurationView)(move: Move) = move match {
+    case sm: SimpleMove =>
+      (sm.start.col - sm.end.col).abs max (sm.start.row - sm.end.row).abs
+    case default => 0
   }
 }
