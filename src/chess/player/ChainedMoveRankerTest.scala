@@ -14,7 +14,6 @@ import chess.model.StandardMoveExplorer
 object ChainedMoveRankerTest extends Test with TestUtils with Main {
 
   def runTests {
-    // TODO: ->Add combining player that prefers moves that check the king, and then moves that capture a piece
     rankerCombinationPicksLongestRookMoves
     rankerCombinationPicksLongestBishopMoves
     rankerCombinationStopsRankingWhenOnlyOneOption
