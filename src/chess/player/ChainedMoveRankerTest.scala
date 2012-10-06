@@ -10,6 +10,7 @@ import test.Main
 import chess.model.Colours.{ Black, White }
 import chess.model.{ Bishop, Queen, Rook }
 import chess.model.StandardMoveExplorer
+import chess.model.Piece
 
 object ChainedMoveRankerTest extends Test with TestUtils with Main {
 
@@ -26,42 +27,10 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     Confirm the longest rook moves are picked
     */
   private def rankerCombinationPicksLongestRookMoves {
-    val rookRanker = new Object with MoveRanker {
-      def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {
-        // TODO: Rework using groupBy    		  
-        def iter(moves: List[Move], rookMoves: List[Move], nonRookMoves: List[Move]): List[List[Move]] = {
-          if (moves.isEmpty)
-            List(rookMoves, nonRookMoves)
-          else {
-            val m :: ms = moves
-            if (isRook(conf, m))
-              iter(ms, m :: rookMoves, nonRookMoves)
-            else
-              iter(ms, rookMoves, m :: nonRookMoves)
-          }
-        }
-        iter(moves, Nil, Nil)
-      }
-    }
-    val longestRanker = new Object with MoveRanker {
-      def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {
-        moves.groupBy(length(conf)).toList.sortBy(_._1).map(_._2).reverse
-      }
-    }
+    val rookRanker = newRanker(Rook())
     val moveRanker: MoveRanker = new ChainedMoveRanker(rookRanker, longestRanker)
 
-    // TODO: Share this Configuration with rankerCombinationPicksLongestBishopMoves
-    val conf: Configuration = new GridConfiguration
-    addKings(conf)
-    /* A bishop that can move 7 squares */
-    conf.add("a1", White, Bishop())
-    /* A queen that can move 7 squares */
-    conf.add("h1", White, Queen())
-    /* A rook that can move 6 squares */
-    conf.add("b2", White, Rook())
-    /* A rook that can move 5 squares */
-    conf.add("c3", White, Rook())
-
+    val conf = newConf
     val moveExplorer = new StandardMoveExplorer(conf)
     val moves = moveExplorer.legalMoves(White)
     val rankedMoves: List[List[Move]] = moveRanker.rankMoves(moves, conf)
@@ -82,6 +51,45 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
 
   private def rankerCombinationStopsRankingWhenOnlyOneOption {
     fail("Not written")
+  }
+
+  private def newConf = {
+    val conf: Configuration = new GridConfiguration
+    addKings(conf)
+    /* A bishop that can move 7 squares */
+    conf.add("a1", White, Bishop())
+    /* A queen that can move 7 squares */
+    conf.add("h1", White, Queen())
+    /* A rook that can move 6 squares */
+    conf.add("b2", White, Rook())
+    /* A rook that can move 5 squares */
+    conf.add("c3", White, Rook())
+    conf
+  }
+
+  private def newRanker(preferredPiece: Piece): MoveRanker =
+    new Object with MoveRanker {
+      def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {
+        // TODO: Rework using groupBy
+        def iter(moves: List[Move], rookMoves: List[Move], nonRookMoves: List[Move]): List[List[Move]] = {
+          if (moves.isEmpty)
+            List(rookMoves, nonRookMoves)
+          else {
+            val m :: ms = moves
+            if (isPiece(preferredPiece)(conf, m))
+              iter(ms, m :: rookMoves, nonRookMoves)
+            else
+              iter(ms, rookMoves, m :: nonRookMoves)
+          }
+        }
+        iter(moves, Nil, Nil)
+      }
+    }
+
+  private val longestRanker = new Object with MoveRanker {
+    def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {
+      moves.groupBy(length(conf)).toList.sortBy(_._1).map(_._2).reverse
+    }
   }
 
   private def print(rankedMoves: List[List[Move]]) {
@@ -114,13 +122,15 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     }
   }
 
-  private def isRook(conf: ConfigurationView, move: Move) = move match {
+  private def isPiece(targetPiece: Piece)(conf: ConfigurationView, move: Move) = move match {
     case sm: SimpleMove => {
       val (_, piece, _) = conf.getExistingPiece(sm.start)
-      piece == Rook()
+      targetPiece == piece
     }
     case default => false
   }
+
+  private def isRook = isPiece(Rook())_
 
   // TODO: Add a length property to SimpleMove or maybe to Move
   private def length(conf: ConfigurationView)(move: Move) = move match {
