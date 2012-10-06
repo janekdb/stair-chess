@@ -70,31 +70,10 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
       "Expected at least four lists to allow for the fundamental divisions of " +
         "{rooks, long}, {rooks, short}, {non-rooks, long}, {non-rooks, short}")
 
-    def assertListNotEmpty(list: List[Any]) = assertTrue(list.size > 0, "List should not be empty")
-    /* Test sequence is descending by the ranker criteria */
-    def verifyDescending(m: List[Move], n: List[Move], ms: List[List[Move]]) {
-      assertListNotEmpty(m)
-      assertListNotEmpty(n)
-
-      def extractDiscriminator(move: Move): (Int, Int) = (if (isRook(conf, move)) 1 else 0, length(conf)(move))
-      
-      /* Verify each move of the same ranking has the same discriminator */
-      val d = extractDiscriminator(m.head)
-      assertTrue(m.tail.forall(extractDiscriminator(_) == d), "Equally ranked moves should have the same discrimintor")
-      /* n will be checked on the next iteration. */
-      val e = extractDiscriminator(n.head)
-      assertTrue(d._1 * 100 + d._2 > e._1 * 100 + e._2, "Adjacent list of moves should be ranked in descending order")
-      ms match {
-        case Nil => Unit
-        case r :: rs => {
-          /* Compare next pair */
-          verifyDescending(n, r, rs)
-        }
-        case default => fail("Unhandled case: " + ms)
-      }
-    }
+    // TODO: Stop inlining discriminator function
+    // def discriminator(move: Move): (Int, Int) = (if (isRook(conf, move)) 1 else 0, length(conf)(move))
     val r :: s :: rs = rankedMoves
-    verifyDescending(r, s, rs)
+    verifyDescending(r, s, rs, (move: Move) => (if (isRook(conf, move)) 1 else 0, length(conf)(move)))
   }
 
   private def rankerCombinationPicksLongestBishopMoves {
@@ -108,6 +87,31 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
   private def print(rankedMoves: List[List[Move]]) {
     println("rankedMoves:")
     for (moves <- rankedMoves) println(moves)
+  }
+
+  private type Discriminator = (Move) => (Int, Int)
+
+  private def assertListNotEmpty(list: List[Any]) = assertTrue(list.size > 0, "List should not be empty")
+
+  /* Test sequence is descending by the ranker criteria */
+  def verifyDescending(m: List[Move], n: List[Move], ms: List[List[Move]], descriminator: Discriminator) {
+    assertListNotEmpty(m)
+    assertListNotEmpty(n)
+
+    /* Verify each move of the same ranking has the same discriminator */
+    val d = descriminator(m.head)
+    assertTrue(m.tail.forall(descriminator(_) == d), "Equally ranked moves should have the same discrimintor")
+    /* n will be checked on the next iteration. */
+    val e = descriminator(n.head)
+    assertTrue(d._1 * 100 + d._2 > e._1 * 100 + e._2, "Adjacent list of moves should be ranked in descending order")
+    ms match {
+      case Nil => Unit
+      case r :: rs => {
+        /* Compare next pair */
+        verifyDescending(n, r, rs, descriminator)
+      }
+      case default => fail("Unhandled case: " + ms)
+    }
   }
 
   private def isRook(conf: ConfigurationView, move: Move) = move match {
