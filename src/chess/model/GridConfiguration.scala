@@ -47,15 +47,14 @@ class GridConfiguration extends Configuration {
   def getRows: List[List[(Colour, Piece)]] = {
     val rows: Seq[List[(Colour, Piece)]] =
       for (r <- 1 to Constants.BOARD_SIZE) yield {
-        // TODO: Add test then switch to yield
-        var row = List[(Colour, Piece)]()
-        for (c <- 1 to Constants.BOARD_SIZE) {
-          pieces.get(new Position(c, r)) match {
-            case Some((colour, piece, _)) => row = (colour, piece) :: row
-            case None => row = null :: row
+        val row: Seq[(Colour, Piece)] =
+          for (c <- 1 to Constants.BOARD_SIZE) yield {
+            pieces.get(new Position(c, r)) match {
+              case Some((colour, piece, _)) => (colour, piece)
+              case None => null
+            }
           }
-        }
-        row.reverse
+        row.toList
       }
     rows.toList
   }
