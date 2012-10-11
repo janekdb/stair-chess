@@ -45,18 +45,19 @@ class GridConfiguration extends Configuration {
   }
 
   def getRows: List[List[(Colour, Piece)]] = {
-    var rows = List[List[(Colour, Piece)]]()
-    for (r <- 1 to Constants.BOARD_SIZE) {
-      var row = List[(Colour, Piece)]()
-      for (c <- 1 to Constants.BOARD_SIZE) {
-        pieces.get(new Position(c, r)) match {
-          case Some((colour, piece, _)) => row = (colour, piece) :: row
-          case None => row = null :: row
+    val rows: Seq[List[(Colour, Piece)]] =
+      for (r <- 1 to Constants.BOARD_SIZE) yield {
+        // TODO: Add test then switch to yield
+        var row = List[(Colour, Piece)]()
+        for (c <- 1 to Constants.BOARD_SIZE) {
+          pieces.get(new Position(c, r)) match {
+            case Some((colour, piece, _)) => row = (colour, piece) :: row
+            case None => row = null :: row
+          }
         }
+        row.reverse
       }
-      rows = row.reverse :: rows
-    }
-    rows.reverse
+    rows.toList
   }
 
   /** Throw exception if there is no piece at the given position */
