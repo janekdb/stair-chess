@@ -7,6 +7,7 @@ import test.{Main, Test, TestUtils}
 object GridConfigurationTest extends Test with TestUtils with Main {
 
   def runTests {
+    confirmGetRows
     moveHistoryMaintained
     moveHistoryCopied
     enPassantEventSent
@@ -15,6 +16,22 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     promoteEventsSent
     promoteCapturingEventsSent
     promoteReplacesPiece
+  }
+
+  def confirmGetRows {
+    val conf = new GridConfiguration
+
+    val whiteStart: Position = "e2"
+    val whiteEnd: Position = "e3"
+    conf.add(whiteStart, White, Pawn())
+    conf.add(whiteEnd, White, Knight())
+
+    val blackStart: Position = "h8"
+    val blackEnd: Position = "h4"
+    conf.add(blackStart, Black, Rook())
+    conf.add(blackEnd, Black, Queen())
+
+    // TODO: Add assertion
   }
 
   def moveHistoryMaintained {
