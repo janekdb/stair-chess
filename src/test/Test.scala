@@ -28,6 +28,10 @@ trait Test {
     assert(notExpected != actual, "Not expected: " + notExpected + ", actual: " + actual + ": " + message)
   }
 
+  def assertNotNull(obj: Any) {
+    assert(obj != null)
+  }
+
   def assertNotNull(obj: Any, message: String) {
     assert(obj != null, message)
   }
