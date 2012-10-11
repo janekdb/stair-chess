@@ -21,17 +21,30 @@ object GridConfigurationTest extends Test with TestUtils with Main {
   def confirmGetRows {
     val conf = new GridConfiguration
 
-    val whiteStart: Position = "e2"
-    val whiteEnd: Position = "e3"
-    conf.add(whiteStart, White, Pawn())
-    conf.add(whiteEnd, White, Knight())
+    conf.add("a1", White, Pawn())
+    conf.add("b2", White, Knight())
 
-    val blackStart: Position = "h8"
-    val blackEnd: Position = "h4"
-    conf.add(blackStart, Black, Rook())
-    conf.add(blackEnd, Black, Queen())
+    conf.add("d4", Black, Rook())
+    conf.add("e4", Black, Queen())
 
-    // TODO: Add assertion
+    val rows = conf.getRows
+    assertNotNull(rows)
+
+    import Constants.BOARD_SIZE
+
+    assertEquals(BOARD_SIZE, rows.size)
+
+    rows.foreach(row => assertEquals(BOARD_SIZE, row.size))
+
+    assertEquals((White, Pawn()), rows(0)(0))
+    assertEquals((White, Knight()), rows(1)(1))
+    assertEquals((Black, Rook()), rows(3)(3))
+    assertEquals((Black, Queen()), rows(3)(4))
+
+    /* All remaining cells must be null */
+    val expectedNullCount = BOARD_SIZE * BOARD_SIZE - 4
+    assertEquals(expectedNullCount, rows.flatten.filter(_ == null).size,
+      "Null cell count is the total cell count minus the count of non-null cells")
   }
 
   def moveHistoryMaintained {
