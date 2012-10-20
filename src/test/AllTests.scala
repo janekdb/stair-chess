@@ -6,19 +6,22 @@ object AllTests {
     var tests: List[Test] = Nil
     // TODO: Determine if each test suite could be added via classpath scanning
     //   which would allow all tests to be looped over to run them.
+    implicit def addTest(any: Test) = new { def ++ { tests ::= any }}
     import chess.model._
-    tests ::= PositionTest
-    tests ::= MoveTest
-    tests ::= GridConfigurationTest
-    tests ::= BoardModelTest
-    tests ::= StandardMoveExplorerTest
+    PositionTest.++
+    MoveTest.++
+    GridConfigurationTest.++
+    BoardModelTest.++
+    StandardMoveExplorerTest.++
     import chess.player._
-    tests ::= RandomPlayerTest
-    tests ::= CapturingPlayerTest
-    tests ::= CheckingPlayerTest
-    tests ::= ChainedMoveRankerTest
+    RandomPlayerTest.++
+    CapturingPlayerTest.++
+    CheckingPlayerTest.++
+    ChainedMoveRankerTest.++
+    import chess.ranker._
+    CheckMatingRankerTest.++
     import chess.app._
-    tests ::= ScoreCardTest
+    ScoreCardTest.++
     println("AllTests: tests.size: " + tests.size)
     tests
   }
