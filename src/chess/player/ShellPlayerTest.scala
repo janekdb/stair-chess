@@ -5,6 +5,7 @@ import chess.model.Configuration
 import chess.model.GridConfiguration
 import chess.model.MoveExplorer
 import chess.model.StandardMoveExplorer
+import chess.ranker.MoveRanker
 import chess.util.TODO
 import test.Main
 import test.Test

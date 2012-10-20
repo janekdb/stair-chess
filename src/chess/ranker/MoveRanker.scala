@@ -1,4 +1,4 @@
-package chess.player
+package chess.ranker
 import chess.model.Move
 import chess.model.ConfigurationView
 

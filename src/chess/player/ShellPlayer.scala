@@ -4,6 +4,7 @@ import chess.model.Move
 import chess.model.Configuration
 import chess.model.Colour
 import chess.model.MoveExplorer
+import chess.ranker.MoveRanker
 
 /**
  * A class that selects a move from a ranked list of move lists.

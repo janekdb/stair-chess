@@ -11,6 +11,7 @@ import chess.model.Colours.{ Black, White }
 import chess.model.{ Bishop, Queen, Rook }
 import chess.model.StandardMoveExplorer
 import chess.model.Piece
+import chess.ranker.MoveRanker
 
 object ChainedMoveRankerTest extends Test with TestUtils with Main {
 

@@ -4,6 +4,7 @@ import chess.model.ConfigurationView
 import scala.collection.immutable.List
 import chess.util.TODO
 import chess.model.Move
+import chess.ranker.MoveRanker
 
 /**
  * A class which ranks moves by successively applying a list of MoveRankers. Moves are ranked
