@@ -6,7 +6,7 @@ import chess.model.Capturing
 import chess.model.Configuration
 
 // TODO: Mixin a piece value source to influence capturing player
-
+// TODO: Replace CapturingPlayer with CapturingRanker in combination with ShellPlayer
 /**
  * A player that selects at random preferring capturing moves.
  */

@@ -5,6 +5,8 @@ import chess.model.{ Configuration, MoveExplorer }
 import chess.model.Colour
 import chess.model.StandardMoveExplorer
 
+// TODO: Replace CheckingPlayer with CheckingRanker in combination with ShellPlayer
+
 /**
  * A player that will always check if possible
  */
