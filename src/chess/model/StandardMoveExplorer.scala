@@ -18,7 +18,7 @@ import chess.model.ex.NonPromotingPawnAdvance
 /**
  * The moves of standard chess
  */
-class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
+class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
 
   private implicit def tuple2list(t: Tuple2[Position, Position]) = List(t._1, t._2)
 
@@ -291,8 +291,7 @@ class StandardMoveExplorer(conf: Configuration) extends MoveExplorer {
 	   * 3. See if the King is in check
 	   */
     val (colour, _, _) = conf.getExistingPiece(move.start)
-    val future = conf.copyOf
-    future.applyMove(move)
+    val future = conf.applied(move)
 
     if (new StandardMoveExplorer(future).kingInCheck(colour)) {
       throw new CheckedOwnKing(move)
