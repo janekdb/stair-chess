@@ -144,6 +144,7 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
     }
   }
 
+  // TODO: Consolidate the checkmate testing code with CheckMatingRanker
   private def checkForCheckMate(colour: Colour): Boolean = {
     moveExplorer.kingInCheck(colour) && !checkedKingCanEscape(colour, conf)
   }
