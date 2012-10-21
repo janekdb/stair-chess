@@ -39,8 +39,8 @@ import chess.model.Drawn
 //Scores: Map(class chess.player.RandomPlayer -> 36, class chess.player.CapturingP
 //layer -> 230, class chess.player.CheckingPlayer -> 103)
 
-// TODO: ->a: Add a MoveRanker that prefers moves that check the king
-// TODO: ->b: Add combining player that prefers moves that check the king, and then moves that capture a piece
+// TODO: ->a: Add a MoveRanker that prefers moves that checkmate the king
+// TODO: ->b: Add combining player that prefers moves that checkmate the king, and then moves that capture a piece
 // TODO: Add a tournament mode
 // TODO: Score as tournament
 // TODO: Add an interactive mode
