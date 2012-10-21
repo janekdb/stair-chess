@@ -91,6 +91,13 @@ class GridConfiguration extends Configuration {
     c
   }
 
+  // TODO: Add test case for GridConfiguration.applied
+  def applied(move: Move): ConfigurationView = {
+    val conf = copyOf
+    conf.applyMove(move)
+    new DelegatingConfigurationView(conf)
+  }
+
   //  private def dumpGrid = {
   //    for (r <- getRows)
   //      println(r mkString ",")
