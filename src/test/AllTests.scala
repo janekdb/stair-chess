@@ -14,6 +14,7 @@ object AllTests {
     GridConfigurationTest.++
     BoardModelTest.++
     StandardMoveExplorerTest.++
+    DelegatingConfigurationViewTest.++
 
     import chess.player._
     RandomPlayerTest.++
