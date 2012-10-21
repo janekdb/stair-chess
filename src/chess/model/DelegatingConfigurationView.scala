@@ -13,10 +13,17 @@ class DelegatingConfigurationView(val configuration: Configuration) extends Conf
 
   def getExistingPiece(position: Position): (Colour, Piece, Option[Position]) = configuration.getExistingPiece(position)
 
-  def getPiece(position: Position): Option[(Colour, Piece, Option[Position])] = getPiece(position)
+  def getPiece(position: Position): Option[(Colour, Piece, Option[Position])] = configuration.getPiece(position)
 
   def locatePieces(colour: Colour, piece: Piece): List[Position] = configuration.locatePieces(colour, piece)
 
   def locatePieces(colour: Colour): List[Position] = configuration.locatePieces(colour)
+
+  // TODO: Add test case for DelegatingConfigurationView.applied
+  def applied(move: Move): ConfigurationView = {
+    val conf = configuration.copyOf
+    conf.applyMove(move)
+    new DelegatingConfigurationView(conf)
+  }
 
 }
