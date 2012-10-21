@@ -36,6 +36,8 @@ trait ConfigurationView {
     }
   }
 
+  // TODO: Consider using apply instead of applied in ConfigurationView
+  def applied(move: Move): ConfigurationView
 }
 
 object ConfigurationView {
