@@ -18,7 +18,7 @@ class ChainedMoveRanker(val moveRankers: MoveRanker*) extends MoveRanker {
   }
 
   private type CV = ConfigurationView
-  
+
   private type RankedMoves = List[List[Move]]
 
   private def iter(rankedMoves: RankedMoves, rankers: List[MoveRanker], conf: CV): RankedMoves = {
@@ -32,7 +32,11 @@ class ChainedMoveRanker(val moveRankers: MoveRanker*) extends MoveRanker {
   }
 
   private def rank(rankedMoves: RankedMoves, ranker: MoveRanker, conf: CV): RankedMoves = {
-    for (moves <- rankedMoves; m <- ranker.rankMoves(moves, conf))
-      yield m
+    /* Reject bad rankers that include empty move lists. */
+    def bypass(moves: List[Move]): List[List[Move]] = if (moves.size == 1) List(moves) else ranker.rankMoves(moves, conf)
+    for (moves <- rankedMoves; m <- bypass(moves)) yield {
+      if (m.isEmpty) throw new AssertionError("Empty move list in rankedMoves: " + rankedMoves)
+      m
+    }
   }
 }
