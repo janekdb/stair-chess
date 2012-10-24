@@ -50,8 +50,8 @@ object ShellPlayerTest extends Test with TestUtils with Main {
   }
 
   private def newShellPlayer(conf: Configuration, moveRanker: MoveRanker): Player = {
-    val explorer: MoveExplorer = new StandardMoveExplorer(conf)
-    new ShellPlayer(White, explorer, moveRanker)
+    val explorerFactory = (conf: ConfigurationView) => new StandardMoveExplorer(conf)
+    new ShellPlayer("Test", White, explorerFactory, moveRanker)
   }
 
 }

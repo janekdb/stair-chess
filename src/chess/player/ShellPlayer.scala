@@ -5,14 +5,15 @@ import chess.model.Configuration
 import chess.model.Colour
 import chess.model.MoveExplorer
 import chess.ranker.MoveRanker
+import chess.model.ConfigurationView
 
 /**
  * A class that selects a move from a ranked list of move lists.
  */
-class ShellPlayer(val colour: Colour, val explorer: MoveExplorer, val moveRanker: MoveRanker) extends Player {
+class ShellPlayer(val name: String, val colour: Colour, explorerFactory: ConfigurationView => MoveExplorer, val moveRanker: MoveRanker) extends Player {
 
   def getMove(configuration: Configuration): Option[Move] = {
-    val moves = explorer.legalMoves(colour)
+    val moves = explorerFactory(configuration).legalMoves(colour)
     val rankedMoves = moveRanker.rankMoves(moves, configuration)
     if (rankedMoves.isEmpty) {
       None
@@ -22,6 +23,6 @@ class ShellPlayer(val colour: Colour, val explorer: MoveExplorer, val moveRanker
     }
   }
   
-  def getName: String = TODO.throwRuntimeEx
+  def getName: String = name
 
 }
