@@ -166,23 +166,8 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
   private def newRanker(preferredPiece: Piece): MoveRanker =
     new Object with MoveRanker {
       def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {
-        def rankMoves0(moves: List[Move], pieceMoves: List[Move], nonPieceMoves: List[Move]): List[List[Move]] = {
-          if (moves.isEmpty) {
-            // TODO: Use a val instead of var for building the result list
-            var r = List[List[Move]]()
-            if (!nonPieceMoves.isEmpty) r = nonPieceMoves :: r
-            /* pieceMoves must be at the head of the list */
-            if (!pieceMoves.isEmpty) r = pieceMoves :: r
-            r
-          } else {
-            val m :: ms = moves
-            if (isPiece(preferredPiece)(conf, m))
-              rankMoves0(ms, m :: pieceMoves, nonPieceMoves)
-            else
-              rankMoves0(ms, pieceMoves, m :: nonPieceMoves)
-          }
-        }
-        rankMoves0(moves, Nil, Nil)
+        val (preferred, other) = moves partition (isPiece(preferredPiece)(conf, _))
+        List(preferred, other) filterNot (_.isEmpty)
       }
     }
 
