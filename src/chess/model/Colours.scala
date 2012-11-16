@@ -7,6 +7,11 @@ sealed trait Colour {
   def enPassantRow: Int
 }
 
+// TODO: Drop Enumeration in exchange for case objects
+//sealed abstract class Move
+//case object Left  extends Move
+//case object Right extends Move
+
 object Colours extends Enumeration {
 
   case object White extends Colour {
