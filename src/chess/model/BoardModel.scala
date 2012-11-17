@@ -38,7 +38,10 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
 
   def getMoveExplorer = moveExplorer
 
-  def this(placements: List[(Colour, Piece, Position)], boardChangedSubscribers: List[BoardChangedSubscriber], confChangedSubscribers: List[ConfigurationChangedSubscriber], 
+  def this(
+      placements: List[(Colour, Piece, Position)],
+      boardChangedSubscribers: List[BoardChangedSubscriber],
+      confChangedSubscribers: List[ConfigurationChangedSubscriber], 
       gameChangedSubscribers: List[GameChangedSubscriber]) {
     this(boardChangedSubscribers, gameChangedSubscribers)
     val confView = new DelegatingConfigurationView(conf)
