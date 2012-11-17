@@ -24,7 +24,7 @@ class DelayingSubscriber extends BoardChangedSubscriber with GameChangedSubscrib
   def onGameChanged(event: GameChanged) {
     val delayFor =
       event match {
-        case _: Won => 500
+        case _: Won => 6000
         case _: Drawn => 100
         case default => {
           assert(false, "Unhandled case: " + event)
@@ -32,6 +32,7 @@ class DelayingSubscriber extends BoardChangedSubscriber with GameChangedSubscrib
           0
         }
       }
+    delay(delayFor)
   }
 
   def onBoardChanged(events: List[BoardChanged]) {
