@@ -35,12 +35,11 @@ import chess.model.GameChangedSubscriber
 import chess.model.GameChanged
 import chess.model.Won
 import chess.model.Drawn
+import chess.player.Players
 
 //Scores: Map(class chess.player.RandomPlayer -> 36, class chess.player.CapturingP
 //layer -> 230, class chess.player.CheckingPlayer -> 103)
 
-// TODO: ->b: Add combining player that prefers moves that checkmate the king, and then moves that capture a piece
-// TODO: ->c: Use the combining player in the tournament to confirm it checkmates more often than other players
 // TODO: Add a tournament mode
 // TODO: Score as tournament
 // TODO: Add an interactive mode
@@ -72,14 +71,15 @@ object ChessApp {
     //    val white = new DumbPlayer(Library.scholarsMate.whiteMoves)
     //    val black = new DumbPlayer(Library.scholarsMate.blackMoves)
     // TODO: For the tournament loop over all combinations of players
-    val explorerFactory = (conf: Configuration) => new StandardMoveExplorer(conf)
+    val explorerFactory = (conf: ConfigurationView) => new StandardMoveExplorer(conf)
     val playerGenerator1 = ((colour: Colour, explorer: MoveExplorer) => new CheckingPlayer(colour, explorer, explorerFactory))
     val playerGenerator2 = ((colour: Colour, explorer: MoveExplorer) => new CapturingPlayer(colour, explorer))
-    val playerGenerator3 = ((colour: Colour, explorer: MoveExplorer) => new RandomPlayer(colour, explorer))
+    //    val playerGenerator3 = ((colour: Colour, explorer: MoveExplorer) => new RandomPlayer(colour, explorer))
+    val playerGenerator3 = ((colour: Colour, explorer: MoveExplorer) => Players.checkMatingCapturingPlayer(colour, explorerFactory))
     val generators = playerGenerator1 :: playerGenerator2 :: playerGenerator3 :: List()
 
     /* TODO: Stop duplicating player names be using a player category label that is not part of the player instance. */
-    val scoreCard = new ScoreCard(Set("CheckingPlayer", "CapturingPlayer", "RandomPlayer"))
+    val scoreCard = new ScoreCard(Set("CheckingPlayer", "CapturingPlayer", "Checkmating, Capturing Player"))
 
     times(1000) {
       for (wpg <- generators; bpg <- generators; if wpg != bpg)
@@ -102,10 +102,18 @@ object ChessApp {
       }
     }
 
+    val useSwingBoard = true
+    val boardAdapter = if (useSwingBoard)
+      // TODO: Remove visual side-effect from SwingBoard creation
+      Some(new BoardAdapter(SwingBoard.createAndShowBoard()))
+    else
+      None
+
     val ui = new TextUI
-    val boardAdapter = new BoardAdapter(SwingBoard.createAndShowBoard())
-    val boardChangedSubscribers = List(boardAdapter, ui, new DelayingSubscriber)
-    val board = new BoardModel(BoardModel.standardPlacements, boardChangedSubscribers, List(boardAdapter), List(ui, outcomeListener))
+    val delayer = new DelayingSubscriber
+    val boardChangedSubscribers = boardAdapter.toList ++ List(ui, delayer)
+    val board = new BoardModel(BoardModel.standardPlacements, boardChangedSubscribers,
+        boardAdapter.toList, List(ui, outcomeListener, delayer))
 
     val white = whitePlayerGenerator(Colours.White, board.getMoveExplorer)
     val black = blackPlayerGenerator(Colours.Black, board.getMoveExplorer)
@@ -151,7 +159,7 @@ object ChessApp {
     /* Let the spectators note the final position. */
     delay(1)
 
-    boardAdapter.close
+    boardAdapter.foreach(_.close)
   }
 
   private def delay(count: Int = 1) { TimeUnit.SECONDS.sleep(count) }
