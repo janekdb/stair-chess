@@ -15,16 +15,14 @@ object CheckingPlayerTest extends Test with TestUtils with Main {
 
   private def canMove {
     val conf: Configuration = new GridConfiguration
-    addWhiteKing(conf)
-    addBlackKing(conf)
+    addKings(conf)
     val rp = newPlayer(conf)
     assertNotNull(rp.getMove(conf.copyOf), "A move should be available")
   }
 
   private def alwaysChecks {
     val conf: Configuration = new GridConfiguration
-    addWhiteKing(conf)
-    addBlackKing(conf)
+    addKings(conf)
     conf.add("c4", White, Knight())
     conf.add("g5", White, Pawn())
     val rp = newPlayer(conf)
