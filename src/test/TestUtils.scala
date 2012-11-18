@@ -24,7 +24,6 @@ trait TestUtils {
     conf.add("e8", Black, King())
   }
 
-  // TODO: Replace addWhiteKing, addBlackKing pairs with addKings
   protected def addKings(conf: Configuration) {
     for(op <- List(addWhiteKing _, addBlackKing _)) op(conf)
   }
