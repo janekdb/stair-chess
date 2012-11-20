@@ -31,8 +31,5 @@ class CheckMatingRanker(val explorerFactory: ConfigurationView => MoveExplorer, 
     me.legalMoves(colour).nonEmpty
   }
 
-  def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {
-    // TODO: Refactor this move partitioning code into a utility function
-    moves.groupBy(rank(conf)).toList.sortBy(_._1).map(_._2).reverse
-  }
+  def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = ranker.rankAsList(moves, rank(conf))
 }
