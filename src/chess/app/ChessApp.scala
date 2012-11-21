@@ -24,7 +24,6 @@ import chess.model.Configuration
 import chess.model.ConfigurationView
 import chess.ui.Board
 import chess.ui.BoardAdapter
-import chess.player.CapturingPlayer
 import chess.player.CheckingPlayer
 import chess.player.Player
 import chess.model.Colour
@@ -64,22 +63,16 @@ object ChessApp {
 
     runTests
 
-    //    val white = new CheckingPlayer(Colours.White, board.getMoveExplorer)
-    //    val black = new CheckingPlayer(Colours.Black, board.getMoveExplorer)
-    //    val white = new CapturingPlayer(Colours.White, board.getMoveExplorer)
-    //    val black = new RandomPlayer(Colours.Black, board.getMoveExplorer)
-    //    val white = new DumbPlayer(Library.scholarsMate.whiteMoves)
-    //    val black = new DumbPlayer(Library.scholarsMate.blackMoves)
     // TODO: For the tournament loop over all combinations of players
     val explorerFactory = (conf: ConfigurationView) => new StandardMoveExplorer(conf)
     val playerGenerator1 = ((colour: Colour, explorer: MoveExplorer) => new CheckingPlayer(colour, explorer, explorerFactory))
-    val playerGenerator2 = ((colour: Colour, explorer: MoveExplorer) => new CapturingPlayer(colour, explorer))
+    val playerGenerator2 = ((colour: Colour, explorer: MoveExplorer) => Players.capturingPlayer(colour, explorerFactory))
     //    val playerGenerator3 = ((colour: Colour, explorer: MoveExplorer) => new RandomPlayer(colour, explorer))
     val playerGenerator3 = ((colour: Colour, explorer: MoveExplorer) => Players.checkMatingCapturingPlayer(colour, explorerFactory))
     val generators = playerGenerator1 :: playerGenerator2 :: playerGenerator3 :: List()
 
     /* TODO: Stop duplicating player names be using a player category label that is not part of the player instance. */
-    val scoreCard = new ScoreCard(Set("CheckingPlayer", "CapturingPlayer", "Checkmating, Capturing Player"))
+    val scoreCard = new ScoreCard(Set("CheckingPlayer", "Capturing Player", "Checkmating, Capturing Player"))
 
     times(1000) {
       for (wpg <- generators; bpg <- generators; if wpg != bpg)
@@ -102,7 +95,7 @@ object ChessApp {
       }
     }
 
-    val useSwingBoard = true
+    val useSwingBoard = false
     val boardAdapter = if (useSwingBoard)
       // TODO: Remove visual side-effect from SwingBoard creation
       Some(new BoardAdapter(SwingBoard.createAndShowBoard()))
@@ -119,12 +112,24 @@ object ChessApp {
     val black = blackPlayerGenerator(Colours.Black, board.getMoveExplorer)
     val playerSelector = new PlayerSelector(white, black)
 
-    // TODO: Functionalise this maybe as a lazy seq from which the first MAX_MOVES are taken
-    var moveCount = 0
-    while (!board.isCompleted && moveCount < MAX_MOVES) {
-      board.move(playerSelector.next.getMove(board.getConfiguration))
-      moveCount += 1
-    }
+    //    if(false ){
+    //
+    //    var moveCount = 0
+    //    while (!board.isCompleted && moveCount < MAX_MOVES) {
+    //      board.move(playerSelector.next.getMove(board.getConfiguration))
+    //      moveCount += 1
+    //    }
+    //    }
+
+    // TODO: Continue functionalising this maybe as a lazy seq from which the first MAX_MOVES are taken
+    val moveCount = (
+      for {
+        m <- 1 to MAX_MOVES
+        if !board.isCompleted
+      } yield {
+        board.move(playerSelector.next.getMove(board.getConfiguration))
+        m
+      }).max
 
     val isAborted = moveCount == MAX_MOVES
 
