@@ -43,10 +43,9 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
       "Expected at least four lists to allow for the fundamental divisions of " +
         "{rooks, long}, {rooks, short}, {non-rooks, long}, {non-rooks, short}")
 
-    // TODO: Stop inlining discriminator function
-    // def discriminator(move: Move): (Int, Int) = (if (isRook(conf, move)) 1 else 0, length(conf)(move))
+    def discriminator: Discriminator = (move: Move) => (if (isRook(conf, move)) 1 else 0, length(conf)(move))
     val r :: s :: rs = rankedMoves
-    verifyDescending(r, s, rs, (move: Move) => (if (isRook(conf, move)) 1 else 0, length(conf)(move)))
+    verifyDescending(r, s, rs, discriminator)
   }
 
   /*
@@ -75,10 +74,9 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
       "Expected at least four lists to allow for the fundamental divisions of " +
         "{long, bishops}, {long, rooks}, {short, bishops}, {short, rooks}")
 
-    // TODO: Stop inlining discriminator function
-    // def discriminator(move: Move): (Int, Int) = (if (isRook(conf, move)) 1 else 0, length(conf)(move))
+    def discriminator: Discriminator = (move: Move) => (length(conf)(move), if (isBishop(conf, move)) 1 else 0)
     val r :: s :: rs = rankedMoves
-    verifyDescending(r, s, rs, (move: Move) => (length(conf)(move), if (isBishop(conf, move)) 1 else 0))
+    verifyDescending(r, s, rs, discriminator)
   }
 
   private def rankerCombinationExcludesNilLists {
@@ -120,10 +118,9 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
       "Expected at least four lists to allow for the fundamental divisions of " +
         "{long, bishops}, {long, rooks}, {short, bishops}, {short, rooks}")
 
-    // TODO: Stop inlining discriminator function
-    // def discriminator(move: Move): (Int, Int) = (if (isRook(conf, move)) 1 else 0, length(conf)(move))
+    def discriminator: Discriminator = (move: Move) => (length(conf)(move), if (isBishop(conf, move)) 1 else 0)
     val r :: s :: rs = rankedMoves
-    verifyDescending(r, s, rs, (move: Move) => (length(conf)(move), if (isBishop(conf, move)) 1 else 0))
+    verifyDescending(r, s, rs, discriminator)
   }
 
   private def rankerCombinationStopsRankingWhenOnlyOneOption {
