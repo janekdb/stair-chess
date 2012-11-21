@@ -11,7 +11,7 @@ import chess.model.Capturing
  */
 class CapturingRanker(val explorerFactory: ConfigurationView => MoveExplorer, colour: Colour) extends MoveRanker {
 
-  private def rank(move: Move) = move match { case _: Capturing => 1 case default => 0 }
+  private def rank(move: Move) = move match { case _: Capturing => RANKING_HIGH case default => RANKING_LOW }
 
   def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = ranker.rankAsList(moves, rank)
 

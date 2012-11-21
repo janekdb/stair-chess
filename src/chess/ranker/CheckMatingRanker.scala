@@ -9,12 +9,10 @@ import chess.model.ConfigurationView
  */
 class CheckMatingRanker(val explorerFactory: ConfigurationView => MoveExplorer, colour: Colour) extends MoveRanker {
 
-  // TODO: Add HIGH and LOW constants to MoveRanker to avoid numeric literals. */
-  /** @return 1 if the move leads to checkmate otherwise 0 */
   private def rank(confView: ConfigurationView)(move: Move): Int = {
     val future = confView.applied(move)
     val e = explorerFactory(future)
-    if (checkForCheckMate(e, colour.opposite, future)) 1 else 0
+    if (checkForCheckMate(e, colour.opposite, future)) RANKING_HIGH else RANKING_LOW
   }
 
   // TODO: Consolidate the checkmate testing code with CheckMatingRanker
