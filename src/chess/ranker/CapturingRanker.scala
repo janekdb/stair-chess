@@ -5,6 +5,7 @@ import chess.model.ConfigurationView
 import chess.model.Move
 import chess.model.Capturing
 
+// TODO: Mixin a piece value source to influence capturing choice
 /**
  * An implementation of MoveRanker that ranks capturing moves higher than other moves.
  */
