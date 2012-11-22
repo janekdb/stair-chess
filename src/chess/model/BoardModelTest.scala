@@ -222,28 +222,25 @@ object BoardModelTest extends Test with TestUtils with Main {
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
 
-    // TODO: Convert this test to use a verifying BoardChangedSubscriber possibly a mock
-    var actual: List[(Colour, GameOutcomeModes.GameOutcomeMode)] = Nil
-
-    val s = new GameChangedSubscriber {
+    class VerifyingGameChangedSubscriber(var expectedEvents: List[GameChanged]) extends GameChangedSubscriber {
       def onGameChanged(event: GameChanged) {
-        event match {
-          case Won(colour, wonMode) => actual = (colour, wonMode) :: actual
-          case default => Unit
+        expectedEvents match {
+          case Nil => throw new AssertionError("An event was received when none were expected: " + event)
+          case expected :: rest => {
+            assertEquals(expected, event, "Not all expected events were received")
+            expectedEvents = rest
+          }
         }
       }
+      def assertAllEventsReceived = assertEquals(Nil, expectedEvents)
     }
 
-    bm.subscribe(s)
-
+    val v = new VerifyingGameChangedSubscriber(List(Won(Black, GameOutcomeModes.CheckMate)))
+    bm.subscribe(v)
     bm.move("c7a7")
-
-    assertEquals(1, actual.size, "One BoardChanged event was fired: " + actual.size)
-    val (colour, winMode) = actual.head
-    assertEquals(Black, colour)
-    assertEquals(GameOutcomeModes.CheckMate, winMode)
+    v.assertAllEventsReceived
   }
-
+  
   private def checkWithNonCapturingEscapeIsDetected {
     val pb = new PlacementsBuilder
 
