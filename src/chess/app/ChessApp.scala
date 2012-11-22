@@ -35,6 +35,7 @@ import chess.model.GameChanged
 import chess.model.Won
 import chess.model.Drawn
 import chess.player.Players
+import chess.stage.ScoreCard
 
 //Scores: Map(class chess.player.RandomPlayer -> 36, class chess.player.CapturingP
 //layer -> 230, class chess.player.CheckingPlayer -> 103)
@@ -151,6 +152,7 @@ object ChessApp {
 
     val maxNameWidth = scoreCard.players.foldLeft(0) { (i, name) => i max name.length }
     val pad = (s: String) => { s.padTo(maxNameWidth, ' ') }
+    // TODO: Right align the scores
     val printScore = (name: String, score: Int) => println(pad(name) + " : " + "%3d" format score)
 
     scoreCard.getWins.foreach {
