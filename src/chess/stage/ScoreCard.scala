@@ -1,10 +1,9 @@
-package chess.app
+package chess.stage
 
 import scala.collection.mutable.HashMap
 
 import chess.player.Player
 
-  // TODO: Move ScoreCard into suitable package
 class ScoreCard(val players: Set[String]) {
 
   val wins = new HashMap[String, Int]()

@@ -1,4 +1,4 @@
-package chess.app
+package chess.stage
 
 import chess.player.Player
 import chess.model.Configuration
