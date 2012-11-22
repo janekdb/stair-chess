@@ -25,7 +25,7 @@ object AllTests {
     CheckMatingRankerTest.++
     CapturingRankerTest.++
 
-    import chess.app._
+    import chess.stage._
     ScoreCardTest.++
 
     println("AllTests: tests.size: " + tests.size)
