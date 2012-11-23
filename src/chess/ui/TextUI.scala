@@ -4,7 +4,6 @@ import chess.model.{ BoardModel, BoardChangedSubscriber, Configuration, Configur
 import chess.model.{ Rook, Knight, Bishop, Queen, King, Pawn }
 import chess.model.{ Castle, MovePiece }
 import chess.model.{ BoardChanged, Castled, PieceMoved, PieceMovedCapturing, PiecePlaced, Promoted, Resigned }
-import chess.util.TODO
 import chess.model.GameChanged
 import chess.model.GameChangedSubscriber
 import chess.model.Won
@@ -23,9 +22,6 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
       }
       case Drawn(drawMode) => {
         display(drawMode.toString)
-      }
-      case default => {
-        TODO.throwRuntimeEx(event.toString)
       }
     }
   }
@@ -65,9 +61,7 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
           case default => throw new RuntimeException("More than one King was found for " + colour + ": " + positions)
         }
       }
-      case default => {
-        TODO.throwRuntimeEx(event.toString)
-      }
+      case default => throw new AssertionError("event was not handled: " + event)
     }
     render
   }
