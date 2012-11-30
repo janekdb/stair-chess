@@ -48,7 +48,6 @@ import chess.stage.ScoreCard
 // TODO: Drawn in other situations apart from two Kings where checkmate is not possible
 // TODO: Add stalemate avoidance
 // TODO: Add a developed position preferring player
-// TODO: Convert capturingEvadingPlayer by adding checkmating ranker
 
 object ChessApp {
 
@@ -67,14 +66,14 @@ object ChessApp {
     // TODO: For the tournament loop over all combinations of players
     val explorerFactory = (conf: ConfigurationView) => new StandardMoveExplorer(conf)
     val pg1 = ((colour: Colour, explorer: MoveExplorer) => new CheckingPlayer(colour, explorer, explorerFactory))
-    val pg2 = ((colour: Colour, explorer: MoveExplorer) => Players.capturingPlayer(colour, explorerFactory))
+    //    val pg2 = ((colour: Colour, explorer: MoveExplorer) => Players.capturingPlayer(colour, explorerFactory))
     //    val pg3 = ((colour: Colour, explorer: MoveExplorer) => new RandomPlayer(colour, explorer))
     val pg3 = ((colour: Colour, explorer: MoveExplorer) => Players.checkMatingCapturingPlayer(colour, explorerFactory))
-    val pg4 = ((colour: Colour, explorer: MoveExplorer) => Players.capturingEvadingPlayer(colour, explorerFactory))
-    val generators = pg1 :: pg2 :: pg3 :: pg4 :: List()
+    val pg4 = ((colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingPlayer(colour, explorerFactory))
+    val generators = pg1 :: pg3 :: pg4 :: List()
 
     /* TODO: Stop duplicating player names be using a player category label that is not part of the player instance. */
-    val scoreCard = new ScoreCard(Set("CheckingPlayer", "Capturing Player", "Checkmating, Capturing Player", "Capture Evading Player"))
+    val scoreCard = new ScoreCard(Set("CheckingPlayer", "Checkmating, Capturing Player", "Checkmating, Capture Evading Player"))
 
     times(1000) {
       for (wpg <- generators; bpg <- generators; if wpg != bpg)
@@ -153,7 +152,7 @@ object ChessApp {
 
     val maxNameWidth = scoreCard.players.foldLeft(0) { (i, name) => i max name.length }
     val pad = (s: String) => { s.padTo(maxNameWidth, ' ') }
-    // TODO: Right align the scores
+    // TODO: ->Right align the scores
     val printScore = (name: String, score: Int) => println(pad(name) + " : " + "%3d" format score)
 
     scoreCard.getWins.foreach {
