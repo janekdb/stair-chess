@@ -20,8 +20,10 @@ object Players {
     new ShellPlayer("Capturing Player", colour, explorerFactory, ranker)
   }
 
-  def capturingEvadingPlayer(colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
-    val ranker = new CaptureEvadingRanker(explorerFactory, colour)
-    new ShellPlayer("Capture Evading Player", colour, explorerFactory, ranker)
+  def checkMatingCaptureEvadingPlayer(colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
+    val checkMatingRanker = new CheckMatingRanker(explorerFactory, colour)
+    val cer = new CaptureEvadingRanker(explorerFactory, colour)
+    val ranker = new ChainedMoveRanker(checkMatingRanker, cer)
+    new ShellPlayer("Checkmating, Capture Evading Player", colour, explorerFactory, ranker)
   }
 }
