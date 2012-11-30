@@ -49,7 +49,8 @@ import chess.stage.ScoreCard
 // TODO: Drawn in other situations apart from two Kings where checkmate is not possible
 // TODO: Add stalemate avoidance
 // TODO: Add a developed position preferring player
-// TODO: Add a defensive player
+// TODO: Convert capturingEvadingPlayer by adding checkmating ranker
+
 object ChessApp {
 
   //  implicit def intWithTimes(n: Int): Unit = new {
@@ -66,14 +67,15 @@ object ChessApp {
 
     // TODO: For the tournament loop over all combinations of players
     val explorerFactory = (conf: ConfigurationView) => new StandardMoveExplorer(conf)
-    val playerGenerator1 = ((colour: Colour, explorer: MoveExplorer) => new CheckingPlayer(colour, explorer, explorerFactory))
-    val playerGenerator2 = ((colour: Colour, explorer: MoveExplorer) => Players.capturingPlayer(colour, explorerFactory))
-    //    val playerGenerator3 = ((colour: Colour, explorer: MoveExplorer) => new RandomPlayer(colour, explorer))
-    val playerGenerator3 = ((colour: Colour, explorer: MoveExplorer) => Players.checkMatingCapturingPlayer(colour, explorerFactory))
-    val generators = playerGenerator1 :: playerGenerator2 :: playerGenerator3 :: List()
+    val pg1 = ((colour: Colour, explorer: MoveExplorer) => new CheckingPlayer(colour, explorer, explorerFactory))
+    val pg2 = ((colour: Colour, explorer: MoveExplorer) => Players.capturingPlayer(colour, explorerFactory))
+    //    val pg3 = ((colour: Colour, explorer: MoveExplorer) => new RandomPlayer(colour, explorer))
+    val pg3 = ((colour: Colour, explorer: MoveExplorer) => Players.checkMatingCapturingPlayer(colour, explorerFactory))
+    val pg4 = ((colour: Colour, explorer: MoveExplorer) => Players.capturingEvadingPlayer(colour, explorerFactory))
+    val generators = pg1 :: pg2 :: pg3 :: pg4 :: List()
 
     /* TODO: Stop duplicating player names be using a player category label that is not part of the player instance. */
-    val scoreCard = new ScoreCard(Set("CheckingPlayer", "Capturing Player", "Checkmating, Capturing Player"))
+    val scoreCard = new ScoreCard(Set("CheckingPlayer", "Capturing Player", "Checkmating, Capturing Player", "Capture Evading Player"))
 
     times(1000) {
       for (wpg <- generators; bpg <- generators; if wpg != bpg)
@@ -107,7 +109,7 @@ object ChessApp {
     val delayer = new DelayingSubscriber
     val boardChangedSubscribers = boardAdapter.toList ++ List(ui, delayer)
     val board = new BoardModel(BoardModel.standardPlacements, boardChangedSubscribers,
-        boardAdapter.toList, List(ui, outcomeListener, delayer))
+      boardAdapter.toList, List(ui, outcomeListener, delayer))
 
     val white = whitePlayerGenerator(Colours.White, board.getMoveExplorer)
     val black = blackPlayerGenerator(Colours.Black, board.getMoveExplorer)
