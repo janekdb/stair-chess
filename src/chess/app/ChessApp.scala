@@ -44,7 +44,6 @@ import chess.stage.ScoreCard
 // TODO: Score as tournament
 // TODO: Add an interactive mode
 // TODO: Look for a way to be more functional
-// TODO: Add player that moves pieces out of danger
 // TODO: Force draw when only two Kings
 // TODO: Drawn in other situations apart from two Kings where checkmate is not possible
 // TODO: Add stalemate avoidance
