@@ -152,8 +152,7 @@ object ChessApp {
 
     val maxNameWidth = scoreCard.players.foldLeft(0) { (i, name) => i max name.length }
     val pad = (s: String) => { s.padTo(maxNameWidth, ' ') }
-    // TODO: ->Right align the scores
-    val printScore = (name: String, score: Int) => println(pad(name) + " : " + "%3d" format score)
+    val printScore = (name: String, score: Int) => println(pad(name) + " : " + "%4d" format score)
 
     scoreCard.getWins.foreach {
       case (name, score) => printScore(name, score)
