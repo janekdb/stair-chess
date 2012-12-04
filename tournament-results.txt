@@ -9,6 +9,16 @@ CheckingPlayer                      : 683
 Checkmating, Capture Evading Player : 500
 Checkmating, Capturing Player       : 801
 
+Scores:
+Wins:
+Checkmating, Capture Evading Player : 3361
+Checkmating, Capturing Player       : 1600
+CheckingPlayer                      :   73
+Draws:
+CheckingPlayer                      :  684
+Checkmating, Capture Evading Player :  479
+Checkmating, Capturing Player       :  769
+
 2012-11-17
 Scores:
 Wins:
