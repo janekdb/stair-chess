@@ -36,6 +36,7 @@ import chess.model.Won
 import chess.model.Drawn
 import chess.player.Players
 import chess.stage.ScoreCard
+import chess.ui.NoUI
 
 //Scores: Map(class chess.player.RandomPlayer -> 36, class chess.player.CapturingP
 //layer -> 230, class chess.player.CheckingPlayer -> 103)
@@ -48,6 +49,9 @@ import chess.stage.ScoreCard
 // TODO: Drawn in other situations apart from two Kings where checkmate is not possible
 // TODO: Add stalemate avoidance
 // TODO: Add a developed position preferring player
+// TODO: Add lookahead ranker with configurable depth
+// TODO: Add parrallelism to lookahead ranker
+// TODO: UI: Convert SwingBoard to Scala
 
 object ChessApp {
 
@@ -73,6 +77,7 @@ object ChessApp {
     val generators = pg1 :: pg3 :: pg4 :: List()
 
     /* TODO: Stop duplicating player names be using a player category label that is not part of the player instance. */
+    /* TODO: Add a trait for player generation to allow a getPlayerName method to be added */
     val scoreCard = new ScoreCard(Set("CheckingPlayer", "Checkmating, Capturing Player", "Checkmating, Capture Evading Player"))
 
     times(1000) {
@@ -97,14 +102,18 @@ object ChessApp {
     }
 
     val useSwingBoard = false
+    val useTextUI = false
+    val includeDelay = false
     val boardAdapter = if (useSwingBoard)
       // TODO: Remove visual side-effect from SwingBoard creation
       Some(new BoardAdapter(SwingBoard.createAndShowBoard()))
     else
       None
 
-    val ui = new TextUI
-    val delayer = new DelayingSubscriber
+    val ui = if (useTextUI) new TextUI else NoUI
+
+    val delayer = if (includeDelay) new DelayingSubscriber else NoUI
+
     val boardChangedSubscribers = boardAdapter.toList ++ List(ui, delayer)
     val board = new BoardModel(BoardModel.standardPlacements, boardChangedSubscribers,
       boardAdapter.toList, List(ui, outcomeListener, delayer))
