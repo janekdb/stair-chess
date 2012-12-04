@@ -2,7 +2,6 @@ package chess.player
 
 import chess.model.ConfigurationView
 import scala.collection.immutable.List
-import chess.util.TODO
 import chess.model.Move
 import chess.ranker.MoveRanker
 
