@@ -2,26 +2,26 @@ package chess.model
 
 import ex._
 
-import test.{Main, Test, TestUtils}
+import test.{ Main, Test, TestUtils }
 
 import Colours.{ Black, White }
 
 object StandardMoveExplorerTest extends Test with TestUtils with Main {
 
   def runTests {
-        
+
     acceptMovePieceThatWouldNotCapture
     acceptPromoteThatWouldNotCapture
 
     rejectMovePieceThatWouldCapture
     rejectPromoteThatWouldCapture
-        
+
     acceptMovePieceCapturingThatWouldCapture
     acceptPromoteCapturingThatWouldCapture
 
     rejectMovePieceCapturingThatWouldNotCapture
     rejectPromoteCapturingThatWouldNotCapture
-    
+
     getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveWhite
     getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveBlack
     getBasicPositionsIncludesEnPassantWhite
@@ -33,7 +33,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     rejectIllegalMoveRejectsNotAdjacentColumnEnPassant
     rejectIllegalMoveRejectsNotDoubleAdvanceEnPassant
     rejectIllegalMoveRejectsSelfCheckingEnPassant
-    
+
     rejectIllegalMoveAllowsCastlingWhenRookOnlyCrossingAttackedSquare
     rejectIllegalMoveRejectsCastlingWhenKingCrossingAttackedSquare
     rejectIllegalMoveRejectsCastlingWhenKingCrossingSquareAttackedByPawn
@@ -107,7 +107,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
       e.rejectIllegalMove(Promote(start, Queen()))
     }
   }
-        
+
   private def acceptMovePieceCapturingThatWouldCapture {
     val start = new Position("a7")
     val end = new Position("b8")
@@ -143,7 +143,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     }
   }
 
-private def rejectPromoteCapturingThatWouldNotCapture {
+  private def rejectPromoteCapturingThatWouldNotCapture {
     val start = new Position("a7")
     val end = new Position("a8")
     val conf = new GridConfiguration
@@ -155,7 +155,7 @@ private def rejectPromoteCapturingThatWouldNotCapture {
       e.rejectIllegalMove(PromoteCapturing(start, end, Queen()))
     }
   }
-    
+
   private def getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveWhite {
 
     val start = new Position("e2")
@@ -186,7 +186,6 @@ private def rejectPromoteCapturingThatWouldNotCapture {
     assertEquals(expected, actual, "Position set excluded two square advance")
   }
 
-  
   /* All conditions met */
   private def getBasicPositionsIncludesEnPassantWhite {
     val whitePawnStart = new Position("e4")
@@ -206,7 +205,6 @@ private def rejectPromoteCapturingThatWouldNotCapture {
     val expected: Set[Position] = Set("d6", "e6")
     assertEquals(expected, actual, "Position set included en-passant")
   }
-
 
   /* All conditions met */
   private def getBasicPositionsIncludesEnPassantBlack {
@@ -299,7 +297,7 @@ private def rejectPromoteCapturingThatWouldNotCapture {
     val e = new StandardMoveExplorer(conf)
     conf.move("g7", "g5")
 
-    assertExceptionThrown("En-passant should be rejected when the adjacent column does not contain a pawn", classOf[UnreachablePositionException] ) {
+    assertExceptionThrown("En-passant should be rejected when the adjacent column does not contain a pawn", classOf[UnreachablePositionException]) {
       e.rejectIllegalMove(EnPassant("e5", "f6"))
     }
   }
@@ -313,7 +311,7 @@ private def rejectPromoteCapturingThatWouldNotCapture {
     conf.move("e4", "e5")
     conf.move("d6", "d5")
 
-    assertExceptionThrown("En-passant should be rejected when the previous move was not a double advance", classOf[UnreachablePositionException] ) {
+    assertExceptionThrown("En-passant should be rejected when the previous move was not a double advance", classOf[UnreachablePositionException]) {
       e.rejectIllegalMove(EnPassant("e5", "d6"))
     }
   }
@@ -330,12 +328,12 @@ private def rejectPromoteCapturingThatWouldNotCapture {
     conf.add("e1", White, King())
     val e = new StandardMoveExplorer(conf)
     conf.move("d7", "d5")
-    
-    assertExceptionThrown("En-passant should be rejected when the player would self check", classOf[CheckedOwnKing] ) {
+
+    assertExceptionThrown("En-passant should be rejected when the player would self check", classOf[CheckedOwnKing]) {
       e.rejectIllegalMove(EnPassant("e5", "d6"))
     }
   }
-  
+
   private def rejectIllegalMoveAllowsCastlingWhenRookOnlyCrossingAttackedSquare {
     val conf = new GridConfiguration
     /* The piece attacking a square the castling rook will cross. */
@@ -401,7 +399,7 @@ private def rejectPromoteCapturingThatWouldNotCapture {
       moveExplorer.rejectIllegalMove(Castle(White, Long))
     }
   }
-  
+
   private def rejectIllegalMoveAllowsResigning {
     val conf = new GridConfiguration
     val moveExplorer = new StandardMoveExplorer(conf)
@@ -463,13 +461,13 @@ private def rejectPromoteCapturingThatWouldNotCapture {
     conf.add("h8", White, King());
 
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(White) filter { case a: Promote => true case default => false}
+    val moves = e.legalMoves(White) filter { case a: Promote => true case default => false }
     val promote = Promote("b7", Queen())
     val expected = List(promote.copy(piece = Knight()), promote)
     assertEquals(expected, moves, "Pawn promotion to both Queen and Knight was considered")
   }
 
-  private def pawnCapturingPromotionSelected  {
+  private def pawnCapturingPromotionSelected {
     val conf: Configuration = new GridConfiguration
     placeKings(conf)
     /* The pawn that should be promoted */
@@ -477,12 +475,11 @@ private def rejectPromoteCapturingThatWouldNotCapture {
     conf.add("c8", Black, Rook())
 
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(White) filter { case a: PromoteCapturing => true case default => false}
+    val moves = e.legalMoves(White) filter { case a: PromoteCapturing => true case default => false }
     val promote = PromoteCapturing("b7", "c8", Queen())
     val expected = List(promote.copy(piece = Knight()), promote)
     assertEquals(expected, moves, "Capturing pawn promotion to both Queen and Knight was considered")
   }
-
 
   //  abcdefgh
   //8 ········
@@ -508,16 +505,16 @@ private def rejectPromoteCapturingThatWouldNotCapture {
     assertEquals(List(MovePieceCapturing("d3", "e3")), moves, "Black escaped from check by selected the only possible move")
   }
 
-//  abcdefgh
-//8 ······k·
-//7 ·····Q··
-//6 ········
-//5 ········
-//4 ···B····
-//3 pR·p·p··
-//2 ·····P··
-//1 ······K·
-//  abcdefgh
+  //  abcdefgh
+  //8 ······k·
+  //7 ·····Q··
+  //6 ········
+  //5 ········
+  //4 ···B····
+  //3 pR·p·p··
+  //2 ·····P··
+  //1 ······K·
+  //  abcdefgh
   /* Black can escape checkmate by taking the queen */
   private def queenCaptureSelected2 {
     val conf: Configuration = new GridConfiguration
@@ -556,7 +553,7 @@ private def rejectPromoteCapturingThatWouldNotCapture {
     assertEquals(List(Castle(White, Long)), moves, "When only long castling was possible short castling was not considered")
   }
 
-  private def longCastlingNotConsideredWhenStartPositionsIncorrect  {
+  private def longCastlingNotConsideredWhenStartPositionsIncorrect {
     val conf: Configuration = new GridConfiguration
     conf.add("a2", White, Rook())
     conf.add("e1", White, King())
@@ -630,15 +627,15 @@ private def rejectPromoteCapturingThatWouldNotCapture {
   }
 
   /* defect: end */
-  
+
   private def placeKings(conf: Configuration) {
     conf.add("e1", White, King())
     conf.add("e8", Black, King())
   }
 
   private def placeAll(conf: Configuration) {
-        for ((colour, piece, position) <- BoardModel.standardPlacements)
-          conf.add(position, colour, piece)
+    for ((colour, piece, position) <- BoardModel.standardPlacements)
+      conf.add(position, colour, piece)
   }
 
   private def render(conf: ConfigurationView) {
