@@ -56,16 +56,16 @@ object ConfigurationView {
    * Return a text representation formatted as a grid with row and column labels.
    * Black starts at the top and is represented by lowercase letters.
    * <pre>
-		  abcdefgh
-		8 rnbqkbnr
-		7 ·p·pp·pp
-		6 ··p·····
-		5 ·····p··
-		4 ·p·····P
-		3 N··P····
-		2 P·P·PPP·
-		1 R·BQKBNR
-		  abcdefgh
+   * abcdefgh
+   * 8 rnbqkbnr
+   * 7 ·p·pp·pp
+   * 6 ··p·····
+   * 5 ·····p··
+   * 4 ·p·····P
+   * 3 N··P····
+   * 2 P·P·PPP·
+   * 1 R·BQKBNR
+   * abcdefgh
    * </pre>
    */
   def getTextRepresentation(confView: ConfigurationView): List[String] = {
