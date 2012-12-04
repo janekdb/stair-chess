@@ -22,7 +22,6 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
-// TODO: UI: Convert SwingBoard to Scala
 public class SwingBoard extends JFrame implements Board {
 	GridLayout boardLayout = new GridLayout(8, 8);
 
@@ -116,7 +115,7 @@ public class SwingBoard extends JFrame implements Board {
 	 * Create the GUI and show it. For thread safety, this method is invoked
 	 * from the event dispatch thread.
 	 */
-		// Create and set up the window.
+	// Create and set up the window.
 	private static SwingBoard createAndShowGUI() {
 		SwingBoard frame = new SwingBoard("Stair Chess");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -192,7 +191,7 @@ public class SwingBoard extends JFrame implements Board {
 		setTitle(String.format("Drawn with %s", drawMode));
 	}
 
-	public void close(){
+	public void close() {
 		super.dispose();
 	}
 }
