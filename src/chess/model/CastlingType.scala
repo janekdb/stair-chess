@@ -6,7 +6,7 @@ trait CastlingType {
     def p(s: Int, e: Int) = (new Position(s, row), new Position(e, row))
     (p(ks, ke), p(rs, re))
   }
-  
+
   /* ((king start, king end), (rook start, rook end)) */
   def getColumns: ((Int, Int), (Int, Int))
 }
