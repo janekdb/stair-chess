@@ -70,7 +70,7 @@ object ChessApp {
 
     // TODO: For the tournament loop over all combinations of players
     val explorerFactory = (conf: ConfigurationView) => new StandardMoveExplorer(conf)
-    val pg1 = ((colour: Colour, explorer: MoveExplorer) => new CheckingPlayer(colour, explorer, explorerFactory))
+    val pg1 = ((colour: Colour, explorer: MoveExplorer) => Players.checkingPlayer(colour, explorerFactory))
     //    val pg2 = ((colour: Colour, explorer: MoveExplorer) => Players.capturingPlayer(colour, explorerFactory))
     //    val pg3 = ((colour: Colour, explorer: MoveExplorer) => new RandomPlayer(colour, explorer))
     val pg3 = ((colour: Colour, explorer: MoveExplorer) => Players.checkMatingCapturingPlayer(colour, explorerFactory))
@@ -102,7 +102,7 @@ object ChessApp {
       }
     }
 
-    val useSwingBoard = false
+    val useSwingBoard = true
     val useTextUI = false
     val includeDelay = false
     val boardAdapter = if (useSwingBoard)
