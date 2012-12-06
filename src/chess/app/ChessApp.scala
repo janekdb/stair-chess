@@ -79,7 +79,7 @@ object ChessApp {
 
     /* TODO: Stop duplicating player names be using a player category label that is not part of the player instance. */
     /* TODO: Add a trait for player generation to allow a getPlayerName method to be added */
-    val scoreCard = new ScoreCard(Set("CheckingPlayer", "Checkmating, Capturing Player", "Checkmating, Capture Evading Player"))
+    val scoreCard = new ScoreCard(Set("Checking Player", "Checkmating, Capturing Player", "Checkmating, Capture Evading Player"))
 
     times(1000) {
       for (wpg <- generators; bpg <- generators; if wpg != bpg)
