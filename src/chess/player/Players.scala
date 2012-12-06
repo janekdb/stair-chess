@@ -5,8 +5,14 @@ import chess.model.MoveExplorer
 import chess.ranker.CheckMatingRanker
 import chess.ranker.CapturingRanker
 import chess.ranker.CaptureEvadingRanker
+import chess.ranker.CheckingRanker
 
 object Players {
+
+  def checkingPlayer(colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
+    val ranker = new CheckingRanker(explorerFactory, colour)
+    new ShellPlayer("Checking Player", colour, explorerFactory, ranker)
+  }
 
   def checkMatingCapturingPlayer(colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
     val checkMatingRanker = new CheckMatingRanker(explorerFactory, colour)
