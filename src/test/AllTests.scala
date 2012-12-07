@@ -18,10 +18,10 @@ object AllTests {
 
     import chess.player._
     RandomPlayerTest.++
-    CheckingPlayerTest.++
     ChainedMoveRankerTest.++
 
     import chess.ranker._
+    CheckingRankerTest.++
     CheckMatingRankerTest.++
     CapturingRankerTest.++
     CaptureEvadingRankerTest.++
