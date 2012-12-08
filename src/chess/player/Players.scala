@@ -9,27 +9,27 @@ import chess.ranker.CheckingRanker
 
 object Players {
 
-  def checkingPlayer(colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
+  def checkingPlayer(name: String, colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
     val ranker = new CheckingRanker(explorerFactory, colour)
-    new ShellPlayer("Checking Player", colour, explorerFactory, ranker)
+    new ShellPlayer(name, colour, explorerFactory, ranker)
   }
 
-  def checkMatingCapturingPlayer(colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
+  def checkMatingCapturingPlayer(name: String, colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
     val checkMatingRanker = new CheckMatingRanker(explorerFactory, colour)
     val capturingRanker = new CapturingRanker(explorerFactory, colour)
     val ranker = new ChainedMoveRanker(checkMatingRanker, capturingRanker)
-    new ShellPlayer("Checkmating, Capturing Player", colour, explorerFactory, ranker)
+    new ShellPlayer(name, colour, explorerFactory, ranker)
   }
 
-  def capturingPlayer(colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
+  def capturingPlayer(name: String, colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
     val ranker = new CapturingRanker(explorerFactory, colour)
-    new ShellPlayer("Capturing Player", colour, explorerFactory, ranker)
+    new ShellPlayer(name, colour, explorerFactory, ranker)
   }
 
-  def checkMatingCaptureEvadingPlayer(colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
+  def checkMatingCaptureEvadingPlayer(name: String, colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
     val checkMatingRanker = new CheckMatingRanker(explorerFactory, colour)
     val cer = new CaptureEvadingRanker(explorerFactory, colour)
     val ranker = new ChainedMoveRanker(checkMatingRanker, cer)
-    new ShellPlayer("Checkmating, Capture Evading Player", colour, explorerFactory, ranker)
+    new ShellPlayer(name, colour, explorerFactory, ranker)
   }
 }
