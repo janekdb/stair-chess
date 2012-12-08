@@ -1,46 +1,30 @@
 package chess.app
 
 import java.util.concurrent.TimeUnit
-import java.util.regex.Pattern
-import chess.model.BoardChanged
-import chess.model.BoardChangedSubscriber
+
 import chess.model.BoardModel
-import chess.model.Castled
+import chess.model.Colour
 import chess.model.Colours
-import chess.model.PieceMoved
-import chess.model.PieceMovedCapturing
-import chess.model.PiecePlaced
-import chess.model.Position
-import chess.model.Promoted
-import chess.model.Resigned
-import chess.player.RandomPlayer
-import chess.ui.SwingBoard
-import chess.ui.TextUI
-import chess.util.PlayerSelector
-import chess.util.TODO
-import test.AllTests
-import chess.model.ConfigurationChangedSubscriber
 import chess.model.Configuration
 import chess.model.ConfigurationView
-import chess.ui.Board
-import chess.ui.BoardAdapter
-import chess.player.CheckingPlayer
-import chess.player.Player
-import chess.model.Colour
+import chess.model.Drawn
+import chess.model.GameChanged
+import chess.model.GameChangedSubscriber
 import chess.model.MoveExplorer
 import chess.model.StandardMoveExplorer
-import chess.ui.DelayingSubscriber
-import chess.model.GameChangedSubscriber
-import chess.model.GameChanged
 import chess.model.Won
-import chess.model.Drawn
+import chess.player.Player
 import chess.player.Players
 import chess.stage.Display
 import chess.stage.ScoreCard
+import chess.ui.Board
+import chess.ui.BoardAdapter
+import chess.ui.DelayingSubscriber
 import chess.ui.NoUI
-
-//Scores: Map(class chess.player.RandomPlayer -> 36, class chess.player.CapturingP
-//layer -> 230, class chess.player.CheckingPlayer -> 103)
+import chess.ui.SwingBoard
+import chess.ui.TextUI
+import chess.util.PlayerSelector
+import test.AllTests
 
 // TODO: Add a tournament mode
 // TODO: Score as tournament
@@ -69,17 +53,21 @@ object ChessApp {
     runTests
 
     // TODO: For the tournament loop over all combinations of players
+
+    val checkingName = "Checking Player"
+    val checkMatingCapturingName = "Checkmating, Capturing Player"
+    val checkMatingCaptureEvadingName = "Checkmating, Capture Evading Player"
+
     val explorerFactory = (conf: ConfigurationView) => new StandardMoveExplorer(conf)
-    val pg1 = ((colour: Colour, explorer: MoveExplorer) => Players.checkingPlayer(colour, explorerFactory))
-    //    val pg2 = ((colour: Colour, explorer: MoveExplorer) => Players.capturingPlayer(colour, explorerFactory))
-    //    val pg3 = ((colour: Colour, explorer: MoveExplorer) => new RandomPlayer(colour, explorer))
-    val pg3 = ((colour: Colour, explorer: MoveExplorer) => Players.checkMatingCapturingPlayer(colour, explorerFactory))
-    val pg4 = ((colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingPlayer(colour, explorerFactory))
-    val generators = pg1 :: pg3 :: pg4 :: List()
+
+    val pg1 = ((colour: Colour, explorer: MoveExplorer) => Players.checkingPlayer(checkingName, colour, explorerFactory))
+    val pg2 = ((colour: Colour, explorer: MoveExplorer) => Players.checkMatingCapturingPlayer(checkMatingCapturingName, colour, explorerFactory))
+    val pg3 = ((colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingPlayer(checkMatingCaptureEvadingName, colour, explorerFactory))
+    val generators = pg1 :: pg2 :: pg3 :: List()
 
     /* TODO: Stop duplicating player names be using a player category label that is not part of the player instance. */
     /* TODO: Add a trait for player generation to allow a getPlayerName method to be added */
-    val scoreCard = new ScoreCard(Set("Checking Player", "Checkmating, Capturing Player", "Checkmating, Capture Evading Player"))
+    val scoreCard = new ScoreCard(Set(checkingName, checkMatingCapturingName, checkMatingCaptureEvadingName))
 
     times(1000) {
       for (wpg <- generators; bpg <- generators; if wpg != bpg)
