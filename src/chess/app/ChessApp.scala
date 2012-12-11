@@ -54,18 +54,18 @@ object ChessApp {
 
     // TODO: For the tournament loop over all combinations of players
 
+    // TODO: Bundle the player names with the generator to avoid synchronisation work by using a tuple and then mapping the name item out
     val checkingName = "Checking Player"
     val checkMatingCapturingName = "Checkmating, Capturing Player"
     val checkMatingCaptureEvadingName = "Checkmating, Capture Evading Player"
 
     val explorerFactory = (conf: ConfigurationView) => new StandardMoveExplorer(conf)
 
-    val pg1 = ((colour: Colour, explorer: MoveExplorer) => Players.checkingPlayer(checkingName, colour, explorerFactory))
-    val pg2 = ((colour: Colour, explorer: MoveExplorer) => Players.checkMatingCapturingPlayer(checkMatingCapturingName, colour, explorerFactory))
-    val pg3 = ((colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingPlayer(checkMatingCaptureEvadingName, colour, explorerFactory))
+    val pg1 = (colour: Colour, explorer: MoveExplorer) => Players.checkingPlayer(checkingName, colour, explorerFactory)
+    val pg2 = (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCapturingPlayer(checkMatingCapturingName, colour, explorerFactory)
+    val pg3 = (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingPlayer(checkMatingCaptureEvadingName, colour, explorerFactory)
     val generators = pg1 :: pg2 :: pg3 :: List()
 
-    /* TODO: Stop duplicating player names be using a player category label that is not part of the player instance. */
     /* TODO: Add a trait for player generation to allow a getPlayerName method to be added */
     val scoreCard = new ScoreCard(Set(checkingName, checkMatingCapturingName, checkMatingCaptureEvadingName))
 
