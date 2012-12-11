@@ -53,21 +53,21 @@ object ChessApp {
     runTests
 
     // TODO: For the tournament loop over all combinations of players
+    val explorerFactory = (conf: ConfigurationView) => new StandardMoveExplorer(conf)
 
-    // TODO: Bundle the player names with the generator to avoid synchronisation work by using a tuple and then mapping the name item out
     val checkingName = "Checking Player"
     val checkMatingCapturingName = "Checkmating, Capturing Player"
     val checkMatingCaptureEvadingName = "Checkmating, Capture Evading Player"
 
-    val explorerFactory = (conf: ConfigurationView) => new StandardMoveExplorer(conf)
+    val p1 = (checkingName, (colour: Colour, explorer: MoveExplorer) => Players.checkingPlayer(checkingName, colour, explorerFactory))
+    val p2 = (checkMatingCapturingName, (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCapturingPlayer(checkMatingCapturingName, colour, explorerFactory))
+    val p3 = (checkMatingCaptureEvadingName, (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingPlayer(checkMatingCaptureEvadingName, colour, explorerFactory))
+    val ps = List(p1, p2, p3)
 
-    val pg1 = (colour: Colour, explorer: MoveExplorer) => Players.checkingPlayer(checkingName, colour, explorerFactory)
-    val pg2 = (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCapturingPlayer(checkMatingCapturingName, colour, explorerFactory)
-    val pg3 = (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingPlayer(checkMatingCaptureEvadingName, colour, explorerFactory)
-    val generators = pg1 :: pg2 :: pg3 :: List()
+    val names = ps map { _._1 }
+    val scoreCard = new ScoreCard(names toSet)
 
-    /* TODO: Add a trait for player generation to allow a getPlayerName method to be added */
-    val scoreCard = new ScoreCard(Set(checkingName, checkMatingCapturingName, checkMatingCaptureEvadingName))
+    val generators = ps map { _._2 }
 
     times(1000) {
       for (wpg <- generators; bpg <- generators; if wpg != bpg)
@@ -90,7 +90,7 @@ object ChessApp {
       }
     }
 
-    val useSwingBoard = true
+    val useSwingBoard = false
     val useTextUI = false
     val includeDelay = false
     val boardAdapter = if (useSwingBoard)
