@@ -22,7 +22,6 @@ import chess.util.TODO
 //		1 ·····k·K
 //		  abcdefgh
 
-
 /**
  * This class is concerned with maintaining a model of a chess game. It contains no UI. A UI can be attached as a listener.
  *
@@ -39,10 +38,10 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
   def getMoveExplorer = moveExplorer
 
   def this(
-      placements: List[(Colour, Piece, Position)],
-      boardChangedSubscribers: List[BoardChangedSubscriber],
-      confChangedSubscribers: List[ConfigurationChangedSubscriber], 
-      gameChangedSubscribers: List[GameChangedSubscriber]) {
+    placements: List[(Colour, Piece, Position)],
+    boardChangedSubscribers: List[BoardChangedSubscriber],
+    confChangedSubscribers: List[ConfigurationChangedSubscriber],
+    gameChangedSubscribers: List[GameChangedSubscriber]) {
     this(boardChangedSubscribers, gameChangedSubscribers)
     val confView = new DelegatingConfigurationView(conf)
     confChangedSubscribers foreach { _.onConfigurationChanged(confView) }
@@ -71,7 +70,7 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
     gameOutcome.get.winner
   }
 
-  private def place(colour: Colour, piece: Piece, position: Position){
+  private def place(colour: Colour, piece: Piece, position: Position) {
     assert(colour != null)
     assert(piece != null)
     assert(position != null)
@@ -156,7 +155,7 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
    * @return true when there is at least one move that will get the king out of
    * check
    */
-  private def checkedKingCanEscape(colour: Colour, conf: Configuration): Boolean = {
+  private def checkedKingCanEscape(colour: Colour, conf: ConfigurationView): Boolean = {
     val me = new StandardMoveExplorer(conf)
     me.legalMoves(colour).nonEmpty
   }
@@ -168,7 +167,7 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
 
   def subscribe(subscriber: BoardChangedSubscriber) { boardChangedSubscribers ::= subscriber }
 
-  def subscribe(subscriber: GameChangedSubscriber) { gameChangedSubscribers ::= subscriber}
+  def subscribe(subscriber: GameChangedSubscriber) { gameChangedSubscribers ::= subscriber }
 
 }
 
@@ -184,7 +183,7 @@ object BoardModel {
     def bp(pieces: List[Piece], colour: Colour, row: Int) = {
       pieces.zipWithIndex.map { case (piece, index) => (colour, piece, new Position(index + 1, row)) }
     }
-    
+
     bp(others, White, 1) ::: bp(pawns, White, 2) ::: bp(pawns, Black, 7) ::: bp(others, Black, 8)
   }
 }
