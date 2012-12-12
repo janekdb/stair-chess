@@ -58,6 +58,9 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     castlingNotConsiderWhenInsidePieceIsNotKing
     enPassantSelected
 
+    /* Check and Check Mate */
+    kingIsCheckMatedDetected
+
     /* Defects */
     defect5IsFixed
   }
@@ -610,6 +613,29 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
   }
 
   /* legalMoves: end*/
+
+  /* Check Mate start */
+
+  private def kingIsCheckMatedDetected {
+    val conf: Configuration = new GridConfiguration
+    placeKings(conf)
+
+    val e1 = new StandardMoveExplorer(conf)
+    assertFalse(e1.kingInCheck(Black), "The black king was not in check")
+    assertFalse(e1.kingInCheckMate(Black), "The black king was not checkmated")
+
+    conf.add("a8", White, Rook())
+    val e2 = new StandardMoveExplorer(conf)
+    assertTrue(e2.kingInCheck(Black), "The black king was in check")
+    assertFalse(e2.kingInCheckMate(Black), "The black king was not checkmated")
+
+    conf.add("a7", White, Rook())
+    val e3 = new StandardMoveExplorer(conf)
+    assertTrue(e3.kingInCheck(Black), "The black king was in check")
+    assertTrue(e3.kingInCheckMate(Black), "The black king was checkmated")
+  }
+
+  /* Check Mate end */
 
   /* defect: start */
 
