@@ -12,21 +12,7 @@ class CheckMatingRanker(val explorerFactory: ConfigurationView => MoveExplorer, 
   private def rank(confView: ConfigurationView)(move: Move): Int = {
     val future = confView.applied(move)
     val e = explorerFactory(future)
-    if (checkForCheckMate(e, colour.opposite, future)) RANKING_HIGH else RANKING_LOW
-  }
-
-  // TODO: Consolidate the checkmate testing code with CheckMatingRanker
-  private def checkForCheckMate(moveExplorer: MoveExplorer, colour: Colour, conf: ConfigurationView): Boolean = {
-    moveExplorer.kingInCheck(colour) && !checkedKingCanEscape(colour, conf)
-  }
-
-  /*
-   * @return true when there is at least one move that will get the king out of
-   * check
-   */
-  private def checkedKingCanEscape(colour: Colour, conf: ConfigurationView): Boolean = {
-    val me = explorerFactory(conf)
-    me.legalMoves(colour).nonEmpty
+    if (e.kingInCheckMate(colour.opposite)) RANKING_HIGH else RANKING_LOW
   }
 
   def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = ranker.rankAsList(moves, rank(conf))
