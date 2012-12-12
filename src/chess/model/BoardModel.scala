@@ -146,19 +146,7 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
     }
   }
 
-  // TODO: Consolidate the checkmate testing code with CheckMatingRanker
-  private def checkForCheckMate(colour: Colour): Boolean = {
-    moveExplorer.kingInCheck(colour) && !checkedKingCanEscape(colour, conf)
-  }
-
-  /*
-   * @return true when there is at least one move that will get the king out of
-   * check
-   */
-  private def checkedKingCanEscape(colour: Colour, conf: ConfigurationView): Boolean = {
-    val me = new StandardMoveExplorer(conf)
-    me.legalMoves(colour).nonEmpty
-  }
+  private def checkForCheckMate(colour: Colour): Boolean = moveExplorer.kingInCheckMate(colour)
 
   // Debug
   private def debug(s: String): Unit = { println(s) }
