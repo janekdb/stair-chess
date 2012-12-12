@@ -32,4 +32,12 @@ object Players {
     val ranker = new ChainedMoveRanker(checkMatingRanker, cer)
     new ShellPlayer(name, colour, explorerFactory, ranker)
   }
+
+  def checkMatingCaptureEvadingCheckingPlayer(name: String, colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
+    val checkMatingRanker = new CheckMatingRanker(explorerFactory, colour)
+    val cer = new CaptureEvadingRanker(explorerFactory, colour)
+    val capr = new CheckingRanker(explorerFactory, colour)
+    val ranker = new ChainedMoveRanker(checkMatingRanker, cer, capr)
+    new ShellPlayer(name, colour, explorerFactory, ranker)
+  }
 }
