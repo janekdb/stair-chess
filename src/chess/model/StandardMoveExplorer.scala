@@ -284,6 +284,18 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
       getBasicPositions(p) contains king)
   }
 
+  def kingInCheckMate(colour: Colour): Boolean = {
+    kingInCheck(colour) && !checkedKingCanEscape(colour)
+  }
+
+  /*
+   * @return true when there is at least one move that will get the king out of
+   * check
+   */
+  private def checkedKingCanEscape(colour: Colour): Boolean = {
+    legalMoves(colour).nonEmpty
+  }
+
   private def checkKingNotLeftInCheckAfterMove(move: SimpleMove) {
     /*
 	   * 1. Clone the current conf
