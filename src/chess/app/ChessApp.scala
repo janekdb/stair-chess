@@ -37,6 +37,7 @@ import test.AllTests
 // TODO: Add lookahead ranker with configurable depth
 // TODO: Add parrallelism to lookahead ranker
 // TODO: UI: Convert SwingBoard to Scala
+// TODO: Add Checkmating, Capture Evading, Capturing Player
 
 object ChessApp {
 
@@ -56,13 +57,15 @@ object ChessApp {
     val explorerFactory = (conf: ConfigurationView) => new StandardMoveExplorer(conf)
 
     val checkingName = "Checking Player"
-    val checkMatingCapturingName = "Checkmating, Capturing Player"
-    val checkMatingCaptureEvadingName = "Checkmating, Capture Evading Player"
+    val checkMatingCapturingName = "CM, Cap Player"
+    val checkMatingCaptureEvadingName = "CM, CapEva Player"
+    val checkMatingCaptureEvadingCapturingName = "CM, CapEva, Cap Player"
 
     val p1 = (checkingName, (colour: Colour, explorer: MoveExplorer) => Players.checkingPlayer(checkingName, colour, explorerFactory))
     val p2 = (checkMatingCapturingName, (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCapturingPlayer(checkMatingCapturingName, colour, explorerFactory))
     val p3 = (checkMatingCaptureEvadingName, (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingPlayer(checkMatingCaptureEvadingName, colour, explorerFactory))
-    val ps = List(p1, p2, p3)
+    val p4 = (checkMatingCaptureEvadingCapturingName, (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingCheckingPlayer(checkMatingCaptureEvadingCapturingName, colour, explorerFactory))
+    val ps = List(p1, p2, p3, p4)
 
     val names = ps map { _._1 }
     val scoreCard = new ScoreCard(names toSet)
