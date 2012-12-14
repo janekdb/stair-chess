@@ -2,7 +2,7 @@ package chess.model
 
 import Colours.{ Black, White }
 
-import test.{Main, Test, TestUtils}
+import test.{ Main, Test, TestUtils }
 
 object GridConfigurationTest extends Test with TestUtils with Main {
 
@@ -16,6 +16,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     promoteEventsSent
     promoteCapturingEventsSent
     promoteReplacesPiece
+    applied
   }
 
   def confirmGetRows {
@@ -130,7 +131,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     val events = conf.applyMove(MovePieceCapturing(whiteStart, whiteEnd))
     assertEquals(List(PieceMovedCapturing(whiteStart, whiteEnd, whiteEnd)), events, "The events sent when a piece captured should have been correct")
   }
-  
+
   def promoteEventsSent {
     val conf = new GridConfiguration
     val whiteStart: Position = "a7"
@@ -160,6 +161,21 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     assertEquals(PieceMoved(start, end) :: Promoted(end, Knight()) :: Nil, events)
     assertEquals(List(), conf.locatePieces(White, Pawn()), "There should not have been any pawns")
     assertEquals(List(end), conf.locatePieces(White, Knight()), "A knight should be present")
+  }
+
+  private def applied {
+    val conf = new GridConfiguration
+
+    val start: Position = "e4"
+    val end: Position = "e5"
+    conf.add(start, White, Pawn())
+    val confPost = conf.applied(MovePiece(start, end))
+
+    assertTrue(conf.exists(start), "The initial configuraton was not changed")
+    assertEquals(1, conf.locatePieces(White).size, "The initial configuraton was not changed")
+
+    assertTrue(confPost.exists(end), "The new configuraton was changed")
+    assertEquals(conf.locatePieces(White).size, confPost.locatePieces(White).size, "The new configuraton had the correct number of pieces")
   }
 
   def assertSomeEquals(expected: (Piece, Position, Position), actual: Option[(Piece, Position, Position)]) {
