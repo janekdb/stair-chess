@@ -4,8 +4,6 @@ import chess.model.Move
 import chess.model.{ Configuration, MoveExplorer }
 import chess.model.Colour
 
-// TODO: Replace RandomPlayer with RandomRanker in combination with ShellPlayer
-
 /**
  * A player that selects moves at random.
  */
