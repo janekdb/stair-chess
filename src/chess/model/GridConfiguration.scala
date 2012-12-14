@@ -91,7 +91,6 @@ class GridConfiguration extends Configuration {
     c
   }
 
-  // TODO: Add test case for GridConfiguration.applied
   def applied(move: Move): ConfigurationView = {
     val conf = copyOf
     conf.applyMove(move)
