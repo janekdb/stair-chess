@@ -35,9 +35,8 @@ import test.AllTests
 // TODO: Add stalemate avoidance
 // TODO: Add a developed position preferring player
 // TODO: Add lookahead ranker with configurable depth
-// TODO: Add parrallelism to lookahead ranker
+// TODO: Add parallelism to lookahead ranker
 // TODO: UI: Convert SwingBoard to Scala
-// TODO: Add Checkmating, Capture Evading, Capturing Player
 
 object ChessApp {
 
