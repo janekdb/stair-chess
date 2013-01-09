@@ -21,14 +21,11 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
     val cd1 = new CountDownLatch(1)
     val cd2 = new CountDownLatch(1)
     var moveOpt: Option[Move] = None
-    class Getter extends Actor {
-      def act() {
-        cd1.countDown
-        moveOpt = p.getMove(conf)
-        cd2.countDown
-      }
+    doAsync {
+      cd1.countDown
+      moveOpt = p.getMove(conf)
+      cd2.countDown
     }
-    (new Getter).start
     cd1.await
     assert(moveOpt.isEmpty)
     p.setMove("e1e2")
@@ -42,20 +39,25 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
     val cd1 = new CountDownLatch(1)
     val cd2 = new CountDownLatch(1)
     var set = false
-    class Setter extends Actor {
-      def act() {
-        cd1.countDown
-        p.setMove("e1e2")
-        set = true
-        cd2.countDown
-      }
+    doAsync {
+      cd1.countDown
+      p.setMove("e1e2")
+      set = true
+      cd2.countDown
     }
-    (new Setter).start
     cd1.await
     assertFalse(set)
     val Some(move) = p.getMove(conf)
     cd2.await
     assertEquals(new MovePiece("e1e2"), move)
+  }
+
+  // TODO: Move doAsync into TestUtils
+  private def doAsync(code: => Unit) {
+    class A extends Actor {
+      def act = code
+    }
+    (new A).start
   }
 
   private def getConf = {
