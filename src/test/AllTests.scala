@@ -19,6 +19,7 @@ object AllTests {
     import chess.player._
     RandomPlayerTest.++
     ChainedMoveRankerTest.++
+    BlockingPlayerTest.++
 
     import chess.ranker._
     CheckingRankerTest.++
