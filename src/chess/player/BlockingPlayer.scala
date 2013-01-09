@@ -16,8 +16,8 @@ class BlockingPlayer(val name: String) extends Player {
   def getName: String = name
 
   /**
-   * @param Will return immediately if getMove has been call and is is still
-   * blocked otherwise will block until getMove is called.
+   * @param Will return immediately if getMove has been called and is still blocked
+   * otherwise will block until getMove is called.
    */
-  def useMove(move: Move): Unit = q put Some(move)
+  def setMove(move: Move): Unit = q put Some(move)
 }
