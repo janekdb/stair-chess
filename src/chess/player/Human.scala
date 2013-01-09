@@ -4,7 +4,7 @@ import chess.model.{ BoardModel, Castle, Colour, Move, MovePiece, Position, Prom
 import chess.model.Promote
 import chess.model.Configuration
 
-class Human(val board: BoardModel, val colour: Colour) extends Player {
+class Human extends Player {
 
   implicit def stringToMovePiece(s: String) = new MovePiece(s)
 
