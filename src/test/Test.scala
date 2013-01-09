@@ -36,12 +36,20 @@ trait Test {
     assert(obj != null, message)
   }
 
+  def assertTrue(condition: Boolean) {
+    assert(condition)
+  }
+
   def assertTrue(condition: Boolean, message: String) {
     assert(condition, message)
   }
 
+  def assertFalse(condition: Boolean) {
+    assert(!condition)
+  }
+
   def assertFalse(condition: Boolean, message: String) {
-	  assert(!condition, message)
+    assert(!condition, message)
   }
 
   class FailureException(e: Exception, message: String) extends RuntimeException(message, e) {
