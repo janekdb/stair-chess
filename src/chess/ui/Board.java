@@ -14,4 +14,8 @@ public interface Board {
 
 	/** Close the UI */
 	void close();
+
+	// TODO: Move addMoveEntryListener out of Board into a new interface
+	void addMoveEntryListener(MoveEntryListener listener);
+
 }
