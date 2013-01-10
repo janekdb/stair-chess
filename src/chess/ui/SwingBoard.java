@@ -64,7 +64,7 @@ public class SwingBoard extends JFrame implements Board {
 
 	private Square[] squares;
 
-	public void addComponentsToPane(final Container pane) {
+	public void addComponentsToPane(final Container pane, final boolean interactiveMode) {
 		final JPanel boardPanel = new JPanel();
 		boardPanel.setLayout(boardLayout);
 
@@ -88,7 +88,14 @@ public class SwingBoard extends JFrame implements Board {
 		}
 
 		pane.add(boardPanel, BorderLayout.CENTER);
+		if (interactiveMode) {
+			moveEntry = new InputFieldMoveEntry();
+			Container mec = moveEntry.getContainer();
+			pane.add(mec, BorderLayout.SOUTH);
+		}
 	}
+
+	private MoveEntry moveEntry;
 
 	private final Map<String, Icon> icons = new HashMap<String, Icon>();
 
@@ -116,11 +123,11 @@ public class SwingBoard extends JFrame implements Board {
 	 * from the event dispatch thread.
 	 */
 	// Create and set up the window.
-	private static SwingBoard createAndShowGUI() {
+	private static SwingBoard createAndShowGUI(final boolean interactiveMode) {
 		SwingBoard frame = new SwingBoard("Stair Chess");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Set up the content pane.
-		frame.addComponentsToPane(frame.getContentPane());
+		frame.addComponentsToPane(frame.getContentPane(), interactiveMode);
 		// Display the window.
 		frame.pack();
 		frame.setVisible(true);
@@ -128,7 +135,12 @@ public class SwingBoard extends JFrame implements Board {
 		return frame;
 	}
 
-	public static Board createAndShowBoard() {
+	/**
+	 * @param interactiveMode
+	 *            if true interactive element will be included.
+	 * @return
+	 */
+	public static Board createAndShowBoard(final boolean interactiveMode) {
 		/* Use an appropriate Look and Feel */
 		try {
 			// UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -147,7 +159,7 @@ public class SwingBoard extends JFrame implements Board {
 		final SwingBoard[] boardHolder = new SwingBoard[1];
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				boardHolder[0] = createAndShowGUI();
+				boardHolder[0] = createAndShowGUI(interactiveMode);
 				latch.countDown();
 			}
 		});
@@ -161,7 +173,7 @@ public class SwingBoard extends JFrame implements Board {
 	}
 
 	public static void main(String[] args) {
-		Board board = createAndShowBoard();
+		Board board = createAndShowBoard(true);
 	}
 
 	public void clearSquare(final int col, final int row) {
@@ -193,5 +205,12 @@ public class SwingBoard extends JFrame implements Board {
 
 	public void close() {
 		super.dispose();
+	}
+
+	public void addMoveEntryListener(MoveEntryListener listener) {
+		if (listener == null) {
+			throw new IllegalArgumentException("listener was null");
+		}
+		moveEntry.addMoveEntryListener(listener);
 	}
 }
