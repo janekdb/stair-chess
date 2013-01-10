@@ -8,6 +8,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * Provides a text based move entry UI element. Adapts input events to the
+ * <code>MoveEntryListener</code> interface.
+ */
 public class InputFieldMoveEntry implements MoveEntry {
 
 	private final JPanel contentPane = new JPanel(new BorderLayout());
@@ -38,7 +42,7 @@ public class InputFieldMoveEntry implements MoveEntry {
 		ActionListener a = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				listener.onMoveEntry(e);
+				listener.onMoveEntry(e.getActionCommand());
 			}
 		};
 		inputField.addActionListener(a);
