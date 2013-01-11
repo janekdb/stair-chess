@@ -1,7 +1,6 @@
 package chess.app
 
 import java.util.concurrent.TimeUnit
-
 import chess.model.BoardModel
 import chess.model.Colour
 import chess.model.Colours
@@ -25,10 +24,19 @@ import chess.ui.SwingBoard
 import chess.ui.TextUI
 import chess.util.PlayerSelector
 import test.AllTests
+import chess.ui.MoveEntryListener
+import chess.player.Human
+import chess.player.BlockingPlayer
+import chess.model.MovePiece
 
+// TODO: ->Add an interactive mode
+// TODO:   Disable text entry when not user's turn
+// TODO:   ->Support adding moveEntryListeners to the SwingBoard
+// TODO:   Use added moveEntryListener to drive Player implementation
+// TODO:   Restrict entry to possible moves
+// TODO:   Handle castling and promotion
 // TODO: Add a tournament mode
 // TODO: Score as tournament
-// TODO: Add an interactive mode
 // TODO: Look for a way to be more functional
 // TODO: Force draw when only two Kings
 // TODO: Drawn in other situations apart from two Kings where checkmate is not possible
@@ -64,22 +72,59 @@ object ChessApp {
     val p2 = (checkMatingCapturingName, (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCapturingPlayer(checkMatingCapturingName, colour, explorerFactory))
     val p3 = (checkMatingCaptureEvadingName, (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingPlayer(checkMatingCaptureEvadingName, colour, explorerFactory))
     val p4 = (checkMatingCaptureEvadingCapturingName, (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingCheckingPlayer(checkMatingCaptureEvadingCapturingName, colour, explorerFactory))
-    val ps = List(p1, p2, p3, p4)
 
-    val names = ps map { _._1 }
-    val scoreCard = new ScoreCard(names toSet)
+    val interactive = true
+    if (interactive) {
+      val playerName = "Human"
+      val player = new BlockingPlayer(playerName)
+      val playerListener = mel(player)
+      val blockingPlayerGenerator = (playerName, (colour: Colour, explorer: MoveExplorer) => player)
+      val ps = List(p1, blockingPlayerGenerator)
+      val names = ps map { _._1 }
+      val scoreCard = new ScoreCard(names toSet)
 
-    val generators = ps map { _._2 }
+      val generators = ps map { _._2 }
 
-    times(1000) {
-      for (wpg <- generators; bpg <- generators; if wpg != bpg)
-        play(scoreCard, wpg, bpg)
+      val interactiveMode = true
+      val sb = SwingBoard.createAndShowBoard(interactiveMode)
+      sb.addMoveEntryListener(playerListener)
+      val boardAdapterOpt = Some(new BoardAdapter(sb))
+      // TODO: Stop using a tuple for blockingPlayerGenerator
+      play(scoreCard, boardAdapterOpt, generators(0), blockingPlayerGenerator._2)
+    } else {
+      val ps = List(p1, p2, p3, p4)
+      val names = ps map { _._1 }
+      val scoreCard = new ScoreCard(names toSet)
+
+      val generators = ps map { _._2 }
+      times(1000) {
+        for (wpg <- generators; bpg <- generators; if wpg != bpg) {
+          val useSwingBoard = true
+          val boardAdapterOpt = if (useSwingBoard) {
+            // TODO: Remove visual side-effect from SwingBoard creation
+            val interactiveMode = false
+            Some(new BoardAdapter(SwingBoard.createAndShowBoard(interactiveMode)))
+          } else
+            None
+
+          play(scoreCard, boardAdapterOpt, wpg, bpg)
+        }
+      }
     }
   }
 
+  private def mel(player: BlockingPlayer) = {
+    new MoveEntryListener {
+      def onMoveEntry(text: String) {
+        // TODO: Use MoveParser
+        val move = new MovePiece(text)
+        player.setMove(move)
+      }
+    }
+  }
   private val MAX_MOVES = 200
 
-  private def play(scoreCard: ScoreCard, whitePlayerGenerator: (Colour, MoveExplorer) => Player, blackPlayerGenerator: (Colour, MoveExplorer) => Player) {
+  private def play(scoreCard: ScoreCard, boardAdapterOpt: Option[BoardAdapter], whitePlayerGenerator: (Colour, MoveExplorer) => Player, blackPlayerGenerator: (Colour, MoveExplorer) => Player) {
     val outcomeListener = new Object with GameChangedSubscriber {
       var winner: Option[Colour] = None
       var isDrawn: Boolean = false
@@ -92,22 +137,16 @@ object ChessApp {
       }
     }
 
-    val useSwingBoard = false
     val useTextUI = false
-    val includeDelay = false
-    val boardAdapter = if (useSwingBoard)
-      // TODO: Remove visual side-effect from SwingBoard creation
-      Some(new BoardAdapter(SwingBoard.createAndShowBoard()))
-    else
-      None
+    val includeDelay = true
 
     val ui = if (useTextUI) new TextUI else NoUI
 
     val delayer = if (includeDelay) new DelayingSubscriber else NoUI
 
-    val boardChangedSubscribers = boardAdapter.toList ++ List(ui, delayer)
+    val boardChangedSubscribers = boardAdapterOpt.toList ++ List(ui, delayer)
     val board = new BoardModel(BoardModel.standardPlacements, boardChangedSubscribers,
-      boardAdapter.toList, List(ui, outcomeListener, delayer))
+      boardAdapterOpt.toList, List(ui, outcomeListener, delayer))
 
     val white = whitePlayerGenerator(Colours.White, board.getMoveExplorer)
     val black = blackPlayerGenerator(Colours.Black, board.getMoveExplorer)
@@ -151,7 +190,7 @@ object ChessApp {
     /* Let the spectators note the final position. */
     delay(1)
 
-    boardAdapter.foreach(_.close)
+    boardAdapterOpt.foreach(_.close)
   }
 
   private def delay(count: Int = 1) { TimeUnit.SECONDS.sleep(count) }
