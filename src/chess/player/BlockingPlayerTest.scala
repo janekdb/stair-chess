@@ -7,6 +7,10 @@ import test.Main
 import test.Test
 import test.TestUtils
 import chess.model.MovePiece
+import chess.model.Colours.Black
+import chess.model.MoveFactory
+import chess.model.Colour
+import chess.model.Configuration
 
 object BlockingPlayerTest extends Test with TestUtils with Main {
 
@@ -16,7 +20,7 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
   }
 
   private def getBlocksUntilSetInvoked {
-    val p = new BlockingPlayer("Test")
+    val p = new BlockingPlayer(Black, "Test")
     val conf = getConf
     val cd1 = new CountDownLatch(1)
     val cd2 = new CountDownLatch(1)
@@ -28,20 +32,20 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
     }
     cd1.await
     assert(moveOpt.isEmpty)
-    p.setMove("e1e2")
+    p.setMoveFactory(mf("e1e2"))
     cd2.await
     assertEquals(Some(new MovePiece("e1e2")), moveOpt)
   }
 
   private def setBlocksUntilGetInvoked {
-    val p = new BlockingPlayer("Test")
+    val p = new BlockingPlayer(Black, "Test")
     val conf = getConf
     val cd1 = new CountDownLatch(1)
     val cd2 = new CountDownLatch(1)
     var set = false
     doAsync {
       cd1.countDown
-      p.setMove("e1e2")
+      p.setMoveFactory(mf("e1e2"))
       set = true
       cd2.countDown
     }
@@ -65,4 +69,6 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
     addKings(conf)
     conf
   }
+
+  private def mf(move: Move) = new MoveFactory { def getMove(colour: Colour, conf: Configuration) = move }
 }
