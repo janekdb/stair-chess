@@ -3,6 +3,7 @@ package chess.app
 import java.util.concurrent.TimeUnit
 import chess.model.BoardModel
 import chess.model.Colour
+import chess.model.Colours.{ Black, White }
 import chess.model.Colours
 import chess.model.Configuration
 import chess.model.ConfigurationView
@@ -28,6 +29,9 @@ import chess.ui.MoveEntryListener
 import chess.player.Human
 import chess.player.BlockingPlayer
 import chess.model.MovePiece
+import chess.model.StandardMoveParser
+import chess.model.MoveFactory
+import chess.model.Move
 
 // TODO: ->Add an interactive mode
 // TODO:   Disable text entry when not user's turn
@@ -76,7 +80,8 @@ object ChessApp {
     val interactive = true
     if (interactive) {
       val playerName = "Human"
-      val player = new BlockingPlayer(playerName)
+      // TODO: Stop assuming BlockingPlayer will be Black
+      val player = new BlockingPlayer(Black, playerName)
       val playerListener = mel(player)
       val blockingPlayerGenerator = (playerName, (colour: Colour, explorer: MoveExplorer) => player)
       val ps = List(p1, blockingPlayerGenerator)
@@ -114,14 +119,17 @@ object ChessApp {
   }
 
   private def mel(player: BlockingPlayer) = {
+    class MF(val text: String) extends MoveFactory {
+      def getMove(colour: Colour, conf: Configuration): Option[Move] =
+        StandardMoveParser.parse(player.getColour, conf, text)
+    }
     new MoveEntryListener {
       def onMoveEntry(text: String) {
-        // TODO: Use MoveParser
-        val move = new MovePiece(text)
-        player.setMove(move)
+        player.setMoveFactory(new MF(text))
       }
     }
   }
+
   private val MAX_MOVES = 200
 
   private def play(scoreCard: ScoreCard, boardAdapterOpt: Option[BoardAdapter], whitePlayerGenerator: (Colour, MoveExplorer) => Player, blackPlayerGenerator: (Colour, MoveExplorer) => Player) {
