@@ -15,7 +15,7 @@ object AllTests {
     BoardModelTest.++
     StandardMoveExplorerTest.++
     DelegatingConfigurationViewTest.++
-    MoveParserTest.++
+    StandardMoveParserTest.++
 
     import chess.player._
     RandomPlayerTest.++
