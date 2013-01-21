@@ -8,6 +8,7 @@ import chess.model.Colours.{ Black, White }
 object StandardMoveParserTest extends Test with TestUtils with Main {
 
   def runTests {
+    invalidMove
     confirmMovePieceParsed
     confirmMovePieceCapturingParsed
     // TODO: Complete MoveParserTest
@@ -20,16 +21,20 @@ object StandardMoveParserTest extends Test with TestUtils with Main {
 
   import StandardMoveParser.parse
 
+  def invalidMove {
+    assertEquals(None, parse(getMoves(Black), "h4h5"))
+  }
+
   def confirmMovePieceParsed {
-    val conf = getConf
-    assertEquals(Some(new MovePiece("e8f8")), parse(Black, conf, "e8f8"))
-    assertEquals(Some(new MovePiece("e1d2")), parse(White, conf, "e1d2"))
+    assertEquals(Some(new MovePiece("e8f8")), parse(getMoves(Black), "e8f8"))
+    assertEquals(Some(new MovePiece("e1d2")), parse(getMoves(White), "e1d2"))
   }
 
   def confirmMovePieceCapturingParsed {
     val conf = getConf
     conf.add(new Position("d7"), White, Pawn())
-    assertEquals(Some(new MovePieceCapturing("e8d7")), parse(Black, conf, "e8d7"))
+    val moves = getMoves(conf)
+    assertEquals(Some(new MovePieceCapturing("e8d7")), parse(moves, "e8d7"))
   }
 
   def confirmResignParsed = fail
@@ -43,4 +48,9 @@ object StandardMoveParserTest extends Test with TestUtils with Main {
     addKings(conf)
     conf
   }
+
+  private def getMoves(colour: Colour): List[Move] = new StandardMoveExplorer(getConf).legalMoves(colour)
+
+  private def getMoves(conf: ConfigurationView) = new StandardMoveExplorer(conf).legalMoves(Black)
+
 }
