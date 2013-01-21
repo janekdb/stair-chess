@@ -4,19 +4,18 @@ package chess.model
 object StandardMoveParser {
 
   /**
+   * @param moves The available moves
+   * @param moveText The text to use to select a corresponding move
    * @return A Some(Move) if the text corresponds to a legal move otherwise None.
    */
-  def parse(colour: Colour, conf: Configuration, moveText: String): Option[Move] = {
-    assert(conf != null, "conf was null")
-    val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(colour)
-    Console.out.println("legalMoves: " + moves)
+  def parse(moves: List[Move], moveText: String): Option[Move] = {
+    println("parse: moves: " + moves)
     val move: Option[Move] = moveText match {
       case StartEnd(start, end) => {
-        Console.out.println("StartEnd: " + start + end)
+        println("StartEnd: " + start + end)
         /* Look for a SimpleMove matching the start and end positions */
         val sms = moves.filter { case m: SimpleMove => m.start == start && m.end == end }
-        Console.out.println("SimpleMoves: " + sms)
+        println("SimpleMoves: " + sms)
         if (sms.nonEmpty) Some(sms.head) else None
 
       }
