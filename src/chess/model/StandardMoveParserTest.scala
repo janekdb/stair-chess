@@ -14,7 +14,7 @@ object StandardMoveParserTest extends Test with TestUtils with Main {
     confirmMovePieceParsed
     confirmMovePieceCapturingParsed
     // TODO: Complete StandardMoveParserTest
-    // confirmEnPassantParsed
+    confirmEnPassantParsed
     confirmCastleParsed
     confirmPromoteToKnightParsed
     confirmPromoteToQueenParsed
