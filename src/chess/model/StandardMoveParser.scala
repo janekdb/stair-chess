@@ -32,9 +32,16 @@ object StandardMoveParser {
   }
 }
 
+import scala.util.matching.Regex
+
 private object StartEnd {
+  // TODO: Remove assumptions about board size from regular expression
+  val pattern = new Regex("^([a-h][1-8])([a-h][1-8])$", "start", "end")
   def unapply(text: String): Option[(Position, Position)] =
-    if (text.length == 4) Some(new Position(text.substring(0, 2)), new Position(text.substring(2, 4))) else None
+    pattern findFirstIn text match {
+      case Some(pattern(start, end)) => Some(new Position(start), new Position(end))
+      case default => None
+    }
 }
 
 private object LongShort {
@@ -42,28 +49,24 @@ private object LongShort {
   def unapply(text: String): Option[CastlingType] = inputMap.get(text)
 }
 
-import scala.util.matching.Regex
-
 private object StartPiece {
   import StandardMoveParser.pieces
   // TODO: Remove assumptions about board size from regular expression
   val pattern = new Regex("^([a-h][1-8])-([a-z]+)$", "start", "piece")
-  def unapply(text: String): Option[(Position, Piece)] = {
+  def unapply(text: String): Option[(Position, Piece)] =
     pattern findFirstIn text match {
       case Some(pattern(start, piece)) => pieces.get(piece) map { p => (new Position(start), p) }
       case default => None
     }
-  }
 }
 
 private object StartEndPiece {
   import StandardMoveParser.pieces
   // TODO: Remove assumptions about board size from regular expression
   val pattern = new Regex("^([a-h][1-8])([a-h][1-8])-([a-z]+)$", "start", "end", "piece")
-  def unapply(text: String): Option[(Position, Position, Piece)] = {
+  def unapply(text: String): Option[(Position, Position, Piece)] =
     pattern findFirstIn text match {
       case Some(pattern(start, end, piece)) => pieces.get(piece) map { p => (new Position(start), new Position(end), p) }
       case default => None
     }
-  }
 }
