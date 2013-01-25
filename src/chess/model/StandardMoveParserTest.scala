@@ -3,13 +3,14 @@ import test.TestUtils
 import test.Test
 import test.Main
 import chess.model.Colours.{ Black, White }
+import scala.util.Random
 
 object StandardMoveParserTest extends Test with TestUtils with Main {
 
   implicit def iterableToList(iter: Iterable[Move]): List[Move] = iter.toList
 
   def runTests {
-    invalidMove
+    invalidInputs
     confirmMovePieceParsed
     confirmMovePieceCapturingParsed
     confirmEnPassantParsed
@@ -23,9 +24,20 @@ object StandardMoveParserTest extends Test with TestUtils with Main {
 
   import StandardMoveParser.parse
 
-  def invalidMove {
+  def invalidInputs {
+    /* Out of bounds */
     assertEquals(None, parse(getMoves(Black), "h4h5"))
+    /* Non-numeric part */
+    assertEquals(None, parse(getMoves(Black), "gggg"))
+    /* Monkey test */
+    val r = new Random(0)
+    for (x <- 1 to 20) {
+      val monkeyText = randomString(r, r.nextInt(10) + 1, "")
+      assertEquals(None, parse(getMoves(Black), monkeyText))
+    }
   }
+
+  private def randomString(r: Random, n: Int, s: String): String = if (n == 0) s else randomString(r, n - 1, r.nextPrintableChar + s)
 
   def confirmMovePieceParsed {
     // TODO: Add test using allMoveTypes
