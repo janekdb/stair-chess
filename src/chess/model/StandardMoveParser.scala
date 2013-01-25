@@ -1,5 +1,6 @@
 package chess.model
 
+// TODO: Parse resign
 // TODO: Extend MoveParser trait
 object StandardMoveParser {
 

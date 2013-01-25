@@ -4,7 +4,6 @@ import test.Test
 import test.Main
 import chess.model.Colours.{ Black, White }
 
-// TODO: Rename to StandardMoveParser
 object StandardMoveParserTest extends Test with TestUtils with Main {
 
   implicit def iterableToList(iter: Iterable[Move]): List[Move] = iter.toList
@@ -13,7 +12,6 @@ object StandardMoveParserTest extends Test with TestUtils with Main {
     invalidMove
     confirmMovePieceParsed
     confirmMovePieceCapturingParsed
-    // TODO: Complete StandardMoveParserTest
     confirmEnPassantParsed
     confirmCastleParsed
     confirmPromoteToKnightParsed
