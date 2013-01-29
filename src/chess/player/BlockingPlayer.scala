@@ -12,7 +12,15 @@ class BlockingPlayer(val colour: Colour, val name: String) extends Player {
 
   private val q = new SynchronousQueue[MoveFactory]
 
-  def getMove(configuration: Configuration): Option[Move] = (q take) getMove (colour, configuration)
+  def getMove(configuration: Configuration): Option[Move] = Some(getSomeMove(configuration))
+
+  /**
+   * Do not return until a move has been parsed
+   */
+  private def getSomeMove(configuration: Configuration): Move = {
+    val m = (q take) getMove (colour, configuration)
+    m.getOrElse(getSomeMove(configuration))
+  }
 
   def getName: String = name
 
