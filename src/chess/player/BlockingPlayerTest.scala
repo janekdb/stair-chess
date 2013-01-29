@@ -16,6 +16,7 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
 
   def runTests {
     getBlocksUntilSetInvoked
+    getBlocksUntilSetInvokedWithSome
     setBlocksUntilGetInvoked
   }
 
@@ -32,6 +33,28 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
     }
     cd1.await
     assert(moveOpt.isEmpty)
+    p.setMoveFactory(mf("e1e2"))
+    cd2.await
+    assertEquals(Some(new MovePiece("e1e2")), moveOpt)
+  }
+
+  private def getBlocksUntilSetInvokedWithSome {
+    val p = new BlockingPlayer(Black, "Test")
+    val conf = getConf
+    val cd1 = new CountDownLatch(1)
+    val cd2 = new CountDownLatch(1)
+    var moveOpt: Option[Move] = None
+    doAsync {
+      cd1.countDown
+      moveOpt = p.getMove(conf)
+      cd2.countDown
+    }
+    cd1.await
+    assert(moveOpt.isEmpty)
+    /* Invoke setMoveFactory multiple times to prove None is discarded. */
+    p.setMoveFactory(mf(None))
+    p.setMoveFactory(mf(None))
+    p.setMoveFactory(mf(None))
     p.setMoveFactory(mf("e1e2"))
     cd2.await
     assertEquals(Some(new MovePiece("e1e2")), moveOpt)
@@ -70,5 +93,5 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
     conf
   }
 
-  private def mf(move: Move) = new MoveFactory { def getMove(colour: Colour, conf: Configuration) = move }
+  private def mf(moveOpt: Option[Move]) = new MoveFactory { override def getMove(colour: Colour, conf: Configuration) = moveOpt }
 }
