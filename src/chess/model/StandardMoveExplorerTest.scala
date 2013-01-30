@@ -8,6 +8,14 @@ import Colours.{ Black, White }
 
 object StandardMoveExplorerTest extends Test with TestUtils with Main {
 
+  // TODO: Use implicit to add legalMovesWithOutResign method to MoveExplorer
+  //  private implicit def addWithOutResign(sme: MoveExplorer) = new {
+  //
+  //    def legalMovesWithOutResign(colour: Colour): List[Move] = {
+  //      val moves =
+  //    }
+  //  }
+
   def runTests {
 
     acceptMovePieceThatWouldNotCapture
@@ -57,6 +65,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     castlingNotConsiderWhenOutsidePieceIsNotRook
     castlingNotConsiderWhenInsidePieceIsNotKing
     enPassantSelected
+    resignIncluded
 
     /* Check and Check Mate */
     kingIsCheckMatedDetected
@@ -453,7 +462,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add("g7", White, Pawn());
 
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(White)
+    val moves = removeResign(e.legalMoves(White))
     assertEquals(List(MovePieceCapturing("a8", "b8")), moves, "The only possible move should have been selected")
   }
 
@@ -504,7 +513,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add("b4", White, King())
     conf.add("g6", Black, Queen())
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(Black)
+    val moves = removeResign(e.legalMoves(Black))
     assertEquals(List(MovePieceCapturing("d3", "e3")), moves, "Black escaped from check by selected the only possible move")
   }
 
@@ -531,7 +540,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add("f7", White, Queen())
     conf.add("g8", Black, King())
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(Black)
+    val moves = removeResign(e.legalMoves(Black))
     assertEquals(List(MovePieceCapturing("g8", "f7")), moves, "Black escaped from check by selected the only possible move")
   }
 
@@ -612,6 +621,14 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     assertTrue(moves contains EnPassant("d5", "e6"), "En passant was in the list of acceptable moves")
   }
 
+  private def resignIncluded {
+    val conf: Configuration = new GridConfiguration
+    placeKings(conf)
+    val e = new StandardMoveExplorer(conf)
+    val moves = e.legalMoves(White)
+    assertTrue(moves contains Resign(White), "Resign was in the list of legal moves")
+  }
+
   /* legalMoves: end*/
 
   /* Check Mate start */
@@ -668,6 +685,10 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     val lines = ConfigurationView.getTextRepresentation(conf)
     for (line <- lines) println(line)
     println
+  }
+
+  private def removeResign(moves: List[Move]) = {
+    moves filterNot { case Resign(colour) => true case default => false }
   }
 
 }
