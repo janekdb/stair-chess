@@ -292,8 +292,13 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
    * @return true when there is at least one move that will get the king out of
    * check
    */
+  // TODO: Ensure checkedKingCanEscape logic is not duplicated elsewhere
   private def checkedKingCanEscape(colour: Colour): Boolean = {
-    legalMoves(colour).nonEmpty
+    removeResign(legalMoves(colour)).nonEmpty
+  }
+
+  private def removeResign(moves: List[Move]) = {
+    moves filterNot { case Resign(colour) => true case default => false }
   }
 
   private def checkKingNotLeftInCheckAfterMove(move: SimpleMove) {
@@ -313,7 +318,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
   /** @return All legal moves. */
   def legalMoves(colour: Colour): List[Move] = {
     val startPositions = conf.locatePieces(colour)
-    var moves = List[Move]()
+    var moves = List[Move](Resign(colour))
     for (s <- startPositions) {
       var endPositions = this.getBasicPositions(s)
       val (_, piece, _) = conf.getExistingPiece(s)
