@@ -1,6 +1,5 @@
 package chess.model
 
-// TODO: Parse resign
 // TODO: Extend MoveParser trait
 object StandardMoveParser {
 
@@ -13,6 +12,7 @@ object StandardMoveParser {
    * @return A Some(Move) if the text corresponds to a legal move otherwise None.
    */
   def parse(moves: List[Move], moveText: String): Option[Move] = {
+
     val move: Option[Move] = moveText match {
       case StartEnd(start, end) => {
         moves find { case m: SimpleMove => (m.start, m.end) == (start, end) case default => false }
@@ -26,7 +26,11 @@ object StandardMoveParser {
       case StartEndPiece(start, end, piece) => {
         moves find { case m: PromoteCapturing => (m.start, m.end, m.piece) == (start, end, piece) case default => false }
       }
-      case default => None
+      case default => {
+        // TODO: Report this via a listener interface
+        println("No match for: '" + moveText + "'")
+        None
+      }
     }
     move
   }
