@@ -34,11 +34,11 @@ import chess.model.MoveFactory
 import chess.model.Move
 
 // TODO: ->Add an interactive mode
+// TODO:   ->Issue warning on illegal move
 // TODO:   Disable text entry when not user's turn
-// TODO:   ->Support adding moveEntryListeners to the SwingBoard
-// TODO:   Use added moveEntryListener to drive Player implementation
 // TODO:   Restrict entry to possible moves
-// TODO:   Handle castling and promotion
+// TODO:   Do not ask for a move from the player when no moves are possible
+// TODO:   Order DelayingSubscriber after textual game output
 // TODO: Add a tournament mode
 // TODO: Score as tournament
 // TODO: Look for a way to be more functional
@@ -49,6 +49,7 @@ import chess.model.Move
 // TODO: Add lookahead ranker with configurable depth
 // TODO: Add parallelism to lookahead ranker
 // TODO: UI: Convert SwingBoard to Scala
+// TODO: Prevent a pawn at h2 from taking a queen at h4 as happened in a manual interaction
 
 object ChessApp {
 
@@ -120,8 +121,12 @@ object ChessApp {
 
   private def mel(player: BlockingPlayer) = {
     class MF(val text: String) extends MoveFactory {
-      def getMove(colour: Colour, conf: Configuration): Option[Move] =
-        StandardMoveParser.parse(player.getColour, conf, text)
+      def getMove(colour: Colour, conf: Configuration): Option[Move] = {
+        val e = new StandardMoveExplorer(conf)
+        val moves = e.legalMoves(player.getColour)
+        //    Console.out.println("legalMoves: " + moves)
+        StandardMoveParser.parse(moves, text)
+      }
     }
     new MoveEntryListener {
       def onMoveEntry(text: String) {
@@ -140,7 +145,6 @@ object ChessApp {
         event match {
           case Won(colour, _) => winner = Some(colour)
           case Drawn(_) => isDrawn = true
-          case default => Unit
         }
       }
     }
