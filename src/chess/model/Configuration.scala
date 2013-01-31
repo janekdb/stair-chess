@@ -68,7 +68,6 @@ trait Configuration extends ConfigurationView {
         this.replace(end, piece)
         Promoted(end, piece) :: events reverse
       }
-      case Resign(colour) => throw new AssertionError("Resign should not be handled in applyMove")
       case default => throw new UnhandledCaseException(move.toString)
     }
   }
