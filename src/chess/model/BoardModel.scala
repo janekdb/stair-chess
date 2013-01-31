@@ -101,15 +101,12 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
 
     /* Extract the last colour before the configuration is changed. */
     val optColour = optMove match {
-      case Some(Resign(colour)) => Some(colour)
       case None => None
       case default => Some(extractColour(optMove.get))
     }
 
     val (events: List[BoardChanged], outcomeOpt) = optMove match {
-      case Some(Resign(colour)) => {
-        (List(Resigned(colour)), Some(GameOutcome(GameOutcomeModes.Resignation, Some(colour.opposite))))
-      }
+      // TODO: Add a way to resign a game but not by using a Move subclass
       case None => {
         (List(), Some(GameOutcome(GameOutcomeModes.Stalemate, None)))
       }
