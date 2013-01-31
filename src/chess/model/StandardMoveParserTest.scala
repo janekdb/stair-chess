@@ -119,17 +119,16 @@ object StandardMoveParserTest extends Test with TestUtils with Main {
     val e3 = new Position("d8")
     val s4 = new Position("a7")
     val e4 = new Position("a5")
-    // TODO: Determine whether Resign should be moved out of the Move hierarchy */
     /* All except Resign */
     def toString(p1: Position, p2: Position): String = p1.toString + p2.toString
     var m = Map[String, Move]()
-    m += (toString(s, e) -> new MovePiece(s, e))
-    m += (toString(s, e2) -> new MovePieceCapturing(s, e2))
-    m += ("castle-short" -> new Castle(Black, Short))
-    m += (s3.toString + "-knight" -> new Promote(s3, Knight()))
-    m += (s3.toString + "-queen" -> new Promote(s3, Queen()))
-    m += (toString(s3, e3) + "-knight" -> new PromoteCapturing(s3, e3, Knight()))
-    m += (toString(s3, e3) + "-rook" -> new PromoteCapturing(s3, e3, Rook()))
+    m += (toString(s, e) -> MovePiece(s, e))
+    m += (toString(s, e2) -> MovePieceCapturing(s, e2))
+    m += ("castle-short" -> Castle(Black, Short))
+    m += (s3.toString + "-knight" -> Promote(s3, Knight()))
+    m += (s3.toString + "-queen" -> Promote(s3, Queen()))
+    m += (toString(s3, e3) + "-knight" -> PromoteCapturing(s3, e3, Knight()))
+    m += (toString(s3, e3) + "-rook" -> PromoteCapturing(s3, e3, Rook()))
     m += (toString(s4, e4) -> EnPassant(s4, e4))
     m
   }
