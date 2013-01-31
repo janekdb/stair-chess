@@ -35,7 +35,6 @@ case class MovePieceCapturing(val start: Position, val end: Position) extends Si
   require(start != end, "Start must be different to end: " + start)
   def this(move: String) = this(start(move), end(move))
 }
-case class Resign(colour: Colour) extends Move
 case class Castle(colour: Colour, castlingType: CastlingType) extends Move
 //case class PromoteCapturing(val start: Position, val end: Position, val piece: Piece) extends SimpleMove {
 case class Promote(val start: Position, val piece: Piece) extends SimpleMove {
@@ -58,3 +57,6 @@ case class EnPassant(val start: Position, val end: Position) extends SimpleMove 
   require(start != end, "Start must be different to end: " + start)
   val captured = new Position(end.getCol, start.getRow)
 }
+
+// TODO: Move Resign into another compilation unit.
+case class Resign(colour: Colour)
