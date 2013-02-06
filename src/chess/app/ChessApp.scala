@@ -34,11 +34,8 @@ import chess.model.MoveFactory
 import chess.model.Move
 
 // TODO: ->Add an interactive mode
-// TODO:   ->Issue warning on illegal move
 // TODO:   Disable text entry when not user's turn
-// TODO:   Restrict entry to possible moves
 // TODO:   Do not ask for a move from the player when no moves are possible
-// TODO:   Order DelayingSubscriber after textual game output
 // TODO: Add a tournament mode
 // TODO: Score as tournament
 // TODO: Look for a way to be more functional
@@ -83,7 +80,6 @@ object ChessApp {
       val playerName = "Human"
       // TODO: Stop assuming BlockingPlayer will be Black
       val player = new BlockingPlayer(Black, playerName)
-      val playerListener = mel(player)
       val blockingPlayerGenerator = (playerName, (colour: Colour, explorer: MoveExplorer) => player)
       val ps = List(p1, blockingPlayerGenerator)
       val names = ps map { _._1 }
@@ -93,6 +89,15 @@ object ChessApp {
 
       val interactiveMode = true
       val sb = SwingBoard.createAndShowBoard(interactiveMode)
+
+      /* Invoked when a legal move has been parsed. */
+      val moveListener = new MoveListener {
+        def onMove(move: Move) {
+          println("MoveListener: " + move)
+          sb.clearMoveEntry
+        }
+      }
+      val playerListener: MoveEntryListener = mel(player, moveListener)
       sb.addMoveEntryListener(playerListener)
       val boardAdapterOpt = Some(new BoardAdapter(sb))
       // TODO: Stop using a tuple for blockingPlayerGenerator
@@ -119,13 +124,23 @@ object ChessApp {
     }
   }
 
-  private def mel(player: BlockingPlayer) = {
+  private trait MoveListener {
+    def onMove(move: Move)
+  }
+
+  private def mel(player: BlockingPlayer, legalMoveListener: MoveListener) = {
     class MF(val text: String) extends MoveFactory {
       def getMove(colour: Colour, conf: Configuration): Option[Move] = {
         val e = new StandardMoveExplorer(conf)
         val moves = e.legalMoves(player.getColour)
         //    Console.out.println("legalMoves: " + moves)
-        StandardMoveParser.parse(moves, text)
+        val moveOpt = StandardMoveParser.parse(moves, text)
+        if (moveOpt.isDefined) {
+          // TODO: Remove println from MoveFactory implementation
+          println("Sending event to legalMoveListener: " + moveOpt)
+          legalMoveListener.onMove(moveOpt.get)
+        }
+        moveOpt
       }
     }
     new MoveEntryListener {
@@ -150,7 +165,7 @@ object ChessApp {
     }
 
     val useTextUI = false
-    val includeDelay = true
+    val includeDelay = false
 
     val ui = if (useTextUI) new TextUI else NoUI
 
@@ -200,7 +215,7 @@ object ChessApp {
     Display.renderScoreCard(scoreCard)
 
     /* Let the spectators note the final position. */
-    delay(1)
+    delay(20)
 
     boardAdapterOpt.foreach(_.close)
   }
