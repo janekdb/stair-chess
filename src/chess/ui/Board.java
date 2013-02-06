@@ -18,4 +18,7 @@ public interface Board {
 	// TODO: Move addMoveEntryListener out of Board into a new interface
 	void addMoveEntryListener(MoveEntryListener listener);
 
+	/** Remove all user input from move entry interface */
+	void clearMoveEntry();
+
 }
