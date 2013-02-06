@@ -19,4 +19,7 @@ public interface MoveEntry {
 	 */
 	void addMoveEntryListener(MoveEntryListener listener);
 
+	/** Remove all user input from move entry interface */
+	void clearMoveEntry();
+
 }
