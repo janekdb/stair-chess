@@ -213,4 +213,9 @@ public class SwingBoard extends JFrame implements Board {
 		}
 		moveEntry.addMoveEntryListener(listener);
 	}
+
+	/* Remove all user input from move entry interface */
+	public void clearMoveEntry() {
+		moveEntry.clearMoveEntry();
+	}
 }
