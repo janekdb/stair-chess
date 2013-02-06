@@ -9,7 +9,6 @@ import chess.model.Won
 import chess.model.PieceMoved
 import chess.model.Promoted
 import chess.model.PieceMovedCapturing
-import chess.util.TODO
 import chess.model.Resigned
 import chess.model.PiecePlaced
 import chess.model.Castled
@@ -19,12 +18,12 @@ class DelayingSubscriber extends BoardChangedSubscriber with GameChangedSubscrib
 
   val DELAY_FACTOR = 1;
 
-  private def delay(d: Int) { TimeUnit.MILLISECONDS.sleep(d * DELAY_FACTOR) }
+  private def delay(d: Int) { TimeUnit.MILLISECONDS.sleep(d / DELAY_FACTOR) }
 
   def onGameChanged(event: GameChanged) {
     val delayFor =
       event match {
-        case _: Won => 100
+        case _: Won => 10000
         case _: Drawn => 100
         case default => {
           assert(false, "Unhandled case: " + event)
@@ -42,7 +41,7 @@ class DelayingSubscriber extends BoardChangedSubscriber with GameChangedSubscrib
   private def onBoardChanged(event: BoardChanged) {
     val delayFor =
       event match {
-        case _: PieceMoved => 1
+        case _: PieceMoved => 1000
         case _: PieceMovedCapturing => 1
         case _: Promoted => 100
         case _: Castled => 100
