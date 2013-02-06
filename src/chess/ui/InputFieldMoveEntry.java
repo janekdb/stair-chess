@@ -48,4 +48,9 @@ public class InputFieldMoveEntry implements MoveEntry {
 		inputField.addActionListener(a);
 	}
 
+	@Override
+	public void clearMoveEntry() {
+		inputField.setText("");
+	}
+
 }
