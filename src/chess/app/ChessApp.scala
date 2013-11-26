@@ -34,7 +34,7 @@ import chess.model.MoveFactory
 import chess.model.Move
 
 // TODO: ->Add an interactive mode
-// TODO:   Disable text entry when not user's turn
+// TODO:   ->Disable text entry when not user's turn
 // TODO:   Do not ask for a move from the player when no moves are possible
 // TODO: Add a tournament mode
 // TODO: Score as tournament
@@ -75,7 +75,7 @@ object ChessApp {
     val p3 = (checkMatingCaptureEvadingName, (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingPlayer(checkMatingCaptureEvadingName, colour, explorerFactory))
     val p4 = (checkMatingCaptureEvadingCapturingName, (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingCheckingPlayer(checkMatingCaptureEvadingCapturingName, colour, explorerFactory))
 
-    val interactive = true
+    val interactive = false
     if (interactive) {
       val playerName = "Human"
       // TODO: Stop assuming BlockingPlayer will be Black
@@ -150,7 +150,7 @@ object ChessApp {
     }
   }
 
-  private val MAX_MOVES = 200
+  private val MaxMoves = 200
 
   private def play(scoreCard: ScoreCard, boardAdapterOpt: Option[BoardAdapter], whitePlayerGenerator: (Colour, MoveExplorer) => Player, blackPlayerGenerator: (Colour, MoveExplorer) => Player) {
     val outcomeListener = new Object with GameChangedSubscriber {
@@ -191,14 +191,14 @@ object ChessApp {
     // TODO: Continue functionalising this maybe as a lazy seq from which the first MAX_MOVES are taken
     val moveCount = (
       for {
-        m <- 1 to MAX_MOVES
+        m <- 1 to MaxMoves
         if !board.isCompleted
       } yield {
         board.move(playerSelector.next.getMove(board.getConfiguration))
         m
       }).max
 
-    val isAborted = moveCount == MAX_MOVES
+    val isAborted = moveCount == MaxMoves
 
     if (outcomeListener.winner.isDefined) {
       val colour = outcomeListener.winner.get
