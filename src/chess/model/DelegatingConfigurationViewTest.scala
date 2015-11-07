@@ -12,8 +12,8 @@ object DelegatingConfigurationViewTest extends Test with TestUtils with Main {
 
   private def appliedResultsInModifedConfiguration {
     val conf = new GridConfiguration
-    conf.add("e5", Black, Pawn())
+    conf.add("e5", Black, Pawn)
     val del = new DelegatingConfigurationView(conf).applied(MovePiece("e5", "e6"))
-    assertEquals(del.getExistingPiece("e6"), (Black, Pawn(), Some(new Position("e5"))))
+    assertEquals(del.getExistingPiece("e6"), (Black, Pawn, Some(new Position("e5"))))
   }
 }

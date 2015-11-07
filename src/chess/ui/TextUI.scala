@@ -53,7 +53,7 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
         conf.replace(position, replacementPiece)
       }
       case Resigned(colour) => {
-        val positions = conf.locatePieces(colour, King())
+        val positions = conf.locatePieces(colour, King)
         positions match {
           case List() => throw new RuntimeException("The King could not be found for " + colour)
           // TODO: UI: Improve resignation visualization

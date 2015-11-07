@@ -26,9 +26,9 @@ object MoveTest extends Test with TestUtils with Main {
   }
 
   private def promote {
-    val wp = Promote("a7", Queen())
+    val wp = Promote("a7", Queen)
     assertEquals(wp.end, new Position("a8"), "The end position of a Promote was correct for White")
-    val bp = Promote("a2", Queen())
+    val bp = Promote("a2", Queen)
     assertEquals(bp.end, new Position("a1"), "The end position of a Promote was correct for Black")
   }
 }

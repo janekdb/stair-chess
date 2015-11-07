@@ -22,11 +22,11 @@ object GridConfigurationTest extends Test with TestUtils with Main {
   private def confirmGetRows {
     val conf = new GridConfiguration
 
-    conf.add("a1", White, Pawn())
-    conf.add("b2", White, Knight())
+    conf.add("a1", White, Pawn)
+    conf.add("b2", White, Knight)
 
-    conf.add("d4", Black, Rook())
-    conf.add("e4", Black, Queen())
+    conf.add("d4", Black, Rook)
+    conf.add("e4", Black, Queen)
 
     val rows = conf.getRows
     assertNotNull(rows)
@@ -37,10 +37,10 @@ object GridConfigurationTest extends Test with TestUtils with Main {
 
     rows.foreach(row => assertEquals(BOARD_SIZE, row.size))
 
-    assertEquals((White, Pawn()), rows(0)(0))
-    assertEquals((White, Knight()), rows(1)(1))
-    assertEquals((Black, Rook()), rows(3)(3))
-    assertEquals((Black, Queen()), rows(3)(4))
+    assertEquals((White, Pawn), rows(0)(0))
+    assertEquals((White, Knight), rows(1)(1))
+    assertEquals((Black, Rook), rows(3)(3))
+    assertEquals((Black, Queen), rows(3)(4))
 
     /* All remaining cells must be null */
     val expectedNullCount = BOARD_SIZE * BOARD_SIZE - 4
@@ -53,11 +53,11 @@ object GridConfigurationTest extends Test with TestUtils with Main {
 
     val whiteStart: Position = "e2"
     val whiteEnd: Position = "e3"
-    conf.add(whiteStart, White, Pawn())
+    conf.add(whiteStart, White, Pawn)
 
     val blackStart: Position = "h8"
     val blackEnd: Position = "h4"
-    conf.add(blackStart, Black, Rook())
+    conf.add(blackStart, Black, Rook)
 
     conf.getLastMove match {
       case None => Unit
@@ -65,10 +65,10 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     }
 
     conf.applyMove(MovePiece(whiteStart, whiteEnd))
-    assertSomeEquals((Pawn(), whiteStart, whiteEnd), conf.getLastMove)
+    assertSomeEquals((Pawn, whiteStart, whiteEnd), conf.getLastMove)
 
     conf.applyMove(MovePiece(blackStart, blackEnd))
-    assertSomeEquals((Rook(), blackStart, blackEnd), conf.getLastMove)
+    assertSomeEquals((Rook, blackStart, blackEnd), conf.getLastMove)
   }
 
   private def moveHistoryCopied {
@@ -76,11 +76,11 @@ object GridConfigurationTest extends Test with TestUtils with Main {
 
     val whiteStart: Position = "e2"
     val whiteEnd: Position = "e3"
-    conf.add(whiteStart, White, Pawn())
+    conf.add(whiteStart, White, Pawn)
 
     conf.applyMove(MovePiece(whiteStart, whiteEnd))
     val copy = conf.copyOf
-    assertSomeEquals((Pawn(), whiteStart, whiteEnd), copy.getLastMove)
+    assertSomeEquals((Pawn, whiteStart, whiteEnd), copy.getLastMove)
   }
 
   private def enPassantEventSent {
@@ -88,11 +88,11 @@ object GridConfigurationTest extends Test with TestUtils with Main {
 
     val whiteStart: Position = "a5"
     val whiteEnd: Position = "b6"
-    conf.add(whiteStart, White, Pawn())
+    conf.add(whiteStart, White, Pawn)
 
     val blackStart: Position = "b7"
     val blackEnd: Position = "b5"
-    conf.add(blackStart, Black, Pawn())
+    conf.add(blackStart, Black, Pawn)
 
     conf.applyMove(MovePiece(blackStart, blackEnd))
     val events = conf.applyMove(EnPassant(whiteStart, whiteEnd))
@@ -106,7 +106,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     }
     val (colour, piece, _) = conf.getExistingPiece(whiteEnd)
     assertEquals(White, colour)
-    assertEquals(Pawn(), piece)
+    assertEquals(Pawn, piece)
     conf.getPiece(blackEnd) match {
       case None => {}
       case default => fail("The black pawn should have been taken")
@@ -117,7 +117,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     val conf = new GridConfiguration
     val whiteStart: Position = "a5"
     val whiteEnd: Position = "a6"
-    conf.add(whiteStart, White, Pawn())
+    conf.add(whiteStart, White, Pawn)
     val events = conf.applyMove(MovePiece(whiteStart, whiteEnd))
     assertEquals(List(PieceMoved(whiteStart, whiteEnd)), events, "The events sent when a piece was moved should have been correct")
   }
@@ -126,8 +126,8 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     val conf = new GridConfiguration
     val whiteStart: Position = "a5"
     val whiteEnd: Position = "b6"
-    conf.add(whiteStart, White, Pawn())
-    conf.add(whiteEnd, Black, Queen())
+    conf.add(whiteStart, White, Pawn)
+    conf.add(whiteEnd, Black, Queen)
     val events = conf.applyMove(MovePieceCapturing(whiteStart, whiteEnd))
     assertEquals(List(PieceMovedCapturing(whiteStart, whiteEnd, whiteEnd)), events, "The events sent when a piece captured should have been correct")
   }
@@ -136,19 +136,19 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     val conf = new GridConfiguration
     val whiteStart: Position = "a7"
     val whiteEnd: Position = "a8"
-    conf.add(whiteStart, White, Pawn())
-    val events = conf.applyMove(Promote(whiteStart, Queen()))
-    assertEquals(List(PieceMoved(whiteStart, whiteEnd), Promoted(whiteEnd, Queen())), events, "The events sent when a piece was promote should have been correct")
+    conf.add(whiteStart, White, Pawn)
+    val events = conf.applyMove(Promote(whiteStart, Queen))
+    assertEquals(List(PieceMoved(whiteStart, whiteEnd), Promoted(whiteEnd, Queen)), events, "The events sent when a piece was promote should have been correct")
   }
 
   private def promoteCapturingEventsSent {
     val conf = new GridConfiguration
     val whiteStart: Position = "a7"
     val whiteEnd: Position = "b8"
-    conf.add(whiteStart, White, Pawn())
-    conf.add(whiteEnd, Black, Bishop())
-    val events = conf.applyMove(PromoteCapturing(whiteStart, whiteEnd, Queen()))
-    assertEquals(List(PieceMovedCapturing(whiteStart, whiteEnd, whiteEnd), Promoted(whiteEnd, Queen())), events, "The events sent when a piece was promote should have been correct")
+    conf.add(whiteStart, White, Pawn)
+    conf.add(whiteEnd, Black, Bishop)
+    val events = conf.applyMove(PromoteCapturing(whiteStart, whiteEnd, Queen))
+    assertEquals(List(PieceMovedCapturing(whiteStart, whiteEnd, whiteEnd), Promoted(whiteEnd, Queen)), events, "The events sent when a piece was promote should have been correct")
   }
 
   private def promoteReplacesPiece {
@@ -156,11 +156,11 @@ object GridConfigurationTest extends Test with TestUtils with Main {
 
     val start: Position = "f7"
     val end: Position = "f8"
-    conf.add(start, White, Pawn())
-    val events = conf.applyMove(Promote(start, Knight()))
-    assertEquals(PieceMoved(start, end) :: Promoted(end, Knight()) :: Nil, events)
-    assertEquals(List(), conf.locatePieces(White, Pawn()), "There should not have been any pawns")
-    assertEquals(List(end), conf.locatePieces(White, Knight()), "A knight should be present")
+    conf.add(start, White, Pawn)
+    val events = conf.applyMove(Promote(start, Knight))
+    assertEquals(PieceMoved(start, end) :: Promoted(end, Knight) :: Nil, events)
+    assertEquals(List(), conf.locatePieces(White, Pawn), "There should not have been any pawns")
+    assertEquals(List(end), conf.locatePieces(White, Knight), "A knight should be present")
   }
 
   def applied {
@@ -168,7 +168,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
 
     val start: Position = "e4"
     val end: Position = "e5"
-    conf.add(start, White, Pawn())
+    conf.add(start, White, Pawn)
     val confPost = conf.applied(MovePiece(start, end))
 
     assertTrue(conf.exists(start), "The initial configuraton was not changed")

@@ -31,7 +31,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     Confirm the longest rook moves are picked
     */
   private def rankerCombinationPicksLongestRookMoves {
-    val rookRanker = newRanker(Rook())
+    val rookRanker = newRanker(Rook)
     val moveRanker: MoveRanker = new ChainedMoveRanker(rookRanker, longestRanker)
 
     val conf = newConf
@@ -55,16 +55,16 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     Confirm the longest bishop moves are picked
     */
   private def rankerCombinationPicksLongestBishopMovesSimple {
-    val bishopRanker = newRanker(Bishop())
+    val bishopRanker = newRanker(Bishop)
     val moveRanker: MoveRanker = new ChainedMoveRanker(longestRanker, bishopRanker)
 
     /* A rook that can move 6 squares */
     val conf: Configuration = new GridConfiguration
     addKings(conf)
     /* A bishop that can move 7 squares */
-    conf.add("a1", White, Bishop())
+    conf.add("a1", White, Bishop)
     /* A rook that can move 6 squares */
-    conf.add("b1", White, Rook())
+    conf.add("b1", White, Rook)
 
     val moveExplorer = new StandardMoveExplorer(conf)
     val moves = moveExplorer.legalMoves(White)
@@ -80,7 +80,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
   }
 
   private def rankerCombinationExcludesNilLists {
-    val bishopRanker = newRanker(Bishop())
+    val bishopRanker = newRanker(Bishop)
     val conf: Configuration = new GridConfiguration
     addKings(conf)
     val moveExplorer = new StandardMoveExplorer(conf)
@@ -103,12 +103,12 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     Confirm the longest bishop moves are picked
    */
   private def rankerCombinationPicksLongestBishopMoves {
-    val bishopRanker = newRanker(Bishop())
+    val bishopRanker = newRanker(Bishop)
     val moveRanker: MoveRanker = new ChainedMoveRanker(longestRanker, bishopRanker)
 
     val conf = newConf
     /* A rook that can move 6 squares */
-    conf.add("d1", White, Rook())
+    conf.add("d1", White, Rook)
 
     val moveExplorer = new StandardMoveExplorer(conf)
     val moves = moveExplorer.legalMoves(White)
@@ -150,13 +150,13 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     val conf: Configuration = new GridConfiguration
     addKings(conf)
     /* A bishop that can move 7 squares */
-    conf.add("a1", White, Bishop())
+    conf.add("a1", White, Bishop)
     /* A queen that can move 7 squares */
-    conf.add("h1", White, Queen())
+    conf.add("h1", White, Queen)
     /* A rook that can move 6 squares */
-    conf.add("b2", White, Rook())
+    conf.add("b2", White, Rook)
     /* A rook that can move 5 squares */
-    conf.add("c3", White, Rook())
+    conf.add("c3", White, Rook)
     conf
   }
 
@@ -213,9 +213,9 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     case default => false
   }
 
-  private def isBishop = isPiece(Bishop()) _
+  private def isBishop = isPiece(Bishop) _
 
-  private def isRook = isPiece(Rook()) _
+  private def isRook = isPiece(Rook) _
 
   // TODO: Add a length property to SimpleMove or maybe to Move
   private def length(conf: ConfigurationView)(move: Move) = move match {

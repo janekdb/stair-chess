@@ -16,12 +16,12 @@ trait TestUtils {
 
   protected def addWhiteKing(conf: Configuration) {
     /* The King is required to allow the kingInCheck method to complete. */
-    conf.add("e1", White, King())
+    conf.add("e1", White, King)
   }
 
   protected def addBlackKing(conf: Configuration) {
     /* The King is required to allow the kingInCheck method to complete. */
-    conf.add("e8", Black, King())
+    conf.add("e8", Black, King)
   }
 
   protected def addKings(conf: Configuration) {

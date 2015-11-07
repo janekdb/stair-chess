@@ -27,10 +27,10 @@ object CapturingRankerTest extends Test with TestUtils with Main {
     val conf: Configuration = new GridConfiguration
 
     addKings(conf)
-    conf.add("h1", White, Rook())
-    conf.add("f8", White, Bishop())
-    conf.add("g8", White, Knight())
-    conf.add("h8", Black, Rook())
+    conf.add("h1", White, Rook)
+    conf.add("f8", White, Bishop)
+    conf.add("g8", White, Knight)
+    conf.add("h8", Black, Rook)
 
     val explorer = new StandardMoveExplorer(conf)
     val rankedMoves: List[List[Move]] = ranker.rankMoves(explorer.legalMoves(White), conf)

@@ -33,17 +33,17 @@ object CaptureEvadingRankerTest extends Test with TestUtils with Main {
     addWhiteKing(conf)
 
     /* A piece that is attacked that is shielding another piece so moving the piece does not reduce the attack count. */
-    conf.add("a2", White, Rook())
-    conf.add("a1", White, Knight())
-    conf.add("a8", Black, Queen());
+    conf.add("a2", White, Rook)
+    conf.add("a1", White, Knight)
+    conf.add("a8", Black, Queen);
 
     /* A piece that can move into a attacked square. */
-    conf.add("g1", White, Knight())
-    conf.add("h8", Black, Rook())
+    conf.add("g1", White, Knight)
+    conf.add("h8", Black, Rook)
 
     /* A piece that can move out of attack. */
-    conf.add("e6", White, Pawn())
-    conf.add("d5", Black, King())
+    conf.add("e6", White, Pawn)
+    conf.add("d5", Black, King)
 
     val explorer = new StandardMoveExplorer(conf)
     val rankedMoves: List[List[Move]] = ranker.rankMoves(explorer.legalMoves(White), conf)
@@ -62,22 +62,22 @@ object CaptureEvadingRankerTest extends Test with TestUtils with Main {
     val conf = new GridConfiguration
 
     addWhiteKing(conf)
-    conf.add("a3", Black, King())
+    conf.add("a3", Black, King)
 
     // Add three pieces that are the only pieces attacked. One piece is attacked 3 time, then 2 then 1
-    conf.add("d6", White, Pawn())
-    conf.add("e6", White, Pawn())
-    conf.add("f6", White, Pawn())
+    conf.add("d6", White, Pawn)
+    conf.add("e6", White, Pawn)
+    conf.add("f6", White, Pawn)
     /* This removes double advance moves from consideration. */
-    conf.add("a8", Black, Rook())
+    conf.add("a8", Black, Rook)
     /* Attack left and right */
-    conf.add("e5", Black, Bishop())
+    conf.add("e5", Black, Bishop)
     /* Attack middle */
-    conf.add("d4", Black, Knight())
+    conf.add("d4", Black, Knight)
     /* Attack left and right */
-    conf.add("e4", Black, Knight())
+    conf.add("e4", Black, Knight)
     /* Attack left */
-    conf.add("c4", Black, Knight())
+    conf.add("c4", Black, Knight)
 
     val explorer = new StandardMoveExplorer(conf)
     val rankedMoves: List[List[Move]] = ranker.rankMoves(explorer.legalMoves(White), conf)

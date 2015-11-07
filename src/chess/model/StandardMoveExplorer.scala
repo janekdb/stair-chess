@@ -46,15 +46,15 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
     val vectors = piece.movements(colour)
     // TODO: Move repeatable property into vectors by pre-repeating the vectors
     val repeatable = piece match {
-      case Queen() => true
-      case Bishop() => true
-      case Rook() => true
+      case Queen => true
+      case Bishop => true
+      case Rook => true
       case default => false
     }
     var basicPositions = Set[Position]()
 
     val moveAllowed = piece match {
-      case Pawn() => pawnMovePredicate
+      case Pawn => pawnMovePredicate
       case default => anyMoveAllowed _
     }
 
@@ -86,11 +86,11 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
       /* Can only take if piece present or en passant possible. The client code will check for the colour */
       val p = startPosition.offset(dCol, dRow)
       val lastMoveWasDoublePawn = conf.getLastMove match {
-        case Some((Pawn(), start, end)) if (start.getRow - end.getRow).abs == 2 => true
+        case Some((Pawn, start, end)) if (start.getRow - end.getRow).abs == 2 => true
         case default => false
       }
       var lastMoveWasAdjacentColumn = conf.getLastMove match {
-        case Some((Pawn(), start, end)) if end.getCol == p.getCol => true
+        case Some((Pawn, start, end)) if end.getCol == p.getCol => true
         case default => false
       }
       var rowIsEnPassant = {
@@ -160,7 +160,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
     def checkNotNonPromotingPawnAdvance(start: Position, end: Position) {
       val (_, piece, _) = conf.getExistingPiece(start)
       piece match {
-        case _: Pawn => {
+        case Pawn => {
           if (end.getRow == Constants.WHITE_HOME_ROW || end.getRow == Constants.BLACK_HOME_ROW)
             throw new NonPromotingPawnAdvance(move)
         }
@@ -215,7 +215,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
         val ((king, kingEnd), (rook, _)) = castlingType.getPositions(row)
 
         /* Disallow if the pieces are not a rook and king in the correct positions */
-        List((rook, Rook()), (king, King())).foreach {
+        List((rook, Rook), (king, King)).foreach {
           case (p, t) =>
             val (_, piece, _) = conf.getExistingPiece(p)
             if (piece != t) {
@@ -276,7 +276,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
   }
 
   def kingInCheck(colour: Colour): Boolean = {
-    val kings = conf.locatePieces(colour, King())
+    val kings = conf.locatePieces(colour, King)
     assert(kings.size == 1, "One king should be present for: " + colour + " but these kings were found: " + kings)
     val king = kings.head
     val opponentPositions = conf.locatePieces(colour.opposite)
@@ -338,15 +338,15 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
   private def isHomeRow(row: Int): Boolean = List(Constants.WHITE_HOME_ROW, Constants.BLACK_HOME_ROW) contains row
   private def isDiagonal(a: Position, b: Position): Boolean = a.col != b.col
 
-  private val promotionPieces = List(Knight(), Queen())
+  private val promotionPieces = List(Knight, Queen)
 
   private def generateMoves(piece: Piece, start: Position, endPositions: Set[Position]) = {
     for (end <- endPositions) yield {
       val endOccupied = conf.getPiece(end).isDefined
       piece match {
-        case Pawn() if isHomeRow(end.getRow) =>
+        case Pawn if isHomeRow(end.getRow) =>
           if (endOccupied) promotionPieces.map { PromoteCapturing(start, end, _) } else promotionPieces.map { Promote(start, _) }
-        case Pawn() if (!endOccupied && isDiagonal(start, end)) => List(EnPassant(start, end))
+        case Pawn if (!endOccupied && isDiagonal(start, end)) => List(EnPassant(start, end))
         case default => if (endOccupied) List(MovePieceCapturing(start, end)) else List(MovePiece(start, end))
       }
     }

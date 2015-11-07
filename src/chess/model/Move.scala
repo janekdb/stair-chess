@@ -7,7 +7,7 @@ private object Utils {
   def start(move: String): Position = new Position(move.substring(0, 2))
   def end(move: String): Position = new Position(move.substring(2, 4))
   def rejectInvalidPromotionPiece(piece: Piece) {
-    if (List(King(), Pawn()) contains piece)
+    if (List(King, Pawn) contains piece)
       throw new IllegalPromotionException(piece)
   }
 }

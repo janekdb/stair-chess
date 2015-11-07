@@ -26,8 +26,8 @@ object CheckingRankerTest extends Test with TestUtils with Main {
 
     val conf: Configuration = new GridConfiguration
     addKings(conf)
-    conf.add("c4", White, Knight())
-    conf.add("g5", White, Pawn())
+    conf.add("c4", White, Knight)
+    conf.add("g5", White, Pawn)
     val expectedKnightMove = new MovePiece("c4d6")
 
     if (false) {

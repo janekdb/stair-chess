@@ -52,8 +52,8 @@ object BoardModelTest extends Test with TestUtils with Main {
 
   private def rejectMoveOntoOwnPiece {
     val pb = new PlacementsBuilder
-    pb(Black, Queen(), "g7")
-    pb(Black, King(), "g8")
+    pb(Black, Queen, "g7")
+    pb(Black, King, "g8")
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
 
@@ -70,8 +70,8 @@ object BoardModelTest extends Test with TestUtils with Main {
 
   private def rejectPawnDoubleAdvanceIfNotFirstMove {
     val pb = new PlacementsBuilder
-    pb(Black, Pawn(), "a7")
-    pb(Black, Queen(), "f8")
+    pb(Black, Pawn, "a7")
+    pb(Black, Queen, "f8")
     pb(getKings)
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
@@ -90,9 +90,9 @@ object BoardModelTest extends Test with TestUtils with Main {
 
   private def acceptCastlingWhenNoInterveningPieces {
     val pb = new PlacementsBuilder
-    pb(Black, King(), "e8")
-    pb(White, Rook(), "a1")
-    pb(White, King(), "e1")
+    pb(Black, King, "e8")
+    pb(White, Rook, "a1")
+    pb(White, King, "e1")
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
 
@@ -101,10 +101,10 @@ object BoardModelTest extends Test with TestUtils with Main {
 
   private def acceptCastlingWhenIrrelevantOpponentPiecesExist {
     val pb = new PlacementsBuilder
-    pb(Black, King(), "e8")
-    pb(White, Rook(), "a1")
-    pb(White, King(), "e1")
-    pb(Black, Knight(), "a8")
+    pb(Black, King, "e8")
+    pb(White, Rook, "a1")
+    pb(White, King, "e1")
+    pb(Black, Knight, "a8")
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
     bm.move(Castle(White, Long))
@@ -112,11 +112,11 @@ object BoardModelTest extends Test with TestUtils with Main {
 
   private def rejectCastlingWhenInterveningPiece {
     val pb = new PlacementsBuilder
-    pb(White, Rook(), "a1")
+    pb(White, Rook, "a1")
 
-    pb(White, King(), "e1")
+    pb(White, King, "e1")
 
-    pb(White, Bishop(), "c1")
+    pb(White, Bishop, "c1")
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
 
@@ -136,11 +136,11 @@ object BoardModelTest extends Test with TestUtils with Main {
       val pb = new PlacementsBuilder
 
       /* Allow white to castle long. */
-      pb(White, Rook(), "a1")
-      pb(White, King(), "e1")
+      pb(White, Rook, "a1")
+      pb(White, King, "e1")
       /* Attack a square */
-      pb(Black, Rook(), file + "8")
-      pb(Black, King(), "h8")
+      pb(Black, Rook, file + "8")
+      pb(Black, King, "h8")
 
       val bm = new BoardModel(pb, Nil, Nil, Nil)
 
@@ -157,11 +157,11 @@ object BoardModelTest extends Test with TestUtils with Main {
       val pb = new PlacementsBuilder
 
       /* Allow white to castle long. */
-      pb(White, Rook(), "a1")
-      pb(White, King(), "e1")
+      pb(White, Rook, "a1")
+      pb(White, King, "e1")
       /* Attack a square */
-      pb(Black, Rook(), file + "8")
-      pb(Black, King(), "h8")
+      pb(Black, Rook, file + "8")
+      pb(Black, King, "h8")
 
       val bm = new BoardModel(pb, Nil, Nil, Nil)
 
@@ -172,9 +172,9 @@ object BoardModelTest extends Test with TestUtils with Main {
   private def rejectReCastling {
     val pb = new PlacementsBuilder
 
-    pb(White, Rook(), "a1")
-    pb(White, King(), "e1")
-    pb(Black, King(), "e8")
+    pb(White, Rook, "a1")
+    pb(White, King, "e1")
+    pb(Black, King, "e8")
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
 
@@ -197,9 +197,9 @@ object BoardModelTest extends Test with TestUtils with Main {
   private def rejectIfMoveLeavesOwnKingInCheck {
     val pb = new PlacementsBuilder
 
-    pb(White, Rook(), "e2")
-    pb(White, King(), "e1")
-    pb(Black, Rook(), "e7")
+    pb(White, Rook, "e2")
+    pb(White, King, "e1")
+    pb(Black, Rook, "e7")
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
 
@@ -215,10 +215,10 @@ object BoardModelTest extends Test with TestUtils with Main {
   private def checkMateIsDetected {
     val pb = new PlacementsBuilder
 
-    pb(White, King(), "a2")
-    pb(Black, King(), "h7")
-    pb(Black, Rook(), "b8")
-    pb(Black, Rook(), "c7")
+    pb(White, King, "a2")
+    pb(Black, King, "h7")
+    pb(Black, Rook, "b8")
+    pb(Black, Rook, "c7")
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
 
@@ -244,10 +244,10 @@ object BoardModelTest extends Test with TestUtils with Main {
   private def checkWithNonCapturingEscapeIsDetected {
     val pb = new PlacementsBuilder
 
-    pb(White, King(), "b2")
-    pb(Black, King(), "h7")
-    pb(Black, Rook(), "c8")
-    pb(Black, Rook(), "d7")
+    pb(White, King, "b2")
+    pb(Black, King, "h7")
+    pb(Black, Rook, "c8")
+    pb(Black, Rook, "d7")
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
 
@@ -292,30 +292,30 @@ object BoardModelTest extends Test with TestUtils with Main {
     /* Position the Queen so that it can check the black King on the next move. */
     val queenStart = "b7"
     val queenEnd = "c8"
-    pb(White, Queen(), queenStart)
-    pb(Black, King(), "d8")
+    pb(White, Queen, queenStart)
+    pb(Black, King, "d8")
 
-    pb(Black, Pawn(), "d7")
-    pb(Black, Bishop(), "e7")
-    pb(Black, Rook(), "g7")
+    pb(Black, Pawn, "d7")
+    pb(Black, Bishop, "e7")
+    pb(Black, Rook, "g7")
 
-    pb(Black, Knight(), "f6")
+    pb(Black, Knight, "f6")
 
-    pb(Black, Pawn(), "a5")
-    pb(White, Pawn(), "d5")
-    pb(Black, Pawn(), "h5")
+    pb(Black, Pawn, "a5")
+    pb(White, Pawn, "d5")
+    pb(Black, Pawn, "h5")
 
-    pb(Black, Pawn(), "a4")
-    pb(Black, Pawn(), "h4")
+    pb(Black, Pawn, "a4")
+    pb(Black, Pawn, "h4")
 
-    pb(White, Queen(), "b3")
-    pb(Black, Knight(), "d3")
-    pb(White, Rook(), "g3")
+    pb(White, Queen, "b3")
+    pb(Black, Knight, "d3")
+    pb(White, Rook, "g3")
 
-    pb(White, Rook(), "b2")
-    pb(Black, Bishop(), "c2")
-    pb(White, King(), "e2")
-    pb(White, Pawn(), "f2")
+    pb(White, Rook, "b2")
+    pb(Black, Bishop, "c2")
+    pb(White, King, "e2")
+    pb(White, Pawn, "f2")
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
     val s = newEventCapturer
@@ -329,8 +329,8 @@ object BoardModelTest extends Test with TestUtils with Main {
     val pb = new PlacementsBuilder
 
     /* The pawn that will capture via en-passant */
-    pb(White, Pawn(), "e4")
-    pb(Black, Pawn(), "d7")
+    pb(White, Pawn, "e4")
+    pb(Black, Pawn, "d7")
 
     pb(getKings)
 
@@ -374,9 +374,9 @@ object BoardModelTest extends Test with TestUtils with Main {
 
     pb(getKings)
     /* The pawn that will capture via en-passant */
-    pb(White, Pawn(), "e4")
+    pb(White, Pawn, "e4")
     /* The pawn that white will attempt to capture with en-passant */
-    pb(Black, Pawn(), "d7")
+    pb(Black, Pawn, "d7")
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
 
@@ -415,9 +415,9 @@ object BoardModelTest extends Test with TestUtils with Main {
     val pb = new PlacementsBuilder
 
     pb(getKings)
-    pb(Black, Rook(), "d8")
-    pb(Black, Rook(), "f8")
-    pb(Black, Rook(), "a2")
+    pb(Black, Rook, "d8")
+    pb(Black, Rook, "f8")
+    pb(Black, Rook, "a2")
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
     /* Move black to ensure lastColour is set */
@@ -498,7 +498,7 @@ positions and moves do not matter – they can be the same or different. The rule 
     rows.foreach { println _ }
   }
 
-  private def getKings = (White, King(), new Position("e1")) :: (Black, King(), new Position("e8")) :: Nil
+  private def getKings = (White, King, new Position("e1")) :: (Black, King, new Position("e8")) :: Nil
 
   private def newEventCapturer = new Object with BoardChangedSubscriber {
     var events: List[BoardChanged] = Nil

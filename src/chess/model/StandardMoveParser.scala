@@ -4,7 +4,7 @@ package chess.model
 object StandardMoveParser {
 
   // TODO: Restrict the visibility of pieces
-  val pieces = Map("rook" -> Rook(), "knight" -> Knight(), "bishop" -> Bishop(), "queen" -> Queen())
+  val pieces = Map("rook" -> Rook, "knight" -> Knight, "bishop" -> Bishop, "queen" -> Queen)
 
   /**
    * @param moves The available moves

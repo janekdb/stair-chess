@@ -32,11 +32,11 @@ object CheckMatingRankerTest extends Test with TestUtils with Main {
     val conf: Configuration = new GridConfiguration
 
     addWhiteKing(conf)
-    conf.add("h1", White, Rook())
+    conf.add("h1", White, Rook)
 
     /* Trap the king behind a row of pawns */
-    conf.add("a8", Black, King())
-    List('a', 'b', 'c').toList.foreach { c => conf.add(c + "7", Black, Pawn()) }
+    conf.add("a8", Black, King)
+    List('a', 'b', 'c').toList.foreach { c => conf.add(c + "7", Black, Pawn) }
 
     val explorer = new StandardMoveExplorer(conf)
     val rankedMoves: List[List[Move]] = ranker.rankMoves(explorer.legalMoves(White), conf)
@@ -53,7 +53,7 @@ object CheckMatingRankerTest extends Test with TestUtils with Main {
 	  val conf: Configuration = new GridConfiguration
 	  
 	  addKings(conf)
-	  conf.add("h1", White, Rook())
+	  conf.add("h1", White, Rook)
 	  
 	  val explorer = new StandardMoveExplorer(conf)
 	  val rankedMoves: List[List[Move]] = ranker.rankMoves(explorer.legalMoves(White), conf)

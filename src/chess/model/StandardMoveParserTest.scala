@@ -48,7 +48,7 @@ object StandardMoveParserTest extends Test with TestUtils with Main {
   def confirmMovePieceCapturingParsed {
     // TODO: Add test using allMoveTypes
     val conf = getConf
-    conf.add(new Position("d7"), White, Pawn())
+    conf.add(new Position("d7"), White, Pawn)
     val moves = getMoves(conf)
     assertEquals(Some(new MovePieceCapturing("e8d7")), parse(moves, "e8d7"))
   }
@@ -125,10 +125,10 @@ object StandardMoveParserTest extends Test with TestUtils with Main {
     m += (toString(s, e) -> MovePiece(s, e))
     m += (toString(s, e2) -> MovePieceCapturing(s, e2))
     m += ("castle-short" -> Castle(Black, Short))
-    m += (s3.toString + "-knight" -> Promote(s3, Knight()))
-    m += (s3.toString + "-queen" -> Promote(s3, Queen()))
-    m += (toString(s3, e3) + "-knight" -> PromoteCapturing(s3, e3, Knight()))
-    m += (toString(s3, e3) + "-rook" -> PromoteCapturing(s3, e3, Rook()))
+    m += (s3.toString + "-knight" -> Promote(s3, Knight))
+    m += (s3.toString + "-queen" -> Promote(s3, Queen))
+    m += (toString(s3, e3) + "-knight" -> PromoteCapturing(s3, e3, Knight))
+    m += (toString(s3, e3) + "-rook" -> PromoteCapturing(s3, e3, Rook))
     m += (toString(s4, e4) -> EnPassant(s4, e4))
     m
   }
