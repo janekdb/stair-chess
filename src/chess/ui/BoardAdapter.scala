@@ -90,7 +90,7 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
 
   private def makeLabel(colour: Colour, piece: Piece): String = {
     val ps = piece.toString
-    (colour.toString + "-" + ps.substring(0, ps.length - 2)).toLowerCase
+    (colour.toString + "-" + ps).toLowerCase
   }
 
   def close {
