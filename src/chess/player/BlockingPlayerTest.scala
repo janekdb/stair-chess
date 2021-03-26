@@ -1,6 +1,5 @@
 package chess.player
 import java.util.concurrent.CountDownLatch
-import scala.actors.Actor
 import chess.model.GridConfiguration
 import chess.model.Move
 import test.Main
@@ -11,6 +10,8 @@ import chess.model.Colours.Black
 import chess.model.MoveFactory
 import chess.model.Colour
 import chess.model.Configuration
+
+import scala.concurrent.Future
 
 object BlockingPlayerTest extends Test with TestUtils with Main {
 
@@ -81,10 +82,9 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
 
   // TODO: Move doAsync into TestUtils
   private def doAsync(code: => Unit) {
-    class A extends Actor {
-      def act = code
-    }
-    (new A).start
+    // the following is equivalent to `implicit val ec = ExecutionContext.global`
+    import scala.concurrent.ExecutionContext.Implicits.global
+    Future(code)
   }
 
   private def getConf = {
