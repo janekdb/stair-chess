@@ -476,14 +476,14 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
   }
 
   //  abcdefgh
-  //8 ········
-  //7 ········
-  //6 ······q·
-  //5 ········
-  //4 ·K······
-  //3 ···kQ···
-  //2 ·······Q
-  //1 ··.b····
+  //8 Â·Â·Â·Â·Â·Â·Â·Â·
+  //7 Â·Â·Â·Â·Â·Â·Â·Â·
+  //6 Â·Â·Â·Â·Â·Â·qÂ·
+  //5 Â·Â·Â·Â·Â·Â·Â·Â·
+  //4 Â·KÂ·Â·Â·Â·Â·Â·
+  //3 Â·Â·Â·kQÂ·Â·Â·
+  //2 Â·Â·Â·Â·Â·Â·Â·Q
+  //1 Â·Â·.bÂ·Â·Â·Â·
   //  abcdefgh
   /* Black can escape checkmate by taking the queen */
   private def queenCaptureSelected {
@@ -500,14 +500,14 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
   }
 
   //  abcdefgh
-  //8 ······k·
-  //7 ·····Q··
-  //6 ········
-  //5 ········
-  //4 ···B····
-  //3 pR·p·p··
-  //2 ·····P··
-  //1 ······K·
+  //8 Â·Â·Â·Â·Â·Â·kÂ·
+  //7 Â·Â·Â·Â·Â·QÂ·Â·
+  //6 Â·Â·Â·Â·Â·Â·Â·Â·
+  //5 Â·Â·Â·Â·Â·Â·Â·Â·
+  //4 Â·Â·Â·BÂ·Â·Â·Â·
+  //3 pRÂ·pÂ·pÂ·Â·
+  //2 Â·Â·Â·Â·Â·PÂ·Â·
+  //1 Â·Â·Â·Â·Â·Â·KÂ·
   //  abcdefgh
   /* Black can escape checkmate by taking the queen */
   private def queenCaptureSelected2 {

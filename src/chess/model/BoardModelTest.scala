@@ -278,14 +278,14 @@ object BoardModelTest extends Test with TestUtils with Main {
   }
 
   //  abcdefgh
-  //8 ··Qk····
-  //7 ···pb·r·
-  //6 ·····n··
-  //5 p··P···p
-  //4 P······P
-  //3 ·Q·n··R·
-  //2 ·Rb·KP··
-  //1 ········
+  //8 Â·Â·QkÂ·Â·Â·Â·
+  //7 Â·Â·Â·pbÂ·rÂ·
+  //6 Â·Â·Â·Â·Â·nÂ·Â·
+  //5 pÂ·Â·PÂ·Â·Â·p
+  //4 PÂ·Â·Â·Â·Â·Â·P
+  //3 Â·QÂ·nÂ·Â·RÂ·
+  //2 Â·RbÂ·KPÂ·Â·
+  //1 Â·Â·Â·Â·Â·Â·Â·Â·
   //  abcdefgh  
   private def checkWithCapturingEscapeIsDetected {
     val pb = new PlacementsBuilder
@@ -461,7 +461,7 @@ Positions are not [considered to be] the same if a pawn that could have been cap
 if the right to castle has been changed. (FIDE 2005, Article 9.2)
 While the rule does not require that the position occur thrice on nearly consecutive moves, it happens this way very often in practice,
 typically with one of the kings being put into perpetual check. The intermediate
-positions and moves do not matter – they can be the same or different. The rule applies to positions, not moves.
+positions and moves do not matter Â· they can be the same or different. The rule applies to positions, not moves.
   private def repeatedConfigurationsIsDetected = fail
   */
 

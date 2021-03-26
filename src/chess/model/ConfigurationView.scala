@@ -58,13 +58,13 @@ object ConfigurationView {
    * <pre>
    * abcdefgh
    * 8 rnbqkbnr
-   * 7 ·p·pp·pp
-   * 6 ··p·····
-   * 5 ·····p··
-   * 4 ·p·····P
-   * 3 N··P····
-   * 2 P·P·PPP·
-   * 1 R·BQKBNR
+   * 7 Â·pÂ·ppÂ·pp
+   * 6 Â·Â·pÂ·Â·Â·Â·Â·
+   * 5 Â·Â·Â·Â·Â·pÂ·Â·
+   * 4 Â·pÂ·Â·Â·Â·Â·P
+   * 3 NÂ·Â·PÂ·Â·Â·Â·
+   * 2 PÂ·PÂ·PPPÂ·
+   * 1 RÂ·BQKBNR
    * abcdefgh
    * </pre>
    */
@@ -82,7 +82,7 @@ object ConfigurationView {
         val symbol =
           square match {
             /* Middle dot: U+00B7 */
-            case null => "·"
+            case null => "Â·"
             case (c: Colour, p: Piece) => {
               val col = colourise(c)_
               symbols.get(p) match { case Some(s) => col(s) case None => assert(false) }
