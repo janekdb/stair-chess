@@ -196,7 +196,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     assertTrue(d._1 * 100 + d._2 >= e._1 * 100 + e._2,
       "Adjacent list of moves should be ranked in descending order: " + m.head + " > " + n.head + ", " + d + " > " + e)
     ms match {
-      case Nil => Unit
+      case Nil => ()
       case r :: rs => {
         /* Compare next pair */
         verifyDescending(n, r, rs, descriminator)

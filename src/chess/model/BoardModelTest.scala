@@ -62,7 +62,7 @@ object BoardModelTest extends Test with TestUtils with Main {
       fail("Move onto own piece should be rejected")
     } catch {
       /* Success */
-      case e: UnreachablePositionException => Unit
+      case e: UnreachablePositionException => ()
       /* Unexpected */
       case e: Exception => unexpected(e)
     }
@@ -82,7 +82,7 @@ object BoardModelTest extends Test with TestUtils with Main {
       fail("Pawn double advance should be rejected if it was not the piece's first move")
     } catch {
       /* Success */
-      case _: UnreachablePositionException => Unit
+      case _: UnreachablePositionException => ()
       /* Unexpected */
       case e: Exception => unexpected(e)
     }
@@ -124,7 +124,7 @@ object BoardModelTest extends Test with TestUtils with Main {
       bm.move(Castle(White, Long))
       fail("Castling should be rejected when there is an intervening piece")
     } catch {
-      case _: InterveningPieceException => Unit
+      case _: InterveningPieceException => ()
       case e: Exception => unexpected(e)
     }
   }
@@ -207,7 +207,7 @@ object BoardModelTest extends Test with TestUtils with Main {
       bm.move("e2h2")
       fail("A move by white that leaves the whte King in check should be rejected")
     } catch {
-      case _: CheckedOwnKing => Unit
+      case _: CheckedOwnKing => ()
       case e: Exception => unexpected(e)
     }
   }

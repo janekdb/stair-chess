@@ -60,7 +60,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     conf.add(blackStart, Black, Rook)
 
     conf.getLastMove match {
-      case None => Unit
+      case None => ()
       case default => fail("The last move should have been None")
     }
 
@@ -180,7 +180,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
 
   private def assertSomeEquals(expected: (Piece, Position, Position), actual: Option[(Piece, Position, Position)]) {
     actual match {
-      case Some((_, _, _)) => Unit
+      case Some((_, _, _)) => ()
       case default => fail("The last move should have been Some((_, _)) but was " + actual)
     }
     val Some((p, a, b)) = actual

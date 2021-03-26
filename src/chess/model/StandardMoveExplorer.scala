@@ -165,7 +165,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
           if (end.getRow == Constants.WHITE_HOME_ROW || end.getRow == Constants.BLACK_HOME_ROW)
             throw new NonPromotingPawnAdvance(move)
         }
-        case default => Unit
+        case default => ()
       }
     }
 
@@ -228,7 +228,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
         (king, rook).foreach { p =>
           conf.getExistingPiece(p) match {
             case (_, _, Some(_)) => throw new PreviouslyMovedException(move)
-            case default => Unit
+            case default => ()
           }
         }
 
