@@ -4,6 +4,7 @@ import chess.model.Configuration
 import chess.model.Move
 import chess.model.Colour
 import chess.model.MoveFactory
+import scala.language.postfixOps
 
 /**
  * This class can be used as a blocking proxy to some source of move selections.

@@ -32,6 +32,7 @@ import chess.model.MovePiece
 import chess.model.StandardMoveParser
 import chess.model.MoveFactory
 import chess.model.Move
+import scala.language.postfixOps
 
 // TODO: ->Add an interactive mode
 // TODO:   ->Disable text entry when not user's turn

@@ -2,6 +2,7 @@ package chess.model
 
 //import Colours.Colour
 import chess.util.UnhandledCaseException
+import scala.language.postfixOps
 
 trait Configuration extends ConfigurationView {
 

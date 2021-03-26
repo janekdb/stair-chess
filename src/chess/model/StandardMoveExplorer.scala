@@ -14,6 +14,7 @@ import chess.model.ex.{
 }
 import chess.util.TODO
 import chess.model.ex.NonPromotingPawnAdvance
+import scala.language.postfixOps
 
 /**
  * The moves of standard chess
