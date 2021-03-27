@@ -88,12 +88,12 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
 
     /* Confirm the ranker is not flawed. */
     val bishopRanked = bishopRanker.rankMoves(moves, conf)
-    assertTrue(bishopRanked.forall(!_.isEmpty), "No empty lists existed in the list of move lists")
+    assertTrue(bishopRanked.forall(_.nonEmpty), "No empty lists existed in the list of move lists")
 
     val moveRanker: MoveRanker = new ChainedMoveRanker(longestRanker, bishopRanker)
     val rankedMoves: List[List[Move]] = moveRanker.rankMoves(moves, conf)
     assert(rankedMoves != Nil)
-    assertTrue(rankedMoves.forall { x => !x.isEmpty }, "There should not be any empty lists: " + rankedMoves)
+    assertTrue(rankedMoves.forall { x => x.nonEmpty }, "There should not be any empty lists: " + rankedMoves)
   }
 
   /*
@@ -181,7 +181,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
 
   private type Discriminator = Move => (Int, Int)
 
-  private def assertListNotEmpty(list: List[Any]) = assertTrue(list.size > 0, "List should not be empty")
+  private def assertListNotEmpty(list: List[Any]) = assertTrue(list.nonEmpty, "List should not be empty")
 
   /* Test sequence is descending by the ranker criteria */
   def verifyDescending(m: List[Move], n: List[Move], ms: List[List[Move]], descriminator: Discriminator) {

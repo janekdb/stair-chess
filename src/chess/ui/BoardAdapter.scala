@@ -22,7 +22,7 @@ import chess.model.Drawn
 
 class BoardAdapter(val board: Board) extends BoardChangedSubscriber with ConfigurationChangedSubscriber with GameChangedSubscriber {
 
-  var configuration: ConfigurationView = null
+  var configuration: ConfigurationView = _
 
   def onConfigurationChanged(event: ConfigurationView) {
     this.configuration = event

@@ -35,7 +35,7 @@ object ShellPlayerTest extends Test with TestUtils with Main {
           }
           case default => false
         }
-        assert(knightMoves.length > 0)
+        assert(knightMoves.nonEmpty)
         val otherMoves = moves filterNot { knightMoves.contains }
         List(knightMoves, otherMoves)
       }
