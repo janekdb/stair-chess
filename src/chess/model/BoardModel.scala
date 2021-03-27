@@ -62,7 +62,7 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
 
   def isCompleted = gameOutcome.isDefined
 
-  def isDrawn = gameOutcome.isDefined && (gameOutcome.get.isStalemate)
+  def isDrawn = gameOutcome.isDefined && gameOutcome.get.isStalemate
 
   def getGameOutcome = gameOutcome
 

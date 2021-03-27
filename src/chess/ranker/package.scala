@@ -16,6 +16,6 @@ package object ranker {
    * @param rank A function that assigns a value to a move where a higher value equates to a preferred move
    * @return The ranked moves
    */
-  def rankAsList(moves: List[Move], rank: (Move) => Int): List[List[Move]] =
+  def rankAsList(moves: List[Move], rank: Move => Int): List[List[Move]] =
     convertRankingMapToList(moves.groupBy(rank)).reverse
 }

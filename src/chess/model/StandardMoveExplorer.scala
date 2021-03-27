@@ -347,7 +347,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
       piece match {
         case Pawn if isHomeRow(end.getRow) =>
           if (endOccupied) promotionPieces.map { PromoteCapturing(start, end, _) } else promotionPieces.map { Promote(start, _) }
-        case Pawn if (!endOccupied && isDiagonal(start, end)) => List(EnPassant(start, end))
+        case Pawn if !endOccupied && isDiagonal(start, end) => List(EnPassant(start, end))
         case default => if (endOccupied) List(MovePieceCapturing(start, end)) else List(MovePiece(start, end))
       }
     }

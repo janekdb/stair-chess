@@ -179,7 +179,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     for (moves <- rankedMoves) println(moves)
   }
 
-  private type Discriminator = (Move) => (Int, Int)
+  private type Discriminator = Move => (Int, Int)
 
   private def assertListNotEmpty(list: List[Any]) = assertTrue(list.size > 0, "List should not be empty")
 
