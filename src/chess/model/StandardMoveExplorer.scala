@@ -90,11 +90,11 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
         case Some((Pawn, start, end)) if (start.getRow - end.getRow).abs == 2 => true
         case default => false
       }
-      var lastMoveWasAdjacentColumn = conf.getLastMove match {
+      val lastMoveWasAdjacentColumn = conf.getLastMove match {
         case Some((Pawn, start, end)) if end.getCol == p.getCol => true
         case default => false
       }
-      var rowIsEnPassant = {
+      val rowIsEnPassant = {
         val (colour, _, _) = conf.getExistingPiece(startPosition)
         startPosition.getRow == colour.enPassantRow
       }
@@ -317,7 +317,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
     val startPositions = conf.locatePieces(colour)
     var moves = List[Move]()
     for (s <- startPositions) {
-      var endPositions = this.getBasicPositions(s)
+      val endPositions = this.getBasicPositions(s)
       val (_, piece, _) = conf.getExistingPiece(s)
       for (moveList <- generateMoves(piece, s, endPositions))
         moves = moveList ::: moves
