@@ -88,7 +88,7 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
   def move(optMove: Option[Move]): Unit = {
 
     if (gameOutcome.isDefined) {
-      throw new IllegalStateException("The game has already been completed");
+      throw new IllegalStateException("The game has already been completed")
     }
 
     if (optMove.isDefined) {

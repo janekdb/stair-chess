@@ -35,7 +35,7 @@ object CaptureEvadingRankerTest extends Test with TestUtils with Main {
     /* A piece that is attacked that is shielding another piece so moving the piece does not reduce the attack count. */
     conf.add("a2", White, Rook)
     conf.add("a1", White, Knight)
-    conf.add("a8", Black, Queen);
+    conf.add("a8", Black, Queen)
 
     /* A piece that can move into a attacked square. */
     conf.add("g1", White, Knight)

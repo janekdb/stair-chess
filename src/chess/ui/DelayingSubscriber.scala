@@ -16,7 +16,7 @@ import chess.model.Castled
 /** A subscriber that slows the display */
 class DelayingSubscriber extends BoardChangedSubscriber with GameChangedSubscriber {
 
-  val DELAY_FACTOR = 1;
+  val DELAY_FACTOR = 1
 
   private def delay(d: Int) { TimeUnit.MILLISECONDS.sleep(d / DELAY_FACTOR) }
 

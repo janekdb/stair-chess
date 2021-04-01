@@ -5,8 +5,8 @@ import chess.model.ConfigurationView
 trait MoveRanker {
 
   /** Convenience values to use when ranking moves into two groups. */
-  val RANKING_HIGH = 1;
-  val RANKING_LOW = 0;
+  val RANKING_HIGH = 1
+  val RANKING_LOW = 0
 
   /**
    * @param A non-null list of legal moves.

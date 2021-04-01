@@ -46,7 +46,7 @@ object Position {
    * @throw IllegalArgumentException if the positions do not share the same row
    */
   def getInterveningPositions(a: Position, b: Position): List[Position] = {
-    if(a.getRow != b.getRow) throw new IllegalArgumentException("The positions must be on the same row");
+    if(a.getRow != b.getRow) throw new IllegalArgumentException("The positions must be on the same row")
     if(a.getCol == b.getCol) return List()
     val (min, max) = if(a.getCol < b.getCol)(a.getCol, b.getCol) else (b.getCol, a.getCol)
     /* (Inclusive, Exclusive) */

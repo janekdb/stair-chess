@@ -131,7 +131,7 @@ object BoardModelTest extends Test with TestUtils with Main {
 
   private def rejectCastlingWhenAnySquareVisitedByTheKingIsUnderAttack {
 
-    val files = List("c", "d", "e");
+    val files = List("c", "d", "e")
     for (file <- files) {
       val pb = new PlacementsBuilder
 
@@ -152,7 +152,7 @@ object BoardModelTest extends Test with TestUtils with Main {
 
   private def acceptCastlingWhenSquaresVisitedByTheRookButNotTheKingAreUnderAttack {
 
-    val files = List("a", "b");
+    val files = List("a", "b")
     for (file <- files) {
       val pb = new PlacementsBuilder
 

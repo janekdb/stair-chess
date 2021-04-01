@@ -432,16 +432,16 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     // Rr    PK
     // RP    PP
     // P
-    conf.add("a6", White, Pawn);
-    conf.add("a7", White, Rook);
-    conf.add("b7", White, Pawn);
-    conf.add("a8", White, Rook);
-    conf.add("b8", Black, Rook);
+    conf.add("a6", White, Pawn)
+    conf.add("a7", White, Rook)
+    conf.add("b7", White, Pawn)
+    conf.add("a8", White, Rook)
+    conf.add("b8", Black, Rook)
     /* Box the White king in */
-    conf.add("h8", White, King);
-    conf.add("h7", White, Pawn);
-    conf.add("g8", White, Pawn);
-    conf.add("g7", White, Pawn);
+    conf.add("h8", White, King)
+    conf.add("h7", White, Pawn)
+    conf.add("g8", White, Pawn)
+    conf.add("g7", White, Pawn)
 
     val e = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(White)
@@ -452,7 +452,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     val conf: Configuration = new GridConfiguration
     /* The pawn that should be promoted */
     conf.add("b7", White, Pawn)
-    conf.add("h8", White, King);
+    conf.add("h8", White, King)
 
     val e = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(White) filter { case a: Promote => true case default => false }
