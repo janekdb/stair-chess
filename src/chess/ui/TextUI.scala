@@ -27,7 +27,7 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
   }
 
   def onBoardChanged(events: List[BoardChanged]) {
-    events foreach onBoardChanged _
+    events foreach onBoardChanged
     moveCount += 1
     display("TextUI: Move completed: " + moveCount + ": " + events.toString)
     display("")

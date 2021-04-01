@@ -28,11 +28,11 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
    * if an opposition piece were present
    */
   private def getAttackedPositions(position: Position): Set[Position] = {
-    getEndPositions(position, pawnAttackingMoveAllowed _)
+    getEndPositions(position, pawnAttackingMoveAllowed)
   }
 
   def getBasicPositions(position: Position): Set[Position] = {
-    getEndPositions(position, pawnMoveAllowed _)
+    getEndPositions(position, pawnMoveAllowed)
   }
 
   /**

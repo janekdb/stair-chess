@@ -41,7 +41,7 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
   }
 
   def onBoardChanged(events: List[BoardChanged]) {
-    events foreach onBoardChanged _
+    events foreach onBoardChanged
   }
 
   private def setPiece(p: Position, piece: String) = board.setPiece(p.getCol, p.getRow, piece)

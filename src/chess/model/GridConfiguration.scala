@@ -13,7 +13,7 @@ class GridConfiguration extends Configuration {
   }
 
   def remove(position: Position) {
-    if (pieces.get(position).isEmpty) {
+    if (!pieces.contains(position)) {
       throw new IllegalStateException("No piece at " + position + ". Pieces: " + pieces)
     }
     pieces -= position

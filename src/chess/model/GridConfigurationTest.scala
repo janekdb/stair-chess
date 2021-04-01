@@ -44,7 +44,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
 
     /* All remaining cells must be null */
     val expectedNullCount = BOARD_SIZE * BOARD_SIZE - 4
-    assertEquals(expectedNullCount, rows.flatten.filter(_ == null).size,
+    assertEquals(expectedNullCount, rows.flatten.count(_ == null),
       "Null cell count is the total cell count minus the count of non-null cells")
   }
 

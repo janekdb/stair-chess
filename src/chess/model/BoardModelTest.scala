@@ -495,7 +495,7 @@ positions and moves do not matter · they can be the same or different. The rule
   }
 
   private def log(rows: List[String]) {
-    rows.foreach { println _ }
+    rows foreach println
   }
 
   private def getKings = (White, King, new Position("e1")) :: (Black, King, new Position("e8")) :: Nil
