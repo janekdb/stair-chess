@@ -99,7 +99,7 @@ public class SwingBoard extends JFrame implements Board {
 
 	private final Map<String, Icon> icons = new HashMap<String, Icon>();
 
-	private static final String ICON_PATH_TEMPLATE = "chess/resource/piece/%s.png";
+	private static final String ICON_PATH_TEMPLATE = "piece/%s.png";
 
 	private Icon getPiece(final String imageName) {
 		Icon icon = icons.get(imageName);
