@@ -38,9 +38,9 @@ case class MovePieceCapturing(start: Position, end: Position) extends SimpleMove
 case class Castle(colour: Colour, castlingType: CastlingType) extends Move
 //case class PromoteCapturing(val start: Position, val end: Position, val piece: Piece) extends SimpleMove {
 case class Promote(start: Position, piece: Piece) extends SimpleMove {
-  require(start != end, "Start must be different to end: " + start)
   /* Use the current row to determine the end row */
   val end = new Position(start.col, if (start.row == WHITE_HOME_ROW + 1) WHITE_HOME_ROW else BLACK_HOME_ROW)
+  require(start != end, "Start must be different to end: " + start)
   def this(move: String, piece: Piece) = {
     this(start(move), piece)
     rejectInvalidPromotionPiece(piece)
@@ -57,6 +57,3 @@ case class EnPassant(start: Position, end: Position) extends SimpleMove with Cap
   require(start != end, "Start must be different to end: " + start)
   val captured = new Position(end.getCol, start.getRow)
 }
-
-// TODO: Move Resign into another compilation unit.
-case class Resign(colour: Colour)
