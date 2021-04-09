@@ -15,13 +15,13 @@ import scala.concurrent.Future
 
 object BlockingPlayerTest extends Test with TestUtils with Main {
 
-  def runTests {
+  def runTests: Unit = {
     getBlocksUntilSetInvoked
     getBlocksUntilSetInvokedWithSome
     setBlocksUntilGetInvoked
   }
 
-  private def getBlocksUntilSetInvoked {
+  private def getBlocksUntilSetInvoked: Unit = {
     val p = new BlockingPlayer(Black, "Test")
     val conf = getConf
     val cd1 = new CountDownLatch(1)
@@ -39,7 +39,7 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
     assertEquals(Some(new MovePiece("e1e2")), moveOpt)
   }
 
-  private def getBlocksUntilSetInvokedWithSome {
+  private def getBlocksUntilSetInvokedWithSome: Unit = {
     val p = new BlockingPlayer(Black, "Test")
     val conf = getConf
     val cd1 = new CountDownLatch(1)
@@ -61,7 +61,7 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
     assertEquals(Some(new MovePiece("e1e2")), moveOpt)
   }
 
-  private def setBlocksUntilGetInvoked {
+  private def setBlocksUntilGetInvoked: Unit = {
     val p = new BlockingPlayer(Black, "Test")
     val conf = getConf
     val cd1 = new CountDownLatch(1)
@@ -81,7 +81,7 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
   }
 
   // TODO: Move doAsync into TestUtils
-  private def doAsync(code: => Unit) {
+  private def doAsync(code: => Unit): Unit = {
     // the following is equivalent to `implicit val ec = ExecutionContext.global`
     import scala.concurrent.ExecutionContext.Implicits.global
     Future(code)

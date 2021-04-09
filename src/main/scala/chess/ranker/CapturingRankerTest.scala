@@ -16,11 +16,11 @@ import chess.model.MovePieceCapturing
 
 object CapturingRankerTest extends Test with TestUtils with Main {
 
-  def runTests {
+  def runTests: Unit = {
     capturingIsRankedFirst
   }
 
-  private def capturingIsRankedFirst {
+  private def capturingIsRankedFirst: Unit = {
     val explorerFactory = (cv: ConfigurationView) => new StandardMoveExplorer(cv)
     val ranker = new CapturingRanker(explorerFactory, White)
 

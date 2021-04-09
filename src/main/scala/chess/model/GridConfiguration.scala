@@ -12,7 +12,7 @@ class GridConfiguration extends Configuration {
     assert(pieces contains new Position(position.getCol, position.getRow))
   }
 
-  def remove(position: Position) {
+  def remove(position: Position): Unit = {
     if (!pieces.contains(position)) {
       throw new IllegalStateException("No piece at " + position + ". Pieces: " + pieces)
     }

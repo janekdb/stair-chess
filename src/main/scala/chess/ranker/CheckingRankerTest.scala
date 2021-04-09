@@ -16,11 +16,11 @@ import chess.model.ConfigurationView
 
 object CheckingRankerTest extends Test with TestUtils with Main {
 
-  def runTests {
+  def runTests: Unit = {
     alwaysChecks
   }
 
-  private def alwaysChecks {
+  private def alwaysChecks: Unit = {
     val explorerFactory = (cv: ConfigurationView) => new StandardMoveExplorer(cv)
     val ranker = new CheckingRanker(explorerFactory, White)
 

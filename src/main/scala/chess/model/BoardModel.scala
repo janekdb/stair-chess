@@ -70,7 +70,7 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
     gameOutcome.get.winner
   }
 
-  private def place(colour: Colour, piece: Piece, position: Position) {
+  private def place(colour: Colour, piece: Piece, position: Position): Unit = {
     assert(colour != null)
     assert(piece != null)
     assert(position != null)
@@ -79,7 +79,7 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
     boardChangedSubscribers.foreach { _.onPiecePlaced(PiecePlaced(colour, piece, position)) }
   }
 
-  private def setGameOutcome(gameOutcome: GameOutcome) {
+  private def setGameOutcome(gameOutcome: GameOutcome): Unit = {
     this.gameOutcome = Some(gameOutcome)
   }
 
@@ -150,9 +150,9 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
 
   // Events
 
-  def subscribe(subscriber: BoardChangedSubscriber) { boardChangedSubscribers ::= subscriber }
+  def subscribe(subscriber: BoardChangedSubscriber): Unit = { boardChangedSubscribers ::= subscriber }
 
-  def subscribe(subscriber: GameChangedSubscriber) { gameChangedSubscribers ::= subscriber }
+  def subscribe(subscriber: GameChangedSubscriber): Unit = { gameChangedSubscribers ::= subscriber }
 
 }
 

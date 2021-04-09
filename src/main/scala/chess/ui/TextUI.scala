@@ -13,7 +13,7 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
 
   private var moveCount = 0
 
-  def onGameChanged(event: GameChanged) {
+  def onGameChanged(event: GameChanged): Unit = {
 
     event match {
       case Won(winner, winMode) => {
@@ -26,14 +26,14 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
     }
   }
 
-  def onBoardChanged(events: List[BoardChanged]) {
+  def onBoardChanged(events: List[BoardChanged]): Unit = {
     events foreach onBoardChanged
     moveCount += 1
     display("TextUI: Move completed: " + moveCount + ": " + events.toString)
     display("")
   }
 
-  private def onBoardChanged(event: BoardChanged) {
+  private def onBoardChanged(event: BoardChanged): Unit = {
 
     event match {
       case Castled(king, rook) => {
@@ -66,12 +66,12 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
     render
   }
 
-  def onPiecePlaced(event: PiecePlaced) {
+  def onPiecePlaced(event: PiecePlaced): Unit = {
     conf.add(event.position, event.colour, event.piece)
     render
   }
 
-  private def render {
+  private def render: Unit = {
     val lines = ConfigurationView.getTextRepresentation(conf)
     for (line <- lines) println(line)
     println

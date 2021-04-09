@@ -12,43 +12,43 @@ trait Test {
 
   def unexpected(e: Exception): Unit = throw new FailureException(e, "Unexpected exception:" + e.getClass.getName)
 
-  def assertEquals(expected: Any, actual: Any) {
+  def assertEquals(expected: Any, actual: Any): Unit = {
     assert(expected == actual, "Expected: " + expected + ", actual: " + actual)
   }
 
-  def assertEquals(expected: Any, actual: Any, message: String) {
+  def assertEquals(expected: Any, actual: Any, message: String): Unit = {
     assert(expected == actual, "Expected: " + expected + ", actual: " + actual + ": " + message)
   }
 
-  def assertNotEquals(notExpected: Any, actual: Any) {
+  def assertNotEquals(notExpected: Any, actual: Any): Unit = {
     assert(notExpected != actual, "Not expected: " + notExpected + ", actual: " + actual)
   }
 
-  def assertNotEquals(notExpected: Any, actual: Any, message: String) {
+  def assertNotEquals(notExpected: Any, actual: Any, message: String): Unit = {
     assert(notExpected != actual, "Not expected: " + notExpected + ", actual: " + actual + ": " + message)
   }
 
-  def assertNotNull(obj: Any) {
+  def assertNotNull(obj: Any): Unit = {
     assert(obj != null)
   }
 
-  def assertNotNull(obj: Any, message: String) {
+  def assertNotNull(obj: Any, message: String): Unit = {
     assert(obj != null, message)
   }
 
-  def assertTrue(condition: Boolean) {
+  def assertTrue(condition: Boolean): Unit = {
     assert(condition)
   }
 
-  def assertTrue(condition: Boolean, message: String) {
+  def assertTrue(condition: Boolean, message: String): Unit = {
     assert(condition, message)
   }
 
-  def assertFalse(condition: Boolean) {
+  def assertFalse(condition: Boolean): Unit = {
     assert(!condition)
   }
 
-  def assertFalse(condition: Boolean, message: String) {
+  def assertFalse(condition: Boolean, message: String): Unit = {
     assert(!condition, message)
   }
 
@@ -60,12 +60,12 @@ trait Test {
 
   }
 
-  def assertIsInstanceOf[T <: Any](expectedType: Class[T], actual: Any, message: String) {
+  def assertIsInstanceOf[T <: Any](expectedType: Class[T], actual: Any, message: String): Unit = {
     assertNotNull(actual, message)
     assertEquals(expectedType, actual.getClass, message)
   }
 
-  def assertExceptionThrown[T <: Exception](assertion: String, expectedException: Class[T])(b: => Unit) {
+  def assertExceptionThrown[T <: Exception](assertion: String, expectedException: Class[T])(b: => Unit): Unit = {
     var thrown = false
     var correctType = false
     var ex: Exception = null

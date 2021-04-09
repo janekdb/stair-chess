@@ -19,12 +19,12 @@ import chess.model.Bishop
 
 object CaptureEvadingRankerTest extends Test with TestUtils with Main {
 
-  def runTests {
+  def runTests: Unit = {
     attackReducingMovesRankedFirst
     highestImpactAttackReducingMovesRankedFirst
   }
 
-  private def attackReducingMovesRankedFirst {
+  private def attackReducingMovesRankedFirst: Unit = {
     val explorerFactory = (cv: ConfigurationView) => new StandardMoveExplorer(cv)
     val ranker = new CaptureEvadingRanker(explorerFactory, White)
 
@@ -55,7 +55,7 @@ object CaptureEvadingRankerTest extends Test with TestUtils with Main {
     assertTrue(rankedMoves(2) contains new MovePiece("g1h3"), rankedMoves(2).toString)
   }
 
-  private def highestImpactAttackReducingMovesRankedFirst {
+  private def highestImpactAttackReducingMovesRankedFirst: Unit = {
     val explorerFactory = (cv: ConfigurationView) => new StandardMoveExplorer(cv)
     val ranker = new CaptureEvadingRanker(explorerFactory, White)
 
@@ -85,7 +85,7 @@ object CaptureEvadingRankerTest extends Test with TestUtils with Main {
     assertEquals(List(new MovePiece("d6d7")), rankedMoves.head)
   }
 
-  private def render(conf: ConfigurationView) {
+  private def render(conf: ConfigurationView): Unit = {
     val lines = ConfigurationView.getTextRepresentation(conf)
     for (line <- lines) println(line)
     println

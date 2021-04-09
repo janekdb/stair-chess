@@ -12,11 +12,11 @@ class ScoreCard(val players: Set[String]) {
   players.foreach(p => wins.put(p, 0))
   players.foreach(p => draws.put(p, 0))
 
-  def addWin(winner: Player, loser: Player) {
+  def addWin(winner: Player, loser: Player): Unit = {
     wins(winner.getName) = wins(winner.getName) + 1
   }
 
-  def addDraw(player1: Player, player2: Player) {
+  def addDraw(player1: Player, player2: Player): Unit = {
     draws(player1.getName) = draws(player1.getName) + 1
     draws(player2.getName) = draws(player2.getName) + 1
   }

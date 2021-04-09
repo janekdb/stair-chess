@@ -14,17 +14,17 @@ trait TestUtils {
   implicit def moveMoveOption(m: Move) = Some(m)
   implicit def string2Position(s: String) = new Position(s)
 
-  protected def addWhiteKing(conf: Configuration) {
+  protected def addWhiteKing(conf: Configuration): Unit = {
     /* The King is required to allow the kingInCheck method to complete. */
     conf.add("e1", White, King)
   }
 
-  protected def addBlackKing(conf: Configuration) {
+  protected def addBlackKing(conf: Configuration): Unit = {
     /* The King is required to allow the kingInCheck method to complete. */
     conf.add("e8", Black, King)
   }
 
-  protected def addKings(conf: Configuration) {
+  protected def addKings(conf: Configuration): Unit = {
     for(op <- List(addWhiteKing _, addBlackKing _)) op(conf)
   }
 }

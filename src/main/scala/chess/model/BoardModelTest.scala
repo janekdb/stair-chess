@@ -9,7 +9,7 @@ import scala.collection.mutable.ListBuffer
 
 object BoardModelTest extends Test with TestUtils with Main {
 
-  def runTests {
+  def runTests: Unit = {
 
     rejectMoveOntoOwnPiece
     rejectPawnDoubleAdvanceIfNotFirstMove
@@ -50,7 +50,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     def asList = placements
   }
 
-  private def rejectMoveOntoOwnPiece {
+  private def rejectMoveOntoOwnPiece: Unit = {
     val pb = new PlacementsBuilder
     pb(Black, Queen, "g7")
     pb(Black, King, "g8")
@@ -68,7 +68,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     }
   }
 
-  private def rejectPawnDoubleAdvanceIfNotFirstMove {
+  private def rejectPawnDoubleAdvanceIfNotFirstMove: Unit = {
     val pb = new PlacementsBuilder
     pb(Black, Pawn, "a7")
     pb(Black, Queen, "f8")
@@ -88,7 +88,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     }
   }
 
-  private def acceptCastlingWhenNoInterveningPieces {
+  private def acceptCastlingWhenNoInterveningPieces: Unit = {
     val pb = new PlacementsBuilder
     pb(Black, King, "e8")
     pb(White, Rook, "a1")
@@ -99,7 +99,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     bm.move(Castle(White, Long))
   }
 
-  private def acceptCastlingWhenIrrelevantOpponentPiecesExist {
+  private def acceptCastlingWhenIrrelevantOpponentPiecesExist: Unit = {
     val pb = new PlacementsBuilder
     pb(Black, King, "e8")
     pb(White, Rook, "a1")
@@ -110,7 +110,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     bm.move(Castle(White, Long))
   }
 
-  private def rejectCastlingWhenInterveningPiece {
+  private def rejectCastlingWhenInterveningPiece: Unit = {
     val pb = new PlacementsBuilder
     pb(White, Rook, "a1")
 
@@ -129,7 +129,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     }
   }
 
-  private def rejectCastlingWhenAnySquareVisitedByTheKingIsUnderAttack {
+  private def rejectCastlingWhenAnySquareVisitedByTheKingIsUnderAttack: Unit = {
 
     val files = List("c", "d", "e")
     for (file <- files) {
@@ -150,7 +150,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     }
   }
 
-  private def acceptCastlingWhenSquaresVisitedByTheRookButNotTheKingAreUnderAttack {
+  private def acceptCastlingWhenSquaresVisitedByTheRookButNotTheKingAreUnderAttack: Unit = {
 
     val files = List("a", "b")
     for (file <- files) {
@@ -169,7 +169,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     }
   }
 
-  private def rejectReCastling {
+  private def rejectReCastling: Unit = {
     val pb = new PlacementsBuilder
 
     pb(White, Rook, "a1")
@@ -194,7 +194,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     }
   }
 
-  private def rejectIfMoveLeavesOwnKingInCheck {
+  private def rejectIfMoveLeavesOwnKingInCheck: Unit = {
     val pb = new PlacementsBuilder
 
     pb(White, Rook, "e2")
@@ -212,7 +212,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     }
   }
 
-  private def checkMateIsDetected {
+  private def checkMateIsDetected: Unit = {
     val pb = new PlacementsBuilder
 
     pb(White, King, "a2")
@@ -223,7 +223,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     val bm = new BoardModel(pb, Nil, Nil, Nil)
 
     class VerifyingGameChangedSubscriber(var expectedEvents: List[GameChanged]) extends GameChangedSubscriber {
-      def onGameChanged(event: GameChanged) {
+      def onGameChanged(event: GameChanged): Unit = {
         expectedEvents match {
           case Nil => throw new AssertionError("An event was received when none were expected: " + event)
           case expected :: rest => {
@@ -241,7 +241,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     v.assertAllEventsReceived
   }
   
-  private def checkWithNonCapturingEscapeIsDetected {
+  private def checkWithNonCapturingEscapeIsDetected: Unit = {
     val pb = new PlacementsBuilder
 
     pb(White, King, "b2")
@@ -254,7 +254,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     var pieceMoved = false
     var eventCount = 0
     val s = new Object with BoardChangedSubscriber {
-      def onBoardChanged(events: List[BoardChanged]) {
+      def onBoardChanged(events: List[BoardChanged]): Unit = {
         for (event <- events) {
           eventCount += 1
           event match {
@@ -263,7 +263,7 @@ object BoardModelTest extends Test with TestUtils with Main {
           }
         }
       }
-      def onPiecePlaced(event: PiecePlaced) {
+      def onPiecePlaced(event: PiecePlaced): Unit = {
         assert(false)
       }
     }
@@ -287,7 +287,7 @@ object BoardModelTest extends Test with TestUtils with Main {
   //2 ·Rb·KP··
   //1 ········
   //  abcdefgh  
-  private def checkWithCapturingEscapeIsDetected {
+  private def checkWithCapturingEscapeIsDetected: Unit = {
     val pb = new PlacementsBuilder
     /* Position the Queen so that it can check the black King on the next move. */
     val queenStart = "b7"
@@ -325,7 +325,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     assertEquals(List(PieceMoved(queenStart, queenEnd)), s.events, "The list of events should be comprised of one PieceMoved event")
   }
 
-  private def enPassantAllowed {
+  private def enPassantAllowed: Unit = {
     val pb = new PlacementsBuilder
 
     /* The pawn that will capture via en-passant */
@@ -338,7 +338,7 @@ object BoardModelTest extends Test with TestUtils with Main {
 
     var pieceMovedCapturing: PieceMovedCapturing = null
     val s = new Object with BoardChangedSubscriber {
-      def onBoardChanged(events: List[BoardChanged]) {
+      def onBoardChanged(events: List[BoardChanged]): Unit = {
         for(event <- events) {
           event match {
             case e @ PieceMovedCapturing(_, _, _) => pieceMovedCapturing = e
@@ -346,7 +346,7 @@ object BoardModelTest extends Test with TestUtils with Main {
           }
         }
       }
-      def onPiecePlaced(event: PiecePlaced) {
+      def onPiecePlaced(event: PiecePlaced): Unit = {
         assert(false)
       }
     }
@@ -369,7 +369,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     assertEquals(blackEnd, pieceMovedCapturing.captured, "PieceMovedCapturing.captured was correct: Expected: " + blackEnd + ", had: " + pieceMovedCapturing)
   }
 
-  private def enPassantDisallowedIfNotImmediatelyUsed {
+  private def enPassantDisallowedIfNotImmediatelyUsed: Unit = {
     val pb = new PlacementsBuilder
 
     pb(getKings)
@@ -392,10 +392,10 @@ object BoardModelTest extends Test with TestUtils with Main {
     }
   }
 
-  private def confirmConfigurationEventIsSent {
+  private def confirmConfigurationEventIsSent: Unit = {
     var events: List[ConfigurationView] = Nil
     val listener = new Object with ConfigurationChangedSubscriber {
-      def onConfigurationChanged(event: ConfigurationView) {
+      def onConfigurationChanged(event: ConfigurationView): Unit = {
         events ::= event
       }
     }
@@ -406,12 +406,12 @@ object BoardModelTest extends Test with TestUtils with Main {
 
   // Companion object
 
-  private def standardPlacements {
+  private def standardPlacements: Unit = {
     assertEquals(4 * 8, BoardModel.standardPlacements.size, "There was a correct number of placements")
   }
 
   /* Stalemate */
-  private def stalemateIsDetected {
+  private def stalemateIsDetected: Unit = {
     val pb = new PlacementsBuilder
 
     pb(getKings)
@@ -436,7 +436,7 @@ object BoardModelTest extends Test with TestUtils with Main {
   }
 
   /* Defend against a Player that fails to select a move when one was available. */
-  private def invalidStalemateIsRejected {
+  private def invalidStalemateIsRejected: Unit = {
     val pb = new PlacementsBuilder
     pb(getKings)
     val bm = new BoardModel(pb, Nil, Nil, Nil)
@@ -467,7 +467,7 @@ positions and moves do not matter · they can be the same or different. The rule
 
   /* Defects */
 
-  private def confirmNotResponsibleForDefect5 {
+  private def confirmNotResponsibleForDefect5: Unit = {
     val bm = new BoardModel(BoardModel.standardPlacements, Nil, Nil, Nil)
     for (move <- DefectFixture.defect5Moves) {
       bm.move(move)
@@ -478,7 +478,7 @@ positions and moves do not matter · they can be the same or different. The rule
     }
   }
 
-  private def confirmNotResponsibleForDefect6 {
+  private def confirmNotResponsibleForDefect6: Unit = {
 	  val bm = new BoardModel(BoardModel.standardPlacements, Nil, Nil, Nil)
 	  for (move <- DefectFixture.defect6Moves) {
 		  bm.move(move)
@@ -490,11 +490,11 @@ positions and moves do not matter · they can be the same or different. The rule
 	  }
   }
 
-  private def log(move: Move) {
+  private def log(move: Move): Unit = {
     println(move)
   }
 
-  private def log(rows: List[String]) {
+  private def log(rows: List[String]): Unit = {
     rows foreach println
   }
 
@@ -502,17 +502,17 @@ positions and moves do not matter · they can be the same or different. The rule
 
   private def newEventCapturer = new Object with BoardChangedSubscriber {
     var events: List[BoardChanged] = Nil
-    def onBoardChanged(events: List[BoardChanged]) {
+    def onBoardChanged(events: List[BoardChanged]): Unit = {
       this.events = this.events ::: events
     }
-    def onPiecePlaced(event: PiecePlaced) {
+    def onPiecePlaced(event: PiecePlaced): Unit = {
       assert(false)
     }
   }
 
   private def newGameChangedEventCapturer = new Object with GameChangedSubscriber {
     var events: List[GameChanged]	= Nil
-    def onGameChanged(event: GameChanged) {
+    def onGameChanged(event: GameChanged): Unit = {
       events = events ::: List(event)
     }
   }

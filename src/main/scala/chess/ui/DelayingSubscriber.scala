@@ -18,9 +18,9 @@ class DelayingSubscriber extends BoardChangedSubscriber with GameChangedSubscrib
 
   val DELAY_FACTOR = 1
 
-  private def delay(d: Int) { TimeUnit.MILLISECONDS.sleep(d / DELAY_FACTOR) }
+  private def delay(d: Int): Unit = { TimeUnit.MILLISECONDS.sleep(d / DELAY_FACTOR) }
 
-  def onGameChanged(event: GameChanged) {
+  def onGameChanged(event: GameChanged): Unit = {
     val delayFor =
       event match {
         case _: Won => 10000
@@ -34,11 +34,11 @@ class DelayingSubscriber extends BoardChangedSubscriber with GameChangedSubscrib
     delay(delayFor)
   }
 
-  def onBoardChanged(events: List[BoardChanged]) {
+  def onBoardChanged(events: List[BoardChanged]): Unit = {
     for (e <- events) onBoardChanged(e)
   }
 
-  private def onBoardChanged(event: BoardChanged) {
+  private def onBoardChanged(event: BoardChanged): Unit = {
     val delayFor =
       event match {
         case _: PieceMoved => 1000
@@ -55,7 +55,7 @@ class DelayingSubscriber extends BoardChangedSubscriber with GameChangedSubscrib
     delay(delayFor)
   }
 
-  def onPiecePlaced(event: PiecePlaced) {
+  def onPiecePlaced(event: PiecePlaced): Unit = {
     delay(1)
   }
 

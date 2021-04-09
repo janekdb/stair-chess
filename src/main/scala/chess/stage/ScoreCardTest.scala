@@ -9,7 +9,7 @@ object ScoreCardTest extends Test with TestUtils with Main {
 
   private implicit def player2String(player: Player): String = player.getName
 
-  def runTests {
+  def runTests: Unit = {
     emptyScoreCardHasEmptyScores
     winsOrderedByMostFirst
     drawsOrderedByName
@@ -26,13 +26,13 @@ object ScoreCardTest extends Test with TestUtils with Main {
   private val PLAYER_4 = new PlayerBase("player-4")
   private val PLAYER_5 = new PlayerBase("player-5")
 
-  private def emptyScoreCardHasEmptyScores {
+  private def emptyScoreCardHasEmptyScores: Unit = {
     val sc = new ScoreCard(Set())
     assertEquals(List(), sc.getWins)
     assertEquals(List(), sc.getDraws)
   }
 
-  private def winsOrderedByMostFirst {
+  private def winsOrderedByMostFirst: Unit = {
     val sc = new ScoreCard(Set(PLAYER_1, PLAYER_2, PLAYER_3, PLAYER_4, PLAYER_5))
     sc.addWin(PLAYER_1, PLAYER_2)
     sc.addWin(PLAYER_1, PLAYER_4)
@@ -44,7 +44,7 @@ object ScoreCardTest extends Test with TestUtils with Main {
     assertEquals(List((PLAYER_1.getName, 2), (PLAYER_2.getName, 1), (PLAYER_4.getName, 1), (PLAYER_3.getName, 0), (PLAYER_5.getName, 0)), wins)
   }
 
-  private def drawsOrderedByName {
+  private def drawsOrderedByName: Unit = {
     val sc = new ScoreCard(Set(PLAYER_1, PLAYER_2, PLAYER_3, PLAYER_4, PLAYER_5))
     sc.addDraw(PLAYER_1, PLAYER_2)
     sc.addDraw(PLAYER_1, PLAYER_4)

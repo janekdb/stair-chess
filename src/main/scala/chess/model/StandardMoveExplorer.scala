@@ -149,16 +149,16 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
     }
   }
 
-  def rejectIllegalMove(move: Move) {
+  def rejectIllegalMove(move: Move): Unit = {
 
-    def checkReachable(start: Position, end: Position) {
+    def checkReachable(start: Position, end: Position): Unit = {
       val legalPositions = getBasicPositions(start)
       if (!(legalPositions contains end)) {
         throw new UnreachablePositionException(MovePiece(start, end), legalPositions)
       }
     }
 
-    def checkNotNonPromotingPawnAdvance(start: Position, end: Position) {
+    def checkNotNonPromotingPawnAdvance(start: Position, end: Position): Unit = {
       val (_, piece, _) = conf.getExistingPiece(start)
       piece match {
         case Pawn => {
@@ -169,13 +169,13 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
       }
     }
 
-    def checkNotCapturing(end: Position) {
+    def checkNotCapturing(end: Position): Unit = {
       if (conf.getPiece(end).isDefined) {
         throw new NonCapturingMoveException(move)
       }
     }
 
-    def checkCapturing(end: Position) {
+    def checkCapturing(end: Position): Unit = {
       if (conf.getPiece(end).isEmpty) {
         throw new CapturingMoveException(move)
       }
@@ -298,7 +298,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
     legalMoves(colour).nonEmpty
   }
 
-  private def checkKingNotLeftInCheckAfterMove(move: SimpleMove) {
+  private def checkKingNotLeftInCheckAfterMove(move: SimpleMove): Unit = {
     /*
 	   * 1. Clone the current conf
 	   * 2. Apply the move without recursively calling this method

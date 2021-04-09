@@ -15,11 +15,11 @@ import test.TestUtils
 // TODO: Modify MoveRanker to require each move to be scored rather than partitioned
 object ShellPlayerTest extends Test with TestUtils with Main {
 
-  def runTests {
+  def runTests: Unit = {
     usesGroupingFunction
   }
 
-  private def usesGroupingFunction {
+  private def usesGroupingFunction: Unit = {
 
     val conf: Configuration = new GridConfiguration
     addWhiteKing(conf)

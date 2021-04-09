@@ -16,7 +16,7 @@ import chess.model.MovePiece
 
 object ChainedMoveRankerTest extends Test with TestUtils with Main {
 
-  def runTests {
+  def runTests: Unit = {
     rankerCombinationPicksLongestRookMoves
     rankerCombinationPicksLongestBishopMovesSimple
     rankerCombinationExcludesNilLists
@@ -30,7 +30,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     Add a MoveRanker that prefers the longest moves
     Confirm the longest rook moves are picked
     */
-  private def rankerCombinationPicksLongestRookMoves {
+  private def rankerCombinationPicksLongestRookMoves: Unit = {
     val rookRanker = newRanker(Rook)
     val moveRanker: MoveRanker = new ChainedMoveRanker(rookRanker, longestRanker)
 
@@ -54,7 +54,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     Add a MoveRanker that prefers bishop moves
     Confirm the longest bishop moves are picked
     */
-  private def rankerCombinationPicksLongestBishopMovesSimple {
+  private def rankerCombinationPicksLongestBishopMovesSimple: Unit = {
     val bishopRanker = newRanker(Bishop)
     val moveRanker: MoveRanker = new ChainedMoveRanker(longestRanker, bishopRanker)
 
@@ -79,7 +79,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     verifyDescending(r, s, rs, discriminator)
   }
 
-  private def rankerCombinationExcludesNilLists {
+  private def rankerCombinationExcludesNilLists: Unit = {
     val bishopRanker = newRanker(Bishop)
     val conf: Configuration = new GridConfiguration
     addKings(conf)
@@ -102,7 +102,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     Add a MoveRanker that prefers bishop moves
     Confirm the longest bishop moves are picked
    */
-  private def rankerCombinationPicksLongestBishopMoves {
+  private def rankerCombinationPicksLongestBishopMoves: Unit = {
     val bishopRanker = newRanker(Bishop)
     val moveRanker: MoveRanker = new ChainedMoveRanker(longestRanker, bishopRanker)
 
@@ -123,7 +123,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     verifyDescending(r, s, rs, discriminator)
   }
 
-  private def rankerCombinationStopsRankingWhenOnlyOneOption {
+  private def rankerCombinationStopsRankingWhenOnlyOneOption: Unit = {
 
     val headRanker = new Object with MoveRanker {
       def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {
@@ -174,7 +174,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     }
   }
 
-  private def print(rankedMoves: List[List[Move]]) {
+  private def print(rankedMoves: List[List[Move]]): Unit = {
     println("rankedMoves:")
     for (moves <- rankedMoves) println(moves)
   }
@@ -184,7 +184,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
   private def assertListNotEmpty(list: List[Any]) = assertTrue(list.nonEmpty, "List should not be empty")
 
   /* Test sequence is descending by the ranker criteria */
-  def verifyDescending(m: List[Move], n: List[Move], ms: List[List[Move]], descriminator: Discriminator) {
+  def verifyDescending(m: List[Move], n: List[Move], ms: List[List[Move]], descriminator: Discriminator): Unit = {
     assertListNotEmpty(m)
     assertListNotEmpty(n)
 

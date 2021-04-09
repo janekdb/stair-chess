@@ -5,7 +5,7 @@ package chess.stage
  */
 object Display {
 
-  def renderScoreCard(scoreCard: ScoreCard) {
+  def renderScoreCard(scoreCard: ScoreCard): Unit = {
 
     println("Scores:")
     println("Wins:")

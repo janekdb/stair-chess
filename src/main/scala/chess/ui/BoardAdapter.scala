@@ -24,11 +24,11 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
 
   var configuration: ConfigurationView = _
 
-  def onConfigurationChanged(event: ConfigurationView) {
+  def onConfigurationChanged(event: ConfigurationView): Unit = {
     this.configuration = event
   }
 
-  def onGameChanged(event: GameChanged) {
+  def onGameChanged(event: GameChanged): Unit = {
     event match {
       case Won(colour, winMode) => {
         board.showWon(colour.toString, winMode.toString)
@@ -40,13 +40,13 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
     }
   }
 
-  def onBoardChanged(events: List[BoardChanged]) {
+  def onBoardChanged(events: List[BoardChanged]): Unit = {
     events foreach onBoardChanged
   }
 
   private def setPiece(p: Position, piece: String) = board.setPiece(p.getCol, p.getRow, piece)
 
-  private def onBoardChanged(event: BoardChanged) {
+  private def onBoardChanged(event: BoardChanged): Unit = {
 
     def clearSquare(p: Position) = board.clearSquare(p.getCol, p.getRow)
 
@@ -84,7 +84,7 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
     }
   }
 
-  def onPiecePlaced(event: PiecePlaced) {
+  def onPiecePlaced(event: PiecePlaced): Unit = {
     setPiece(event.position, makeLabel(event.colour, event.piece))
   }
 
@@ -93,7 +93,7 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
     (colour.toString + "-" + ps).toLowerCase
   }
 
-  def close {
+  def close: Unit = {
     board.close()
   }
 }

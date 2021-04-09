@@ -20,12 +20,12 @@ import chess.model.Colour
 
 object CheckMatingRankerTest extends Test with TestUtils with Main {
 
-  def runTests {
+  def runTests: Unit = {
     checkMateIsRankedFirst
     whenNoCheckMateAllMovesAreRankedEqually
   }
 
-  private def checkMateIsRankedFirst {
+  private def checkMateIsRankedFirst: Unit = {
     val explorerFactory = (cv: ConfigurationView) => new StandardMoveExplorer(cv)
     val ranker = new CheckMatingRanker(explorerFactory, White)
 
@@ -46,7 +46,7 @@ object CheckMatingRankerTest extends Test with TestUtils with Main {
     assertEquals(List(new MovePiece("h1h8")), r)
   }
 
-  private def whenNoCheckMateAllMovesAreRankedEqually {
+  private def whenNoCheckMateAllMovesAreRankedEqually: Unit = {
 	  val explorerFactory = (cv: ConfigurationView) => new StandardMoveExplorer(cv)
 	  val ranker = new CheckMatingRanker(explorerFactory, White)
 	  

@@ -55,11 +55,11 @@ object ChessApp {
   //    def times(f: => Unit) = 1 to n foreach { _ => f }
   //  }
 
-  private def times(n: Int)(code: => Unit) {
+  private def times(n: Int)(code: => Unit): Unit = {
     for (i <- 1 to n) code
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
 
     runTests
 
@@ -93,7 +93,7 @@ object ChessApp {
 
       /* Invoked when a legal move has been parsed. */
       val moveListener = new MoveListener {
-        def onMove(move: Move) {
+        def onMove(move: Move): Unit = {
           println("MoveListener: " + move)
           sb.clearMoveEntry
         }
@@ -126,7 +126,7 @@ object ChessApp {
   }
 
   private trait MoveListener {
-    def onMove(move: Move)
+    def onMove(move: Move): Unit
   }
 
   private def mel(player: BlockingPlayer, legalMoveListener: MoveListener) = {
@@ -145,7 +145,7 @@ object ChessApp {
       }
     }
     new MoveEntryListener {
-      def onMoveEntry(text: String) {
+      def onMoveEntry(text: String): Unit = {
         player.setMoveFactory(new MF(text))
       }
     }
@@ -153,11 +153,11 @@ object ChessApp {
 
   private val MaxMoves = 200
 
-  private def play(scoreCard: ScoreCard, boardAdapterOpt: Option[BoardAdapter], whitePlayerGenerator: (Colour, MoveExplorer) => Player, blackPlayerGenerator: (Colour, MoveExplorer) => Player) {
+  private def play(scoreCard: ScoreCard, boardAdapterOpt: Option[BoardAdapter], whitePlayerGenerator: (Colour, MoveExplorer) => Player, blackPlayerGenerator: (Colour, MoveExplorer) => Player): Unit = {
     val outcomeListener = new Object with GameChangedSubscriber {
       var winner: Option[Colour] = None
       var isDrawn: Boolean = false
-      def onGameChanged(event: GameChanged) {
+      def onGameChanged(event: GameChanged): Unit = {
         event match {
           case Won(colour, _) => winner = Some(colour)
           case Drawn(_) => isDrawn = true
@@ -221,9 +221,9 @@ object ChessApp {
     boardAdapterOpt.foreach(_.close)
   }
 
-  private def delay(count: Int = 1) { TimeUnit.SECONDS.sleep(count) }
+  private def delay(count: Int = 1): Unit = { TimeUnit.SECONDS.sleep(count) }
 
-  def runTests {
+  def runTests: Unit = {
     AllTests.runAllTests
   }
 }
