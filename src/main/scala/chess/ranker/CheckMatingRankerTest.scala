@@ -36,7 +36,7 @@ object CheckMatingRankerTest extends Test with TestUtils with Main {
 
     /* Trap the king behind a row of pawns */
     conf.add("a8", Black, King)
-    List('a', 'b', 'c').foreach { c => conf.add(c + "7", Black, Pawn) }
+    List('a', 'b', 'c').foreach { c => conf.add(s"${c}7", Black, Pawn) }
 
     val explorer = new StandardMoveExplorer(conf)
     val rankedMoves: List[List[Move]] = ranker.rankMoves(explorer.legalMoves(White), conf)

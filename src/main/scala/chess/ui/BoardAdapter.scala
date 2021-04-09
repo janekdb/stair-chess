@@ -78,7 +78,7 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
       }
       case Resigned(colour) => {
         // TODO: UI: Improve resignation visualisation with a popup dialog
-        throw new RuntimeException(colour + " has resigned")
+        throw new RuntimeException(s"$colour has resigned")
       }
       case default => TODO.throwRuntimeEx("Unhandled case: " + event)
     }

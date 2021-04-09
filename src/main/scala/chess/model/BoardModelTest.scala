@@ -473,7 +473,7 @@ positions and moves do not matter · they can be the same or different. The rule
       bm.move(move)
     }
     val move = DefectFixture.defect5FinalMove
-    assertExceptionThrown(move + " should be rejected", classOf[InvalidParticipantException]) {
+    assertExceptionThrown(s"$move should be rejected", classOf[InvalidParticipantException]) {
       bm.move(move)
     }
   }
@@ -484,7 +484,7 @@ positions and moves do not matter · they can be the same or different. The rule
 		  bm.move(move)
 	  }
 	  val move = DefectFixture.defect6FinalMove
-	  assertExceptionThrown(move + " should be rejected", classOf[AttackedPositionException]) {
+	  assertExceptionThrown(s"$move should be rejected", classOf[AttackedPositionException]) {
 		  bm.move(move)
 		  println
 	  }

@@ -18,7 +18,7 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
     event match {
       case Won(winner, winMode) => {
         // TODO: UI: Visualize won game
-        display(winMode + "! " + winner + " wins")
+        display(s"$winMode! $winner wins")
       }
       case Drawn(drawMode) => {
         display(drawMode.toString)

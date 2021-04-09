@@ -646,7 +646,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     }
     val e = new StandardMoveExplorer(conf)
     val move = DefectFixture.defect5FinalMove
-    assertExceptionThrown(move + " should be rejected", classOf[InvalidParticipantException]) {
+    assertExceptionThrown(s"$move should be rejected", classOf[InvalidParticipantException]) {
       e.rejectIllegalMove(move)
     }
   }
