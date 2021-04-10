@@ -37,7 +37,7 @@ object StandardMoveParserTest extends Test with TestUtils with Main {
     }
   }
 
-  private def randomString(r: Random, n: Int, s: String): String = if (n == 0) s else randomString(r, n - 1, s"${r.nextPrintableChar}$s")
+  private def randomString(r: Random, n: Int, s: String): String = if (n == 0) s else randomString(r, n - 1, s"${r.nextPrintableChar()}$s")
 
   def confirmMovePieceParsed: Unit = {
     // TODO: Add test using allMoveTypes

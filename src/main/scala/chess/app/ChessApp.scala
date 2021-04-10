@@ -195,7 +195,7 @@ object ChessApp {
         m <- 1 to MaxMoves
         if !board.isCompleted
       } yield {
-        board.move(playerSelector.next.getMove(board.getConfiguration))
+        board.move(playerSelector.next().getMove(board.getConfiguration))
         m
       }).max
 

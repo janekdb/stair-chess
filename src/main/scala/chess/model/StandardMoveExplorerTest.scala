@@ -666,7 +666,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
   private def render(conf: ConfigurationView): Unit = {
     val lines = ConfigurationView.getTextRepresentation(conf)
     for (line <- lines) println(line)
-    println
+    println()
   }
 
 }

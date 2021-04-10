@@ -7,9 +7,9 @@ import scala.collection.immutable.List
  */
 class DelegatingConfigurationView(val configuration: Configuration) extends ConfigurationView {
 
-  def getLastMove(): Option[(Piece, Position, Position)] = configuration.getLastMove
+  def getLastMove: Option[(Piece, Position, Position)] = configuration.getLastMove
 
-  def getRows(): List[List[(Colour, Piece)]] = configuration.getRows
+  def getRows: List[List[(Colour, Piece)]] = configuration.getRows
 
   def getExistingPiece(position: Position): (Colour, Piece, Option[Position]) = configuration.getExistingPiece(position)
 
