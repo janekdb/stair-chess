@@ -38,19 +38,23 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
   def getMoveExplorer = moveExplorer
 
   def this(
-    placements: List[(Colour, Piece, Position)],
-    boardChangedSubscribers: List[BoardChangedSubscriber],
-    confChangedSubscribers: List[ConfigurationChangedSubscriber],
-    gameChangedSubscribers: List[GameChangedSubscriber]) {
+            placements: List[(Colour, Piece, Position)],
+            boardChangedSubscribers: List[BoardChangedSubscriber],
+            confChangedSubscribers: List[ConfigurationChangedSubscriber],
+            gameChangedSubscribers: List[GameChangedSubscriber]) = {
     this(boardChangedSubscribers, gameChangedSubscribers)
     val confView = new DelegatingConfigurationView(conf)
-    confChangedSubscribers foreach { _.onConfigurationChanged(confView) }
+    confChangedSubscribers foreach {
+      _.onConfigurationChanged(confView)
+    }
     for ((colour, piece, position) <- placements) place(colour, piece, position)
   }
 
   case class GameOutcome(gameOutcomeMode: GameOutcomeMode, winner: Option[Colour]) {
     def isCheckMate: Boolean = gameOutcomeMode == GameOutcomeModes.CheckMate
+
     def isResigned: Boolean = gameOutcomeMode == GameOutcomeModes.Resignation
+
     def isStalemate: Boolean = gameOutcomeMode == GameOutcomeModes.Stalemate
   }
 
@@ -76,7 +80,9 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
     assert(position != null)
     assert(conf != null)
     conf.add(position, colour, piece)
-    boardChangedSubscribers.foreach { _.onPiecePlaced(PiecePlaced(colour, piece, position)) }
+    boardChangedSubscribers.foreach {
+      _.onPiecePlaced(PiecePlaced(colour, piece, position))
+    }
   }
 
   private def setGameOutcome(gameOutcome: GameOutcome): Unit = {
@@ -121,17 +127,22 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
     if (outcomeOpt.isDefined) {
       setGameOutcome(outcomeOpt.get)
     }
-    for (s <- boardChangedSubscribers) { s.onBoardChanged(events) }
+    for (s <- boardChangedSubscribers) {
+      s.onBoardChanged(events)
+    }
 
     val wonEvent = if (isWon) List(Won(gameOutcome.get.winner.get, gameOutcome.get.gameOutcomeMode)) else Nil
     val drawnEvent = if (isDrawn) List(Drawn(GameOutcomeModes.Stalemate)) else Nil
-    for (s <- gameChangedSubscribers; e <- Nil ::: wonEvent ::: drawnEvent) { s.onGameChanged(e) }
+    for (s <- gameChangedSubscribers; e <- Nil ::: wonEvent ::: drawnEvent) {
+      s.onGameChanged(e)
+    }
 
     lastColour = optColour
   }
 
   private def extractColour(move: Move): Colour = {
     implicit def tuple2colour(t: (Colour, Piece, Option[Position])) = t._1
+
     move match {
       case Castle(colour, _) => colour
       case MovePiece(start, _) => conf.getExistingPiece(start)
@@ -146,19 +157,25 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
   private def checkForCheckMate(colour: Colour): Boolean = moveExplorer.kingInCheckMate(colour)
 
   // Debug
-  private def debug(s: String): Unit = { println(s) }
+  private def debug(s: String): Unit = {
+    println(s)
+  }
 
   // Events
 
-  def subscribe(subscriber: BoardChangedSubscriber): Unit = { boardChangedSubscribers ::= subscriber }
+  def subscribe(subscriber: BoardChangedSubscriber): Unit = {
+    boardChangedSubscribers ::= subscriber
+  }
 
-  def subscribe(subscriber: GameChangedSubscriber): Unit = { gameChangedSubscribers ::= subscriber }
+  def subscribe(subscriber: GameChangedSubscriber): Unit = {
+    gameChangedSubscribers ::= subscriber
+  }
 
 }
 
 object BoardModel {
 
-  import Colours.{ Black, White }
+  import Colours.{Black, White}
 
   def standardPlacements: List[(Colour, Piece, Position)] = {
 

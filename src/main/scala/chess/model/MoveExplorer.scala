@@ -6,7 +6,7 @@ package chess.model
 trait MoveExplorer {
 
   /** @throw IllegalMoveException when the move would violate a condition not considered by {@link getBasicPositions} */
-  def rejectIllegalMove(move: Move)
+  def rejectIllegalMove(move: Move): Unit
 
   /** @return true if the king of the selected colour is in check */
   def kingInCheck(colour: Colour): Boolean

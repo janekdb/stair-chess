@@ -17,10 +17,10 @@ trait Configuration extends ConfigurationView {
    * Throw exception if there is no piece at the given position.
    * Throw exception if the end position is already occupied.
    */
-  def move(start: Position, end: Position)
+  def move(start: Position, end: Position): Unit
 
   /** Replace the piece with a the same colour carrying over the move count */
-  def replace(position: Position, replacementPiece: Piece)
+  def replace(position: Position, replacementPiece: Piece): Unit
 
   /** Return a deep copy of the Configuration */
   def copyOf: Configuration
