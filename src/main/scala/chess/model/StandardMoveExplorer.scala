@@ -269,10 +269,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
         checkReachable(start, end)
         checkKingNotLeftInCheckAfterMove(m)
       }
-      case _: Resign => {
-        /* Nothing */
-      }
-      case default => throw new UnhandledCaseException(move.toString)
+      case _ => throw new UnhandledCaseException(move.toString)
     }
   }
 
