@@ -1,9 +1,9 @@
 package chess.model
 
-import Colours.{ Black, White }
+import Colours.{Black, White}
 import GameOutcomeModes.GameOutcomeMode
 import ex._
-import test.{ Main, Test, TestUtils }
+import test.{Main, Test, TestUtils}
 import chess.util.TODO
 import scala.collection.mutable.ListBuffer
 
@@ -45,8 +45,11 @@ object BoardModelTest extends Test with TestUtils with Main {
 
   private class PlacementsBuilder {
     var placements: List[(Colour, Piece, Position)] = Nil
+
     def apply(colour: Colour, piece: Piece, position: String) = placements = (colour, piece, new Position(position)) :: placements
+
     def apply(placements: List[(Colour, Piece, Position)]) = this.placements = placements ::: this.placements
+
     def asList = placements
   }
 
@@ -232,6 +235,7 @@ object BoardModelTest extends Test with TestUtils with Main {
           }
         }
       }
+
       def assertAllEventsReceived = assertEquals(Nil, expectedEvents)
     }
 
@@ -240,7 +244,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     bm.move("c7a7")
     v.assertAllEventsReceived
   }
-  
+
   private def checkWithNonCapturingEscapeIsDetected: Unit = {
     val pb = new PlacementsBuilder
 
@@ -263,6 +267,7 @@ object BoardModelTest extends Test with TestUtils with Main {
           }
         }
       }
+
       def onPiecePlaced(event: PiecePlaced): Unit = {
         assert(false)
       }
@@ -339,13 +344,14 @@ object BoardModelTest extends Test with TestUtils with Main {
     var pieceMovedCapturing: PieceMovedCapturing = null
     val s = new Object with BoardChangedSubscriber {
       def onBoardChanged(events: List[BoardChanged]): Unit = {
-        for(event <- events) {
+        for (event <- events) {
           event match {
-            case e @ PieceMovedCapturing(_, _, _) => pieceMovedCapturing = e
+            case e@PieceMovedCapturing(_, _, _) => pieceMovedCapturing = e
             case default => fail("Unexpected event: " + event)
           }
         }
       }
+
       def onPiecePlaced(event: PiecePlaced): Unit = {
         assert(false)
       }
@@ -442,7 +448,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     val bm = new BoardModel(pb, Nil, Nil, Nil)
     bm.move("e8e7")
     assertExceptionThrown("Invalid  stalemate indication was rejected", classOf[UnconsideredMovesStalemateException]) {
-          bm.move(None)
+      bm.move(None)
     }
   }
 
@@ -479,15 +485,15 @@ positions and moves do not matter · they can be the same or different. The rule
   }
 
   private def confirmNotResponsibleForDefect6: Unit = {
-	  val bm = new BoardModel(BoardModel.standardPlacements, Nil, Nil, Nil)
-	  for (move <- DefectFixture.defect6Moves) {
-		  bm.move(move)
-	  }
-	  val move = DefectFixture.defect6FinalMove
-	  assertExceptionThrown(s"$move should be rejected", classOf[AttackedPositionException]) {
-		  bm.move(move)
-		  println()
-	  }
+    val bm = new BoardModel(BoardModel.standardPlacements, Nil, Nil, Nil)
+    for (move <- DefectFixture.defect6Moves) {
+      bm.move(move)
+    }
+    val move = DefectFixture.defect6FinalMove
+    assertExceptionThrown(s"$move should be rejected", classOf[AttackedPositionException]) {
+      bm.move(move)
+      println()
+    }
   }
 
   private def log(move: Move): Unit = {
@@ -500,21 +506,28 @@ positions and moves do not matter · they can be the same or different. The rule
 
   private def getKings = (White, King, new Position("e1")) :: (Black, King, new Position("e8")) :: Nil
 
-  private def newEventCapturer = new Object with BoardChangedSubscriber {
+  private class EventCapturer extends BoardChangedSubscriber {
     var events: List[BoardChanged] = Nil
+
     def onBoardChanged(events: List[BoardChanged]): Unit = {
       this.events = this.events ::: events
     }
+
     def onPiecePlaced(event: PiecePlaced): Unit = {
       assert(false)
     }
   }
 
-  private def newGameChangedEventCapturer = new Object with GameChangedSubscriber {
-    var events: List[GameChanged]	= Nil
+  private def newEventCapturer = new EventCapturer
+
+  private class GameChangedEventCapturer extends GameChangedSubscriber {
+    var events: List[GameChanged] = Nil
+
     def onGameChanged(event: GameChanged): Unit = {
       events = events ::: List(event)
     }
   }
+
+  private def newGameChangedEventCapturer = new GameChangedEventCapturer
 
 }

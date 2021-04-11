@@ -153,17 +153,18 @@ object ChessApp {
 
   private val MaxMoves = 200
 
-  private def play(scoreCard: ScoreCard, boardAdapterOpt: Option[BoardAdapter], whitePlayerGenerator: (Colour, MoveExplorer) => Player, blackPlayerGenerator: (Colour, MoveExplorer) => Player): Unit = {
-    val outcomeListener = new Object with GameChangedSubscriber {
-      var winner: Option[Colour] = None
-      var isDrawn: Boolean = false
-      def onGameChanged(event: GameChanged): Unit = {
-        event match {
-          case Won(colour, _) => winner = Some(colour)
-          case Drawn(_) => isDrawn = true
-        }
+  private class OutcomeListener extends GameChangedSubscriber {
+    var winner: Option[Colour] = None
+    var isDrawn: Boolean = false
+    def onGameChanged(event: GameChanged): Unit = {
+      event match {
+        case Won(colour, _) => winner = Some(colour)
+        case Drawn(_) => isDrawn = true
       }
     }
+  }
+  private def play(scoreCard: ScoreCard, boardAdapterOpt: Option[BoardAdapter], whitePlayerGenerator: (Colour, MoveExplorer) => Player, blackPlayerGenerator: (Colour, MoveExplorer) => Player): Unit = {
+    val outcomeListener = new OutcomeListener
 
     val useTextUI = false
     val includeDelay = false
