@@ -30,12 +30,10 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
 
   def onGameChanged(event: GameChanged): Unit = {
     event match {
-      case Won(colour, winMode) => {
+      case Won(colour, winMode) =>
         board.showWon(colour.toString, winMode.toString)
-      }
-      case Drawn(drawMode) => {
+      case Drawn(drawMode) =>
         board.showDrawn(drawMode.toString)
-      }
       case default => TODO.throwRuntimeEx("Unhandled case: " + event)
     }
   }
@@ -53,33 +51,28 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
     event match {
 
       /* Assume the consumer of BoardChangeEvent has access to the board configuration. */
-      case PieceMoved(start, end) => {
+      case PieceMoved(start, end) =>
         val (colour, piece, _) = configuration.getExistingPiece(end)
         clearSquare(start)
         setPiece(end, makeLabel(colour, piece))
-      }
-      case PieceMovedCapturing(start, end, captured) => {
+      case PieceMovedCapturing(start, end, captured) =>
         val (colour, piece, _) = configuration.getExistingPiece(end)
         clearSquare(captured)
         clearSquare(start)
         setPiece(end, makeLabel(colour, piece))
-      }
-      case Promoted(position, piece) => {
+      case Promoted(position, piece) =>
         val (colour, piece, _) = configuration.getExistingPiece(position)
         val promotedLabel = makeLabel(colour, piece)
         setPiece(position, promotedLabel)
-      }
-      case Castled(king, rook) => {
+      case Castled(king, rook) =>
         for (pm <- List(king, rook)) {
           val (colour, piece, _) = configuration.getExistingPiece(pm.end)
           clearSquare(pm.start)
           setPiece(pm.end, makeLabel(colour, piece))
         }
-      }
-      case Resigned(colour) => {
+      case Resigned(colour) =>
         // TODO: UI: Improve resignation visualisation with a popup dialog
         throw new RuntimeException(s"$colour has resigned")
-      }
       case default => TODO.throwRuntimeEx("Unhandled case: " + event)
     }
   }

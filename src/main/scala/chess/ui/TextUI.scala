@@ -16,13 +16,11 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
   def onGameChanged(event: GameChanged): Unit = {
 
     event match {
-      case Won(winner, winMode) => {
+      case Won(winner, winMode) =>
         // TODO: UI: Visualize won game
         display(s"$winMode! $winner wins")
-      }
-      case Drawn(drawMode) => {
+      case Drawn(drawMode) =>
         display(drawMode.toString)
-      }
     }
   }
 
@@ -36,31 +34,26 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
   private def onBoardChanged(event: BoardChanged): Unit = {
 
     event match {
-      case Castled(king, rook) => {
-          conf.move(king.start, king.end)
-          conf.move(rook.start, rook.end)
-      }
-      case PieceMoved(start, end) => {
+      case Castled(king, rook) =>
+        conf.move(king.start, king.end)
+        conf.move(rook.start, rook.end)
+      case PieceMoved(start, end) =>
         /* Assumes a piece is present at the start position. */
         conf.move(start, end)
-      }
-      case PieceMovedCapturing(start, end, captured) => {
+      case PieceMovedCapturing(start, end, captured) =>
         /* Assumes pieces are present at the start and captured positions. */
         conf.remove(captured)
         conf.move(start, end)
-      }
-      case Promoted(position, replacementPiece) => {
+      case Promoted(position, replacementPiece) =>
         conf.replace(position, replacementPiece)
-      }
-      case Resigned(colour) => {
+      case Resigned(colour) =>
         val positions = conf.locatePieces(colour, King)
         positions match {
           case List() => throw new RuntimeException("The King could not be found for " + colour)
           // TODO: UI: Improve resignation visualization
-          case List(position) => { conf.remove(position) }
+          case List(position) => conf.remove(position)
           case default => throw new RuntimeException("More than one King was found for " + colour + ": " + positions)
         }
-      }
       case default => throw new AssertionError("event was not handled: " + event)
     }
     render

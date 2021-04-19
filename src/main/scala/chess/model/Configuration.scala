@@ -32,12 +32,11 @@ trait Configuration extends ConfigurationView {
    */
   def applyMove(move: Move): List[BoardChanged] = {
     move match {
-      case MovePiece(start, end) => {
+      case MovePiece(start, end) =>
         /* Square unoccupied so just move the piece if not en passant*/
         this.move(start, end)
         List(PieceMoved(start, end))
-      }
-      case MovePieceCapturing(start, end) => {
+      case MovePieceCapturing(start, end) =>
         val (colour, piece, _) = this.getExistingPiece(start)
         val (otherColour, _, _) = this.getExistingPiece(end)
         /* The opponents piece is being captured. */
@@ -45,30 +44,25 @@ trait Configuration extends ConfigurationView {
         this.remove(end)
         this.move(start, end)
         List(PieceMovedCapturing(start, end, end))
-      }
-      case e: EnPassant => {
+      case e: EnPassant =>
         this.move(e.start, e.end)
         this.remove(e.captured)
         List(PieceMovedCapturing(e.start, e.end, e.captured))
-      }
-      case Castle(colour, castlingType) => {
+      case Castle(colour, castlingType) =>
         val row = colour.homeRow
         val (king, rook) = castlingType.getPositions(row)
         for ((start, end) <- List(king, rook)) {
           this.move(start, end)
         }
         List(Castled(new PieceMoved(king), new PieceMoved(rook)))
-      }
-      case p @ Promote(start, piece) => {
+      case p @ Promote(start, piece) =>
         val events = applyMove(MovePiece(start, p.end))
         this.replace(p.end, piece)
         Promoted(p.end, piece) :: events reverse
-      }
-      case PromoteCapturing(start, end, piece) => {
+      case PromoteCapturing(start, end, piece) =>
         val events = applyMove(MovePieceCapturing(start, end))
         this.replace(end, piece)
         Promoted(end, piece) :: events reverse
-      }
       case default => throw new UnhandledCaseException(move.toString)
     }
   }

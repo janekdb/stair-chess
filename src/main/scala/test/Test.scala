@@ -72,11 +72,10 @@ trait Test {
     try {
       b
     } catch {
-      case e: Exception => {
+      case e: Exception =>
         thrown = true
         ex = e
         correctType = e.getClass == expectedException
-      }
       case d @ default => throw new AssertionError("Unhandled case: " + d)
     }
     if (!thrown) {

@@ -63,10 +63,9 @@ class GridConfiguration extends Configuration {
   def getExistingPiece(position: Position): (Colour, Piece, Option[Position]) = {
     pieces.get(position) match {
       case Some(p) => p
-      case None => {
+      case None =>
         println(pieces)
         throw new IllegalStateException("No piece at " + position)
-      }
     }
   }
 

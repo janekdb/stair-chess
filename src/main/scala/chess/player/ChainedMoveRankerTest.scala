@@ -198,19 +198,17 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
       "Adjacent list of moves should be ranked in descending order: " + m.head + " > " + n.head + ", " + d + " > " + e)
     ms match {
       case Nil => ()
-      case r :: rs => {
+      case r :: rs =>
         /* Compare next pair */
         verifyDescending(n, r, rs, descriminator)
-      }
       case default => fail("Unhandled case: " + ms)
     }
   }
 
   private def isPiece(targetPiece: Piece)(conf: ConfigurationView, move: Move) = move match {
-    case sm: SimpleMove => {
+    case sm: SimpleMove =>
       val (_, piece, _) = conf.getExistingPiece(sm.start)
       targetPiece == piece
-    }
     case default => false
   }
 

@@ -97,18 +97,17 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     conf.applyMove(MovePiece(blackStart, blackEnd))
     val events = conf.applyMove(EnPassant(whiteStart, whiteEnd))
     events match {
-      case List(PieceMovedCapturing(start, end, captured)) => {
+      case List(PieceMovedCapturing(start, end, captured)) =>
         assertEquals(whiteStart, start)
         assertEquals(whiteEnd, end)
         assertEquals(blackEnd, captured)
-      }
       case default => fail("Unexpected list of events: " + events)
     }
     val (colour, piece, _) = conf.getExistingPiece(whiteEnd)
     assertEquals(White, colour)
     assertEquals(Pawn, piece)
     conf.getPiece(blackEnd) match {
-      case None => {}
+      case None =>
       case default => fail("The black pawn should have been taken")
     }
   }

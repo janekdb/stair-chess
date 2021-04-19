@@ -107,12 +107,11 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
       conf.getExistingPiece(startPosition) match {
         /* Disallow double advancement if the pawn has already been moved. */
         case (_, _, Some(_)) => false
-        case default => {
+        case default =>
           /* Deny attempt to jump over a piece */
           val r = if (dRow == 2) 1 else -1
           val p = startPosition.offset(0, r)
           !conf.exists(p)
-        }
       }
     } else {
       throw new AssertionError("All pawn moves handled")
@@ -142,10 +141,9 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
   /** @return (encountered own piece, encountered opponent piece) */
   def testPieceColour(movePiecePosition: Position, movingPieceColour: Colour) = {
     conf.getPiece(movePiecePosition) match {
-      case None => { /* Square unoccupied */ (false, false) }
-      case Some((otherColour, _, _)) => {
+      case None => /* Square unoccupied */ (false, false)
+      case Some((otherColour, _, _)) =>
         if (otherColour == movingPieceColour) (true, false) else (false, true)
-      }
     }
   }
 
@@ -161,10 +159,9 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
     def checkNotNonPromotingPawnAdvance(start: Position, end: Position): Unit = {
       val (_, piece, _) = conf.getExistingPiece(start)
       piece match {
-        case Pawn => {
+        case Pawn =>
           if (end.getRow == Constants.WHITE_HOME_ROW || end.getRow == Constants.BLACK_HOME_ROW)
             throw new NonPromotingPawnAdvance(move)
-        }
         case default => ()
       }
     }
@@ -182,7 +179,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
     }
 
     move match {
-      case m @ MovePiece(start, end) => {
+      case m @ MovePiece(start, end) =>
         checkReachable(start, end)
         /* If the move was a promotion it would be matched by Promote */
         checkNotNonPromotingPawnAdvance(start, end)
@@ -190,8 +187,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
         checkNotCapturing(end)
         /* Perform this check after all move validating checks */
         checkKingNotLeftInCheckAfterMove(m)
-      }
-      case m @ MovePieceCapturing(start, end) => {
+      case m @ MovePieceCapturing(start, end) =>
         checkReachable(start, end)
         /* If the move was a promotion it would be matched by Promote */
         checkNotNonPromotingPawnAdvance(start, end)
@@ -199,8 +195,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
         checkCapturing(end)
         /* Perform this check after all move validating checks */
         checkKingNotLeftInCheckAfterMove(m)
-      }
-      case Castle(colour, castlingType) => {
+      case Castle(colour, castlingType) =>
         /*
         * Castling restrictions.
         * 1. Your king has been moved earlier in the game.
@@ -249,26 +244,21 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
             throw new AttackedPositionException(move, i.head)
           }
         }
-
-      }
-      case m @ Promote(start, piece) => {
+      case m @ Promote(start, piece) =>
         checkReachable(start, m.end)
         /* PromoteCapturing must be used when capturing */
         checkNotCapturing(m.end)
         /* Perform this check after all move validating checks */
         checkKingNotLeftInCheckAfterMove(m)
-      }
-      case m @ PromoteCapturing(start, end, piece) => {
+      case m @ PromoteCapturing(start, end, piece) =>
         checkReachable(start, end)
         /* Promote must be used when not capturing */
         checkCapturing(end)
         /* Perform this check after all move validating checks */
         checkKingNotLeftInCheckAfterMove(m)
-      }
-      case m @ EnPassant(start, end) => {
+      case m @ EnPassant(start, end) =>
         checkReachable(start, end)
         checkKingNotLeftInCheckAfterMove(m)
-      }
       case _ => throw new UnhandledCaseException(move.toString)
     }
   }

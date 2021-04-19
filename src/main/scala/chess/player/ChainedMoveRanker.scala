@@ -27,10 +27,9 @@ class ChainedMoveRanker(val moveRankers: MoveRanker*) extends MoveRanker {
   private def iter(rankedMoves: RankedMoves, rankers: List[MoveRanker], conf: CV): RankedMoves = {
     rankers match {
       case Nil => rankedMoves
-      case r :: rs => {
+      case r :: rs =>
         val rm = rank(rankedMoves, r, conf)
         iter(rm, rs, conf)
-      }
     }
   }
 

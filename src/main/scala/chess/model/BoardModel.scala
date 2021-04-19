@@ -113,16 +113,14 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
 
     val (events: List[BoardChanged], outcomeOpt) = optMove match {
       // TODO: Add a way to resign a game but not by using a Move subclass
-      case None => {
+      case None =>
         (List(), Some(GameOutcome(GameOutcomeModes.Stalemate, None)))
-      }
-      case default => {
+      case default =>
         val move = optMove.get
         val colour = optColour.get
         val e = conf.applyMove(move)
         val outcomeOption = if (checkForCheckMate(colour.opposite)) Some(GameOutcome(GameOutcomeModes.CheckMate, Some(colour))) else None
         (e, outcomeOption)
-      }
     }
     if (outcomeOpt.isDefined) {
       setGameOutcome(outcomeOpt.get)

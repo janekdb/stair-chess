@@ -25,11 +25,10 @@ class DelayingSubscriber extends BoardChangedSubscriber with GameChangedSubscrib
       event match {
         case _: Won => 10000
         case _: Drawn => 100
-        case default => {
+        case default =>
           assert(false, "Unhandled case: " + event)
           /* Without this delayFor typed as AnyVal */
           0
-        }
       }
     delay(delayFor)
   }
@@ -46,11 +45,10 @@ class DelayingSubscriber extends BoardChangedSubscriber with GameChangedSubscrib
         case _: Promoted => 100
         case _: Castled => 100
         case _: Resigned => 1000
-        case default => {
+        case default =>
           assert(false, "Unhandled case: " + event)
           /* Without this delayFor typed as AnyVal */
           0
-        }
       }
     delay(delayFor)
   }

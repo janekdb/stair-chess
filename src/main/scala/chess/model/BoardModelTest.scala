@@ -229,10 +229,9 @@ object BoardModelTest extends Test with TestUtils with Main {
       def onGameChanged(event: GameChanged): Unit = {
         expectedEvents match {
           case Nil => throw new AssertionError("An event was received when none were expected: " + event)
-          case expected :: rest => {
+          case expected :: rest =>
             assertEquals(expected, event, "Not all expected events were received")
             expectedEvents = rest
-          }
         }
       }
 

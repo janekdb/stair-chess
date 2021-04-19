@@ -29,10 +29,9 @@ object ShellPlayerTest extends Test with TestUtils with Main {
     val mr = new Object with MoveRanker {
       def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {
         val knightMoves = moves filter {
-          case move: SimpleMove => {
+          case move: SimpleMove =>
             val (_, piece, _) = conf.getExistingPiece(move.start)
             piece == Knight
-          }
           case default => false
         }
         assert(knightMoves.nonEmpty)

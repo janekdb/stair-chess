@@ -83,10 +83,9 @@ object ConfigurationView {
           square match {
             /* Middle dot: U+00B7 */
             case null => "·"
-            case (c: Colour, p: Piece) => {
+            case (c: Colour, p: Piece) =>
               val col = colourise(c)_
               symbols.get(p) match { case Some(s) => col(s) case None => assert(false) }
-            }
             case _ => "?"
           }
         line = line + symbol

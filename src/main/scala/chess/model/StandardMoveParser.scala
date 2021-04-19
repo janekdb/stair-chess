@@ -14,23 +14,18 @@ object StandardMoveParser {
   def parse(moves: List[Move], moveText: String): Option[Move] = {
 
     val move: Option[Move] = moveText match {
-      case StartEnd(start, end) => {
+      case StartEnd(start, end) =>
         moves find { case m: SimpleMove => (m.start, m.end) == (start, end) case default => false }
-      }
-      case LongShort(castlingType) => {
+      case LongShort(castlingType) =>
         moves find { case m: Castle => m.castlingType == castlingType case default => false }
-      }
-      case StartPiece(start, piece) => {
+      case StartPiece(start, piece) =>
         moves find { case m: Promote => (m.start, m.piece) == (start, piece) case default => false }
-      }
-      case StartEndPiece(start, end, piece) => {
+      case StartEndPiece(start, end, piece) =>
         moves find { case m: PromoteCapturing => (m.start, m.end, m.piece) == (start, end, piece) case default => false }
-      }
-      case default => {
+      case default =>
         // TODO: Report this via a listener interface
         println("No match for: '" + moveText + "'")
         None
-      }
     }
     move
   }
