@@ -3,6 +3,7 @@ import chess.model.Colour
 import chess.model.Move
 import chess.model.MoveExplorer
 import chess.model.ConfigurationView
+import chess.ranker
 
 /**
  * An implementation of MoveRanker that ranks check mating moves higher than other moves.

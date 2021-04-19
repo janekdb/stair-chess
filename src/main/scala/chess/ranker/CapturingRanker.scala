@@ -4,6 +4,7 @@ import chess.model.MoveExplorer
 import chess.model.ConfigurationView
 import chess.model.Move
 import chess.model.Capturing
+import chess.ranker
 
 // TODO: Mixin a piece value source to influence capturing choice
 /**

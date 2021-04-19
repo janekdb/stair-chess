@@ -4,7 +4,7 @@ import chess.model.ConfigurationView
 import chess.model.Colour
 import chess.model.MoveExplorer
 import chess.model.Capturing
-import chess.model.MovePiece
+import chess.ranker
 
 /**
  * An implementation of MoveRanker that ranks moves that reduce the number of attacked pieces higher than other moves.

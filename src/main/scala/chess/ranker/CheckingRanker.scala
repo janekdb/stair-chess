@@ -1,9 +1,9 @@
 package chess.ranker
 import chess.model.Move
 import chess.model.ConfigurationView
-import chess.model.Configuration
 import chess.model.Colour
 import chess.model.MoveExplorer
+import chess.ranker
 
 /**
  * A ranker that ranks checking moves highest.

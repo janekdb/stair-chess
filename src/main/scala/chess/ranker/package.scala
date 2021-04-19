@@ -1,9 +1,11 @@
+package chess
+
 import chess.model.Move
 
 package object ranker {
 
   /**
-   * Given a map move lists calculate a linear representation where the most
+   * Given a map of move lists calculate a linear representation where the most
    * favoured move list is at the head of the list.
    */
   private def convertRankingMapToList(map: Map[Int, List[Move]]): List[List[Move]] =
