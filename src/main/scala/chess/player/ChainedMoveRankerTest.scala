@@ -1,18 +1,20 @@
 package chess.player
 import chess.model.GridConfiguration
-import chess.model.{ Move, SimpleMove }
+import chess.model.{Move, SimpleMove}
 import chess.util.TODO
 import test.TestUtils
 import chess.model.ConfigurationView
 import chess.model.Configuration
 import test.Test
 import test.Main
-import chess.model.Colours.{ Black, White }
-import chess.model.{ Bishop, Queen, Rook }
+import chess.model.Colours.{Black, White}
+import chess.model.{Bishop, Queen, Rook}
 import chess.model.StandardMoveExplorer
 import chess.model.Piece
 import chess.ranker.MoveRanker
 import chess.model.MovePiece
+
+import scala.annotation.tailrec
 
 object ChainedMoveRankerTest extends Test with TestUtils with Main {
 
@@ -182,6 +184,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
   private def assertListNotEmpty(list: List[Any]) = assertTrue(list.nonEmpty, "List should not be empty")
 
   /* Test sequence is descending by the ranker criteria */
+  @tailrec
   def verifyDescending(m: List[Move], n: List[Move], ms: List[List[Move]], descriminator: Discriminator): Unit = {
     assertListNotEmpty(m)
     assertListNotEmpty(n)

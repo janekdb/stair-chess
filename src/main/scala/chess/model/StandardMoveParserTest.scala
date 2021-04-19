@@ -2,7 +2,9 @@ package chess.model
 import test.TestUtils
 import test.Test
 import test.Main
-import chess.model.Colours.{ Black, White }
+import chess.model.Colours.{Black, White}
+
+import scala.annotation.tailrec
 import scala.util.Random
 
 object StandardMoveParserTest extends Test with TestUtils with Main {
@@ -37,6 +39,7 @@ object StandardMoveParserTest extends Test with TestUtils with Main {
     }
   }
 
+  @tailrec
   private def randomString(r: Random, n: Int, s: String): String = if (n == 0) s else randomString(r, n - 1, s"${r.nextPrintableChar()}$s")
 
   def confirmMovePieceParsed: Unit = {

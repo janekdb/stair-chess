@@ -1,9 +1,12 @@
 package chess.player
 
 import chess.model.ConfigurationView
+
 import scala.collection.immutable.List
 import chess.model.Move
 import chess.ranker.MoveRanker
+
+import scala.annotation.tailrec
 
 /**
  * A class which ranks moves by successively applying a list of MoveRankers. Moves are ranked
@@ -20,6 +23,7 @@ class ChainedMoveRanker(val moveRankers: MoveRanker*) extends MoveRanker {
 
   private type RankedMoves = List[List[Move]]
 
+  @tailrec
   private def iter(rankedMoves: RankedMoves, rankers: List[MoveRanker], conf: CV): RankedMoves = {
     rankers match {
       case Nil => rankedMoves
