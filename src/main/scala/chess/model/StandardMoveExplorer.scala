@@ -21,7 +21,7 @@ import scala.language.postfixOps
  */
 class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
 
-  private implicit def tuple2list(t: Tuple2[Position, Position]) = List(t._1, t._2)
+  private implicit def tuple2list(t: (Position, Position)) = List(t._1, t._2)
 
   /**
    * The set of attacked positions including empty squares that would be attacked by a pawn
