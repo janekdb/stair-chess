@@ -161,11 +161,9 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
   }
 
   private def newRanker(preferredPiece: Piece): MoveRanker =
-    new Object with MoveRanker {
-      def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {
-        val (preferred, other) = moves partition (isPiece(preferredPiece)(conf, _))
-        List(preferred, other) filterNot (_.isEmpty)
-      }
+    (moves: List[Move], conf: ConfigurationView) => {
+      val (preferred, other) = moves partition (isPiece(preferredPiece)(conf, _))
+      List(preferred, other) filterNot (_.isEmpty)
     }
 
   private val longestRanker = new Object with MoveRanker {
