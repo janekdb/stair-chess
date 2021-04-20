@@ -53,12 +53,11 @@ public class SwingBoard extends JFrame implements Board {
 		JLabel label;
 		String graphicName;
 
-		Square(JLabel label, String graphicName) {
+		Square(JLabel label) {
 			if (label == null) {
 				throw new IllegalArgumentException();
 			}
 			this.label = label;
-			this.graphicName = graphicName;
 		}
 	}
 
@@ -81,7 +80,7 @@ public class SwingBoard extends JFrame implements Board {
 				lb.setOpaque(true);
 				Border border = new LineBorder(Color.GRAY, SQUARE_BORDER_WIDTH);
 				lb.setBorder(border);
-				squares[getIndex(col, row)] = new Square(lb, null);
+				squares[getIndex(col, row)] = new Square(lb);
 
 				boardPanel.add(lb);
 			}
