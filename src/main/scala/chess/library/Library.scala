@@ -6,7 +6,7 @@ import chess.model.MovePieceCapturing
 
 object Library {
 
-  implicit def stringToMovePiece(s: String) = new MovePiece(s)
+  implicit def stringToMovePiece(s: String): MovePiece = new MovePiece(s)
 
   private val scholarsMateBlack: List[Move] = List(
     "e7e5",

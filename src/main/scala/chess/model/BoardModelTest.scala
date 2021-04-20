@@ -41,16 +41,16 @@ object BoardModelTest extends Test with TestUtils with Main {
     confirmNotResponsibleForDefect6
   }
 
-  implicit def placementBuilder2List(pb: PlacementsBuilder) = pb.asList
+  implicit def placementBuilder2List(pb: PlacementsBuilder): List[(Colour, Piece, Position)] = pb.asList
 
   private class PlacementsBuilder {
     var placements: List[(Colour, Piece, Position)] = Nil
 
-    def apply(colour: Colour, piece: Piece, position: String) = placements = (colour, piece, new Position(position)) :: placements
+    def apply(colour: Colour, piece: Piece, position: String): Unit = placements = (colour, piece, new Position(position)) :: placements
 
-    def apply(placements: List[(Colour, Piece, Position)]) = this.placements = placements ::: this.placements
+    def apply(placements: List[(Colour, Piece, Position)]): Unit = this.placements = placements ::: this.placements
 
-    def asList = placements
+    def asList: List[(Colour, Piece, Position)] = placements
   }
 
   private def rejectMoveOntoOwnPiece: Unit = {
@@ -235,7 +235,7 @@ object BoardModelTest extends Test with TestUtils with Main {
         }
       }
 
-      def assertAllEventsReceived = assertEquals(Nil, expectedEvents)
+      def assertAllEventsReceived: Unit = assertEquals(Nil, expectedEvents)
     }
 
     val v = new VerifyingGameChangedSubscriber(List(Won(Black, GameOutcomeModes.CheckMate)))

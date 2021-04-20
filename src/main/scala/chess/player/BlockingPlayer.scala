@@ -25,7 +25,7 @@ class BlockingPlayer(val colour: Colour, val name: String) extends Player {
 
   def getName: String = name
 
-  def getColour = colour
+  def getColour: Colour = colour
 
   /**
    * @param Will return immediately if getMove has been called and is still blocked

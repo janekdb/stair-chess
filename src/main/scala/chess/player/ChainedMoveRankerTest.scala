@@ -181,7 +181,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
 
   private type Discriminator = Move => (Int, Int)
 
-  private def assertListNotEmpty(list: List[Any]) = assertTrue(list.nonEmpty, "List should not be empty")
+  private def assertListNotEmpty(list: List[Any]): Unit = assertTrue(list.nonEmpty, "List should not be empty")
 
   /* Test sequence is descending by the ranker criteria */
   @tailrec

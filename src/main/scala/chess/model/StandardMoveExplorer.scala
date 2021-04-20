@@ -21,7 +21,7 @@ import scala.language.postfixOps
  */
 class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
 
-  private implicit def tuple2list(t: (Position, Position)) = List(t._1, t._2)
+  private implicit def tuple2list(t: (Position, Position)): List[Position] = List(t._1, t._2)
 
   /**
    * The set of attacked positions including empty squares that would be attacked by a pawn
@@ -139,7 +139,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
   private def pawnForwardTwo(dCol: Int, dRow: Int) = Set((0, 2), (0, -2)) contains (dCol, dRow)
 
   /** @return (encountered own piece, encountered opponent piece) */
-  def testPieceColour(movePiecePosition: Position, movingPieceColour: Colour) = {
+  def testPieceColour(movePiecePosition: Position, movingPieceColour: Colour): (Boolean, Boolean) = {
     conf.getPiece(movePiecePosition) match {
       case None => /* Square unoccupied */ (false, false)
       case Some((otherColour, _, _)) =>
@@ -350,6 +350,6 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
     }
   }
 
-  private def log(message: String) = println(message)
+  private def log(message: String): Unit = println(message)
 
 }

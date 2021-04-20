@@ -46,7 +46,7 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
 
   private def onBoardChanged(event: BoardChanged): Unit = {
 
-    def clearSquare(p: Position) = board.clearSquare(p.getCol, p.getRow)
+    def clearSquare(p: Position): Unit = board.clearSquare(p.getCol, p.getRow)
 
     event match {
 

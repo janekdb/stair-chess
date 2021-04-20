@@ -5,7 +5,7 @@ import chess.model.Configuration
 
 class Computer extends Player {
 
-  implicit def stringToMovePiece(s: String) = new MovePiece(s)
+  implicit def stringToMovePiece(s: String): MovePiece = new MovePiece(s)
 
   var moves: List[Move] = List(
     "e2e4",

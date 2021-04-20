@@ -5,7 +5,7 @@ import chess.util.TODO
 
 class GridConfiguration extends Configuration {
 
-  var pieces = Map[Position, (Colour, Piece, Option[Position])]()
+  var pieces: Map[Position, (Colour, Piece, Option[Position])] = Map[Position, (Colour, Piece, Option[Position])]()
 
   def add(position: Position, colour: Colour, piece: Piece): Unit = {
     pieces += (position -> (colour, piece, None))

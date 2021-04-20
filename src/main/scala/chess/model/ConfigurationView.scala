@@ -25,11 +25,11 @@ trait ConfigurationView {
   def locatePieces(colour: Colour): List[Position]
 
   /** @return true if a piece exists at the given location */
-  def exists(p: Position) = getPiece(p).isDefined
+  def exists(p: Position): Boolean = getPiece(p).isDefined
 
   /** @return true if a piece exists at the given location with the given colour*/
   // TODO: Do this in a monadic style
-  def exists(p: Position, c: Colour) = {
+  def exists(p: Position, c: Colour): Boolean = {
     getPiece(p) match {
       case Some((colour, _, _)) => colour == c
       case None => false

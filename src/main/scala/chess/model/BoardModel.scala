@@ -33,9 +33,9 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
   private val moveExplorer: MoveExplorer = new StandardMoveExplorer(conf)
 
   /** @return a copy of the current Configuration */
-  def getConfiguration = conf.copyOf
+  def getConfiguration: Configuration = conf.copyOf
 
-  def getMoveExplorer = moveExplorer
+  def getMoveExplorer: MoveExplorer = moveExplorer
 
   def this(
             placements: List[(Colour, Piece, Position)],
@@ -60,15 +60,15 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
 
   var gameOutcome: Option[GameOutcome] = None
 
-  private def wonGuard = if (!isWon) throw new AssertionError("There is no winner")
+  private def wonGuard: Unit = if (!isWon) throw new AssertionError("There is no winner")
 
-  def isWon = gameOutcome.isDefined && (gameOutcome.get.isCheckMate || gameOutcome.get.isResigned)
+  def isWon: Boolean = gameOutcome.isDefined && (gameOutcome.get.isCheckMate || gameOutcome.get.isResigned)
 
-  def isCompleted = gameOutcome.isDefined
+  def isCompleted: Boolean = gameOutcome.isDefined
 
-  def isDrawn = gameOutcome.isDefined && gameOutcome.get.isStalemate
+  def isDrawn: Boolean = gameOutcome.isDefined && gameOutcome.get.isStalemate
 
-  def getGameOutcome = gameOutcome
+  def getGameOutcome: Option[GameOutcome] = gameOutcome
 
   def getWinner: Option[Colour] = {
     gameOutcome.get.winner
@@ -139,7 +139,7 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
   }
 
   private def extractColour(move: Move): Colour = {
-    implicit def tuple2colour(t: (Colour, Piece, Option[Position])) = t._1
+    implicit def tuple2colour(t: (Colour, Piece, Option[Position])): Colour = t._1
 
     move match {
       case Castle(colour, _) => colour

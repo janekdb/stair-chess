@@ -8,5 +8,5 @@ object Constants {
     
   val WHITE_HOME_ROW = 1
   
-  val BLACK_HOME_ROW = BOARD_SIZE
+  val BLACK_HOME_ROW: Int = BOARD_SIZE
 }

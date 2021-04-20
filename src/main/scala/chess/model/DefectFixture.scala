@@ -5,10 +5,10 @@ import Colours.{Black, White}
 object DefectFixture {
 
   // TODO: Use TestUtils instead of duplicating implicit functions
-  implicit def string2MovePiece(s: String) = new MovePiece(s)
-  implicit def string2Position(s: String) = new Position(s)
+  implicit def string2MovePiece(s: String): MovePiece = new MovePiece(s)
+  implicit def string2Position(s: String): Position = new Position(s)
 
-  var defect5Moves = List[Move]()
+  var defect5Moves: List[Move] = List[Move]()
   defect5Moves ::= new MovePiece("g2g4")
   defect5Moves ::= new MovePiece("f7f5")
   defect5Moves ::= new MovePiece("f2f3")
@@ -55,9 +55,9 @@ object DefectFixture {
   defect5Moves = defect5Moves.reverse
 
   /* This move should be rejected after playing the defect5Moves moves */
-  val defect5FinalMove = Castle(Black, Long)
+  val defect5FinalMove: Castle = Castle(Black, Long)
 
-  var defect6Moves = List[Move]()
+  var defect6Moves: List[Move] = List[Move]()
   defect6Moves ::= new MovePiece("d2d4")
   defect6Moves ::= new MovePiece("d7d6")
   defect6Moves ::= new MovePiece("d1d2")
@@ -89,7 +89,7 @@ object DefectFixture {
   defect6Moves = defect6Moves.reverse
 
   /* This move should be rejected after playing the defect6Moves moves */
-  val defect6FinalMove = Castle(White, Short)
+  val defect6FinalMove: Castle = Castle(White, Short)
 
 
 }

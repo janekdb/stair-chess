@@ -17,8 +17,8 @@ class Position(val col: Int, val row: Int) {
 
   def offset(dCol: Int, dRow: Int): Position = new Position(col + dCol, row + dRow)
 
-  def getRow = row
-  def getCol = col
+  def getRow: Int = row
+  def getCol: Int = col
 
   private def inBounds(i: Int): Boolean = i >= 1 & i <= Constants.BOARD_SIZE
 
@@ -36,7 +36,7 @@ class Position(val col: Int, val row: Int) {
     }
   }
 
-  override def hashCode = row + col
+  override def hashCode: Int = row + col
 }
 
 object Position {

@@ -63,7 +63,7 @@ object StandardMoveParserTest extends Test with TestUtils with Main {
     assertEquals(Some(expected), actual)
   }
 
-  def confirmCastleParsed = {
+  def confirmCastleParsed: Unit = {
     val input = "castle-short"
     val expected: Move = allMoveTypes(input)
     val actual = parse(allMoveTypes.values, input)
@@ -90,7 +90,7 @@ object StandardMoveParserTest extends Test with TestUtils with Main {
     assertEquals(expected, actual)
   }
 
-  def confirmPromoteCapturingToKnightParsed = {
+  def confirmPromoteCapturingToKnightParsed: Unit = {
     val input = "e7d8-knight"
     val expected: Move = allMoveTypes(input)
     val Some(actual) = parse(allMoveTypes.values, input)

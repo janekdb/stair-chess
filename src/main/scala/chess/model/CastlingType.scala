@@ -12,11 +12,11 @@ trait CastlingType {
 }
 
 object Short extends CastlingType {
-  def getColumns = ((5, 7), (8, 6))
+  def getColumns: ((Int, Int), (Int, Int)) = ((5, 7), (8, 6))
   override def toString = "Short"
 }
 
 object Long extends CastlingType {
-  def getColumns = ((5, 3), (1, 4))
+  def getColumns: ((Int, Int), (Int, Int)) = ((5, 3), (1, 4))
   override def toString = "Long"
 }

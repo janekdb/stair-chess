@@ -10,8 +10,8 @@ import chess.model.PiecePlaced
  */
 object NoUI extends BoardChangedSubscriber with GameChangedSubscriber {
 
-  def onGameChanged(event: GameChanged) = ()
-  def onBoardChanged(events: List[BoardChanged]) = ()
-  def onPiecePlaced(event: PiecePlaced) = ()
+  def onGameChanged(event: GameChanged): Unit = ()
+  def onBoardChanged(events: List[BoardChanged]): Unit = ()
+  def onPiecePlaced(event: PiecePlaced): Unit = ()
 
 }

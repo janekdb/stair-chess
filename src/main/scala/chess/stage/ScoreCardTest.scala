@@ -1,9 +1,8 @@
 package chess.stage
 
 import chess.player.Player
-import chess.model.Configuration
-
-import test.{ Main, Test, TestUtils }
+import chess.model.{Configuration, Move}
+import test.{Main, Test, TestUtils}
 
 object ScoreCardTest extends Test with TestUtils with Main {
 
@@ -16,8 +15,8 @@ object ScoreCardTest extends Test with TestUtils with Main {
   }
 
   private class PlayerBase(name: String) extends Player {
-    def getName = name
-    def getMove(configuration: Configuration) = None
+    def getName: String = name
+    def getMove(configuration: Configuration): Option[Move] = None
   }
 
   private val PLAYER_1 = new PlayerBase("player-1")

@@ -93,5 +93,5 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
     conf
   }
 
-  private def mf(moveOpt: Option[Move]) = new MoveFactory { override def getMove(colour: Colour, conf: Configuration) = moveOpt }
+  private def mf(moveOpt: Option[Move]) = new MoveFactory { override def getMove(colour: Colour, conf: Configuration): Option[Move] = moveOpt }
 }

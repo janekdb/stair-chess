@@ -36,5 +36,5 @@ object AllTests {
     tests
   }
 
-  def runAllTests = tests foreach { _.runTests }
+  def runAllTests: Unit = tests foreach { _.runTests }
 }

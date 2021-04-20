@@ -24,7 +24,7 @@ class ScoreCard(val players: Set[String]) {
   def getWins: List[(String, Int)] = {
     /* Sort the greatest number of wins first */
     val ordering = new Object with Ordering[(String, Int)] {
-      def compare(x: (String, Int), y: (String, Int)) = {
+      def compare(x: (String, Int), y: (String, Int)): Int = {
         val (p1, s1) = x
         val (p2, s2) = y
         val sc = -(s1 compare s2)
@@ -38,7 +38,7 @@ class ScoreCard(val players: Set[String]) {
   def getDraws: List[(String, Int)] = {
     /* Sort by name because a high draw count is not neccesarily better or worse than a low number */
     val ordering = new Object with Ordering[(String, Int)] {
-      def compare(x: (String, Int), y: (String, Int)) = {
+      def compare(x: (String, Int), y: (String, Int)): Int = {
         val (p1, _) = x
         val (p2, _) = y
         p1 compare p2
