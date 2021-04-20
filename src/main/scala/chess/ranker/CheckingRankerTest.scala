@@ -14,6 +14,7 @@ import chess.model.MovePieceCapturing
 import chess.model.StandardMoveExplorer
 import chess.model.ConfigurationView
 
+//noinspection ZeroIndexToHead
 object CheckingRankerTest extends Test with TestUtils with Main {
 
   def runTests: Unit = {

@@ -102,7 +102,7 @@ object ChessApp {
       sb.addMoveEntryListener(playerListener)
       val boardAdapterOpt = Some(new BoardAdapter(sb))
       // TODO: Stop using a tuple for blockingPlayerGenerator
-      play(scoreCard, boardAdapterOpt, generators(0), blockingPlayerGenerator._2)
+      play(scoreCard, boardAdapterOpt, generators.head, blockingPlayerGenerator._2)
     } else {
       val ps = List(p1, p2, p3, p4)
       val names = ps map { _._1 }

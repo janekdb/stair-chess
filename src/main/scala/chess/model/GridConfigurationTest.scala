@@ -19,6 +19,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     applied
   }
 
+  //noinspection ZeroIndexToHead
   private def confirmGetRows: Unit = {
     val conf = new GridConfiguration
 

@@ -50,6 +50,7 @@ object CaptureEvadingRankerTest extends Test with TestUtils with Main {
 
     /* Visual inspection of the ranked moves confirmed the partition count. */
     assertEquals(3, rankedMoves.size, rankedMoves.toString)
+    //noinspection ZeroIndexToHead
     assertTrue(rankedMoves(0) contains new MovePiece("e6e7"), rankedMoves(0).toString)
     assertTrue(rankedMoves(1) contains new MovePieceCapturing("a2a8"), rankedMoves(1).toString)
     assertTrue(rankedMoves(2) contains new MovePiece("g1h3"), rankedMoves(2).toString)
