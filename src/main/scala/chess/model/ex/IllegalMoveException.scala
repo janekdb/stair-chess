@@ -6,7 +6,7 @@ import chess.model.Position
 import chess.model.Colour
 import chess.model.Piece
 
-abstract class IllegalMoveException(move: Move) extends RuntimeException("Illegal move: " + move.toString())
+abstract class IllegalMoveException(move: Move) extends RuntimeException("Illegal move: " + move.toString)
 
 class PreviouslyMovedException(move: Move) extends IllegalMoveException(move)
 

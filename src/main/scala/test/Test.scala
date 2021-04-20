@@ -54,7 +54,7 @@ trait Test {
 
   class FailureException(e: Exception, message: String) extends RuntimeException(message, e) {
 
-    def this(e: Exception) = this(e, "Unexpected exception: " + e.getClass())
+    def this(e: Exception) = this(e, "Unexpected exception: " + e.getClass)
 
     def this(message: String) = this(null, message)
 
