@@ -186,11 +186,12 @@ public class SwingBoard extends JFrame implements Board {
 	 * @param piece
 	 *            A piece category such as black-rook
 	 */
+	@SuppressWarnings("UnnecessaryLocalVariable")
 	public void setPiece(final int col, final int row, final String piece) {
-		String gName = piece;
+		String graphicName = piece;
 		Square sq = squares[getIndex(col, row)];
-		sq.label.setIcon(getPiece(gName));
-		sq.graphicName = gName;
+		sq.label.setIcon(getPiece(graphicName));
+		sq.graphicName = graphicName;
 	}
 
 	public void showWon(final String colour, final String wonMode) {
