@@ -23,7 +23,7 @@ import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 public class SwingBoard extends JFrame implements Board {
-	GridLayout boardLayout = new GridLayout(8, 8);
+	final GridLayout boardLayout = new GridLayout(8, 8);
 
 	public SwingBoard(String name) {
 		super(name);
