@@ -108,6 +108,7 @@ public class SwingBoard extends JFrame implements Board {
 		try {
 			String imagePath = String.format(ICON_PATH_TEMPLATE, imageName);
 			InputStream is = getClass().getClassLoader().getResourceAsStream(imagePath);
+			assert is != null;
 			BufferedImage myPicture = ImageIO.read(is);
 			icon = new ImageIcon(myPicture);
 		} catch (Exception e) {
