@@ -28,14 +28,14 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
     val cd2 = new CountDownLatch(1)
     var moveOpt: Option[Move] = None
     doAsync {
-      cd1.countDown
+      cd1.countDown()
       moveOpt = p.getMove(conf)
-      cd2.countDown
+      cd2.countDown()
     }
-    cd1.await
+    cd1.await()
     assert(moveOpt.isEmpty)
     p.setMoveFactory(mf("e1e2"))
-    cd2.await
+    cd2.await()
     assertEquals(Some(new MovePiece("e1e2")), moveOpt)
   }
 
@@ -46,18 +46,18 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
     val cd2 = new CountDownLatch(1)
     var moveOpt: Option[Move] = None
     doAsync {
-      cd1.countDown
+      cd1.countDown()
       moveOpt = p.getMove(conf)
-      cd2.countDown
+      cd2.countDown()
     }
-    cd1.await
+    cd1.await()
     assert(moveOpt.isEmpty)
     /* Invoke setMoveFactory multiple times to prove None is discarded. */
     p.setMoveFactory(mf(None))
     p.setMoveFactory(mf(None))
     p.setMoveFactory(mf(None))
     p.setMoveFactory(mf("e1e2"))
-    cd2.await
+    cd2.await()
     assertEquals(Some(new MovePiece("e1e2")), moveOpt)
   }
 
@@ -68,15 +68,15 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
     val cd2 = new CountDownLatch(1)
     var set = false
     doAsync {
-      cd1.countDown
+      cd1.countDown()
       p.setMoveFactory(mf("e1e2"))
       set = true
-      cd2.countDown
+      cd2.countDown()
     }
-    cd1.await
+    cd1.await()
     assertFalse(set)
     val Some(move) = p.getMove(conf)
-    cd2.await
+    cd2.await()
     assertEquals(new MovePiece("e1e2"), move)
   }
 

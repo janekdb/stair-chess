@@ -95,7 +95,7 @@ object ChessApp {
       val moveListener = new MoveListener {
         def onMove(move: Move): Unit = {
           println("MoveListener: " + move)
-          sb.clearMoveEntry
+          sb.clearMoveEntry()
         }
       }
       val playerListener: MoveEntryListener = mel(player, moveListener)
