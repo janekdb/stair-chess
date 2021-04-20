@@ -96,7 +96,7 @@ public class SwingBoard extends JFrame implements Board {
 
 	private MoveEntry moveEntry;
 
-	private final Map<String, Icon> icons = new HashMap<String, Icon>();
+	private final Map<String, Icon> icons = new HashMap<>();
 
 	private static final String ICON_PATH_TEMPLATE = "piece/%s.png";
 
@@ -156,11 +156,9 @@ public class SwingBoard extends JFrame implements Board {
 		// Schedule a job for the event dispatch thread:
 		// creating and showing this application's GUI.
 		final SwingBoard[] boardHolder = new SwingBoard[1];
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				boardHolder[0] = createAndShowGUI(interactiveMode);
-				latch.countDown();
-			}
+		javax.swing.SwingUtilities.invokeLater(() -> {
+			boardHolder[0] = createAndShowGUI(interactiveMode);
+			latch.countDown();
 		});
 
 		try {

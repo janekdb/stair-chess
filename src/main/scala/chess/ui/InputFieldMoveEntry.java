@@ -39,12 +39,7 @@ public class InputFieldMoveEntry implements MoveEntry {
 
 	@Override
 	public void addMoveEntryListener(final MoveEntryListener listener) {
-		ActionListener a = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				listener.onMoveEntry(e.getActionCommand());
-			}
-		};
+		ActionListener a = e -> listener.onMoveEntry(e.getActionCommand());
 		inputField.addActionListener(a);
 	}
 
