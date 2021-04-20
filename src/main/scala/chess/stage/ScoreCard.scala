@@ -1,13 +1,13 @@
 package chess.stage
 
-import scala.collection.mutable.HashMap
-
 import chess.player.Player
+
+import scala.collection.mutable
 
 class ScoreCard(val players: Set[String]) {
 
-  val wins = new HashMap[String, Int]()
-  val draws = new HashMap[String, Int]()
+  val wins = new mutable.HashMap[String, Int]()
+  val draws = new mutable.HashMap[String, Int]()
 
   players.foreach(p => wins.put(p, 0))
   players.foreach(p => draws.put(p, 0))
