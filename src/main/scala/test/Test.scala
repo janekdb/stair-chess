@@ -76,7 +76,6 @@ trait Test {
         thrown = true
         ex = e
         correctType = e.getClass == expectedException
-      case d => throw new AssertionError("Unhandled case: " + d)
     }
     if (!thrown) {
       fail(assertion)
