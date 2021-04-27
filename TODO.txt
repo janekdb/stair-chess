@@ -8,12 +8,17 @@ using getBasicMoves which is incomplete because it does not include castling.
 
 Add stalemate detection. Use this example of black in stalemate,
   abcdefgh
-8 ·····Q··
-7 ···k····
-6 R·······
-5 ·N······
-4 ········
-3 ·····K··
-2 ·R······
-1 ········
+8 Â·Â·Â·Â·Â·QÂ·Â·
+7 Â·Â·Â·kÂ·Â·Â·Â·
+6 RÂ·Â·Â·Â·Â·Â·Â·
+5 Â·NÂ·Â·Â·Â·Â·Â·
+4 Â·Â·Â·Â·Â·Â·Â·Â·
+3 Â·Â·Â·Â·Â·KÂ·Â·
+2 Â·RÂ·Â·Â·Â·Â·Â·
+1 Â·Â·Â·Â·Â·Â·Â·Â·
   abcdefgh
+
+DONE: Get running Scala 2.13.5
+
+Add player that prefers taking pieces nearest the king
+
