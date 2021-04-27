@@ -43,7 +43,7 @@ object Position {
   
   /**
    * @return all intervening positions.
-   * @throw IllegalArgumentException if the positions do not share the same row
+   * @throws IllegalArgumentException if the positions do not share the same row
    */
   def getInterveningPositions(a: Position, b: Position): List[Position] = {
     if(a.getRow != b.getRow) throw new IllegalArgumentException("The positions must be on the same row")
