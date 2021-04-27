@@ -201,7 +201,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
       case r :: rs =>
         /* Compare next pair */
         verifyDescending(n, r, rs, descriminator)
-      case default => fail("Unhandled case: " + ms)
+      case _ => fail("Unhandled case: " + ms)
     }
   }
 
@@ -209,7 +209,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     case sm: SimpleMove =>
       val (_, piece, _) = conf.getExistingPiece(sm.start)
       targetPiece == piece
-    case default => false
+    case _ => false
   }
 
   private def isBishop = isPiece(Bishop) _
@@ -220,6 +220,6 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
   private def length(conf: ConfigurationView)(move: Move) = move match {
     case sm: SimpleMove =>
       (sm.start.col - sm.end.col).abs max (sm.start.row - sm.end.row).abs
-    case default => 0
+    case _ => 0
   }
 }

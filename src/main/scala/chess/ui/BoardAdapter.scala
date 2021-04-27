@@ -34,7 +34,7 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
         board.showWon(colour.toString, winMode.toString)
       case Drawn(drawMode) =>
         board.showDrawn(drawMode.toString)
-      case default => TODO.throwRuntimeEx("Unhandled case: " + event)
+      case _ => TODO.throwRuntimeEx("Unhandled case: " + event)
     }
   }
 
@@ -73,7 +73,7 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
       case Resigned(colour) =>
         // TODO: UI: Improve resignation visualisation with a popup dialog
         throw new RuntimeException(s"$colour has resigned")
-      case default => TODO.throwRuntimeEx("Unhandled case: " + event)
+      case _ => TODO.throwRuntimeEx("Unhandled case: " + event)
     }
   }
 

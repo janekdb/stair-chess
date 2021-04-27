@@ -65,7 +65,7 @@ object BoardModelTest extends Test with TestUtils with Main {
       fail("Move onto own piece should be rejected")
     } catch {
       /* Success */
-      case e: UnreachablePositionException => ()
+      case _: UnreachablePositionException => ()
       /* Unexpected */
       case e: Exception => unexpected(e)
     }
@@ -262,7 +262,7 @@ object BoardModelTest extends Test with TestUtils with Main {
           eventCount += 1
           event match {
             case PieceMoved(_, _) => pieceMoved = true
-            case default => fail("Unexpected event: " + event)
+            case _ => fail("Unexpected event: " + event)
           }
         }
       }
@@ -346,7 +346,7 @@ object BoardModelTest extends Test with TestUtils with Main {
         for (event <- events) {
           event match {
             case e@PieceMovedCapturing(_, _, _) => pieceMovedCapturing = e
-            case default => fail("Unexpected event: " + event)
+            case _ => fail("Unexpected event: " + event)
           }
         }
       }

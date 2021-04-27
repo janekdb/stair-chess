@@ -62,7 +62,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
 
     conf.getLastMove match {
       case None => ()
-      case default => fail("The last move should have been None")
+      case _ => fail("The last move should have been None")
     }
 
     conf.applyMove(MovePiece(whiteStart, whiteEnd))
@@ -102,14 +102,14 @@ object GridConfigurationTest extends Test with TestUtils with Main {
         assertEquals(whiteStart, start)
         assertEquals(whiteEnd, end)
         assertEquals(blackEnd, captured)
-      case default => fail("Unexpected list of events: " + events)
+      case _ => fail("Unexpected list of events: " + events)
     }
     val (colour, piece, _) = conf.getExistingPiece(whiteEnd)
     assertEquals(White, colour)
     assertEquals(Pawn, piece)
     conf.getPiece(blackEnd) match {
       case None =>
-      case default => fail("The black pawn should have been taken")
+      case _ => fail("The black pawn should have been taken")
     }
   }
 
@@ -181,7 +181,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
   private def assertSomeEquals(expected: (Piece, Position, Position), actual: Option[(Piece, Position, Position)]): Unit = {
     actual match {
       case Some((_, _, _)) => ()
-      case default => fail("The last move should have been Some((_, _)) but was " + actual)
+      case _ => fail("The last move should have been Some((_, _)) but was " + actual)
     }
     val Some((p, a, b)) = actual
     assertEquals(expected, (p, a, b))

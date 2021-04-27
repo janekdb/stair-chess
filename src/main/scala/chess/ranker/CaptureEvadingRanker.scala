@@ -19,7 +19,7 @@ class CaptureEvadingRanker(val explorerFactory: ConfigurationView => MoveExplore
     val future = confView.applied(move)
     val e = explorerFactory(future)
     val legalMoves = e.legalMoves(colour.opposite)
-    val capturingMoves = legalMoves filter { case _: Capturing => true case default => false }
+    val capturingMoves = legalMoves filter { case _: Capturing => true case _ => false }
     -capturingMoves.size
   }
 

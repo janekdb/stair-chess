@@ -455,7 +455,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add("h8", White, King)
 
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(White) filter { case a: Promote => true case default => false }
+    val moves = e.legalMoves(White) filter { case _: Promote => true case _ => false }
     val promote = Promote("b7", Queen)
     val expected = List(promote.copy(piece = Knight), promote)
     assertEquals(expected, moves, "Pawn promotion to both Queen and Knight was considered")
@@ -469,7 +469,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add("c8", Black, Rook)
 
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(White) filter { case a: PromoteCapturing => true case default => false }
+    val moves = e.legalMoves(White) filter { case _: PromoteCapturing => true case _ => false }
     val promote = PromoteCapturing("b7", "c8", Queen)
     val expected = List(promote.copy(piece = Knight), promote)
     assertEquals(expected, moves, "Capturing pawn promotion to both Queen and Knight was considered")
@@ -533,7 +533,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add("h1", White, Rook)
     val allowedMove = Castle(White, Long)
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(White) filter { case a: Castle => true case default => false }
+    val moves = e.legalMoves(White) filter { case _: Castle => true case _ => false }
     assertEquals(List(Castle(White, Short), Castle(White, Long)), moves, "Both long and short castling was included")
   }
 
@@ -543,7 +543,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add("e1", White, King)
     conf.add("h2", White, Rook)
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(White) filter { case a: Castle => true case default => false }
+    val moves = e.legalMoves(White) filter { case _: Castle => true case _ => false }
     assertEquals(List(Castle(White, Long)), moves, "When only long castling was possible short castling was not considered")
   }
 
@@ -553,7 +553,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add("e1", White, King)
     conf.add("h1", White, Rook)
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(White) filter { case a: Castle => true case default => false }
+    val moves = e.legalMoves(White) filter { case _: Castle => true case _ => false }
     assertEquals(List(Castle(White, Short)), moves, "When only short castling was possible long castling was not considered")
   }
 
@@ -563,7 +563,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add("e1", White, King)
     conf.add("h1", Black, Rook)
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(White) filter { case a: Castle => true case default => false }
+    val moves = e.legalMoves(White) filter { case _: Castle => true case _ => false }
     assertEquals(List(), moves, "When no castling was possible no castling was considered")
   }
 
@@ -573,7 +573,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add("e1", White, King)
     conf.add("h1", White, Bishop)
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(White) filter { case a: Castle => true case default => false }
+    val moves = e.legalMoves(White) filter { case _: Castle => true case _ => false }
     assertEquals(List(), moves, "When the outside piece was not a rook no castling was considered")
   }
 
@@ -584,7 +584,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add("e1", White, Queen)
     conf.add("h1", White, Rook)
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(White) filter { case a: Castle => true case default => false }
+    val moves = e.legalMoves(White) filter { case _: Castle => true case _ => false }
     assertEquals(List(), moves, "When the inside piece was not a king  no castling was considered")
   }
 

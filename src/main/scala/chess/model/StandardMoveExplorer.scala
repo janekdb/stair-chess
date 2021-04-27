@@ -36,12 +36,13 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
   }
 
   /**
-   * @return The set of possible positions excluding moves that would result in 1. the move escaping from the board edges,
+   * @return The set of possible positions excluding moves that would result in 1. The move escaping from the board edges,
    * or 2. A non-Knight jumping over a piece, or 3. A piece taking another piece of the same colour.
    * Further restrictions on moves are imposed by {@link #rejectIllegalMove}
    */
-  def getEndPositions(position: Position,
-    pawnMovePredicate: (Position, (Int, Int)) => Boolean): Set[Position] = {
+  def getEndPositions(
+                       position: Position,
+                       pawnMovePredicate: (Position, (Int, Int)) => Boolean): Set[Position] = {
     val (colour, piece, _) = conf.getExistingPiece(position)
 
     val vectors = piece.movements(colour)
@@ -50,13 +51,13 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
       case Queen => true
       case Bishop => true
       case Rook => true
-      case default => false
+      case _ => false
     }
     var basicPositions = Set[Position]()
 
     val moveAllowed = piece match {
       case Pawn => pawnMovePredicate
-      case default => anyMoveAllowed _
+      case _ => anyMoveAllowed _
     }
 
     for (v <- vectors) {
@@ -88,11 +89,11 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
       val p = startPosition.offset(dCol, dRow)
       val lastMoveWasDoublePawn = conf.getLastMove match {
         case Some((Pawn, start, end)) if (start.getRow - end.getRow).abs == 2 => true
-        case default => false
+        case _ => false
       }
       val lastMoveWasAdjacentColumn = conf.getLastMove match {
-        case Some((Pawn, start, end)) if end.getCol == p.getCol => true
-        case default => false
+        case Some((Pawn, _, end)) if end.getCol == p.getCol => true
+        case _ => false
       }
       val rowIsEnPassant = {
         val (colour, _, _) = conf.getExistingPiece(startPosition)
@@ -107,7 +108,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
       conf.getExistingPiece(startPosition) match {
         /* Disallow double advancement if the pawn has already been moved. */
         case (_, _, Some(_)) => false
-        case default =>
+        case _ =>
           /* Deny attempt to jump over a piece */
           val r = if (dRow == 2) 1 else -1
           val p = startPosition.offset(0, r)
@@ -162,7 +163,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
         case Pawn =>
           if (end.getRow == Constants.WHITE_HOME_ROW || end.getRow == Constants.BLACK_HOME_ROW)
             throw new NonPromotingPawnAdvance(move)
-        case default => ()
+        case _ => ()
       }
     }
 
@@ -223,7 +224,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
         (king, rook).foreach { p =>
           conf.getExistingPiece(p) match {
             case (_, _, Some(_)) => throw new PreviouslyMovedException(move)
-            case default => ()
+            case _ => ()
           }
         }
 
@@ -244,13 +245,13 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
             throw new AttackedPositionException(move, i.head)
           }
         }
-      case m @ Promote(start, piece) =>
+      case m @ Promote(start, _) =>
         checkReachable(start, m.end)
         /* PromoteCapturing must be used when capturing */
         checkNotCapturing(m.end)
         /* Perform this check after all move validating checks */
         checkKingNotLeftInCheckAfterMove(m)
-      case m @ PromoteCapturing(start, end, piece) =>
+      case m @ PromoteCapturing(start, end, _) =>
         checkReachable(start, end)
         /* Promote must be used when not capturing */
         checkCapturing(end)
@@ -335,7 +336,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
         case Pawn if isHomeRow(end.getRow) =>
           if (endOccupied) promotionPieces.map { PromoteCapturing(start, end, _) } else promotionPieces.map { Promote(start, _) }
         case Pawn if !endOccupied && isDiagonal(start, end) => List(EnPassant(start, end))
-        case default => if (endOccupied) List(MovePieceCapturing(start, end)) else List(MovePiece(start, end))
+        case _ => if (endOccupied) List(MovePieceCapturing(start, end)) else List(MovePiece(start, end))
       }
     }
   }
@@ -346,10 +347,8 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
       this.rejectIllegalMove(move)
       true
     } catch {
-      case e: IllegalMoveException => false
+      case _: IllegalMoveException => false
     }
   }
-
-  private def log(message: String): Unit = println(message)
 
 }

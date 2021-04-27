@@ -32,7 +32,7 @@ object ShellPlayerTest extends Test with TestUtils with Main {
           case move: SimpleMove =>
             val (_, piece, _) = conf.getExistingPiece(move.start)
             piece == Knight
-          case default => false
+          case _ => false
         }
         assert(knightMoves.nonEmpty)
         val otherMoves = moves filterNot { knightMoves.contains }

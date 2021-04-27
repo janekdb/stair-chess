@@ -108,14 +108,14 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
     /* Extract the last colour before the configuration is changed. */
     val optColour = optMove match {
       case None => None
-      case default => Some(extractColour(optMove.get))
+      case _ => Some(extractColour(optMove.get))
     }
 
     val (events: List[BoardChanged], outcomeOpt) = optMove match {
       // TODO: Add a way to resign a game but not by using a Move subclass
       case None =>
         (List(), Some(GameOutcome(GameOutcomeModes.Stalemate, None)))
-      case default =>
+      case _ =>
         val move = optMove.get
         val colour = optColour.get
         val e = conf.applyMove(move)
@@ -148,7 +148,7 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
       case Promote(start, _) => conf.getExistingPiece(start)
       case PromoteCapturing(start, _, _) => conf.getExistingPiece(start)
       case EnPassant(start, _) => conf.getExistingPiece(start)
-      case default => throw new UnhandledCaseException(move.toString)
+      case _ => throw new UnhandledCaseException(move.toString)
     }
   }
 

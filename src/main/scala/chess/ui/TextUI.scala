@@ -52,9 +52,9 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
           case List() => throw new RuntimeException("The King could not be found for " + colour)
           // TODO: UI: Improve resignation visualization
           case List(position) => conf.remove(position)
-          case default => throw new RuntimeException("More than one King was found for " + colour + ": " + positions)
+          case _ => throw new RuntimeException("More than one King was found for " + colour + ": " + positions)
         }
-      case default => throw new AssertionError("event was not handled: " + event)
+      case _ => throw new AssertionError("event was not handled: " + event)
     }
     render
   }
