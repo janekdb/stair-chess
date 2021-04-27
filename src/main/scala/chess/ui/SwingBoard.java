@@ -138,7 +138,7 @@ public class SwingBoard extends JFrame implements Board {
 	/**
 	 * @param interactiveMode
 	 *            if true interactive element will be included.
-	 * @return
+	 * @return A new board which has been shown
 	 */
 	public static Board createAndShowBoard(final boolean interactiveMode) {
 		/* Use an appropriate Look and Feel */
