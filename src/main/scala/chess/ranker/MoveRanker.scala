@@ -9,7 +9,7 @@ trait MoveRanker {
   val RANKING_LOW = 0
 
   /**
-   * @param A non-null list of legal moves.
+   * @param moves A non-null list of legal moves.
    * @return A possibly empty list of non empty move lists where the first move list contains the most preferred moves.
    */
   def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]]
