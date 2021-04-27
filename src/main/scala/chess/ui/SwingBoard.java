@@ -67,7 +67,7 @@ public class SwingBoard extends JFrame implements Board {
 		final JPanel boardPanel = new JPanel();
 		boardPanel.setLayout(boardLayout);
 
-		int borderedSqSz = SQUARE_SIZE + 2 * SQUARE_BORDER_WIDTH;
+		@SuppressWarnings("PointlessArithmeticExpression") int borderedSqSz = SQUARE_SIZE + 2 * SQUARE_BORDER_WIDTH;
 		boardPanel.setPreferredSize(new Dimension(borderedSqSz * BOARD_SIZE, borderedSqSz * BOARD_SIZE));
 
 		squares = new Square[BOARD_SIZE * BOARD_SIZE];
