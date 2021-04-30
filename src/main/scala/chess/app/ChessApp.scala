@@ -3,7 +3,7 @@ package chess.app
 import java.util.concurrent.TimeUnit
 import chess.model.BoardModel
 import chess.model.Colour
-import chess.model.Colours.{ Black, White }
+import chess.model.Colours.{Black, White}
 import chess.model.Colours
 import chess.model.Configuration
 import chess.model.ConfigurationView
@@ -70,11 +70,13 @@ object ChessApp {
     val checkMatingCapturingName = "CM, Cap Player"
     val checkMatingCaptureEvadingName = "CM, CapEva Player"
     val checkMatingCaptureEvadingCapturingName = "CM, CapEva, Cap Player"
+    val checkMatingHighValueCapturingName = "CM, HV Cap Player"
 
     val p1 = (checkingName, (colour: Colour, explorer: MoveExplorer) => Players.checkingPlayer(checkingName, colour, explorerFactory))
     val p2 = (checkMatingCapturingName, (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCapturingPlayer(checkMatingCapturingName, colour, explorerFactory))
     val p3 = (checkMatingCaptureEvadingName, (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingPlayer(checkMatingCaptureEvadingName, colour, explorerFactory))
     val p4 = (checkMatingCaptureEvadingCapturingName, (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingCheckingPlayer(checkMatingCaptureEvadingCapturingName, colour, explorerFactory))
+    val p5 = (checkMatingHighValueCapturingName, (colour: Colour, explorer: MoveExplorer) => Players.checkMatingHighValueCapturingPlayer(checkMatingHighValueCapturingName, colour, explorerFactory))
 
     val interactive = false
     if (interactive) {
@@ -83,10 +85,10 @@ object ChessApp {
       val player = new BlockingPlayer(Black, playerName)
       val blockingPlayerGenerator = (playerName, (colour: Colour, explorer: MoveExplorer) => player)
       val ps = List(p1, blockingPlayerGenerator)
-      val names = ps map { _._1 }
+      val names = ps map (_._1)
       val scoreCard = new ScoreCard(names toSet)
 
-      val generators = ps map { _._2 }
+      val generators = ps map (_._2)
 
       val interactiveMode = true
       val sb = SwingBoard.createAndShowBoard(interactiveMode)
@@ -104,11 +106,11 @@ object ChessApp {
       // TODO: Stop using a tuple for blockingPlayerGenerator
       play(scoreCard, boardAdapterOpt, generators.head, blockingPlayerGenerator._2)
     } else {
-      val ps = List(p1, p2, p3, p4)
-      val names = ps map { _._1 }
+      val ps = List(p1, p2, p3, p4, p5)
+      val names = ps map (_._1)
       val scoreCard = new ScoreCard(names toSet)
 
-      val generators = ps map { _._2 }
+      val generators = ps map (_._2)
       times(1000) {
         for (wpg <- generators; bpg <- generators; if wpg != bpg) {
           val useSwingBoard = true
@@ -156,6 +158,7 @@ object ChessApp {
   private class OutcomeListener extends GameChangedSubscriber {
     var winner: Option[Colour] = None
     var isDrawn: Boolean = false
+
     def onGameChanged(event: GameChanged): Unit = {
       event match {
         case Won(colour, _) => winner = Some(colour)
@@ -163,6 +166,7 @@ object ChessApp {
       }
     }
   }
+
   private def play(scoreCard: ScoreCard, boardAdapterOpt: Option[BoardAdapter], whitePlayerGenerator: (Colour, MoveExplorer) => Player, blackPlayerGenerator: (Colour, MoveExplorer) => Player): Unit = {
     val outcomeListener = new OutcomeListener
 
@@ -217,12 +221,14 @@ object ChessApp {
     Display.renderScoreCard(scoreCard)
 
     /* Let the spectators note the final position. */
-    delay(20)
+    delay(1)
 
     boardAdapterOpt.foreach(_.close)
   }
 
-  private def delay(count: Int = 1): Unit = { TimeUnit.SECONDS.sleep(count) }
+  private def delay(count: Int = 1): Unit = {
+    TimeUnit.SECONDS.sleep(count)
+  }
 
   def runTests: Unit = {
     AllTests.runAllTests

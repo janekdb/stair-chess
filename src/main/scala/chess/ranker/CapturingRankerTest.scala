@@ -3,7 +3,6 @@ import test.TestUtils
 import test.Test
 import test.Main
 import chess.model.GridConfiguration
-import chess.model.MovePiece
 import chess.model.Move
 import chess.model.StandardMoveExplorer
 import chess.model.ConfigurationView

@@ -10,7 +10,6 @@ import chess.model.Knight
 import chess.model.Pawn
 import chess.player.Player
 import chess.model.Move
-import chess.model.MovePieceCapturing
 import chess.model.StandardMoveExplorer
 import chess.model.ConfigurationView
 

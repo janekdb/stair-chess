@@ -2,10 +2,7 @@ package chess.player
 import chess.model.Colour
 import chess.model.ConfigurationView
 import chess.model.MoveExplorer
-import chess.ranker.CheckMatingRanker
-import chess.ranker.CapturingRanker
-import chess.ranker.CaptureEvadingRanker
-import chess.ranker.CheckingRanker
+import chess.ranker.{CaptureEvadingRanker, CapturingRanker, CheckMatingRanker, CheckingRanker, HighValueCapturingRanker}
 
 object Players {
 
@@ -17,6 +14,13 @@ object Players {
   def checkMatingCapturingPlayer(name: String, colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
     val checkMatingRanker = new CheckMatingRanker(explorerFactory, colour)
     val capturingRanker = new CapturingRanker(explorerFactory, colour)
+    val ranker = new ChainedMoveRanker(checkMatingRanker, capturingRanker)
+    new ShellPlayer(name, colour, explorerFactory, ranker)
+  }
+
+  def checkMatingHighValueCapturingPlayer(name: String, colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
+    val checkMatingRanker = new CheckMatingRanker(explorerFactory, colour)
+    val capturingRanker = new HighValueCapturingRanker(explorerFactory, colour)
     val ranker = new ChainedMoveRanker(checkMatingRanker, capturingRanker)
     new ShellPlayer(name, colour, explorerFactory, ranker)
   }

@@ -28,6 +28,7 @@ object AllTests {
     CheckMatingRankerTest.++
     CapturingRankerTest.++
     CaptureEvadingRankerTest.++
+    HighValueCapturingRankerTest.++
 
     import chess.stage._
     ScoreCardTest.++
