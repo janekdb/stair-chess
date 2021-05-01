@@ -69,14 +69,28 @@ object ChessApp {
     val checkingName = "Checking"
     val checkMatingCapturingName = "CM, Cap"
     val checkMatingCaptureEvadingName = "CM, CapEva"
+    val checkMatingCaptureEvadingCheckingName = "CM, CapEva, Chk"
     val checkMatingCaptureEvadingCapturingName = "CM, CapEva, Cap"
+    val checkMatingCaptureEvadingHighValueCapturingName = "CM, CapEva, HVCap"
     val checkMatingHighValueCapturingName = "CM, HVCap"
+    val checkMatingCheckingHighValueCapturingName = "CM, Chk, HVCap"
 
-    val p1 = (checkingName, (colour: Colour, explorer: MoveExplorer) => Players.checkingPlayer(checkingName, colour, explorerFactory))
-    val p2 = (checkMatingCapturingName, (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCapturingPlayer(checkMatingCapturingName, colour, explorerFactory))
-    val p3 = (checkMatingCaptureEvadingName, (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingPlayer(checkMatingCaptureEvadingName, colour, explorerFactory))
-    val p4 = (checkMatingCaptureEvadingCapturingName, (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingCheckingPlayer(checkMatingCaptureEvadingCapturingName, colour, explorerFactory))
-    val p5 = (checkMatingHighValueCapturingName, (colour: Colour, explorer: MoveExplorer) => Players.checkMatingHighValueCapturingPlayer(checkMatingHighValueCapturingName, colour, explorerFactory))
+    val p1 = (checkingName,
+      (colour: Colour, explorer: MoveExplorer) => Players.checkingPlayer(checkingName, colour, explorerFactory))
+    val p2 = (checkMatingCapturingName,
+      (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCapturingPlayer(checkMatingCapturingName, colour, explorerFactory))
+    val p3 = (checkMatingCaptureEvadingName,
+      (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingPlayer(checkMatingCaptureEvadingName, colour, explorerFactory))
+    val p4 = (checkMatingCaptureEvadingCheckingName,
+      (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingCheckingPlayer(checkMatingCaptureEvadingCheckingName, colour, explorerFactory))
+    val p5 = (checkMatingCaptureEvadingCapturingName,
+      (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingCapturingPlayer(checkMatingCaptureEvadingCapturingName, colour, explorerFactory))
+    val p6 = (checkMatingCaptureEvadingHighValueCapturingName,
+      (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingHighValueCapturingPlayer(checkMatingCaptureEvadingHighValueCapturingName, colour, explorerFactory))
+    val p7 = (checkMatingHighValueCapturingName,
+      (colour: Colour, explorer: MoveExplorer) => Players.checkMatingHighValueCapturingPlayer(checkMatingHighValueCapturingName, colour, explorerFactory))
+    val p8 = (checkMatingCheckingHighValueCapturingName,
+      (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCheckingHighValueCapturingPlayer(checkMatingCheckingHighValueCapturingName, colour, explorerFactory))
 
     val interactive = false
     if (interactive) {
@@ -106,7 +120,7 @@ object ChessApp {
       // TODO: Stop using a tuple for blockingPlayerGenerator
       play(scoreCard, boardAdapterOpt, generators.head, blockingPlayerGenerator._2)
     } else {
-      val ps = List(p1, p2, p3, p4, p5)
+      val ps = List(p1, p2, p3, p4, p5, p6, p7, p8)
       val names = ps map (_._1)
       val scoreCard = new ScoreCard(names toSet)
 

@@ -18,10 +18,34 @@ object Players {
     new ShellPlayer(name, colour, explorerFactory, ranker)
   }
 
+  def checkMatingCaptureEvadingCapturingPlayer(name: String, colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
+    val checkMatingRanker = new CheckMatingRanker(explorerFactory, colour)
+    val captureEvadingRanker = new CaptureEvadingRanker(explorerFactory, colour)
+    val capturingRanker = new CapturingRanker(explorerFactory, colour)
+    val ranker = new ChainedMoveRanker(checkMatingRanker, captureEvadingRanker, capturingRanker)
+    new ShellPlayer(name, colour, explorerFactory, ranker)
+  }
+
+  def checkMatingCaptureEvadingHighValueCapturingPlayer(name: String, colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
+    val checkMatingRanker = new CheckMatingRanker(explorerFactory, colour)
+    val captureEvadingRanker = new CaptureEvadingRanker(explorerFactory, colour)
+    val capturingRanker = new HighValueCapturingRanker(explorerFactory, colour)
+    val ranker = new ChainedMoveRanker(checkMatingRanker, captureEvadingRanker, capturingRanker)
+    new ShellPlayer(name, colour, explorerFactory, ranker)
+  }
+
   def checkMatingHighValueCapturingPlayer(name: String, colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
     val checkMatingRanker = new CheckMatingRanker(explorerFactory, colour)
     val capturingRanker = new HighValueCapturingRanker(explorerFactory, colour)
     val ranker = new ChainedMoveRanker(checkMatingRanker, capturingRanker)
+    new ShellPlayer(name, colour, explorerFactory, ranker)
+  }
+
+  def checkMatingCheckingHighValueCapturingPlayer(name: String, colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
+    val checkMatingRanker = new CheckMatingRanker(explorerFactory, colour)
+    val checkingRanker = new CheckingRanker(explorerFactory, colour)
+    val capturingRanker = new HighValueCapturingRanker(explorerFactory, colour)
+    val ranker = new ChainedMoveRanker(checkMatingRanker, checkingRanker, capturingRanker)
     new ShellPlayer(name, colour, explorerFactory, ranker)
   }
 
