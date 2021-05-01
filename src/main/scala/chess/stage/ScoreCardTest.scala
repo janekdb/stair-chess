@@ -12,10 +12,12 @@ object ScoreCardTest extends Test with TestUtils with Main {
     emptyScoreCardHasEmptyScores
     winsOrderedByMostFirst
     drawsOrderedByName
+    scoresOrderByName
   }
 
   private class PlayerBase(name: String) extends Player {
     def getName: String = name
+
     def getMove(configuration: Configuration): Option[Move] = None
   }
 
@@ -27,8 +29,9 @@ object ScoreCardTest extends Test with TestUtils with Main {
 
   private def emptyScoreCardHasEmptyScores: Unit = {
     val sc = new ScoreCard(Set())
-    assertEquals(List(), sc.getWins)
-    assertEquals(List(), sc.getDraws)
+    assertEquals(Nil, sc.getWins)
+    assertEquals(Nil, sc.getDraws)
+    assertEquals(Nil, sc.getScores)
   }
 
   private def winsOrderedByMostFirst: Unit = {
@@ -52,6 +55,26 @@ object ScoreCardTest extends Test with TestUtils with Main {
     sc.addWin(PLAYER_1, PLAYER_5)
     val draws = sc.getDraws
     assertEquals(List((PLAYER_1.getName, 2), (PLAYER_2.getName, 2), (PLAYER_3.getName, 1), (PLAYER_4.getName, 1), (PLAYER_5.getName, 0)), draws)
+  }
+
+  private def scoresOrderByName: Unit = {
+    val sc = new ScoreCard(Set(PLAYER_1, PLAYER_2, PLAYER_3, PLAYER_4, PLAYER_5))
+    sc.addDraw(PLAYER_1, PLAYER_2)
+    sc.addDraw(PLAYER_1, PLAYER_2)
+    sc.addDraw(PLAYER_2, PLAYER_3)
+    sc.addWin(PLAYER_1, PLAYER_5)
+    sc.addWin(PLAYER_3, PLAYER_5)
+    val scores = sc.getScores
+    assertEquals(
+      Scores(PLAYER_1, 1, 2, 0) ::
+        Scores(PLAYER_2, 0, 3, 0) ::
+        Scores(PLAYER_3, 1, 1, 0) ::
+        Scores(PLAYER_4, 0, 0, 0) ::
+        Scores(PLAYER_5, 0, 0, 2) ::
+        Nil,
+      scores
+    )
+
   }
 
 }
