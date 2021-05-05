@@ -7,4 +7,6 @@ lazy val root = (project in file("."))
     name := "stair-chess"
   )
 scalacOptions ++= Seq("-deprecation", "-feature", "-language:implicitConversions")
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.5" % Test
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.7" % Test
+
+logBuffered in Test := false

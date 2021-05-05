@@ -20,5 +20,11 @@ Add stalemate detection. Use this example of black in stalemate,
 
 DONE: Get running Scala 2.13.5
 
+Convert tests to ScalaTest
+ - Convert to ScalaTest
+ - Remove custom test framework
+
+Add player that prefers to fork
+
 Add player that prefers taking pieces nearest the king
 
