@@ -22,7 +22,6 @@ object AllTests {
     BlockingPlayerTest.++
 
     import chess.ranker._
-    CheckMatingRankerTest.++
     CapturingRankerTest.++
     HighValueCapturingRankerTest.++
 
