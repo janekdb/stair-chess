@@ -26,7 +26,7 @@ object StandardMoveParserTest extends Test with TestUtils with Main {
 
   import StandardMoveParser.parse
 
-  def invalidInputs: Unit = {
+  def invalidInputs(): Unit = {
     /* Out of bounds */
     assertEquals(None, parse(getMoves(Black), "h4h5"))
     /* Non-numeric part */
@@ -42,13 +42,13 @@ object StandardMoveParserTest extends Test with TestUtils with Main {
   @tailrec
   private def randomString(r: Random, n: Int, s: String): String = if (n == 0) s else randomString(r, n - 1, s"${r.nextPrintableChar()}$s")
 
-  def confirmMovePieceParsed: Unit = {
+  def confirmMovePieceParsed(): Unit = {
     // TODO: Add test using allMoveTypes
     assertEquals(Some(new MovePiece("e8f8")), parse(getMoves(Black), "e8f8"))
     assertEquals(Some(new MovePiece("e1d2")), parse(getMoves(White), "e1d2"))
   }
 
-  def confirmMovePieceCapturingParsed: Unit = {
+  def confirmMovePieceCapturingParsed(): Unit = {
     // TODO: Add test using allMoveTypes
     val conf = getConf
     conf.add(new Position("d7"), White, Pawn)
@@ -56,48 +56,48 @@ object StandardMoveParserTest extends Test with TestUtils with Main {
     assertEquals(Some(new MovePieceCapturing("e8d7")), parse(moves, "e8d7"))
   }
 
-  def confirmEnPassantParsed: Unit = {
+  def confirmEnPassantParsed(): Unit = {
     val input = "a7a5"
     val expected: Move = allMoveTypes(input)
     val actual = parse(allMoveTypes.values, input)
     assertEquals(Some(expected), actual)
   }
 
-  def confirmCastleParsed: Unit = {
+  def confirmCastleParsed(): Unit = {
     val input = "castle-short"
     val expected: Move = allMoveTypes(input)
     val actual = parse(allMoveTypes.values, input)
     assertEquals(Some(expected), actual)
   }
 
-  def confirmPromoteToInvalidPieceParsed: Unit = {
+  def confirmPromoteToInvalidPieceParsed(): Unit = {
     val input = "e7-plonje"
     val actual = parse(allMoveTypes.values, input)
     assertEquals(None, actual)
   }
 
-  def confirmPromoteToKnightParsed: Unit = {
+  def confirmPromoteToKnightParsed(): Unit = {
     val input = "e7-knight"
     val expected: Move = allMoveTypes(input)
     val Some(actual) = parse(allMoveTypes.values, input)
     assertEquals(expected, actual)
   }
 
-  def confirmPromoteToQueenParsed: Unit = {
+  def confirmPromoteToQueenParsed(): Unit = {
     val input = "e7-queen"
     val expected: Move = allMoveTypes(input)
     val Some(actual) = parse(allMoveTypes.values, input)
     assertEquals(expected, actual)
   }
 
-  def confirmPromoteCapturingToKnightParsed: Unit = {
+  def confirmPromoteCapturingToKnightParsed(): Unit = {
     val input = "e7d8-knight"
     val expected: Move = allMoveTypes(input)
     val Some(actual) = parse(allMoveTypes.values, input)
     assertEquals(expected, actual)
   }
 
-  def confirmPromoteCapturingToRookParsed: Unit = {
+  def confirmPromoteCapturingToRookParsed(): Unit = {
     val input = "e7d8-rook"
     val expected: Move = allMoveTypes(input)
     val Some(actual) = parse(allMoveTypes.values, input)

@@ -64,7 +64,7 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
     render
   }
 
-  private def render: Unit = {
+  private def render(): Unit = {
     val lines = ConfigurationView.getTextRepresentation(conf)
     for (line <- lines) println(line)
     println()

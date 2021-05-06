@@ -2,9 +2,9 @@ package test
 
 trait Test {
 
-  def runTests: Unit
+  def runTests(): Unit
 
-  def fail: Unit = throw new FailureException("fail")
+  def fail(): Unit = throw new FailureException("fail")
 
   def fail(message: String): Unit = throw new FailureException(message)
 

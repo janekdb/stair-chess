@@ -9,7 +9,7 @@ object MoveTest extends Test with TestUtils with Main {
     enPassant
   }
 
-  private def rejectWhenStartEqualsEnd: Unit = {
+  private def rejectWhenStartEqualsEnd(): Unit = {
     assertExceptionThrown("A move with the start equal to the end position should be rejected", classOf[IllegalArgumentException]) {
       val p = new Position("e7")
       MovePiece(p, p)
@@ -20,12 +20,12 @@ object MoveTest extends Test with TestUtils with Main {
     }
   }
 
-  private def enPassant: Unit = {
+  private def enPassant(): Unit = {
     val e = EnPassant("e5", "d6")
     assertEquals(new Position("d5"), e.captured)
   }
 
-  private def promote: Unit = {
+  private def promote(): Unit = {
     val wp = Promote("a7", Queen)
     assertEquals(wp.end, new Position("a8"), "The end position of a Promote was correct for White")
     val bp = Promote("a2", Queen)

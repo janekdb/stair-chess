@@ -32,7 +32,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     Add a MoveRanker that prefers the longest moves
     Confirm the longest rook moves are picked
     */
-  private def rankerCombinationPicksLongestRookMoves: Unit = {
+  private def rankerCombinationPicksLongestRookMoves(): Unit = {
     val rookRanker = newRanker(Rook)
     val moveRanker: MoveRanker = new ChainedMoveRanker(rookRanker, longestRanker)
 
@@ -56,7 +56,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     Add a MoveRanker that prefers bishop moves
     Confirm the longest bishop moves are picked
     */
-  private def rankerCombinationPicksLongestBishopMovesSimple: Unit = {
+  private def rankerCombinationPicksLongestBishopMovesSimple(): Unit = {
     val bishopRanker = newRanker(Bishop)
     val moveRanker: MoveRanker = new ChainedMoveRanker(longestRanker, bishopRanker)
 
@@ -81,7 +81,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     verifyDescending(r, s, rs, discriminator)
   }
 
-  private def rankerCombinationExcludesNilLists: Unit = {
+  private def rankerCombinationExcludesNilLists(): Unit = {
     val bishopRanker = newRanker(Bishop)
     val conf: Configuration = new GridConfiguration
     addKings(conf)
@@ -104,7 +104,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     Add a MoveRanker that prefers bishop moves
     Confirm the longest bishop moves are picked
    */
-  private def rankerCombinationPicksLongestBishopMoves: Unit = {
+  private def rankerCombinationPicksLongestBishopMoves(): Unit = {
     val bishopRanker = newRanker(Bishop)
     val moveRanker: MoveRanker = new ChainedMoveRanker(longestRanker, bishopRanker)
 
@@ -125,7 +125,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     verifyDescending(r, s, rs, discriminator)
   }
 
-  private def rankerCombinationStopsRankingWhenOnlyOneOption: Unit = {
+  private def rankerCombinationStopsRankingWhenOnlyOneOption(): Unit = {
 
     val headRanker = new Object with MoveRanker {
       def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {

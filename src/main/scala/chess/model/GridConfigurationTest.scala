@@ -20,7 +20,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
   }
 
   //noinspection ZeroIndexToHead
-  private def confirmGetRows: Unit = {
+  private def confirmGetRows(): Unit = {
     val conf = new GridConfiguration
 
     conf.add("a1", White, Pawn)
@@ -49,7 +49,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
       "Null cell count is the total cell count minus the count of non-null cells")
   }
 
-  private def moveHistoryMaintained: Unit = {
+  private def moveHistoryMaintained(): Unit = {
     val conf = new GridConfiguration
 
     val whiteStart: Position = "e2"
@@ -72,7 +72,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     assertSomeEquals((Rook, blackStart, blackEnd), conf.getLastMove)
   }
 
-  private def moveHistoryCopied: Unit = {
+  private def moveHistoryCopied(): Unit = {
     val conf = new GridConfiguration
 
     val whiteStart: Position = "e2"
@@ -84,7 +84,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     assertSomeEquals((Pawn, whiteStart, whiteEnd), copy.getLastMove)
   }
 
-  private def enPassantEventSent: Unit = {
+  private def enPassantEventSent(): Unit = {
     val conf = new GridConfiguration
 
     val whiteStart: Position = "a5"
@@ -113,7 +113,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     }
   }
 
-  private def pieceMovedEventSent: Unit = {
+  private def pieceMovedEventSent(): Unit = {
     val conf = new GridConfiguration
     val whiteStart: Position = "a5"
     val whiteEnd: Position = "a6"
@@ -122,7 +122,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     assertEquals(List(PieceMoved(whiteStart, whiteEnd)), events, "The events sent when a piece was moved should have been correct")
   }
 
-  private def pieceMovedCapturingEventSent: Unit = {
+  private def pieceMovedCapturingEventSent(): Unit = {
     val conf = new GridConfiguration
     val whiteStart: Position = "a5"
     val whiteEnd: Position = "b6"
@@ -132,7 +132,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     assertEquals(List(PieceMovedCapturing(whiteStart, whiteEnd, whiteEnd)), events, "The events sent when a piece captured should have been correct")
   }
 
-  private def promoteEventsSent: Unit = {
+  private def promoteEventsSent(): Unit = {
     val conf = new GridConfiguration
     val whiteStart: Position = "a7"
     val whiteEnd: Position = "a8"
@@ -141,7 +141,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     assertEquals(List(PieceMoved(whiteStart, whiteEnd), Promoted(whiteEnd, Queen)), events, "The events sent when a piece was promote should have been correct")
   }
 
-  private def promoteCapturingEventsSent: Unit = {
+  private def promoteCapturingEventsSent(): Unit = {
     val conf = new GridConfiguration
     val whiteStart: Position = "a7"
     val whiteEnd: Position = "b8"
@@ -151,7 +151,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     assertEquals(List(PieceMovedCapturing(whiteStart, whiteEnd, whiteEnd), Promoted(whiteEnd, Queen)), events, "The events sent when a piece was promote should have been correct")
   }
 
-  private def promoteReplacesPiece: Unit = {
+  private def promoteReplacesPiece(): Unit = {
     val conf = new GridConfiguration
 
     val start: Position = "f7"
@@ -163,7 +163,7 @@ object GridConfigurationTest extends Test with TestUtils with Main {
     assertEquals(List(end), conf.locatePieces(White, Knight), "A knight should be present")
   }
 
-  def applied: Unit = {
+  def applied(): Unit = {
     val conf = new GridConfiguration
 
     val start: Position = "e4"

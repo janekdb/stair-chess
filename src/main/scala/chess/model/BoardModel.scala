@@ -60,7 +60,7 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
 
   var gameOutcome: Option[GameOutcome] = None
 
-  private def wonGuard: Unit = if (!isWon) throw new AssertionError("There is no winner")
+  private def wonGuard(): Unit = if (!isWon) throw new AssertionError("There is no winner")
 
   def isWon: Boolean = gameOutcome.isDefined && (gameOutcome.get.isCheckMate || gameOutcome.get.isResigned)
 

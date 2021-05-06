@@ -19,7 +19,7 @@ object ShellPlayerTest extends Test with TestUtils with Main {
     usesGroupingFunction
   }
 
-  private def usesGroupingFunction: Unit = {
+  private def usesGroupingFunction(): Unit = {
 
     val conf: Configuration = new GridConfiguration
     addWhiteKing(conf)

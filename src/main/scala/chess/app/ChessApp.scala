@@ -244,7 +244,7 @@ object ChessApp {
     TimeUnit.SECONDS.sleep(count)
   }
 
-  def runTests: Unit = {
+  def runTests(): Unit = {
     AllTests.runAllTests
   }
 }

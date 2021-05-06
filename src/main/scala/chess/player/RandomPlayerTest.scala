@@ -13,7 +13,7 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     isRandom
   }
 
-  private def canMove: Unit = {
+  private def canMove(): Unit = {
     val conf: Configuration = new GridConfiguration
     addWhiteKing(conf)
     conf.add("a1", White, Rook)
@@ -21,7 +21,7 @@ object RandomPlayerTest extends Test with TestUtils with Main {
     assertNotNull(rp.getMove(conf.copyOf), "A move should be available")
   }
 
-  private def isRandom: Unit = {
+  private def isRandom(): Unit = {
     val conf: Configuration = new GridConfiguration
     addWhiteKing(conf)
     conf.add("a1", White, Rook)
