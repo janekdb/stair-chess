@@ -21,9 +21,6 @@ object AllTests {
     ChainedMoveRankerTest.++
     BlockingPlayerTest.++
 
-    import chess.ranker._
-    HighValueCapturingRankerTest.++
-
     import chess.stage._
     ScoreCardTest.++
 
