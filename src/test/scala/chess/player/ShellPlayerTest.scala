@@ -1,25 +1,27 @@
 package chess.player
-import chess.model.Colours._
+
+import chess.model.Colours.White
 import chess.model._
-import chess.model.Configuration
-import chess.model.GridConfiguration
-import chess.model.MoveExplorer
-import chess.model.StandardMoveExplorer
 import chess.ranker.MoveRanker
-import chess.util.TODO
-import test.Main
-import test.Test
+import org.scalatest._
+import matchers.should.Matchers
+import wordspec.AnyWordSpec
+import OptionValues._
 import test.TestUtils
 
 // TODO: Mixin a piece value source to influence capturing player
 // TODO: Modify MoveRanker to require each move to be scored rather than partitioned
-object ShellPlayerTest extends Test with TestUtils with Main {
+class ShellPlayerTest extends AnyWordSpec with Matchers with TestUtils {
 
-  def runTests: Unit = {
-    usesGroupingFunction
+  "A ShellPlayer" when {
+    "providing a move" should {
+      "apply the move ranker" in {
+        usesGroupingFunction()
+      }
+    }
   }
 
-  private def usesGroupingFunction(): Unit = {
+  private def usesGroupingFunction(): Assertion = {
 
     val conf: Configuration = new GridConfiguration
     addWhiteKing(conf)
@@ -35,22 +37,26 @@ object ShellPlayerTest extends Test with TestUtils with Main {
           case _ => false
         }
         assert(knightMoves.nonEmpty)
-        val otherMoves = moves filterNot { knightMoves.contains }
+        val otherMoves = moves filterNot (knightMoves.contains)
         List(knightMoves, otherMoves)
       }
     }
-    val sp = newShellPlayer(conf, mr)
-    val Some(move: MovePiece) = sp.getMove(conf.copyOf)
+    val sp = newShellPlayer(mr)
 
-    assertIsInstanceOf(classOf[MovePiece], move, "A move was selected")
-    val (colour, piece, _) = conf.getExistingPiece(move.start)
-    assertEquals(White, colour, "A white piece was moved")
-    assertEquals(Knight, piece, "A knight was moved")
+    val move = sp.getMove(conf.copyOf)
+    move.value shouldBe a[MovePiece]
+    val start = move.value match {
+      case mp: MovePiece => mp.start
+      case _ => fail()
+    }
+
+    val (colour, piece, _) = conf.getExistingPiece(start)
+    colour shouldBe White
+    piece shouldBe Knight
   }
 
-  private def newShellPlayer(conf: Configuration, moveRanker: MoveRanker): Player = {
+  private def newShellPlayer(moveRanker: MoveRanker): Player = {
     val explorerFactory = (conf: ConfigurationView) => new StandardMoveExplorer(conf)
     new ShellPlayer("Test", White, explorerFactory, moveRanker)
   }
-
 }
