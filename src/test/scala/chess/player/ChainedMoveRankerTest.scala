@@ -1,29 +1,27 @@
 package chess.player
-import chess.model.GridConfiguration
-import chess.model.{Move, SimpleMove}
-import chess.util.TODO
-import test.TestUtils
-import chess.model.ConfigurationView
-import chess.model.Configuration
-import test.Test
-import test.Main
-import chess.model.Colours.{Black, White}
-import chess.model.{Bishop, Queen, Rook}
-import chess.model.StandardMoveExplorer
-import chess.model.Piece
+
+import chess.model.Colours.White
+import chess.model._
 import chess.ranker.MoveRanker
-import chess.model.MovePiece
+import org.scalatest._
+import matchers.should.Matchers
+import wordspec.AnyWordSpec
+import test.TestUtils
 
 import scala.annotation.tailrec
 
-object ChainedMoveRankerTest extends Test with TestUtils with Main {
+object ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
 
-  def runTests: Unit = {
-    rankerCombinationPicksLongestRookMoves
-    rankerCombinationPicksLongestBishopMovesSimple
-    rankerCombinationExcludesNilLists
-    rankerCombinationPicksLongestBishopMoves
-    rankerCombinationStopsRankingWhenOnlyOneOption
+  "A ChainedMoveRanker" when {
+    "selecting a move" should {
+      "chain the use of rankers" in {
+        rankerCombinationPicksLongestRookMoves()
+        rankerCombinationPicksLongestBishopMovesSimple()
+        rankerCombinationExcludesNilLists()
+        rankerCombinationPicksLongestBishopMoves()
+        rankerCombinationStopsRankingWhenOnlyOneOption()
+      }
+    }
   }
 
   /*
@@ -32,7 +30,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     Add a MoveRanker that prefers the longest moves
     Confirm the longest rook moves are picked
     */
-  private def rankerCombinationPicksLongestRookMoves(): Unit = {
+  private def rankerCombinationPicksLongestRookMoves(): Assertion = {
     val rookRanker = newRanker(Rook)
     val moveRanker: MoveRanker = new ChainedMoveRanker(rookRanker, longestRanker)
 
@@ -40,12 +38,15 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     val moveExplorer = new StandardMoveExplorer(conf)
     val moves = moveExplorer.legalMoves(White)
     val rankedMoves: List[List[Move]] = moveRanker.rankMoves(moves, conf)
-    assert(rankedMoves != Nil)
-    assertTrue(rankedMoves.length >= 4,
-      "Expected at least four lists to allow for the fundamental divisions of " +
-        "{rooks, long}, {rooks, short}, {non-rooks, long}, {non-rooks, short}")
+    rankedMoves should not be empty
 
-    def discriminator: Discriminator = (move: Move) => (if (isRook(conf, move)) 1 else 0, length(conf)(move))
+    withClue("Expected at least four lists to allow for the fundamental divisions of " +
+      "{rooks, long}, {rooks, short}, {non-rooks, long}, {non-rooks, short}") {
+      rankedMoves.length should be >= 4
+    }
+
+    def discriminator: Discriminator = (move: Move) => (if (isRook(conf, move)) 1 else 0, moveLength(move))
+
     val r :: s :: rs = rankedMoves
     verifyDescending(r, s, rs, discriminator)
   }
@@ -56,7 +57,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     Add a MoveRanker that prefers bishop moves
     Confirm the longest bishop moves are picked
     */
-  private def rankerCombinationPicksLongestBishopMovesSimple(): Unit = {
+  private def rankerCombinationPicksLongestBishopMovesSimple(): Assertion = {
     val bishopRanker = newRanker(Bishop)
     val moveRanker: MoveRanker = new ChainedMoveRanker(longestRanker, bishopRanker)
 
@@ -71,17 +72,19 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     val moveExplorer = new StandardMoveExplorer(conf)
     val moves = moveExplorer.legalMoves(White)
     val rankedMoves: List[List[Move]] = moveRanker.rankMoves(moves, conf)
-    assert(rankedMoves != Nil)
-    assertTrue(rankedMoves.length >= 4,
-      "Expected at least four lists to allow for the fundamental divisions of " +
-        "{long, bishops}, {long, rooks}, {short, bishops}, {short, rooks}")
+    rankedMoves should not be empty
+    withClue("Expected at least four lists to allow for the fundamental divisions of " +
+      "{long, bishops}, {long, rooks}, {short, bishops}, {short, rooks}") {
+      rankedMoves.length should be >= 4
+    }
 
-    def discriminator: Discriminator = (move: Move) => (length(conf)(move), if (isBishop(conf, move)) 1 else 0)
+    def discriminator: Discriminator = (move: Move) => (moveLength(move), if (isBishop(conf, move)) 1 else 0)
+
     val r :: s :: rs = rankedMoves
     verifyDescending(r, s, rs, discriminator)
   }
 
-  private def rankerCombinationExcludesNilLists(): Unit = {
+  private def rankerCombinationExcludesNilLists(): Assertion = {
     val bishopRanker = newRanker(Bishop)
     val conf: Configuration = new GridConfiguration
     addKings(conf)
@@ -90,12 +93,16 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
 
     /* Confirm the ranker is not flawed. */
     val bishopRanked = bishopRanker.rankMoves(moves, conf)
-    assertTrue(bishopRanked.forall(_.nonEmpty), "No empty lists existed in the list of move lists")
+    withClue("No empty lists existed in the list of move lists") {
+      all(bishopRanked) should not be empty
+    }
 
     val moveRanker: MoveRanker = new ChainedMoveRanker(longestRanker, bishopRanker)
     val rankedMoves: List[List[Move]] = moveRanker.rankMoves(moves, conf)
-    assert(rankedMoves != Nil)
-    assertTrue(rankedMoves.forall { x => x.nonEmpty }, "There should not be any empty lists: " + rankedMoves)
+    rankedMoves should not be empty
+    withClue("There should not be any empty lists: " + rankedMoves) {
+      all(rankedMoves) should not be empty
+    }
   }
 
   /*
@@ -104,7 +111,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     Add a MoveRanker that prefers bishop moves
     Confirm the longest bishop moves are picked
    */
-  private def rankerCombinationPicksLongestBishopMoves(): Unit = {
+  private def rankerCombinationPicksLongestBishopMoves(): Assertion = {
     val bishopRanker = newRanker(Bishop)
     val moveRanker: MoveRanker = new ChainedMoveRanker(longestRanker, bishopRanker)
 
@@ -115,17 +122,19 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
     val moveExplorer = new StandardMoveExplorer(conf)
     val moves = moveExplorer.legalMoves(White)
     val rankedMoves: List[List[Move]] = moveRanker.rankMoves(moves, conf)
-    assert(rankedMoves != Nil)
-    assertTrue(rankedMoves.length >= 4,
-      "Expected at least four lists to allow for the fundamental divisions of " +
-        "{long, bishops}, {long, rooks}, {short, bishops}, {short, rooks}")
+    rankedMoves should not be empty
+    withClue("Expected at least four lists to allow for the fundamental divisions of " +
+      "{long, bishops}, {long, rooks}, {short, bishops}, {short, rooks}") {
+      rankedMoves.length should be >= 4
+    }
 
-    def discriminator: Discriminator = (move: Move) => (length(conf)(move), if (isBishop(conf, move)) 1 else 0)
+    def discriminator: Discriminator = (move: Move) => (moveLength(move), if (isBishop(conf, move)) 1 else 0)
+
     val r :: s :: rs = rankedMoves
     verifyDescending(r, s, rs, discriminator)
   }
 
-  private def rankerCombinationStopsRankingWhenOnlyOneOption(): Unit = {
+  private def rankerCombinationStopsRankingWhenOnlyOneOption(): Assertion = {
 
     val headRanker = new Object with MoveRanker {
       def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {
@@ -145,7 +154,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
 
     val moves = List(new MovePiece("e1e2"), new MovePiece("h8h7"), new MovePiece("g8h6"))
     val rankedMoves: List[List[Move]] = moveRanker.rankMoves(moves, new GridConfiguration)
-    assertEquals(List(List(new MovePiece("e1e2")), List(new MovePiece("h8h7"), new MovePiece("g8h6"))), rankedMoves)
+    rankedMoves shouldBe List(List(new MovePiece("e1e2")), List(new MovePiece("h8h7"), new MovePiece("g8h6")))
   }
 
   private def newConf = {
@@ -170,37 +179,34 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
 
   private val longestRanker = new Object with MoveRanker {
     def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {
-      moves.groupBy(length(conf)).toList.sortBy(_._1).map(_._2).reverse
+      val grouped = moves.groupBy(moveLength).toList
+      grouped.sortBy(_._1).map(_._2).reverse
     }
-  }
-
-  private def print(rankedMoves: List[List[Move]]): Unit = {
-    println("rankedMoves:")
-    for (moves <- rankedMoves) println(moves)
   }
 
   private type Discriminator = Move => (Int, Int)
 
-  private def assertListNotEmpty(list: List[Any]): Unit = assertTrue(list.nonEmpty, "List should not be empty")
-
   /* Test sequence is descending by the ranker criteria */
   @tailrec
-  def verifyDescending(m: List[Move], n: List[Move], ms: List[List[Move]], descriminator: Discriminator): Unit = {
-    assertListNotEmpty(m)
-    assertListNotEmpty(n)
+  def verifyDescending(m: List[Move], n: List[Move], ms: List[List[Move]], discriminator: Discriminator): Assertion = {
+    m should not be empty
+    n should not be empty
 
     /* Verify each move of the same ranking has the same discriminator */
-    val d = descriminator(m.head)
-    assertTrue(m.tail.forall(descriminator(_) == d), "Equally ranked moves should have the same discrimintor")
+    val d = discriminator(m.head)
+    withClue("Equally ranked moves should have the same discriminator") {
+      all(m.tail.map(discriminator)) shouldBe d
+    }
     /* n will be checked on the next iteration. */
-    val e = descriminator(n.head)
-    assertTrue(d._1 * 100 + d._2 >= e._1 * 100 + e._2,
-      "Adjacent list of moves should be ranked in descending order: " + m.head + " > " + n.head + ", " + d + " > " + e)
+    val e = discriminator(n.head)
+    withClue("Adjacent list of moves should be ranked in descending order: " + m.head + " > " + n.head + ", " + d + " > " + e) {
+      (d._1 * 100 + d._2) shouldBe >=(e._1 * 100 + e._2)
+    }
     ms match {
-      case Nil => ()
+      case Nil => succeed
       case r :: rs =>
         /* Compare next pair */
-        verifyDescending(n, r, rs, descriminator)
+        verifyDescending(n, r, rs, discriminator)
       case _ => fail("Unhandled case: " + ms)
     }
   }
@@ -217,7 +223,7 @@ object ChainedMoveRankerTest extends Test with TestUtils with Main {
   private def isRook = isPiece(Rook) _
 
   // TODO: Add a length property to SimpleMove or maybe to Move
-  private def length(conf: ConfigurationView)(move: Move) = move match {
+  private def moveLength(move: Move) = move match {
     case sm: SimpleMove =>
       (sm.start.col - sm.end.col).abs max (sm.start.row - sm.end.row).abs
     case _ => 0
