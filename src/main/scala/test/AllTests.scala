@@ -17,7 +17,6 @@ object AllTests {
     StandardMoveParserTest.++
 
     import chess.player._
-    RandomPlayerTest.++
     ChainedMoveRankerTest.++
     BlockingPlayerTest.++
 
