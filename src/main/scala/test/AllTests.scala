@@ -16,9 +16,6 @@ object AllTests {
     DelegatingConfigurationViewTest.++
     StandardMoveParserTest.++
 
-    import chess.stage._
-    ScoreCardTest.++
-
     println("AllTests: tests.size: " + tests.size)
     tests
   }
