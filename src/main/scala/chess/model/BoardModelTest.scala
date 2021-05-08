@@ -9,36 +9,36 @@ import scala.collection.mutable.ListBuffer
 
 object BoardModelTest extends Test with TestUtils with Main {
 
-  def runTests: Unit = {
+  def runTests(): Unit = {
 
-    rejectMoveOntoOwnPiece
-    rejectPawnDoubleAdvanceIfNotFirstMove
-    acceptCastlingWhenNoInterveningPieces
-    acceptCastlingWhenIrrelevantOpponentPiecesExist
-    rejectCastlingWhenInterveningPiece
-    rejectCastlingWhenAnySquareVisitedByTheKingIsUnderAttack
-    acceptCastlingWhenSquaresVisitedByTheRookButNotTheKingAreUnderAttack
-    rejectReCastling
-    rejectIfMoveLeavesOwnKingInCheck
-    checkMateIsDetected
-    checkWithNonCapturingEscapeIsDetected
-    checkWithCapturingEscapeIsDetected
-    enPassantAllowed
-    enPassantDisallowedIfNotImmediatelyUsed
+    rejectMoveOntoOwnPiece()
+    rejectPawnDoubleAdvanceIfNotFirstMove()
+    acceptCastlingWhenNoInterveningPieces()
+    acceptCastlingWhenIrrelevantOpponentPiecesExist()
+    rejectCastlingWhenInterveningPiece()
+    rejectCastlingWhenAnySquareVisitedByTheKingIsUnderAttack()
+    acceptCastlingWhenSquaresVisitedByTheRookButNotTheKingAreUnderAttack()
+    rejectReCastling()
+    rejectIfMoveLeavesOwnKingInCheck()
+    checkMateIsDetected()
+    checkWithNonCapturingEscapeIsDetected()
+    checkWithCapturingEscapeIsDetected()
+    enPassantAllowed()
+    enPassantDisallowedIfNotImmediatelyUsed()
     /* Configuration event */
-    confirmConfigurationEventIsSent
+    confirmConfigurationEventIsSent()
     // Companion Object
-    standardPlacements
+    standardPlacements()
     /* Stalemate */
-    stalemateIsDetected
-    invalidStalemateIsRejected
+    stalemateIsDetected()
+    invalidStalemateIsRejected()
     /* Repeated configurations */
     // TODO: LOW: Allow draw to be claimed
     // repeatedConfigurationsIsDetected
 
     /* Defects */
-    confirmNotResponsibleForDefect5
-    confirmNotResponsibleForDefect6
+    confirmNotResponsibleForDefect5()
+    confirmNotResponsibleForDefect6()
   }
 
   implicit def placementBuilder2List(pb: PlacementsBuilder): List[(Colour, Piece, Position)] = pb.asList
@@ -241,7 +241,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     val v = new VerifyingGameChangedSubscriber(List(Won(Black, GameOutcomeModes.CheckMate)))
     bm.subscribe(v)
     bm.move("c7a7")
-    v.assertAllEventsReceived
+    v.assertAllEventsReceived()
   }
 
   private def checkWithNonCapturingEscapeIsDetected(): Unit = {
