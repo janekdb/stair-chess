@@ -16,9 +16,6 @@ object AllTests {
     DelegatingConfigurationViewTest.++
     StandardMoveParserTest.++
 
-    import chess.player._
-    BlockingPlayerTest.++
-
     import chess.stage._
     ScoreCardTest.++
 

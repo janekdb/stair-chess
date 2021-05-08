@@ -1,27 +1,32 @@
 package chess.player
-import java.util.concurrent.CountDownLatch
-import chess.model.GridConfiguration
-import chess.model.Move
-import test.Main
-import test.Test
-import test.TestUtils
-import chess.model.MovePiece
-import chess.model.Colours.Black
-import chess.model.MoveFactory
-import chess.model.Colour
-import chess.model.Configuration
 
+import chess.model.Colours.Black
+import chess.model._
+import test.TestUtils
+import org.scalatest._
+import wordspec.AnyWordSpec
+import matchers.should.Matchers
+import OptionValues._
+import java.util.concurrent.CountDownLatch
 import scala.concurrent.Future
 
-object BlockingPlayerTest extends Test with TestUtils with Main {
+class BlockingPlayerTest extends AnyWordSpec with Matchers with TestUtils {
 
-  def runTests: Unit = {
-    getBlocksUntilSetInvoked
-    getBlocksUntilSetInvokedWithSome
-    setBlocksUntilGetInvoked
+  "A BlockingPlayer" when {
+    "getting a move" should {
+      "block get until a move factory is set" in {
+        getBlocksUntilSetInvoked()
+      }
+      "block get until a non-empty move is set" in {
+        getBlocksUntilSetInvokedWithSome()
+      }
+      "block set until get is invoked" in {
+        setBlocksUntilGetInvoked()
+      }
+    }
   }
 
-  private def getBlocksUntilSetInvoked(): Unit = {
+  private def getBlocksUntilSetInvoked(): Assertion = {
     val p = new BlockingPlayer(Black, "Test")
     val conf = getConf
     val cd1 = new CountDownLatch(1)
@@ -36,10 +41,10 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
     assert(moveOpt.isEmpty)
     p.setMoveFactory(mf("e1e2"))
     cd2.await()
-    assertEquals(Some(new MovePiece("e1e2")), moveOpt)
+    moveOpt.value shouldBe new MovePiece("e1e2")
   }
 
-  private def getBlocksUntilSetInvokedWithSome(): Unit = {
+  private def getBlocksUntilSetInvokedWithSome(): Assertion = {
     val p = new BlockingPlayer(Black, "Test")
     val conf = getConf
     val cd1 = new CountDownLatch(1)
@@ -58,10 +63,10 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
     p.setMoveFactory(mf(None))
     p.setMoveFactory(mf("e1e2"))
     cd2.await()
-    assertEquals(Some(new MovePiece("e1e2")), moveOpt)
+    moveOpt.value shouldBe new MovePiece("e1e2")
   }
 
-  private def setBlocksUntilGetInvoked(): Unit = {
+  private def setBlocksUntilGetInvoked(): Assertion = {
     val p = new BlockingPlayer(Black, "Test")
     val conf = getConf
     val cd1 = new CountDownLatch(1)
@@ -74,10 +79,10 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
       cd2.countDown()
     }
     cd1.await()
-    assertFalse(set)
-    val Some(move) = p.getMove(conf)
+    set shouldBe false
+    val moveOpt = p.getMove(conf)
     cd2.await()
-    assertEquals(new MovePiece("e1e2"), move)
+    moveOpt.value shouldBe new MovePiece("e1e2")
   }
 
   // TODO: Move doAsync into TestUtils
@@ -93,5 +98,7 @@ object BlockingPlayerTest extends Test with TestUtils with Main {
     conf
   }
 
-  private def mf(moveOpt: Option[Move]) = new MoveFactory { override def getMove(colour: Colour, conf: Configuration): Option[Move] = moveOpt }
+  private def mf(moveOpt: Option[Move]) = new MoveFactory {
+    override def getMove(colour: Colour, conf: Configuration): Option[Move] = moveOpt
+  }
 }
