@@ -1,5 +1,6 @@
 package chess.model
 
+// TODO: Convert to case class
 class Position(val col: Int, val row: Int) {
 
   /* e8 */

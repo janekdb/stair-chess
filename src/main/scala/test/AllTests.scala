@@ -8,7 +8,6 @@ object AllTests {
     implicit class TestOps(any: Test) { def ++ : Unit = { tests ::= any } }
 
     import chess.model._
-    PositionTest.++
     MoveTest.++
     GridConfigurationTest.++
     BoardModelTest.++
