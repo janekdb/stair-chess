@@ -12,7 +12,6 @@ object AllTests {
     BoardModelTest.++
     StandardMoveExplorerTest.++
     DelegatingConfigurationViewTest.++
-    StandardMoveParserTest.++
 
     println("AllTests: tests.size: " + tests.size)
     tests
