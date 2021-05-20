@@ -1,92 +1,110 @@
 package chess.model
 
-import ex._
+import chess.model.Colours.{Black, White}
+import chess.model.ex._
+import chess.test.TestUtils
+import org.scalatest._
+import wordspec.AnyWordSpec
+import matchers.should.Matchers
+import LoneElement._
 
-import test.{ Main, Test, TestUtils }
+class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils {
 
-import Colours.{ Black, White }
+  "A StandardMoveExplorer" should {
+    "accept and reject moves" in {
+      acceptMovePieceThatWouldNotCapture()
+      acceptPromoteThatWouldNotCapture()
 
-object StandardMoveExplorerTest extends Test with TestUtils with Main {
+      rejectMovePieceThatWouldCapture()
+      rejectPromoteThatWouldCapture()
 
-  def runTests: Unit = {
+      acceptMovePieceCapturingThatWouldCapture()
+      acceptPromoteCapturingThatWouldCapture()
 
-    acceptMovePieceThatWouldNotCapture
-    acceptPromoteThatWouldNotCapture
+      rejectMovePieceCapturingThatWouldNotCapture()
+      rejectPromoteCapturingThatWouldNotCapture()
 
-    rejectMovePieceThatWouldCapture
-    rejectPromoteThatWouldCapture
+      getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveWhite()
+      getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveBlack()
+      getBasicPositionsIncludesEnPassantWhite()
+      getBasicPositionsIncludesEnPassantBlack()
+      getBasicPositionsExcludesEnPassantWhenNotDoubleAdvance()
+      getBasicPositionsExcludesEnPassantWhenNotAdjacentColumn()
+      getBasicPositionsExcludesEnPassantWhenNotFifthRow()
+      rejectIllegalMoveAllowsValidEnPassant()
+      rejectIllegalMoveRejectsNotAdjacentColumnEnPassant()
+      rejectIllegalMoveRejectsNotDoubleAdvanceEnPassant()
+      rejectIllegalMoveRejectsSelfCheckingEnPassant()
 
-    acceptMovePieceCapturingThatWouldCapture
-    acceptPromoteCapturingThatWouldCapture
+      rejectIllegalMoveAllowsCastlingWhenRookOnlyCrossingAttackedSquare()
+      rejectIllegalMoveRejectsCastlingWhenKingCrossingAttackedSquare()
+      rejectIllegalMoveRejectsCastlingWhenKingCrossingSquareAttackedByPawn()
+      rejectIllegalMoveRejectsReCastling()
 
-    rejectMovePieceCapturingThatWouldNotCapture
-    rejectPromoteCapturingThatWouldNotCapture
+      //    rejectIllegalMoveAllowsResigning
 
-    getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveWhite
-    getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveBlack
-    getBasicPositionsIncludesEnPassantWhite
-    getBasicPositionsIncludesEnPassantBlack
-    getBasicPositionsExcludesEnPassantWhenNotDoubleAdvance
-    getBasicPositionsExcludesEnPassantWhenNotAdjacentColumn
-    getBasicPositionsExcludesEnPassantWhenNotFifthRow
-    rejectIllegalMoveAllowsValidEnPassant
-    rejectIllegalMoveRejectsNotAdjacentColumnEnPassant
-    rejectIllegalMoveRejectsNotDoubleAdvanceEnPassant
-    rejectIllegalMoveRejectsSelfCheckingEnPassant
+      rejectNonPromotingPawnAdvanceToBackRank()
+      rejectNonPromotingPawnCaptureOfBackRankPiece()
 
-    rejectIllegalMoveAllowsCastlingWhenRookOnlyCrossingAttackedSquare
-    rejectIllegalMoveRejectsCastlingWhenKingCrossingAttackedSquare
-    rejectIllegalMoveRejectsCastlingWhenKingCrossingSquareAttackedByPawn
-    rejectIllegalMoveRejectsReCastling
+      /* legalMoves */
+      selectsOnlyMove()
+      pawnPromotionSelected()
+      pawnCapturingPromotionSelected()
+      queenCaptureSelected()
+      queenCaptureSelected2()
+      castlingIncluded()
+      shortCastlingNotConsideredWhenStartPositionsIncorrect()
+      longCastlingNotConsideredWhenStartPositionsIncorrect()
+      castlingNotConsideredWhenEitherPieceIsNotOwnPiece()
+      castlingNotConsiderWhenOutsidePieceIsNotRook()
+      castlingNotConsiderWhenInsidePieceIsNotKing()
+      enPassantSelected()
+      resignExcluded()
 
-    //    rejectIllegalMoveAllowsResigning
+      /* Check and Check Mate */
+      kingIsCheckMatedDetected()
 
-    rejectNonPromotingPawnAdvanceToBackRank
-    rejectNonPromotingPawnCaptureOfBackRankPiece
-
-    /* legalMoves */
-    selectsOnlyMove
-    pawnPromotionSelected
-    pawnCapturingPromotionSelected
-    queenCaptureSelected
-    queenCaptureSelected2
-    castlingIncluded
-    shortCastlingNotConsideredWhenStartPositionsIncorrect
-    longCastlingNotConsideredWhenStartPositionsIncorrect
-    castlingNotConsideredWhenEitherPieceIsNotOwnPiece
-    castlingNotConsiderWhenOutsidePieceIsNotRook
-    castlingNotConsiderWhenInsidePieceIsNotKing
-    enPassantSelected
-    resignExcluded
-
-    /* Check and Check Mate */
-    kingIsCheckMatedDetected
-
-    /* Defects */
-    defect5IsFixed
+      /* Defects */
+      defect5IsFixed()
+    }
   }
 
-  private def acceptMovePieceThatWouldNotCapture(): Unit = {
+  private def placeKings(conf: Configuration): Unit = {
+    conf.add("e1", White, King)
+    conf.add("e8", Black, King)
+  }
+
+  private def placeAll(conf: Configuration): Unit = {
+    for ((colour, piece, position) <- BoardModel.standardPlacements)
+      conf.add(position, colour, piece)
+  }
+
+  private def render(conf: ConfigurationView): Unit = {
+    val lines = ConfigurationView.getTextRepresentation(conf)
+    for (line <- lines) println(line)
+    println()
+  }
+
+  private def acceptMovePieceThatWouldNotCapture(): Assertion = {
     val start = new Position("e2")
     val end = new Position("e3")
     val conf = new GridConfiguration
     placeKings(conf)
     conf.add(start, White, Pawn)
     val e = new StandardMoveExplorer(conf)
-    e.rejectIllegalMove(MovePiece(start, end))
+    noException shouldBe thrownBy(e.rejectIllegalMove(MovePiece(start, end)))
   }
 
-  private def acceptPromoteThatWouldNotCapture(): Unit = {
+  private def acceptPromoteThatWouldNotCapture(): Assertion = {
     val start = new Position("a7")
-    val end = new Position("a8")
     val conf = new GridConfiguration
     placeKings(conf)
     conf.add(start, White, Pawn)
     val e = new StandardMoveExplorer(conf)
-    e.rejectIllegalMove(Promote(start, Queen))
+    noException shouldBe thrownBy(e.rejectIllegalMove(Promote(start, Queen)))
   }
 
-  private def rejectMovePieceThatWouldCapture(): Unit = {
+  private def rejectMovePieceThatWouldCapture(): Assertion = {
     val start = new Position("a7")
     val end = new Position("a8")
     val conf = new GridConfiguration
@@ -94,12 +112,14 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add(start, White, Rook)
     conf.add(end, Black, Rook)
     val e = new StandardMoveExplorer(conf)
-    assertExceptionThrown("MovePiece that would have taken a piece was rejected", classOf[NonCapturingMoveException]) {
-      e.rejectIllegalMove(MovePiece(start, end))
+    withClue("MovePiece that would have taken a piece was rejected") {
+      a[NonCapturingMoveException] shouldBe thrownBy {
+        e.rejectIllegalMove(MovePiece(start, end))
+      }
     }
   }
 
-  private def rejectPromoteThatWouldCapture(): Unit = {
+  private def rejectPromoteThatWouldCapture(): Assertion = {
     val start = new Position("a7")
     val end = new Position("a8")
     val conf = new GridConfiguration
@@ -107,12 +127,14 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add(start, White, Pawn)
     conf.add(end, Black, Rook)
     val e = new StandardMoveExplorer(conf)
-    assertExceptionThrown("Promote that would have taken a piece was rejected", classOf[UnreachablePositionException]) {
-      e.rejectIllegalMove(Promote(start, Queen))
+    withClue("Promote that would have taken a piece was rejected") {
+      a[UnreachablePositionException] shouldBe thrownBy {
+        e.rejectIllegalMove(Promote(start, Queen))
+      }
     }
   }
 
-  private def acceptMovePieceCapturingThatWouldCapture(): Unit = {
+  private def acceptMovePieceCapturingThatWouldCapture(): Assertion = {
     val start = new Position("a7")
     val end = new Position("b8")
     val conf = new GridConfiguration
@@ -120,10 +142,10 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add(start, White, Bishop)
     conf.add(end, Black, Rook)
     val e = new StandardMoveExplorer(conf)
-    e.rejectIllegalMove(MovePieceCapturing(start, end))
+    noException shouldBe thrownBy(e.rejectIllegalMove(MovePieceCapturing(start, end)))
   }
 
-  private def acceptPromoteCapturingThatWouldCapture(): Unit = {
+  private def acceptPromoteCapturingThatWouldCapture(): Assertion = {
     val start = new Position("a7")
     val end = new Position("b8")
     val conf = new GridConfiguration
@@ -131,10 +153,10 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add(start, White, Pawn)
     conf.add(end, Black, Rook)
     val e = new StandardMoveExplorer(conf)
-    e.rejectIllegalMove(PromoteCapturing(start, end, Rook))
+    noException shouldBe thrownBy(e.rejectIllegalMove(PromoteCapturing(start, end, Rook)))
   }
 
-  private def rejectMovePieceCapturingThatWouldNotCapture(): Unit = {
+  private def rejectMovePieceCapturingThatWouldNotCapture(): Assertion = {
     val start = new Position("a7")
     val end = new Position("a8")
     val conf = new GridConfiguration
@@ -142,12 +164,14 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add(start, White, Rook)
     conf.add("f5", Black, Rook)
     val e = new StandardMoveExplorer(conf)
-    assertExceptionThrown("MovePieceCapturing that would not have captured a piece was rejected", classOf[CapturingMoveException]) {
-      e.rejectIllegalMove(MovePieceCapturing(start, end))
+    withClue("MovePieceCapturing that would not have captured a piece was rejected") {
+      a[CapturingMoveException] shouldBe thrownBy {
+        e.rejectIllegalMove(MovePieceCapturing(start, end))
+      }
     }
   }
 
-  private def rejectPromoteCapturingThatWouldNotCapture(): Unit = {
+  private def rejectPromoteCapturingThatWouldNotCapture(): Assertion = {
     val start = new Position("a7")
     val end = new Position("a8")
     val conf = new GridConfiguration
@@ -155,12 +179,14 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add(start, White, Pawn)
     conf.add("f5", Black, Rook)
     val e = new StandardMoveExplorer(conf)
-    assertExceptionThrown("PromoteCapturing that would not have capturing a piece was rejected", classOf[CapturingMoveException]) {
-      e.rejectIllegalMove(PromoteCapturing(start, end, Queen))
+    withClue("PromoteCapturing that would not have capturing a piece was rejected") {
+      a[CapturingMoveException] shouldBe thrownBy {
+        e.rejectIllegalMove(PromoteCapturing(start, end, Queen))
+      }
     }
   }
 
-  private def getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveWhite(): Unit = {
+  private def getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveWhite(): Assertion = {
 
     val start = new Position("e2")
     val end = new Position("e3")
@@ -172,10 +198,12 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
 
     val actual = e.getBasicPositions(end)
     val expected: Set[Position] = Set("e4")
-    assertEquals(expected, actual, "Position set excluded two square advance")
+    withClue("Position set excluded two square advance") {
+      actual shouldBe expected
+    }
   }
 
-  private def getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveBlack(): Unit = {
+  private def getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveBlack(): Assertion = {
 
     val start = new Position("e7")
     val end = new Position("e6")
@@ -187,11 +215,13 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
 
     val actual = e.getBasicPositions(end)
     val expected: Set[Position] = Set("e5")
-    assertEquals(expected, actual, "Position set excluded two square advance")
+    withClue("Position set excluded two square advance") {
+      actual shouldBe expected
+    }
   }
 
   /* All conditions met */
-  private def getBasicPositionsIncludesEnPassantWhite(): Unit = {
+  private def getBasicPositionsIncludesEnPassantWhite(): Assertion = {
     val whitePawnStart = new Position("e4")
     val whitePawnEnd = new Position("e5")
     val conf = new GridConfiguration
@@ -203,15 +233,17 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.move("d7", "d5")
     /*
      * The black pawn is now on the same rank as the white pawn and has moved two squares which is the
-     * full set of pre-conditions required to allow white to capture via en-passant.
+     * full set of pre-conditions required to allow white to capture via en passant.
      */
     val actual = e.getBasicPositions(whitePawnEnd)
     val expected: Set[Position] = Set("d6", "e6")
-    assertEquals(expected, actual, "Position set included en-passant")
+    withClue("Position set included en passant") {
+      actual shouldBe expected
+    }
   }
 
   /* All conditions met */
-  private def getBasicPositionsIncludesEnPassantBlack(): Unit = {
+  private def getBasicPositionsIncludesEnPassantBlack(): Assertion = {
     val blackPawnStart = new Position("e5")
     val blackPawnEnd = new Position("e4")
     val conf = new GridConfiguration
@@ -223,11 +255,13 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.move("d2", "d4")
     /*
 		   * The white pawn is now on the same rank as the black pawn and has moved two squares which is the
-		   * full set of pre-conditions required to allow black to capture via en-passant.
+		   * full set of pre-conditions required to allow black to capture via en passant.
 		   */
     val actual = e.getBasicPositions(blackPawnEnd)
     val expected: Set[Position] = Set("d3", "e3")
-    assertEquals(expected, actual, "Position set included en-passant")
+    withClue("Position set included en passant") {
+      actual shouldBe expected
+    }
   }
 
   /*
@@ -236,7 +270,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
    */
 
   /* No double advance */
-  private def getBasicPositionsExcludesEnPassantWhenNotDoubleAdvance(): Unit = {
+  private def getBasicPositionsExcludesEnPassantWhenNotDoubleAdvance(): Assertion = {
     val whitePawn = new Position("e2")
     val conf = new GridConfiguration
     conf.add(whitePawn, White, Pawn)
@@ -248,11 +282,13 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.move("d3", "d2")
     val actual = e.getBasicPositions(whitePawn)
     val expected: Set[Position] = Set("e4", "e3")
-    assertEquals(expected, actual, "Position set excluded en-passant")
+    withClue("Position set excluded en passant") {
+      actual shouldBe expected
+    }
   }
 
   /* Not fifth row */
-  private def getBasicPositionsExcludesEnPassantWhenNotFifthRow(): Unit = {
+  private def getBasicPositionsExcludesEnPassantWhenNotFifthRow(): Assertion = {
     val whitePawn = new Position("e2")
     val conf = new GridConfiguration
     conf.add(whitePawn, White, Pawn)
@@ -264,11 +300,13 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.move("d7", "d5")
     val actual = e.getBasicPositions(whitePawn)
     val expected: Set[Position] = Set("e4", "e3")
-    assertEquals(expected, actual, "Position set excluded en-passant")
+    withClue("Position set excluded en passant") {
+      actual shouldBe expected
+    }
   }
 
   /* Not adjacent column */
-  private def getBasicPositionsExcludesEnPassantWhenNotAdjacentColumn(): Unit = {
+  private def getBasicPositionsExcludesEnPassantWhenNotAdjacentColumn(): Assertion = {
     val whitePawnStart = new Position("e4")
     val whitePawnEnd = new Position("e5")
     val conf = new GridConfiguration
@@ -281,32 +319,36 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.move("b7", "b5")
     val actual = e.getBasicPositions(whitePawnEnd)
     val expected: Set[Position] = Set("e6")
-    assertEquals(expected, actual, "Position set excluded en-passant")
+    withClue("Position set excluded en passant") {
+      actual shouldBe expected
+    }
   }
 
-  private def rejectIllegalMoveAllowsValidEnPassant(): Unit = {
+  private def rejectIllegalMoveAllowsValidEnPassant(): Assertion = {
     val conf = new GridConfiguration
     placeKings(conf)
     conf.add("e5", White, Pawn)
     conf.add("f7", Black, Pawn)
     val e = new StandardMoveExplorer(conf)
     conf.applyMove(MovePiece("f7", "f5"))
-    e.rejectIllegalMove(EnPassant("e5", "f6"))
+    noException shouldBe thrownBy(e.rejectIllegalMove(EnPassant("e5", "f6")))
   }
 
-  private def rejectIllegalMoveRejectsNotAdjacentColumnEnPassant(): Unit = {
+  private def rejectIllegalMoveRejectsNotAdjacentColumnEnPassant(): Assertion = {
     val conf = new GridConfiguration
     conf.add("e5", White, Pawn)
     conf.add("g7", Black, Pawn)
     val e = new StandardMoveExplorer(conf)
     conf.move("g7", "g5")
+    withClue("En passant should be rejected when the adjacent column does not contain a pawn") {
+      an[UnreachablePositionException] shouldBe thrownBy {
+        e.rejectIllegalMove(EnPassant("e5", "f6"))
+      }
 
-    assertExceptionThrown("En-passant should be rejected when the adjacent column does not contain a pawn", classOf[UnreachablePositionException]) {
-      e.rejectIllegalMove(EnPassant("e5", "f6"))
     }
   }
 
-  private def rejectIllegalMoveRejectsNotDoubleAdvanceEnPassant(): Unit = {
+  private def rejectIllegalMoveRejectsNotDoubleAdvanceEnPassant(): Assertion = {
     val conf = new GridConfiguration
     conf.add("e4", White, Pawn)
     conf.add("d7", Black, Pawn)
@@ -315,15 +357,17 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.move("e4", "e5")
     conf.move("d6", "d5")
 
-    assertExceptionThrown("En-passant should be rejected when the previous move was not a double advance", classOf[UnreachablePositionException]) {
-      e.rejectIllegalMove(EnPassant("e5", "d6"))
+    withClue("En passant should be rejected when the previous move was not a double advance") {
+      an[UnreachablePositionException] shouldBe thrownBy {
+        e.rejectIllegalMove(EnPassant("e5", "d6"))
+      }
     }
   }
 
   /* Do not overtest */
   //  private def rejectIllegalMoveRejectsIncorrectRowEnPassant = fail
 
-  private def rejectIllegalMoveRejectsSelfCheckingEnPassant(): Unit = {
+  private def rejectIllegalMoveRejectsSelfCheckingEnPassant(): Assertion = {
     val conf = new GridConfiguration
     conf.add("e5", White, Pawn)
     conf.add("d7", Black, Pawn)
@@ -333,12 +377,14 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     val e = new StandardMoveExplorer(conf)
     conf.move("d7", "d5")
 
-    assertExceptionThrown("En-passant should be rejected when the player would self check", classOf[CheckedOwnKing]) {
-      e.rejectIllegalMove(EnPassant("e5", "d6"))
+    withClue("En passant should be rejected when the player would self check") {
+      a[CheckedOwnKing] shouldBe thrownBy {
+        e.rejectIllegalMove(EnPassant("e5", "d6"))
+      }
     }
   }
 
-  private def rejectIllegalMoveAllowsCastlingWhenRookOnlyCrossingAttackedSquare(): Unit = {
+  private def rejectIllegalMoveAllowsCastlingWhenRookOnlyCrossingAttackedSquare(): Assertion = {
     val conf = new GridConfiguration
     /* The piece attacking a square the castling rook will cross. */
     conf.add("b2", White, Rook)
@@ -346,10 +392,10 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add("e8", Black, King)
     conf.add("a8", Black, Rook)
     val e = new StandardMoveExplorer(conf)
-    e.rejectIllegalMove(Castle(Black, Long))
+    noException shouldBe thrownBy(e.rejectIllegalMove(Castle(Black, Long)))
   }
 
-  private def rejectIllegalMoveRejectsCastlingWhenKingCrossingAttackedSquare(): Unit = {
+  private def rejectIllegalMoveRejectsCastlingWhenKingCrossingAttackedSquare(): Assertion = {
     val conf = new GridConfiguration
     /* The piece attacking a square the castling king will cross. */
     conf.add("d2", White, Rook)
@@ -357,27 +403,30 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add("e8", Black, King)
     conf.add("a8", Black, Rook)
     val e = new StandardMoveExplorer(conf)
-    assertExceptionThrown("Castling should be rejected when the king would cross an attacked square", classOf[AttackedPositionException]) {
-      e.rejectIllegalMove(Castle(Black, Long))
+    withClue("Castling should be rejected when the king would cross an attacked square") {
+      an[AttackedPositionException] shouldBe thrownBy {
+        e.rejectIllegalMove(Castle(Black, Long))
+      }
     }
   }
 
   /* Confirm the fault exhibited by defect 6 is fixed. */
-  private def rejectIllegalMoveRejectsCastlingWhenKingCrossingSquareAttackedByPawn(): Unit = {
+  private def rejectIllegalMoveRejectsCastlingWhenKingCrossingSquareAttackedByPawn(): Assertion = {
     val conf = new GridConfiguration
     placeAll(conf)
     for (move <- DefectFixture.defect6Moves) {
       conf.applyMove(move)
     }
     val e = new StandardMoveExplorer(conf)
-    assertExceptionThrown("Castling should be rejected when the king would end on a square attacked by a pawn", classOf[AttackedPositionException]) {
+    withClue("Castling should be rejected when the king would end on a square attacked by a pawn") {
       val move = DefectFixture.defect6FinalMove
-      e.rejectIllegalMove(move)
-      render(conf)
+      an[AttackedPositionException] shouldBe thrownBy {
+        e.rejectIllegalMove(move)
+      }
     }
   }
 
-  private def rejectIllegalMoveRejectsReCastling(): Unit = {
+  private def rejectIllegalMoveRejectsReCastling(): Assertion = {
     val conf = new GridConfiguration
     val moveExplorer = new StandardMoveExplorer(conf)
 
@@ -399,34 +448,36 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.applyMove("d1e1")
     conf.applyMove("e8e7")
 
-    assertExceptionThrown("Re-Castling was rejected", classOf[PreviouslyMovedException]) {
-      moveExplorer.rejectIllegalMove(Castle(White, Long))
+    withClue("Re-Castling was rejected") {
+      a[PreviouslyMovedException] shouldBe thrownBy {
+        moveExplorer.rejectIllegalMove(Castle(White, Long))
+      }
     }
   }
 
-  private def rejectNonPromotingPawnAdvanceToBackRank(): Unit = {
+  private def rejectNonPromotingPawnAdvanceToBackRank(): Assertion = {
     val conf = new GridConfiguration
     placeKings(conf)
     conf.add("d7", White, Pawn)
     val e = new StandardMoveExplorer(conf)
-    assertExceptionThrown("Non promoting pawn advance to opponents home rank should be rejected", classOf[NonPromotingPawnAdvance]) {
-      e.rejectIllegalMove(MovePiece("d7", "d8"))
+    withClue("Non promoting pawn advance to opponents home rank should be rejected") {
+      a[NonPromotingPawnAdvance] shouldBe thrownBy(e.rejectIllegalMove(MovePiece("d7", "d8")))
     }
   }
 
-  private def rejectNonPromotingPawnCaptureOfBackRankPiece(): Unit = {
+  private def rejectNonPromotingPawnCaptureOfBackRankPiece(): Assertion = {
     val conf = new GridConfiguration
     placeKings(conf)
     conf.add("d7", White, Pawn)
     conf.add("e8", Black, Bishop)
     val e = new StandardMoveExplorer(conf)
-    assertExceptionThrown("Non promoting pawn capturing of opponents home rank piece should be rejected", classOf[NonPromotingPawnAdvance]) {
-      e.rejectIllegalMove(MovePieceCapturing("d7", "e8"))
+    withClue("Non promoting pawn capturing of opponents home rank piece should be rejected") {
+      a[NonPromotingPawnAdvance] shouldBe thrownBy(e.rejectIllegalMove(MovePieceCapturing("d7", "e8")))
     }
   }
 
   /* legalMoves: start */
-  private def selectsOnlyMove(): Unit = {
+  private def selectsOnlyMove(): Assertion = {
     val conf: Configuration = new GridConfiguration
     /* Box the rooks in */
     // Rr    PK
@@ -445,23 +496,28 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
 
     val e = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(White)
-    assertEquals(List(MovePieceCapturing("a8", "b8")), moves, "The only possible move should have been selected")
+    withClue("The only possible move should have been selected") {
+      moves.loneElement shouldBe MovePieceCapturing("a8", "b8")
+    }
   }
 
-  private def pawnPromotionSelected(): Unit = {
+  private def pawnPromotionSelected(): Assertion = {
     val conf: Configuration = new GridConfiguration
     /* The pawn that should be promoted */
     conf.add("b7", White, Pawn)
     conf.add("h8", White, King)
 
     val e = new StandardMoveExplorer(conf)
+    // TODO: Use collect
     val moves = e.legalMoves(White) filter { case _: Promote => true case _ => false }
     val promote = Promote("b7", Queen)
     val expected = List(promote.copy(piece = Knight), promote)
-    assertEquals(expected, moves, "Pawn promotion to both Queen and Knight was considered")
+    withClue("Pawn promotion to both Queen and Knight was considered") {
+      moves shouldBe expected
+    }
   }
 
-  private def pawnCapturingPromotionSelected(): Unit = {
+  private def pawnCapturingPromotionSelected(): Assertion = {
     val conf: Configuration = new GridConfiguration
     placeKings(conf)
     /* The pawn that should be promoted */
@@ -472,7 +528,9 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     val moves = e.legalMoves(White) filter { case _: PromoteCapturing => true case _ => false }
     val promote = PromoteCapturing("b7", "c8", Queen)
     val expected = List(promote.copy(piece = Knight), promote)
-    assertEquals(expected, moves, "Capturing pawn promotion to both Queen and Knight was considered")
+    withClue("Capturing pawn promotion to both Queen and Knight was considered") {
+      moves shouldBe expected
+    }
   }
 
   //  abcdefgh
@@ -486,7 +544,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
   //1 ··.b····
   //  abcdefgh
   /* Black can escape checkmate by taking the queen */
-  private def queenCaptureSelected(): Unit = {
+  private def queenCaptureSelected(): Assertion = {
     val conf: Configuration = new GridConfiguration
     conf.add("d1", Black, Bishop)
     conf.add("h2", White, Queen)
@@ -496,7 +554,9 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add("g6", Black, Queen)
     val e = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(Black)
-    assertEquals(List(MovePieceCapturing("d3", "e3")), moves, "Black escaped from check by selected the only possible move")
+    withClue("Black escaped from check by selecting the only possible move") {
+      moves.loneElement shouldBe MovePieceCapturing("d3", "e3")
+    }
   }
 
   //  abcdefgh
@@ -510,7 +570,7 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
   //1 ······K·
   //  abcdefgh
   /* Black can escape checkmate by taking the queen */
-  private def queenCaptureSelected2(): Unit = {
+  private def queenCaptureSelected2(): Assertion = {
     val conf: Configuration = new GridConfiguration
     conf.add("g1", White, King)
     conf.add("f2", Black, Pawn)
@@ -523,61 +583,74 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add("g8", Black, King)
     val e = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(Black)
-    assertEquals(List(MovePieceCapturing("g8", "f7")), moves, "Black escaped from check by selected the only possible move")
+    withClue("Black escaped from check by selected the only possible move") {
+      moves.loneElement shouldBe MovePieceCapturing("g8", "f7")
+    }
   }
 
-  private def castlingIncluded(): Unit = {
+  private def castlingIncluded(): Assertion = {
     val conf: Configuration = new GridConfiguration
     conf.add("a1", White, Rook)
     conf.add("e1", White, King)
     conf.add("h1", White, Rook)
-    val allowedMove = Castle(White, Long)
     val e = new StandardMoveExplorer(conf)
+    // TODO: Use collect
     val moves = e.legalMoves(White) filter { case _: Castle => true case _ => false }
-    assertEquals(List(Castle(White, Short), Castle(White, Long)), moves, "Both long and short castling was included")
+    withClue("Both long and short castling was included") {
+      moves shouldBe Castle(White, Short) :: Castle(White, Long) :: Nil
+    }
+
   }
 
-  private def shortCastlingNotConsideredWhenStartPositionsIncorrect(): Unit = {
+  private def shortCastlingNotConsideredWhenStartPositionsIncorrect(): Assertion = {
     val conf: Configuration = new GridConfiguration
     conf.add("a1", White, Rook)
     conf.add("e1", White, King)
     conf.add("h2", White, Rook)
     val e = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(White) filter { case _: Castle => true case _ => false }
-    assertEquals(List(Castle(White, Long)), moves, "When only long castling was possible short castling was not considered")
+    withClue("When only long castling was possible short castling was not considered") {
+      moves.loneElement shouldBe Castle(White, Long)
+    }
   }
 
-  private def longCastlingNotConsideredWhenStartPositionsIncorrect(): Unit = {
+  private def longCastlingNotConsideredWhenStartPositionsIncorrect(): Assertion = {
     val conf: Configuration = new GridConfiguration
     conf.add("a2", White, Rook)
     conf.add("e1", White, King)
     conf.add("h1", White, Rook)
     val e = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(White) filter { case _: Castle => true case _ => false }
-    assertEquals(List(Castle(White, Short)), moves, "When only short castling was possible long castling was not considered")
+    withClue("When only short castling was possible long castling was not considered") {
+      moves.loneElement shouldBe Castle(White, Short)
+    }
   }
 
-  private def castlingNotConsideredWhenEitherPieceIsNotOwnPiece(): Unit = {
+  private def castlingNotConsideredWhenEitherPieceIsNotOwnPiece(): Assertion = {
     val conf: Configuration = new GridConfiguration
     conf.add("a1", Black, Rook)
     conf.add("e1", White, King)
     conf.add("h1", Black, Rook)
     val e = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(White) filter { case _: Castle => true case _ => false }
-    assertEquals(List(), moves, "When no castling was possible no castling was considered")
+    withClue("When no castling was possible no castling was considered") {
+      moves shouldBe empty
+    }
   }
 
-  private def castlingNotConsiderWhenOutsidePieceIsNotRook(): Unit = {
+  private def castlingNotConsiderWhenOutsidePieceIsNotRook(): Assertion = {
     val conf: Configuration = new GridConfiguration
     conf.add("a1", White, Knight)
     conf.add("e1", White, King)
     conf.add("h1", White, Bishop)
     val e = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(White) filter { case _: Castle => true case _ => false }
-    assertEquals(List(), moves, "When the outside piece was not a rook no castling was considered")
+    withClue("When the outside piece was not a rook no castling was considered") {
+      moves shouldBe empty
+    }
   }
 
-  private def castlingNotConsiderWhenInsidePieceIsNotKing(): Unit = {
+  private def castlingNotConsiderWhenInsidePieceIsNotKing(): Assertion = {
     val conf: Configuration = new GridConfiguration
     conf.add("a1", White, Rook)
     conf.add("d1", White, King)
@@ -585,10 +658,12 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.add("h1", White, Rook)
     val e = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(White) filter { case _: Castle => true case _ => false }
-    assertEquals(List(), moves, "When the inside piece was not a king  no castling was considered")
+    withClue("When the inside piece was not a king  no castling was considered") {
+      moves shouldBe empty
+    }
   }
 
-  private def enPassantSelected(): Unit = {
+  private def enPassantSelected(): Assertion = {
     val conf: Configuration = new GridConfiguration
     placeKings(conf)
     conf.add("e7", Black, Pawn)
@@ -599,46 +674,64 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     conf.applyMove(MovePiece("e7", "e5"))
     val e = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(White)
-    assertFalse(moves contains MovePiece("d5", "e6"), "MovePiece should not have been in the list of acceptable moves")
-    assertTrue(moves contains EnPassant("d5", "e6"), "En passant was in the list of acceptable moves")
+    withClue("MovePiece should not have been in the list of acceptable moves") {
+      moves should not contain MovePiece("d5", "e6")
+    }
+    withClue("En passant was in the list of acceptable moves") {
+      moves should contain(EnPassant("d5", "e6"))
+    }
   }
 
-  private def resignExcluded(): Unit = {
+  private def resignExcluded(): Assertion = {
     val conf: Configuration = new GridConfiguration
     placeKings(conf)
     val e = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(White)
-    assertFalse(moves contains Resign(White), "Resign was not in the list of legal moves")
+    withClue("Resign was not in the list of legal moves") {
+      moves should not contain Resign(White)
+    }
   }
 
   /* legalMoves: end*/
 
   /* Check Mate start */
 
-  private def kingIsCheckMatedDetected(): Unit = {
+  private def kingIsCheckMatedDetected(): Assertion = {
     val conf: Configuration = new GridConfiguration
     placeKings(conf)
 
     val e1 = new StandardMoveExplorer(conf)
-    assertFalse(e1.kingInCheck(Black), "The black king was not in check")
-    assertFalse(e1.kingInCheckMate(Black), "The black king was not checkmated")
+    withClue("The black king was not in check") {
+      e1.kingInCheck(Black) shouldBe false
+    }
+    withClue("The black king was not checkmated") {
+      e1.kingInCheckMate(Black) shouldBe false
+    }
 
     conf.add("a8", White, Rook)
     val e2 = new StandardMoveExplorer(conf)
-    assertTrue(e2.kingInCheck(Black), "The black king was in check")
-    assertFalse(e2.kingInCheckMate(Black), "The black king was not checkmated")
+    withClue("The black king was in check") {
+      e2.kingInCheck(Black) shouldBe true
+    }
+    withClue("The black king was not checkmated") {
+      e2.kingInCheckMate(Black) shouldBe false
+    }
 
     conf.add("a7", White, Rook)
     val e3 = new StandardMoveExplorer(conf)
-    assertTrue(e3.kingInCheck(Black), "The black king was in check")
-    assertTrue(e3.kingInCheckMate(Black), "The black king was checkmated")
+    withClue("The black king was in check") {
+      e3.kingInCheck(Black) shouldBe true
+    }
+    withClue("The black king was checkmated") {
+      e3.kingInCheckMate(Black) shouldBe true
+    }
   }
 
   /* Check Mate end */
 
   /* defect: start */
 
-  private def defect5IsFixed(): Unit = {
+  private def defect5IsFixed(): Assertion = {
     val conf: Configuration = new GridConfiguration
     placeAll(conf)
     for (move <- DefectFixture.defect5Moves) {
@@ -646,27 +739,13 @@ object StandardMoveExplorerTest extends Test with TestUtils with Main {
     }
     val e = new StandardMoveExplorer(conf)
     val move = DefectFixture.defect5FinalMove
-    assertExceptionThrown(s"$move should be rejected", classOf[InvalidParticipantException]) {
-      e.rejectIllegalMove(move)
+    withClue(s"$move should be rejected") {
+      a[InvalidParticipantException] shouldBe thrownBy {
+        e.rejectIllegalMove(move)
+      }
     }
   }
 
   /* defect: end */
-
-  private def placeKings(conf: Configuration): Unit = {
-    conf.add("e1", White, King)
-    conf.add("e8", Black, King)
-  }
-
-  private def placeAll(conf: Configuration): Unit = {
-    for ((colour, piece, position) <- BoardModel.standardPlacements)
-      conf.add(position, colour, piece)
-  }
-
-  private def render(conf: ConfigurationView): Unit = {
-    val lines = ConfigurationView.getTextRepresentation(conf)
-    for (line <- lines) println(line)
-    println()
-  }
 
 }
