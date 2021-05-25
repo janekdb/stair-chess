@@ -1,44 +1,54 @@
 package chess.model
 
-import Colours.{Black, White}
-import GameOutcomeModes.GameOutcomeMode
-import ex._
-import test.{Main, Test, TestUtils}
-import chess.util.TODO
-import scala.collection.mutable.ListBuffer
+import chess.model.Colours.{Black, White}
+import chess.model.ex._
+import org.scalatest._
+import LoneElement._
+import OptionValues._
+import wordspec.AnyWordSpec
+import matchers.should.Matchers
+import test.TestUtils
 
-object BoardModelTest extends Test with TestUtils with Main {
+class BoardModelTest extends AnyWordSpec with Matchers with Inspectors with TestUtils {
 
-  def runTests(): Unit = {
+  "A BoardModel" should {
+    "reject or accept moves" in {
+      rejectMoveOntoOwnPiece()
+      rejectPawnDoubleAdvanceIfNotFirstMove()
+      acceptCastlingWhenNoInterveningPieces()
+      acceptCastlingWhenIrrelevantOpponentPiecesExist()
+      rejectCastlingWhenInterveningPiece()
+      rejectCastlingWhenAnySquareVisitedByTheKingIsUnderAttack()
+      acceptCastlingWhenSquaresVisitedByTheRookButNotTheKingAreUnderAttack()
+      rejectReCastling()
+      rejectIfMoveLeavesOwnKingInCheck()
+      enPassantAllowed()
+      enPassantDisallowedIfNotImmediatelyUsed()
+    }
+    "detect checkmate" in {
+      checkMateIsDetected()
+    }
+    "detect check" in {
+      checkWithNonCapturingEscapeIsDetected()
+      checkWithCapturingEscapeIsDetected()
+    }
+    "detect stalemate" in {
+      stalemateIsDetected()
+      invalidStalemateIsRejected()
+    }
+    "behave as expected" in {
+      /* Configuration event */
+      confirmConfigurationEventIsSent()
+      // Companion Object
+      standardPlacements()
+      /* Repeated configurations */
+      // TODO: LOW: Allow draw to be claimed
+      // repeatedConfigurationsIsDetected
 
-    rejectMoveOntoOwnPiece()
-    rejectPawnDoubleAdvanceIfNotFirstMove()
-    acceptCastlingWhenNoInterveningPieces()
-    acceptCastlingWhenIrrelevantOpponentPiecesExist()
-    rejectCastlingWhenInterveningPiece()
-    rejectCastlingWhenAnySquareVisitedByTheKingIsUnderAttack()
-    acceptCastlingWhenSquaresVisitedByTheRookButNotTheKingAreUnderAttack()
-    rejectReCastling()
-    rejectIfMoveLeavesOwnKingInCheck()
-    checkMateIsDetected()
-    checkWithNonCapturingEscapeIsDetected()
-    checkWithCapturingEscapeIsDetected()
-    enPassantAllowed()
-    enPassantDisallowedIfNotImmediatelyUsed()
-    /* Configuration event */
-    confirmConfigurationEventIsSent()
-    // Companion Object
-    standardPlacements()
-    /* Stalemate */
-    stalemateIsDetected()
-    invalidStalemateIsRejected()
-    /* Repeated configurations */
-    // TODO: LOW: Allow draw to be claimed
-    // repeatedConfigurationsIsDetected
-
-    /* Defects */
-    confirmNotResponsibleForDefect5()
-    confirmNotResponsibleForDefect6()
+      /* Defects */
+      confirmNotResponsibleForDefect5()
+      confirmNotResponsibleForDefect6()
+    }
   }
 
   implicit def placementBuilder2List(pb: PlacementsBuilder): List[(Colour, Piece, Position)] = pb.asList
@@ -53,25 +63,19 @@ object BoardModelTest extends Test with TestUtils with Main {
     def asList: List[(Colour, Piece, Position)] = placements
   }
 
-  private def rejectMoveOntoOwnPiece(): Unit = {
+  private def rejectMoveOntoOwnPiece(): Assertion = {
     val pb = new PlacementsBuilder
     pb(Black, Queen, "g7")
     pb(Black, King, "g8")
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
 
-    try {
+    an[UnreachablePositionException] shouldBe thrownBy {
       bm.move("g7g8")
-      fail("Move onto own piece should be rejected")
-    } catch {
-      /* Success */
-      case _: UnreachablePositionException => ()
-      /* Unexpected */
-      case e: Exception => unexpected(e)
     }
   }
 
-  private def rejectPawnDoubleAdvanceIfNotFirstMove(): Unit = {
+  private def rejectPawnDoubleAdvanceIfNotFirstMove(): Assertion = {
     val pb = new PlacementsBuilder
     pb(Black, Pawn, "a7")
     pb(Black, Queen, "f8")
@@ -80,18 +84,14 @@ object BoardModelTest extends Test with TestUtils with Main {
     val bm = new BoardModel(pb, Nil, Nil, Nil)
 
     bm.move("a7a6")
-    try {
-      bm.move("a6a4")
-      fail("Pawn double advance should be rejected if it was not the piece's first move")
-    } catch {
-      /* Success */
-      case _: UnreachablePositionException => ()
-      /* Unexpected */
-      case e: Exception => unexpected(e)
+    withClue("Pawn double advance should be rejected if it was not the piece's first move") {
+      an[UnreachablePositionException] shouldBe thrownBy {
+        bm.move("a6a4")
+      }
     }
   }
 
-  private def acceptCastlingWhenNoInterveningPieces(): Unit = {
+  private def acceptCastlingWhenNoInterveningPieces(): Assertion = {
     val pb = new PlacementsBuilder
     pb(Black, King, "e8")
     pb(White, Rook, "a1")
@@ -99,10 +99,10 @@ object BoardModelTest extends Test with TestUtils with Main {
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
 
-    bm.move(Castle(White, Long))
+    noException shouldBe thrownBy(bm.move(Castle(White, Long)))
   }
 
-  private def acceptCastlingWhenIrrelevantOpponentPiecesExist(): Unit = {
+  private def acceptCastlingWhenIrrelevantOpponentPiecesExist(): Assertion = {
     val pb = new PlacementsBuilder
     pb(Black, King, "e8")
     pb(White, Rook, "a1")
@@ -110,10 +110,10 @@ object BoardModelTest extends Test with TestUtils with Main {
     pb(Black, Knight, "a8")
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
-    bm.move(Castle(White, Long))
+    noException shouldBe thrownBy(bm.move(Castle(White, Long)))
   }
 
-  private def rejectCastlingWhenInterveningPiece(): Unit = {
+  private def rejectCastlingWhenInterveningPiece(): Assertion = {
     val pb = new PlacementsBuilder
     pb(White, Rook, "a1")
 
@@ -123,19 +123,16 @@ object BoardModelTest extends Test with TestUtils with Main {
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
 
-    try {
+    a[InterveningPieceException] shouldBe thrownBy {
       bm.move(Castle(White, Long))
-      fail("Castling should be rejected when there is an intervening piece")
-    } catch {
-      case _: InterveningPieceException => ()
-      case e: Exception => unexpected(e)
     }
   }
 
-  private def rejectCastlingWhenAnySquareVisitedByTheKingIsUnderAttack(): Unit = {
+  private def rejectCastlingWhenAnySquareVisitedByTheKingIsUnderAttack(): Assertion = {
 
     val files = List("c", "d", "e")
-    for (file <- files) {
+    forAll(files) { file =>
+
       val pb = new PlacementsBuilder
 
       /* Allow white to castle long. */
@@ -147,16 +144,18 @@ object BoardModelTest extends Test with TestUtils with Main {
 
       val bm = new BoardModel(pb, Nil, Nil, Nil)
 
-      assertExceptionThrown("Castling the king over an attacked square should be rejected", classOf[AttackedPositionException]) {
-        bm.move(Castle(White, Long))
+      withClue("Castling the king over an attacked square should be rejected") {
+        a[AttackedPositionException] shouldBe thrownBy {
+          bm.move(Castle(White, Long))
+        }
       }
     }
   }
 
-  private def acceptCastlingWhenSquaresVisitedByTheRookButNotTheKingAreUnderAttack(): Unit = {
+  private def acceptCastlingWhenSquaresVisitedByTheRookButNotTheKingAreUnderAttack(): Assertion = {
 
     val files = List("a", "b")
-    for (file <- files) {
+    forAll(files) { file =>
       val pb = new PlacementsBuilder
 
       /* Allow white to castle long. */
@@ -168,11 +167,11 @@ object BoardModelTest extends Test with TestUtils with Main {
 
       val bm = new BoardModel(pb, Nil, Nil, Nil)
 
-      bm.move(Castle(White, Long))
+      noException shouldBe thrownBy(bm.move(Castle(White, Long)))
     }
   }
 
-  private def rejectReCastling(): Unit = {
+  private def rejectReCastling(): Assertion = {
     val pb = new PlacementsBuilder
 
     pb(White, Rook, "a1")
@@ -192,12 +191,12 @@ object BoardModelTest extends Test with TestUtils with Main {
     bm.move("e7e8")
     bm.move("d1e1")
     bm.move("e8e7")
-    assertExceptionThrown("Re-Castling was rejected", classOf[PreviouslyMovedException]) {
+    a[PreviouslyMovedException] shouldBe thrownBy {
       bm.move(Castle(White, Long))
     }
   }
 
-  private def rejectIfMoveLeavesOwnKingInCheck(): Unit = {
+  private def rejectIfMoveLeavesOwnKingInCheck(): Assertion = {
     val pb = new PlacementsBuilder
 
     pb(White, Rook, "e2")
@@ -206,16 +205,12 @@ object BoardModelTest extends Test with TestUtils with Main {
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
 
-    try {
+    a[CheckedOwnKing] shouldBe thrownBy {
       bm.move("e2h2")
-      fail("A move by white that leaves the whte King in check should be rejected")
-    } catch {
-      case _: CheckedOwnKing => ()
-      case e: Exception => unexpected(e)
     }
   }
 
-  private def checkMateIsDetected(): Unit = {
+  private def checkMateIsDetected(): Assertion = {
     val pb = new PlacementsBuilder
 
     pb(White, King, "a2")
@@ -228,14 +223,16 @@ object BoardModelTest extends Test with TestUtils with Main {
     class VerifyingGameChangedSubscriber(var expectedEvents: List[GameChanged]) extends GameChangedSubscriber {
       def onGameChanged(event: GameChanged): Unit = {
         expectedEvents match {
-          case Nil => throw new AssertionError("An event was received when none were expected: " + event)
+          case Nil => fail("An event was received when none were expected: " + event)
           case expected :: rest =>
-            assertEquals(expected, event, "Not all expected events were received")
+            withClue("Not all expected events were received") {
+              event shouldBe expected
+            }
             expectedEvents = rest
         }
       }
 
-      def assertAllEventsReceived(): Unit = assertEquals(Nil, expectedEvents)
+      def assertAllEventsReceived(): Assertion = expectedEvents shouldBe empty
     }
 
     val v = new VerifyingGameChangedSubscriber(List(Won(Black, GameOutcomeModes.CheckMate)))
@@ -244,7 +241,7 @@ object BoardModelTest extends Test with TestUtils with Main {
     v.assertAllEventsReceived()
   }
 
-  private def checkWithNonCapturingEscapeIsDetected(): Unit = {
+  private def checkWithNonCapturingEscapeIsDetected(): Assertion = {
     val pb = new PlacementsBuilder
 
     pb(White, King, "b2")
@@ -261,14 +258,14 @@ object BoardModelTest extends Test with TestUtils with Main {
         for (event <- events) {
           eventCount += 1
           event match {
-            case PieceMoved(_, _) => pieceMoved = true
+            case _: PieceMoved => pieceMoved = true
             case _ => fail("Unexpected event: " + event)
           }
         }
       }
 
       def onPiecePlaced(event: PiecePlaced): Unit = {
-        assert(false)
+        fail()
       }
     }
 
@@ -277,8 +274,10 @@ object BoardModelTest extends Test with TestUtils with Main {
     /* Check the King. This is not checkmate since a move to a2 escapes check. */
     bm.move("d7b7")
 
-    assert(pieceMoved, "The game was not won when the king was checked but could escape")
-    assertEquals(1, eventCount, "There was only one event")
+    withClue("The game was not won when the king was checked but could escape") {
+      pieceMoved shouldBe true
+    }
+    eventCount shouldBe 1
   }
 
   //  abcdefgh
@@ -290,8 +289,8 @@ object BoardModelTest extends Test with TestUtils with Main {
   //3 ·Q·n··R·
   //2 ·Rb·KP··
   //1 ········
-  //  abcdefgh  
-  private def checkWithCapturingEscapeIsDetected(): Unit = {
+  //  abcdefgh
+  private def checkWithCapturingEscapeIsDetected(): Assertion = {
     val pb = new PlacementsBuilder
     /* Position the Queen so that it can check the black King on the next move. */
     val queenStart = "b7"
@@ -325,11 +324,15 @@ object BoardModelTest extends Test with TestUtils with Main {
     val s = newEventCapturer
     bm.subscribe(s)
     bm.move(MovePiece(queenStart, queenEnd))
-    assertFalse(s.events contains Won(White, GameOutcomeModes.CheckMate), "The list of event should not include Won")
-    assertEquals(List(PieceMoved(queenStart, queenEnd)), s.events, "The list of events should be comprised of one PieceMoved event")
+    withClue("The list of event should not include Won") {
+      s.events should not contain Won(White, GameOutcomeModes.CheckMate)
+    }
+    withClue("The list of events should be comprised of one PieceMoved event") {
+      s.events.loneElement shouldBe PieceMoved(queenStart, queenEnd)
+    }
   }
 
-  private def enPassantAllowed(): Unit = {
+  private def enPassantAllowed(): Assertion = {
     val pb = new PlacementsBuilder
 
     /* The pawn that will capture via en-passant */
@@ -340,19 +343,19 @@ object BoardModelTest extends Test with TestUtils with Main {
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
 
-    var pieceMovedCapturing: PieceMovedCapturing = null
+    var pieceMovedCapturing: Option[PieceMovedCapturing] = None
     val s = new Object with BoardChangedSubscriber {
       def onBoardChanged(events: List[BoardChanged]): Unit = {
         for (event <- events) {
           event match {
-            case e@PieceMovedCapturing(_, _, _) => pieceMovedCapturing = e
+            case e: PieceMovedCapturing => pieceMovedCapturing = Some(e)
             case _ => fail("Unexpected event: " + event)
           }
         }
       }
 
       def onPiecePlaced(event: PiecePlaced): Unit = {
-        assert(false)
+        fail()
       }
     }
 
@@ -368,13 +371,15 @@ object BoardModelTest extends Test with TestUtils with Main {
     val whiteEnd: Position = "d6"
     bm.move(EnPassant(whiteStart, whiteEnd))
 
-    assertNotNull(pieceMovedCapturing, "PieceMovedTaking event was sent")
-    assertEquals(whiteStart, pieceMovedCapturing.start, "PieceMovedCapturing.start was correct: " + pieceMovedCapturing)
-    assertEquals(whiteEnd, pieceMovedCapturing.end, "PieceMovedCapturing.end was correct: " + pieceMovedCapturing)
-    assertEquals(blackEnd, pieceMovedCapturing.captured, "PieceMovedCapturing.captured was correct: Expected: " + blackEnd + ", had: " + pieceMovedCapturing)
+    withClue("PieceMovedTaking event was sent") {
+      pieceMovedCapturing shouldBe defined
+    }
+    pieceMovedCapturing.value.start shouldBe whiteStart
+    pieceMovedCapturing.value.end shouldBe whiteEnd
+    pieceMovedCapturing.value.captured shouldBe blackEnd
   }
 
-  private def enPassantDisallowedIfNotImmediatelyUsed(): Unit = {
+  private def enPassantDisallowedIfNotImmediatelyUsed(): Assertion = {
     val pb = new PlacementsBuilder
 
     pb(getKings)
@@ -391,32 +396,37 @@ object BoardModelTest extends Test with TestUtils with Main {
     /* Black king */
     bm.move("e8d8")
 
-    assertExceptionThrown("En-passant disallowed when not immediately played", classOf[UnreachablePositionException]) {
+    withClue("En-passant disallowed when not immediately played") {
       /* En-passant */
-      bm.move("e5d6")
+      an[UnreachablePositionException] shouldBe thrownBy {
+        bm.move("e5d6")
+      }
     }
   }
 
-  private def confirmConfigurationEventIsSent(): Unit = {
+  private def confirmConfigurationEventIsSent(): Assertion = {
     var events: List[ConfigurationView] = Nil
     val listener = new Object with ConfigurationChangedSubscriber {
       def onConfigurationChanged(event: ConfigurationView): Unit = {
         events ::= event
       }
     }
-    val bm = new BoardModel(List(), Nil, List(listener), Nil)
-    assertEquals(1, events.size, "The list of received events should have had one element")
-    assertTrue(events.head.isInstanceOf[ConfigurationView], "The events should have been an instance of ConfigurationView but was: " + events.head.getClass)
+    val _ = new BoardModel(List(), Nil, List(listener), Nil)
+    events should have size 1
+    withClue("The events should have been an instance of ConfigurationView but was: " + events.head.getClass) {
+      val filtered = events.collect { case e: ConfigurationView => e }
+      filtered should not be empty
+    }
   }
 
   // Companion object
 
-  private def standardPlacements(): Unit = {
-    assertEquals(4 * 8, BoardModel.standardPlacements.size, "There was a correct number of placements")
+  private def standardPlacements(): Assertion = {
+    BoardModel.standardPlacements should have size (4 * 8)
   }
 
   /* Stalemate */
-  private def stalemateIsDetected(): Unit = {
+  private def stalemateIsDetected(): Assertion = {
     val pb = new PlacementsBuilder
 
     pb(getKings)
@@ -432,22 +442,36 @@ object BoardModelTest extends Test with TestUtils with Main {
 
     bm.subscribe(s)
     bm.move(None)
-    assertEquals(List(Drawn(GameOutcomeModes.Stalemate)), s.events, "When no move was offered stalemate was detected")
-    assertTrue(bm.isCompleted, "On stalemate the game is completed")
-    assertFalse(bm.isWon, "On stalemate the game was not won")
-    assertTrue(bm.isDrawn, "On stalemate the game was drawn")
-    assertTrue(bm.getGameOutcome.get.isStalemate, "On stalemate the game outcome was stalemate")
-    assertTrue(bm.getWinner.isEmpty, "The winner was not defined when the stalemate was reached")
+    withClue("When no move was offered stalemate was detected") {
+      s.events shouldBe Drawn(GameOutcomeModes.Stalemate) :: Nil
+    }
+    withClue("On stalemate the game is completed") {
+      bm.isCompleted shouldBe true
+    }
+    withClue("On stalemate the game was not won") {
+      bm.isWon shouldBe false
+    }
+    withClue("On stalemate the game was drawn") {
+      bm.isDrawn shouldBe true
+    }
+    withClue("On stalemate the game outcome was stalemate") {
+      bm.getGameOutcome.value.isStalemate shouldBe true
+    }
+    withClue("The winner was not defined when the stalemate was reached") {
+      bm.getWinner shouldBe empty
+    }
   }
 
   /* Defend against a Player that fails to select a move when one was available. */
-  private def invalidStalemateIsRejected(): Unit = {
+  private def invalidStalemateIsRejected(): Assertion = {
     val pb = new PlacementsBuilder
     pb(getKings)
     val bm = new BoardModel(pb, Nil, Nil, Nil)
     bm.move("e8e7")
-    assertExceptionThrown("Invalid  stalemate indication was rejected", classOf[UnconsideredMovesStalemateException]) {
-      bm.move(None)
+    withClue("Invalid  stalemate indication was rejected") {
+      an[UnconsideredMovesStalemateException] shouldBe thrownBy {
+        bm.move(None)
+      }
     }
   }
 
@@ -472,35 +496,26 @@ positions and moves do not matter · they can be the same or different. The rule
 
   /* Defects */
 
-  private def confirmNotResponsibleForDefect5(): Unit = {
+  private def confirmNotResponsibleForDefect5(): Assertion = {
     val bm = new BoardModel(BoardModel.standardPlacements, Nil, Nil, Nil)
     for (move <- DefectFixture.defect5Moves) {
       bm.move(move)
     }
     val move = DefectFixture.defect5FinalMove
-    assertExceptionThrown(s"$move should be rejected", classOf[InvalidParticipantException]) {
+    an[InvalidParticipantException] shouldBe thrownBy {
       bm.move(move)
     }
   }
 
-  private def confirmNotResponsibleForDefect6(): Unit = {
+  private def confirmNotResponsibleForDefect6(): Assertion = {
     val bm = new BoardModel(BoardModel.standardPlacements, Nil, Nil, Nil)
     for (move <- DefectFixture.defect6Moves) {
       bm.move(move)
     }
     val move = DefectFixture.defect6FinalMove
-    assertExceptionThrown(s"$move should be rejected", classOf[AttackedPositionException]) {
+    an[AttackedPositionException] shouldBe thrownBy {
       bm.move(move)
-      println()
     }
-  }
-
-  private def log(move: Move): Unit = {
-    println(move)
-  }
-
-  private def log(rows: List[String]): Unit = {
-    rows foreach println
   }
 
   private def getKings = (White, King, new Position("e1")) :: (Black, King, new Position("e8")) :: Nil
@@ -513,7 +528,7 @@ positions and moves do not matter · they can be the same or different. The rule
     }
 
     def onPiecePlaced(event: PiecePlaced): Unit = {
-      assert(false)
+      fail()
     }
   }
 

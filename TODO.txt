@@ -24,6 +24,8 @@ Convert tests to ScalaTest
  - Convert to ScalaTest
  - Remove custom test framework
 
+Add scalafmt
+
 Add player that prefers to fork
 
 Add player that prefers taking pieces nearest the king
