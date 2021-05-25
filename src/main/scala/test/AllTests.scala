@@ -9,7 +9,6 @@ object AllTests {
 
     import chess.model._
     GridConfigurationTest.++
-    DelegatingConfigurationViewTest.++
 
     println("AllTests: tests.size: " + tests.size)
     tests
