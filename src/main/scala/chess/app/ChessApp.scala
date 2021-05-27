@@ -3,7 +3,7 @@ package chess.app
 import java.util.concurrent.TimeUnit
 import chess.model.BoardModel
 import chess.model.Colour
-import chess.model.Colours.{Black, White}
+import chess.model.Colours.Black
 import chess.model.Colours
 import chess.model.Configuration
 import chess.model.ConfigurationView
@@ -17,18 +17,14 @@ import chess.player.Player
 import chess.player.Players
 import chess.stage.Display
 import chess.stage.ScoreCard
-import chess.ui.Board
 import chess.ui.BoardAdapter
 import chess.ui.DelayingSubscriber
 import chess.ui.NoUI
 import chess.ui.SwingBoard
 import chess.ui.TextUI
 import chess.util.PlayerSelector
-import test.AllTests
 import chess.ui.MoveEntryListener
-import chess.player.Human
 import chess.player.BlockingPlayer
-import chess.model.MovePiece
 import chess.model.StandardMoveParser
 import chess.model.MoveFactory
 import chess.model.Move
@@ -51,17 +47,11 @@ import scala.language.postfixOps
 
 object ChessApp {
 
-  //  implicit def intWithTimes(n: Int): Unit = new {
-  //    def times(f: => Unit) = 1 to n foreach { _ => f }
-  //  }
-
   private def times(n: Int)(code: => Unit): Unit = {
     for (i <- 1 to n) code
   }
 
   def main(args: Array[String]): Unit = {
-
-    runTests
 
     // TODO: For the tournament loop over all combinations of players
     val explorerFactory = (conf: ConfigurationView) => new StandardMoveExplorer(conf)
@@ -242,10 +232,6 @@ object ChessApp {
 
   private def delay(count: Int = 1): Unit = {
     TimeUnit.SECONDS.sleep(count)
-  }
-
-  def runTests(): Unit = {
-    AllTests.runAllTests
   }
 }
 
