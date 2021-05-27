@@ -5,7 +5,7 @@ import chess.model._
 import org.scalatest._
 import matchers.should.Matchers
 import wordspec.AnyWordSpec
-import test.{Main, Test, TestUtils}
+import test.TestUtils
 
 class CapturingRankerTest extends AnyWordSpec with Matchers with TestUtils {
 
