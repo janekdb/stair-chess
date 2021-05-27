@@ -8,7 +8,6 @@ object AllTests {
     implicit class TestOps(any: Test) { def ++ : Unit = { tests ::= any } }
 
     import chess.model._
-    GridConfigurationTest.++
 
     println("AllTests: tests.size: " + tests.size)
     tests
