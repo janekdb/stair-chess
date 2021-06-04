@@ -20,9 +20,9 @@ Add stalemate detection. Use this example of black in stalemate,
 
 DONE: Get running Scala 2.13.5
 
-Convert tests to ScalaTest
- - Convert to ScalaTest
- - Remove custom test framework
+DONE: Convert tests to ScalaTest
+ DONE: - Convert to ScalaTest
+ DONE: - Remove custom test framework
 
 Add scalafmt
 
