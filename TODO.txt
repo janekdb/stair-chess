@@ -24,7 +24,7 @@ DONE: Convert tests to ScalaTest
  DONE: - Convert to ScalaTest
  DONE: - Remove custom test framework
 
-Add scalafmt
+DONE: Add scalafmt
 
 Add player that prefers to fork
 
