@@ -5,16 +5,13 @@ import chess.model.MoveExplorer
 import chess.model.ConfigurationView
 import chess.ranker
 
-/**
-  * An implementation of MoveRanker that ranks check mating moves higher than other moves.
+/** An implementation of MoveRanker that ranks check mating moves higher than other moves.
   */
-class CheckMatingRanker(val explorerFactory: ConfigurationView => MoveExplorer,
-                        colour: Colour)
-    extends MoveRanker {
+class CheckMatingRanker(val explorerFactory: ConfigurationView => MoveExplorer, colour: Colour) extends MoveRanker {
 
   private def rank(confView: ConfigurationView)(move: Move): Int = {
     val future = confView.applied(move)
-    val e = explorerFactory(future)
+    val e      = explorerFactory(future)
     if (e.kingInCheckMate(colour.opposite)) RANKING_HIGH else RANKING_LOW
   }
 
