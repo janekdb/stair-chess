@@ -6,8 +6,8 @@ import scala.collection.mutable
 
 class ScoreCard(val players: Set[String]) {
 
-  val wins = new mutable.HashMap[String, Int]()
-  val draws = new mutable.HashMap[String, Int]()
+  val wins   = new mutable.HashMap[String, Int]()
+  val draws  = new mutable.HashMap[String, Int]()
   val scores = new mutable.HashMap[String, Scores]()
 
   players.foreach(p => wins.put(p, 0))
@@ -37,7 +37,7 @@ class ScoreCard(val players: Set[String]) {
       def compare(x: (String, Int), y: (String, Int)): Int = {
         val (p1, s1) = x
         val (p2, s2) = y
-        val sc = -(s1 compare s2)
+        val sc       = -(s1 compare s2)
         /* For tied scores order by name */
         if (sc != 0) sc else p1 compare p2
       }

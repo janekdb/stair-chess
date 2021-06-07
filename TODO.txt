@@ -30,3 +30,7 @@ Add player that prefers to fork
 
 Add player that prefers taking pieces nearest the king
 
+Replace rankers by labellers: For each move label the move
+
+Search the tree: Start by following position where the opponent has only a few moves.
+

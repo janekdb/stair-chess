@@ -5,7 +5,7 @@ import chess.model._
 import org.scalatest._
 import matchers.should.Matchers
 import wordspec.AnyWordSpec
-import test.TestUtils
+import chess.test.TestUtils
 
 class RandomPlayerTest extends AnyWordSpec with Matchers with TestUtils {
 

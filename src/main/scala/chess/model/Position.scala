@@ -4,8 +4,8 @@ package chess.model
 class Position(val col: Int, val row: Int) {
 
   /* e8 */
-  def this(position: String) = this(
-    Constants.COLUMN_LABELS.indexOf(position.substring(0, 1)) + 1, position.substring(1, 2).toInt)
+  def this(position: String) =
+    this(Constants.COLUMN_LABELS.indexOf(position.substring(0, 1)) + 1, position.substring(1, 2).toInt)
 
   if (row < 1) throw new IllegalArgumentException("row was < 1")
   if (row > Constants.BOARD_SIZE) throw new IllegalArgumentException("row was > " + Constants.BOARD_SIZE + ": " + row)
@@ -41,18 +41,19 @@ class Position(val col: Int, val row: Int) {
 }
 
 object Position {
-  
-  /**
-   * @return all intervening positions.
-   * @throws IllegalArgumentException if the positions do not share the same row
-   */
+
+  /** @return
+    *   all intervening positions.
+    * @throws
+    *   IllegalArgumentException if the positions do not share the same row
+    */
   def getInterveningPositions(a: Position, b: Position): List[Position] = {
-    if(a.getRow != b.getRow) throw new IllegalArgumentException("The positions must be on the same row")
-    if(a.getCol == b.getCol) return List()
-    val (min, max) = if(a.getCol < b.getCol)(a.getCol, b.getCol) else (b.getCol, a.getCol)
+    if (a.getRow != b.getRow) throw new IllegalArgumentException("The positions must be on the same row")
+    if (a.getCol == b.getCol) return List()
+    val (min, max) = if (a.getCol < b.getCol) (a.getCol, b.getCol) else (b.getCol, a.getCol)
     /* (Inclusive, Exclusive) */
-    for(c <- List.range(min+1, max))
+    for (c <- List.range(min + 1, max))
       yield new Position(c, a.getRow)
   }
-  
+
 }

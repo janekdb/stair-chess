@@ -13,7 +13,7 @@ object DelegatingConfigurationViewTest extends AnyWordSpec with Matchers with Te
       val conf = new GridConfiguration
       conf.add("e5", Black, Pawn)
       val del = new DelegatingConfigurationView(conf).applied(MovePiece("e5", "e6"))
-      del.getExistingPiece("e6") shouldBe(Black, Pawn, Some(new Position("e5")))
+      del.getExistingPiece("e6") shouldBe (Black, Pawn, Some(new Position("e5")))
     }
   }
 }

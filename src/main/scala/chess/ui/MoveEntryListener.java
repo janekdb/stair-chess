@@ -6,5 +6,5 @@ package chess.ui;
  */
 public interface MoveEntryListener {
 
-	void onMoveEntry(String text);
+    void onMoveEntry(String text);
 }

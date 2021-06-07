@@ -5,9 +5,8 @@ import chess.model.Colour
 import chess.model.MoveExplorer
 import chess.ranker
 
-/**
- * A ranker that ranks checking moves highest.
- */
+/** A ranker that ranks checking moves highest.
+  */
 class CheckingRanker(val explorerFactory: ConfigurationView => MoveExplorer, colour: Colour) extends MoveRanker {
 
   private def checkingMove(confView: ConfigurationView, move: Move): Boolean =

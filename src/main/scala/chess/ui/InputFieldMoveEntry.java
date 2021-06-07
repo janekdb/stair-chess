@@ -13,38 +13,38 @@ import javax.swing.JTextField;
  */
 public class InputFieldMoveEntry implements MoveEntry {
 
-	private final JPanel contentPane = new JPanel(new BorderLayout());
+    private final JPanel contentPane = new JPanel(new BorderLayout());
 
-	private final JTextField inputField = new JTextField(4);
+    private final JTextField inputField = new JTextField(4);
 
-	public InputFieldMoveEntry() {
-		contentPane.add(inputField, BorderLayout.NORTH);
-	}
+    public InputFieldMoveEntry() {
+        contentPane.add(inputField, BorderLayout.NORTH);
+    }
 
-	@Override
-	public void enable() {
-		throw new RuntimeException("TODO");
-	}
+    @Override
+    public void enable() {
+        throw new RuntimeException("TODO");
+    }
 
-	@Override
-	public void disable() {
-		throw new RuntimeException("TODO");
-	}
+    @Override
+    public void disable() {
+        throw new RuntimeException("TODO");
+    }
 
-	@Override
-	public Container getContainer() {
-		return contentPane;
-	}
+    @Override
+    public Container getContainer() {
+        return contentPane;
+    }
 
-	@Override
-	public void addMoveEntryListener(final MoveEntryListener listener) {
-		ActionListener a = e -> listener.onMoveEntry(e.getActionCommand());
-		inputField.addActionListener(a);
-	}
+    @Override
+    public void addMoveEntryListener(final MoveEntryListener listener) {
+        ActionListener a = e -> listener.onMoveEntry(e.getActionCommand());
+        inputField.addActionListener(a);
+    }
 
-	@Override
-	public void clearMoveEntry() {
-		inputField.setText("");
-	}
+    @Override
+    public void clearMoveEntry() {
+        inputField.setText("");
+    }
 
 }

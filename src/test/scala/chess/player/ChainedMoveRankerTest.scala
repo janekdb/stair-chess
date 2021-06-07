@@ -6,7 +6,7 @@ import chess.ranker.MoveRanker
 import org.scalatest._
 import matchers.should.Matchers
 import wordspec.AnyWordSpec
-import test.TestUtils
+import chess.test.TestUtils
 
 import scala.annotation.tailrec
 
@@ -29,19 +29,21 @@ object ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
     Add a MoveRanker that prefers rook moves
     Add a MoveRanker that prefers the longest moves
     Confirm the longest rook moves are picked
-    */
+   */
   private def rankerCombinationPicksLongestRookMoves(): Assertion = {
-    val rookRanker = newRanker(Rook)
+    val rookRanker             = newRanker(Rook)
     val moveRanker: MoveRanker = new ChainedMoveRanker(rookRanker, longestRanker)
 
-    val conf = newConf
-    val moveExplorer = new StandardMoveExplorer(conf)
-    val moves = moveExplorer.legalMoves(White)
+    val conf                          = newConf
+    val moveExplorer                  = new StandardMoveExplorer(conf)
+    val moves                         = moveExplorer.legalMoves(White)
     val rankedMoves: List[List[Move]] = moveRanker.rankMoves(moves, conf)
     rankedMoves should not be empty
 
-    withClue("Expected at least four lists to allow for the fundamental divisions of " +
-      "{rooks, long}, {rooks, short}, {non-rooks, long}, {non-rooks, short}") {
+    withClue(
+      "Expected at least four lists to allow for the fundamental divisions of " +
+        "{rooks, long}, {rooks, short}, {non-rooks, long}, {non-rooks, short}"
+    ) {
       rankedMoves.length should be >= 4
     }
 
@@ -56,9 +58,9 @@ object ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
     Add a MoveRanker that prefers the longest moves
     Add a MoveRanker that prefers bishop moves
     Confirm the longest bishop moves are picked
-    */
+   */
   private def rankerCombinationPicksLongestBishopMovesSimple(): Assertion = {
-    val bishopRanker = newRanker(Bishop)
+    val bishopRanker           = newRanker(Bishop)
     val moveRanker: MoveRanker = new ChainedMoveRanker(longestRanker, bishopRanker)
 
     /* A rook that can move 6 squares */
@@ -69,12 +71,14 @@ object ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
     /* A rook that can move 6 squares */
     conf.add("b1", White, Rook)
 
-    val moveExplorer = new StandardMoveExplorer(conf)
-    val moves = moveExplorer.legalMoves(White)
+    val moveExplorer                  = new StandardMoveExplorer(conf)
+    val moves                         = moveExplorer.legalMoves(White)
     val rankedMoves: List[List[Move]] = moveRanker.rankMoves(moves, conf)
     rankedMoves should not be empty
-    withClue("Expected at least four lists to allow for the fundamental divisions of " +
-      "{long, bishops}, {long, rooks}, {short, bishops}, {short, rooks}") {
+    withClue(
+      "Expected at least four lists to allow for the fundamental divisions of " +
+        "{long, bishops}, {long, rooks}, {short, bishops}, {short, rooks}"
+    ) {
       rankedMoves.length should be >= 4
     }
 
@@ -85,11 +89,11 @@ object ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
   }
 
   private def rankerCombinationExcludesNilLists(): Assertion = {
-    val bishopRanker = newRanker(Bishop)
+    val bishopRanker        = newRanker(Bishop)
     val conf: Configuration = new GridConfiguration
     addKings(conf)
     val moveExplorer = new StandardMoveExplorer(conf)
-    val moves = moveExplorer.legalMoves(White)
+    val moves        = moveExplorer.legalMoves(White)
 
     /* Confirm the ranker is not flawed. */
     val bishopRanked = bishopRanker.rankMoves(moves, conf)
@@ -97,7 +101,7 @@ object ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
       all(bishopRanked) should not be empty
     }
 
-    val moveRanker: MoveRanker = new ChainedMoveRanker(longestRanker, bishopRanker)
+    val moveRanker: MoveRanker        = new ChainedMoveRanker(longestRanker, bishopRanker)
     val rankedMoves: List[List[Move]] = moveRanker.rankMoves(moves, conf)
     rankedMoves should not be empty
     withClue("There should not be any empty lists: " + rankedMoves) {
@@ -112,19 +116,21 @@ object ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
     Confirm the longest bishop moves are picked
    */
   private def rankerCombinationPicksLongestBishopMoves(): Assertion = {
-    val bishopRanker = newRanker(Bishop)
+    val bishopRanker           = newRanker(Bishop)
     val moveRanker: MoveRanker = new ChainedMoveRanker(longestRanker, bishopRanker)
 
     val conf = newConf
     /* A rook that can move 6 squares */
     conf.add("d1", White, Rook)
 
-    val moveExplorer = new StandardMoveExplorer(conf)
-    val moves = moveExplorer.legalMoves(White)
+    val moveExplorer                  = new StandardMoveExplorer(conf)
+    val moves                         = moveExplorer.legalMoves(White)
     val rankedMoves: List[List[Move]] = moveRanker.rankMoves(moves, conf)
     rankedMoves should not be empty
-    withClue("Expected at least four lists to allow for the fundamental divisions of " +
-      "{long, bishops}, {long, rooks}, {short, bishops}, {short, rooks}") {
+    withClue(
+      "Expected at least four lists to allow for the fundamental divisions of " +
+        "{long, bishops}, {long, rooks}, {short, bishops}, {short, rooks}"
+    ) {
       rankedMoves.length should be >= 4
     }
 
@@ -152,7 +158,7 @@ object ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
 
     val moveRanker: MoveRanker = new ChainedMoveRanker(headRanker, throwingRanker)
 
-    val moves = List(new MovePiece("e1e2"), new MovePiece("h8h7"), new MovePiece("g8h6"))
+    val moves                         = List(new MovePiece("e1e2"), new MovePiece("h8h7"), new MovePiece("g8h6"))
     val rankedMoves: List[List[Move]] = moveRanker.rankMoves(moves, new GridConfiguration)
     rankedMoves shouldBe List(List(new MovePiece("e1e2")), List(new MovePiece("h8h7"), new MovePiece("g8h6")))
   }
@@ -199,11 +205,13 @@ object ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
     }
     /* n will be checked on the next iteration. */
     val e = discriminator(n.head)
-    withClue("Adjacent list of moves should be ranked in descending order: " + m.head + " > " + n.head + ", " + d + " > " + e) {
+    withClue(
+      "Adjacent list of moves should be ranked in descending order: " + m.head + " > " + n.head + ", " + d + " > " + e
+    ) {
       (d._1 * 100 + d._2) shouldBe >=(e._1 * 100 + e._2)
     }
     ms match {
-      case Nil => succeed
+      case Nil     => succeed
       case r :: rs =>
         /* Compare next pair */
         verifyDescending(n, r, rs, discriminator)

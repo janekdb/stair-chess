@@ -5,7 +5,7 @@ import chess.player.Player
 import org.scalatest._
 import wordspec.AnyWordSpec
 import matchers.should.Matchers
-import test.TestUtils
+import chess.test.TestUtils
 
 object ScoreCardTest extends AnyWordSpec with Matchers with TestUtils {
 
@@ -57,7 +57,10 @@ object ScoreCardTest extends AnyWordSpec with Matchers with TestUtils {
     sc.addDraw(PLAYER_1, PLAYER_5)
     val wins = sc.getWins
     wins shouldBe
-      (PLAYER_1.getName, 2) :: (PLAYER_2.getName, 1) :: (PLAYER_4.getName, 1) :: (PLAYER_3.getName, 0) :: (PLAYER_5.getName, 0) :: Nil
+      (PLAYER_1.getName, 2) :: (PLAYER_2.getName, 1) :: (PLAYER_4.getName, 1) :: (PLAYER_3.getName, 0) :: (
+        PLAYER_5.getName,
+        0
+      ) :: Nil
   }
 
   private def drawsOrderedByName(): Assertion = {
@@ -69,7 +72,10 @@ object ScoreCardTest extends AnyWordSpec with Matchers with TestUtils {
     sc.addWin(PLAYER_1, PLAYER_5)
     val draws = sc.getDraws
     draws shouldBe
-      (PLAYER_1.getName, 2) :: (PLAYER_2.getName, 2) :: (PLAYER_3.getName, 1) :: (PLAYER_4.getName, 1) :: (PLAYER_5.getName, 0) :: Nil
+      (PLAYER_1.getName, 2) :: (PLAYER_2.getName, 2) :: (PLAYER_3.getName, 1) :: (PLAYER_4.getName, 1) :: (
+        PLAYER_5.getName,
+        0
+      ) :: Nil
   }
 
   private def scoresOrderedByName(): Assertion = {
@@ -82,11 +88,11 @@ object ScoreCardTest extends AnyWordSpec with Matchers with TestUtils {
     val scores = sc.getScores
     scores shouldBe
       Scores(PLAYER_1, 1, 2, 0) ::
-        Scores(PLAYER_2, 0, 3, 0) ::
-        Scores(PLAYER_3, 1, 1, 0) ::
-        Scores(PLAYER_4, 0, 0, 0) ::
-        Scores(PLAYER_5, 0, 0, 2) ::
-        Nil
+      Scores(PLAYER_2, 0, 3, 0) ::
+      Scores(PLAYER_3, 1, 1, 0) ::
+      Scores(PLAYER_4, 0, 0, 0) ::
+      Scores(PLAYER_5, 0, 0, 2) ::
+      Nil
   }
 
 }

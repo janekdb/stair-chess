@@ -20,7 +20,10 @@ import chess.util.TODO
 import chess.model.Won
 import chess.model.Drawn
 
-class BoardAdapter(val board: Board) extends BoardChangedSubscriber with ConfigurationChangedSubscriber with GameChangedSubscriber {
+class BoardAdapter(val board: Board)
+    extends BoardChangedSubscriber
+    with ConfigurationChangedSubscriber
+    with GameChangedSubscriber {
 
   var configuration: ConfigurationView = _
 
@@ -62,7 +65,7 @@ class BoardAdapter(val board: Board) extends BoardChangedSubscriber with Configu
         setPiece(end, makeLabel(colour, piece))
       case Promoted(position, piece) =>
         val (colour, piece, _) = configuration.getExistingPiece(position)
-        val promotedLabel = makeLabel(colour, piece)
+        val promotedLabel      = makeLabel(colour, piece)
         setPiece(position, promotedLabel)
       case Castled(king, rook) =>
         for (pm <- List(king, rook)) {

@@ -2,9 +2,8 @@ package chess.model
 
 import scala.collection.immutable.List
 
-/**
- * Provide an implementation of ConfigurationView by delegating to a Configuration
- */
+/** Provide an implementation of ConfigurationView by delegating to a Configuration
+  */
 class DelegatingConfigurationView(val configuration: Configuration) extends ConfigurationView {
 
   def getLastMove: Option[(Piece, Position, Position)] = configuration.getLastMove

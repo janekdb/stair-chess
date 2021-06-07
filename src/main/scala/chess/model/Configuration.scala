@@ -12,11 +12,9 @@ trait Configuration extends ConfigurationView {
   /** Throw exception if there is no piece at the given position */
   def remove(position: Position): Unit
 
-  /**
-   * Move the piece, incrementing it's move count.
-   * Throw exception if there is no piece at the given position.
-   * Throw exception if the end position is already occupied.
-   */
+  /** Move the piece, incrementing it's move count. Throw exception if there is no piece at the given position. Throw
+    * exception if the end position is already occupied.
+    */
   def move(start: Position, end: Position): Unit
 
   /** Replace the piece with a the same colour carrying over the move count */
@@ -25,11 +23,11 @@ trait Configuration extends ConfigurationView {
   /** Return a deep copy of the Configuration */
   def copyOf: Configuration
 
-  /**
-   * Update board configuration. The move must be legal i.e. the caller takes responsibility for
-   * ensuring the move is legal.
-   * @return A list of UI events to send to listeners.
-   */
+  /** Update board configuration. The move must be legal i.e. the caller takes responsibility for ensuring the move is
+    * legal.
+    * @return
+    *   A list of UI events to send to listeners.
+    */
   def applyMove(move: Move): List[BoardChanged] = {
     move match {
       case MovePiece(start, end) =>
@@ -37,7 +35,7 @@ trait Configuration extends ConfigurationView {
         this.move(start, end)
         List(PieceMoved(start, end))
       case MovePieceCapturing(start, end) =>
-        val (colour, piece, _) = this.getExistingPiece(start)
+        val (colour, piece, _)  = this.getExistingPiece(start)
         val (otherColour, _, _) = this.getExistingPiece(end)
         /* The opponents piece is being captured. */
         assert(otherColour != colour)
@@ -49,7 +47,7 @@ trait Configuration extends ConfigurationView {
         this.remove(e.captured)
         List(PieceMovedCapturing(e.start, e.end, e.captured))
       case Castle(colour, castlingType) =>
-        val row = colour.homeRow
+        val row          = colour.homeRow
         val (king, rook) = castlingType.getPositions(row)
         for ((start, end) <- List(king, rook)) {
           this.move(start, end)

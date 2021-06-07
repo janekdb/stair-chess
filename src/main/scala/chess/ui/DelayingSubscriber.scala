@@ -23,7 +23,7 @@ class DelayingSubscriber extends BoardChangedSubscriber with GameChangedSubscrib
   def onGameChanged(event: GameChanged): Unit = {
     val delayFor =
       event match {
-        case _: Won => 10000
+        case _: Won   => 10000
         case _: Drawn => 100
         case _ =>
           assert(assertion = false, "Unhandled case: " + event)
@@ -40,11 +40,11 @@ class DelayingSubscriber extends BoardChangedSubscriber with GameChangedSubscrib
   private def onBoardChanged(event: BoardChanged): Unit = {
     val delayFor =
       event match {
-        case _: PieceMoved => 1000
+        case _: PieceMoved          => 1000
         case _: PieceMovedCapturing => 1
-        case _: Promoted => 100
-        case _: Castled => 100
-        case _: Resigned => 1000
+        case _: Promoted            => 100
+        case _: Castled             => 100
+        case _: Resigned            => 1000
         case _ =>
           assert(assertion = false, "Unhandled case: " + event)
           /* Without this delayFor typed as AnyVal */

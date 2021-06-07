@@ -16,17 +16,15 @@ import chess.util.TODO
 import chess.model.ex.NonPromotingPawnAdvance
 import scala.language.postfixOps
 
-/**
- * The moves of standard chess
- */
+/** The moves of standard chess
+  */
 class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
 
   private implicit def tuple2list(t: (Position, Position)): List[Position] = List(t._1, t._2)
 
-  /**
-   * The set of attacked positions including empty squares that would be attacked by a pawn
-   * if an opposition piece were present
-   */
+  /** The set of attacked positions including empty squares that would be attacked by a pawn if an opposition piece were
+    * present
+    */
   private def getAttackedPositions(position: Position): Set[Position] = {
     getEndPositions(position, pawnAttackingMoveAllowed)
   }
@@ -35,35 +33,33 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
     getEndPositions(position, pawnMoveAllowed)
   }
 
-  /**
-   * @return The set of possible positions excluding moves that would result in 1. The move escaping from the board edges,
-   * or 2. A non-Knight jumping over a piece, or 3. A piece taking another piece of the same colour.
-   * Further restrictions on moves are imposed by {@link #rejectIllegalMove}
-   */
-  def getEndPositions(
-                       position: Position,
-                       pawnMovePredicate: (Position, (Int, Int)) => Boolean): Set[Position] = {
+  /** @return
+    *   The set of possible positions excluding moves that would result in 1. The move escaping from the board edges, or
+    *   2. A non-Knight jumping over a piece, or 3. A piece taking another piece of the same colour. Further
+    *   restrictions on moves are imposed by {@link #rejectIllegalMove}
+    */
+  def getEndPositions(position: Position, pawnMovePredicate: (Position, (Int, Int)) => Boolean): Set[Position] = {
     val (colour, piece, _) = conf.getExistingPiece(position)
 
     val vectors = piece.movements(colour)
     // TODO: Move repeatable property into vectors by pre-repeating the vectors
     val repeatable = piece match {
-      case Queen => true
+      case Queen  => true
       case Bishop => true
-      case Rook => true
-      case _ => false
+      case Rook   => true
+      case _      => false
     }
     var basicPositions = Set[Position]()
 
     val moveAllowed = piece match {
       case Pawn => pawnMovePredicate
-      case _ => anyMoveAllowed _
+      case _    => anyMoveAllowed _
     }
 
     for (v <- vectors) {
       var advanceTerminated = false
-      var firstIteration = true
-      var c = position
+      var firstIteration    = true
+      var c                 = position
       while ((firstIteration || repeatable) && (!advanceTerminated) && c.canOffset(v._1, v._2)) {
         firstIteration = false
         if (!moveAllowed(c, v)) {
@@ -89,11 +85,11 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
       val p = startPosition.offset(dCol, dRow)
       val lastMoveWasDoublePawn = conf.getLastMove match {
         case Some((Pawn, start, end)) if (start.getRow - end.getRow).abs == 2 => true
-        case _ => false
+        case _                                                                => false
       }
       val lastMoveWasAdjacentColumn = conf.getLastMove match {
         case Some((Pawn, _, end)) if end.getCol == p.getCol => true
-        case _ => false
+        case _                                              => false
       }
       val rowIsEnPassant = {
         val (colour, _, _) = conf.getExistingPiece(startPosition)
@@ -108,7 +104,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
       conf.getExistingPiece(startPosition) match {
         /* Disallow double advancement if the pawn has already been moved. */
         case (_, _, Some(_)) => false
-        case _ =>
+        case _               =>
           /* Deny attempt to jump over a piece */
           val r = if (dRow == 2) 1 else -1
           val p = startPosition.offset(0, r)
@@ -135,8 +131,8 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
     }
   }
 
-  private def pawnDiagonal(dCol: Int, dRow: Int) = Set((1, 1), (1, -1), (-1, -1), (-1, 1)) contains (dCol, dRow)
-  private def pawnForward(dCol: Int, dRow: Int) = Set((0, 1), (0, -1)) contains (dCol, dRow)
+  private def pawnDiagonal(dCol: Int, dRow: Int)   = Set((1, 1), (1, -1), (-1, -1), (-1, 1)) contains (dCol, dRow)
+  private def pawnForward(dCol: Int, dRow: Int)    = Set((0, 1), (0, -1)) contains (dCol, dRow)
   private def pawnForwardTwo(dCol: Int, dRow: Int) = Set((0, 2), (0, -2)) contains (dCol, dRow)
 
   /** @return (encountered own piece, encountered opponent piece) */
@@ -198,33 +194,32 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
         checkKingNotLeftInCheckAfterMove(m)
       case Castle(colour, castlingType) =>
         /*
-        * Castling restrictions.
-        * 1. Your king has been moved earlier in the game.
-		* 2. The rook that castles has been moved earlier in the game.
-		* 3. There are pieces standing between your king and rook.
-		* 4. The king is in check.
-		* 5. The king moves through a square that is under attack by an opponents piece.
-		* 6. The king would be in check after castling.
-        */
+         * Castling restrictions.
+         * 1. Your king has been moved earlier in the game.
+         * 2. The rook that castles has been moved earlier in the game.
+         * 3. There are pieces standing between your king and rook.
+         * 4. The king is in check.
+         * 5. The king moves through a square that is under attack by an opponents piece.
+         * 6. The king would be in check after castling.
+         */
 
         val row = colour.homeRow
 
         val ((king, kingEnd), (rook, _)) = castlingType.getPositions(row)
 
         /* Disallow if the pieces are not a rook and king in the correct positions */
-        List((rook, Rook), (king, King)).foreach {
-          case (p, t) =>
-            val (_, piece, _) = conf.getExistingPiece(p)
-            if (piece != t) {
-              throw new InvalidParticipantException(move, piece)
-            }
+        List((rook, Rook), (king, King)).foreach { case (p, t) =>
+          val (_, piece, _) = conf.getExistingPiece(p)
+          if (piece != t) {
+            throw new InvalidParticipantException(move, piece)
+          }
         }
 
         /* Disallow if either piece has already been moved. */
         (king, rook).foreach { p =>
           conf.getExistingPiece(p) match {
             case (_, _, Some(_)) => throw new PreviouslyMovedException(move)
-            case _ => ()
+            case _               => ()
           }
         }
 
@@ -236,11 +231,11 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
 
         /* Disallow if King is in check or would cross any square that is is attacked or would end in check. */
         // TODO: Consider converting to map operation with predicate to test for attacked status
-        val exposedPositions = king :: kingEnd :: Position.getInterveningPositions(king, kingEnd) toSet
+        val exposedPositions  = king :: kingEnd :: Position.getInterveningPositions(king, kingEnd) toSet
         val opponentPositions = conf locatePieces colour.opposite
         opponentPositions.foreach { p =>
           val attackedPositions = getAttackedPositions(p)
-          val i = exposedPositions intersect attackedPositions
+          val i                 = exposedPositions intersect attackedPositions
           if (i.nonEmpty) {
             throw new AttackedPositionException(move, i.head)
           }
@@ -267,10 +262,9 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
   def kingInCheck(colour: Colour): Boolean = {
     val kings = conf.locatePieces(colour, King)
     assert(kings.size == 1, "One king should be present for: " + colour + " but these kings were found: " + kings)
-    val king = kings.head
+    val king              = kings.head
     val opponentPositions = conf.locatePieces(colour.opposite)
-    opponentPositions.exists(p =>
-      getBasicPositions(p) contains king)
+    opponentPositions.exists(p => getBasicPositions(p) contains king)
   }
 
   def kingInCheckMate(colour: Colour): Boolean = {
@@ -288,12 +282,12 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
 
   private def checkKingNotLeftInCheckAfterMove(move: SimpleMove): Unit = {
     /*
-	   * 1. Clone the current conf
-	   * 2. Apply the move without recursively calling this method
-	   * 3. See if the King is in check
-	   */
+     * 1. Clone the current conf
+     * 2. Apply the move without recursively calling this method
+     * 3. See if the King is in check
+     */
     val (colour, _, _) = conf.getExistingPiece(move.start)
-    val future = conf.applied(move)
+    val future         = conf.applied(move)
 
     if (new StandardMoveExplorer(future).kingInCheck(colour)) {
       throw new CheckedOwnKing(move)
@@ -303,9 +297,9 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
   /** @return All legal moves. */
   def legalMoves(colour: Colour): List[Move] = {
     val startPositions = conf.locatePieces(colour)
-    var moves = List[Move]()
+    var moves          = List[Move]()
     for (s <- startPositions) {
-      val endPositions = this.getBasicPositions(s)
+      val endPositions  = this.getBasicPositions(s)
       val (_, piece, _) = conf.getExistingPiece(s)
       for (moveList <- generateMoves(piece, s, endPositions))
         moves = moveList ::: moves
@@ -334,7 +328,8 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
       val endOccupied = conf.getPiece(end).isDefined
       piece match {
         case Pawn if isHomeRow(end.getRow) =>
-          if (endOccupied) promotionPieces.map { PromoteCapturing(start, end, _) } else promotionPieces.map { Promote(start, _) }
+          if (endOccupied) promotionPieces.map { PromoteCapturing(start, end, _) }
+          else promotionPieces.map { Promote(start, _) }
         case Pawn if !endOccupied && isDiagonal(start, end) => List(EnPassant(start, end))
         case _ => if (endOccupied) List(MovePieceCapturing(start, end)) else List(MovePiece(start, end))
       }

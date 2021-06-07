@@ -1,12 +1,11 @@
 package chess.player
 
 import chess.model.Move
-import chess.model.{ Configuration, MoveExplorer }
+import chess.model.{Configuration, MoveExplorer}
 import chess.model.Colour
 
-/**
- * A player that selects moves at random.
- */
+/** A player that selects moves at random.
+  */
 class RandomPlayer(val colour: Colour, val explorer: MoveExplorer) extends Player {
 
   def getName = "RandomPlayer"

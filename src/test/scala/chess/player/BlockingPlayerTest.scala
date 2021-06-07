@@ -2,7 +2,7 @@ package chess.player
 
 import chess.model.Colours.Black
 import chess.model._
-import test.TestUtils
+import chess.test.TestUtils
 import org.scalatest._
 import wordspec.AnyWordSpec
 import matchers.should.Matchers
@@ -27,10 +27,10 @@ class BlockingPlayerTest extends AnyWordSpec with Matchers with TestUtils {
   }
 
   private def getBlocksUntilSetInvoked(): Assertion = {
-    val p = new BlockingPlayer(Black, "Test")
-    val conf = getConf
-    val cd1 = new CountDownLatch(1)
-    val cd2 = new CountDownLatch(1)
+    val p                     = new BlockingPlayer(Black, "Test")
+    val conf                  = getConf
+    val cd1                   = new CountDownLatch(1)
+    val cd2                   = new CountDownLatch(1)
     var moveOpt: Option[Move] = None
     doAsync {
       cd1.countDown()
@@ -45,10 +45,10 @@ class BlockingPlayerTest extends AnyWordSpec with Matchers with TestUtils {
   }
 
   private def getBlocksUntilSetInvokedWithSome(): Assertion = {
-    val p = new BlockingPlayer(Black, "Test")
-    val conf = getConf
-    val cd1 = new CountDownLatch(1)
-    val cd2 = new CountDownLatch(1)
+    val p                     = new BlockingPlayer(Black, "Test")
+    val conf                  = getConf
+    val cd1                   = new CountDownLatch(1)
+    val cd2                   = new CountDownLatch(1)
     var moveOpt: Option[Move] = None
     doAsync {
       cd1.countDown()
@@ -67,11 +67,11 @@ class BlockingPlayerTest extends AnyWordSpec with Matchers with TestUtils {
   }
 
   private def setBlocksUntilGetInvoked(): Assertion = {
-    val p = new BlockingPlayer(Black, "Test")
+    val p    = new BlockingPlayer(Black, "Test")
     val conf = getConf
-    val cd1 = new CountDownLatch(1)
-    val cd2 = new CountDownLatch(1)
-    var set = false
+    val cd1  = new CountDownLatch(1)
+    val cd2  = new CountDownLatch(1)
+    var set  = false
     doAsync {
       cd1.countDown()
       p.setMoveFactory(mf("e1e2"))

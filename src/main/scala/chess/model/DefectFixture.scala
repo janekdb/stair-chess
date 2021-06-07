@@ -6,7 +6,7 @@ object DefectFixture {
 
   // TODO: Use TestUtils instead of duplicating implicit functions
   implicit def string2MovePiece(s: String): MovePiece = new MovePiece(s)
-  implicit def string2Position(s: String): Position = new Position(s)
+  implicit def string2Position(s: String): Position   = new Position(s)
 
   var defect5Moves: List[Move] = List[Move]()
   defect5Moves ::= new MovePiece("g2g4")
@@ -90,6 +90,5 @@ object DefectFixture {
 
   /* This move should be rejected after playing the defect6Moves moves */
   val defect6FinalMove: Castle = Castle(White, Short)
-
 
 }

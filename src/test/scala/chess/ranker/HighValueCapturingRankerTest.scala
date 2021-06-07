@@ -5,7 +5,7 @@ import chess.model._
 import org.scalatest._
 import wordspec.AnyWordSpec
 import matchers.should.Matchers
-import test.TestUtils
+import chess.test.TestUtils
 
 //noinspection ZeroIndexToHead
 class HighValueCapturingRankerTest extends AnyWordSpec with Matchers with TestUtils {
@@ -20,7 +20,7 @@ class HighValueCapturingRankerTest extends AnyWordSpec with Matchers with TestUt
 
   private def ranksHighValuePiecesFirst: Assertion = {
     val explorerFactory = (cv: ConfigurationView) => new StandardMoveExplorer(cv)
-    val ranker = new HighValueCapturingRanker(explorerFactory, White)
+    val ranker          = new HighValueCapturingRanker(explorerFactory, White)
 
     val conf: Configuration = new GridConfiguration
     addKings(conf)
@@ -31,7 +31,7 @@ class HighValueCapturingRankerTest extends AnyWordSpec with Matchers with TestUt
     conf.add("b7", Black, Knight)
     conf.add("c7", Black, Queen)
 
-    val explorer = new StandardMoveExplorer(conf)
+    val explorer                      = new StandardMoveExplorer(conf)
     val rankedMoves: List[List[Move]] = ranker.rankMoves(explorer.legalMoves(White), conf)
 
     rankedMoves should have size 4

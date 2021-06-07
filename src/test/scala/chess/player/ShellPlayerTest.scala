@@ -7,7 +7,7 @@ import org.scalatest._
 import matchers.should.Matchers
 import wordspec.AnyWordSpec
 import OptionValues._
-import test.TestUtils
+import chess.test.TestUtils
 
 // TODO: Mixin a piece value source to influence capturing player
 // TODO: Modify MoveRanker to require each move to be scored rather than partitioned
@@ -47,7 +47,7 @@ class ShellPlayerTest extends AnyWordSpec with Matchers with TestUtils {
     move.value shouldBe a[MovePiece]
     val start = move.value match {
       case mp: MovePiece => mp.start
-      case _ => fail()
+      case _             => fail()
     }
 
     val (colour, piece, _) = conf.getExistingPiece(start)

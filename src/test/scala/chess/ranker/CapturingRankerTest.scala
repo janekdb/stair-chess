@@ -5,7 +5,7 @@ import chess.model._
 import org.scalatest._
 import matchers.should.Matchers
 import wordspec.AnyWordSpec
-import test.TestUtils
+import chess.test.TestUtils
 
 class CapturingRankerTest extends AnyWordSpec with Matchers with TestUtils {
 
@@ -19,7 +19,7 @@ class CapturingRankerTest extends AnyWordSpec with Matchers with TestUtils {
 
   private def capturingIsRankedFirst: Assertion = {
     val explorerFactory = (cv: ConfigurationView) => new StandardMoveExplorer(cv)
-    val ranker = new CapturingRanker(explorerFactory, White)
+    val ranker          = new CapturingRanker(explorerFactory, White)
 
     val conf: Configuration = new GridConfiguration
 
@@ -29,7 +29,7 @@ class CapturingRankerTest extends AnyWordSpec with Matchers with TestUtils {
     conf.add("g8", White, Knight)
     conf.add("h8", Black, Rook)
 
-    val explorer = new StandardMoveExplorer(conf)
+    val explorer                      = new StandardMoveExplorer(conf)
     val rankedMoves: List[List[Move]] = ranker.rankMoves(explorer.legalMoves(White), conf)
 
     rankedMoves should have size 2

@@ -22,14 +22,17 @@ import chess.util.TODO
 //		1 ·····k·K
 //		  abcdefgh
 
-/**
- * This class is concerned with maintaining a model of a chess game. It contains no UI. A UI can be attached as a listener.
- *
- * With White at the top of a grid that hangs down the coordinate of a square is (column 1-8, row 1-8).
- */
-class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var gameChangedSubscribers: List[GameChangedSubscriber]) {
+/** This class is concerned with maintaining a model of a chess game. It contains no UI. A UI can be attached as a
+  * listener.
+  *
+  * With White at the top of a grid that hangs down the coordinate of a square is (column 1-8, row 1-8).
+  */
+class BoardModel(
+    var boardChangedSubscribers: List[BoardChangedSubscriber],
+    var gameChangedSubscribers: List[GameChangedSubscriber]
+) {
 
-  private val conf: Configuration = new GridConfiguration
+  private val conf: Configuration        = new GridConfiguration
   private val moveExplorer: MoveExplorer = new StandardMoveExplorer(conf)
 
   /** @return a copy of the current Configuration */
@@ -38,10 +41,11 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
   def getMoveExplorer: MoveExplorer = moveExplorer
 
   def this(
-            placements: List[(Colour, Piece, Position)],
-            boardChangedSubscribers: List[BoardChangedSubscriber],
-            confChangedSubscribers: List[ConfigurationChangedSubscriber],
-            gameChangedSubscribers: List[GameChangedSubscriber]) = {
+      placements: List[(Colour, Piece, Position)],
+      boardChangedSubscribers: List[BoardChangedSubscriber],
+      confChangedSubscribers: List[ConfigurationChangedSubscriber],
+      gameChangedSubscribers: List[GameChangedSubscriber]
+  ) = {
     this(boardChangedSubscribers, gameChangedSubscribers)
     val confView = new DelegatingConfigurationView(conf)
     confChangedSubscribers foreach {
@@ -108,7 +112,7 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
     /* Extract the last colour before the configuration is changed. */
     val optColour = optMove match {
       case None => None
-      case _ => Some(extractColour(optMove.get))
+      case _    => Some(extractColour(optMove.get))
     }
 
     val (events: List[BoardChanged], outcomeOpt) = optMove match {
@@ -116,10 +120,11 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
       case None =>
         (List(), Some(GameOutcome(GameOutcomeModes.Stalemate, None)))
       case _ =>
-        val move = optMove.get
+        val move   = optMove.get
         val colour = optColour.get
-        val e = conf.applyMove(move)
-        val outcomeOption = if (checkForCheckMate(colour.opposite)) Some(GameOutcome(GameOutcomeModes.CheckMate, Some(colour))) else None
+        val e      = conf.applyMove(move)
+        val outcomeOption =
+          if (checkForCheckMate(colour.opposite)) Some(GameOutcome(GameOutcomeModes.CheckMate, Some(colour))) else None
         (e, outcomeOption)
     }
     if (outcomeOpt.isDefined) {
@@ -129,7 +134,7 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
       s.onBoardChanged(events)
     }
 
-    val wonEvent = if (isWon) List(Won(gameOutcome.get.winner.get, gameOutcome.get.gameOutcomeMode)) else Nil
+    val wonEvent   = if (isWon) List(Won(gameOutcome.get.winner.get, gameOutcome.get.gameOutcomeMode)) else Nil
     val drawnEvent = if (isDrawn) List(Drawn(GameOutcomeModes.Stalemate)) else Nil
     for (s <- gameChangedSubscribers; e <- Nil ::: wonEvent ::: drawnEvent) {
       s.onGameChanged(e)
@@ -142,13 +147,13 @@ class BoardModel(var boardChangedSubscribers: List[BoardChangedSubscriber], var 
     implicit def tuple2colour(t: (Colour, Piece, Option[Position])): Colour = t._1
 
     move match {
-      case Castle(colour, _) => colour
-      case MovePiece(start, _) => conf.getExistingPiece(start)
-      case MovePieceCapturing(start, _) => conf.getExistingPiece(start)
-      case Promote(start, _) => conf.getExistingPiece(start)
+      case Castle(colour, _)             => colour
+      case MovePiece(start, _)           => conf.getExistingPiece(start)
+      case MovePieceCapturing(start, _)  => conf.getExistingPiece(start)
+      case Promote(start, _)             => conf.getExistingPiece(start)
       case PromoteCapturing(start, _, _) => conf.getExistingPiece(start)
-      case EnPassant(start, _) => conf.getExistingPiece(start)
-      case _ => throw new UnhandledCaseException(move.toString)
+      case EnPassant(start, _)           => conf.getExistingPiece(start)
+      case _                             => throw new UnhandledCaseException(move.toString)
     }
   }
 
@@ -177,7 +182,7 @@ object BoardModel {
 
   def standardPlacements: List[(Colour, Piece, Position)] = {
 
-    val pawns = List.fill(Constants.BOARD_SIZE)(Pawn)
+    val pawns  = List.fill(Constants.BOARD_SIZE)(Pawn)
     val others = List(Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook)
 
     def bp(pieces: List[Piece], colour: Colour, row: Int) = {

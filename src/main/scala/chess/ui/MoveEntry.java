@@ -7,19 +7,20 @@ import java.awt.Container;
  */
 public interface MoveEntry {
 
-	void enable();
+    void enable();
 
-	void disable();
+    void disable();
 
-	Container getContainer();
+    Container getContainer();
 
-	/**
-	 * @param listener
-	 *            The object that will receive entered move notifications
-	 */
-	void addMoveEntryListener(MoveEntryListener listener);
+    /**
+     * @param listener The object that will receive entered move notifications
+     */
+    void addMoveEntryListener(MoveEntryListener listener);
 
-	/** Remove all user input from move entry interface */
-	void clearMoveEntry();
+    /**
+     * Remove all user input from move entry interface
+     */
+    void clearMoveEntry();
 
 }

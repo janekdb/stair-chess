@@ -1,13 +1,11 @@
 package chess.model
 
-/**
- * Read only access to a Configuration
- */
+/** Read only access to a Configuration
+  */
 trait ConfigurationView {
 
-  /**
-   * Return the last move or None
-   */
+  /** Return the last move or None
+    */
   def getLastMove: Option[(Piece, Position, Position)]
 
   def getRows: List[List[(Colour, Piece)]]
@@ -27,12 +25,12 @@ trait ConfigurationView {
   /** @return true if a piece exists at the given location */
   def exists(p: Position): Boolean = getPiece(p).isDefined
 
-  /** @return true if a piece exists at the given location with the given colour*/
+  /** @return true if a piece exists at the given location with the given colour */
   // TODO: Do this in a monadic style
   def exists(p: Position, c: Colour): Boolean = {
     getPiece(p) match {
       case Some((colour, _, _)) => colour == c
-      case None => false
+      case None                 => false
     }
   }
 
@@ -42,37 +40,29 @@ trait ConfigurationView {
 
 object ConfigurationView {
 
-  import chess.model.Colours.{ Black, White }
+  import chess.model.Colours.{Black, White}
 
-  private val symbols = Map[Piece, String](Rook -> "R", Knight -> "N", Bishop -> "B", King -> "K", Queen -> "Q", Pawn -> "P")
+  private val symbols =
+    Map[Piece, String](Rook -> "R", Knight -> "N", Bishop -> "B", King -> "K", Queen -> "Q", Pawn -> "P")
 
   private def colourise(c: Colour)(symbol: String): String = {
-    c match { case White => symbol case Black => symbol.toLowerCase }
+    c match {
+      case White => symbol
+      case Black => symbol.toLowerCase
+    }
   }
 
   // TODO: Remove mutable variables from getTextRepresentation
   /*  */
-  /**
-   * Return a text representation formatted as a grid with row and column labels.
-   * Black starts at the top and is represented by lowercase letters.
-   * <pre>
-   * abcdefgh
-   * 8 rnbqkbnr
-   * 7 ·p·pp·pp
-   * 6 ··p·····
-   * 5 ·····p··
-   * 4 ·p·····P
-   * 3 N··P····
-   * 2 P·P·PPP·
-   * 1 R·BQKBNR
-   * abcdefgh
-   * </pre>
-   */
+  /** Return a text representation formatted as a grid with row and column labels. Black starts at the top and is
+    * represented by lowercase letters. <pre> abcdefgh 8 rnbqkbnr 7 ·p·pp·pp 6 ··p····· 5 ·····p·· 4 ·p·····P 3 N··P····
+    * 2 P·P·PPP· 1 R·BQKBNR abcdefgh </pre>
+    */
   def getTextRepresentation(confView: ConfigurationView): List[String] = {
     var lines: List[String] = List()
-    val COLUMN_LABELS = "  abcdefgh"
+    val COLUMN_LABELS       = "  abcdefgh"
     lines ::= COLUMN_LABELS
-    val rows = confView.getRows.reverse
+    val rows   = confView.getRows.reverse
     var rowNum = rows.size
     for (row <- rows) {
       var line = ""
@@ -84,8 +74,11 @@ object ConfigurationView {
             /* Middle dot: U+00B7 */
             case null => "·"
             case (c: Colour, p: Piece) =>
-              val col = colourise(c)_
-              symbols.get(p) match { case Some(s) => col(s) case None => assert(false) }
+              val col = colourise(c) _
+              symbols.get(p) match {
+                case Some(s) => col(s)
+                case None    => assert(false)
+              }
             case _ => "?"
           }
         line = line + symbol

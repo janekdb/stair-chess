@@ -87,8 +87,8 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
 
   private def acceptMovePieceThatWouldNotCapture(): Assertion = {
     val start = new Position("e2")
-    val end = new Position("e3")
-    val conf = new GridConfiguration
+    val end   = new Position("e3")
+    val conf  = new GridConfiguration
     placeKings(conf)
     conf.add(start, White, Pawn)
     val e = new StandardMoveExplorer(conf)
@@ -97,7 +97,7 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
 
   private def acceptPromoteThatWouldNotCapture(): Assertion = {
     val start = new Position("a7")
-    val conf = new GridConfiguration
+    val conf  = new GridConfiguration
     placeKings(conf)
     conf.add(start, White, Pawn)
     val e = new StandardMoveExplorer(conf)
@@ -106,8 +106,8 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
 
   private def rejectMovePieceThatWouldCapture(): Assertion = {
     val start = new Position("a7")
-    val end = new Position("a8")
-    val conf = new GridConfiguration
+    val end   = new Position("a8")
+    val conf  = new GridConfiguration
     placeKings(conf)
     conf.add(start, White, Rook)
     conf.add(end, Black, Rook)
@@ -121,8 +121,8 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
 
   private def rejectPromoteThatWouldCapture(): Assertion = {
     val start = new Position("a7")
-    val end = new Position("a8")
-    val conf = new GridConfiguration
+    val end   = new Position("a8")
+    val conf  = new GridConfiguration
     placeKings(conf)
     conf.add(start, White, Pawn)
     conf.add(end, Black, Rook)
@@ -136,8 +136,8 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
 
   private def acceptMovePieceCapturingThatWouldCapture(): Assertion = {
     val start = new Position("a7")
-    val end = new Position("b8")
-    val conf = new GridConfiguration
+    val end   = new Position("b8")
+    val conf  = new GridConfiguration
     placeKings(conf)
     conf.add(start, White, Bishop)
     conf.add(end, Black, Rook)
@@ -147,8 +147,8 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
 
   private def acceptPromoteCapturingThatWouldCapture(): Assertion = {
     val start = new Position("a7")
-    val end = new Position("b8")
-    val conf = new GridConfiguration
+    val end   = new Position("b8")
+    val conf  = new GridConfiguration
     placeKings(conf)
     conf.add(start, White, Pawn)
     conf.add(end, Black, Rook)
@@ -158,8 +158,8 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
 
   private def rejectMovePieceCapturingThatWouldNotCapture(): Assertion = {
     val start = new Position("a7")
-    val end = new Position("a8")
-    val conf = new GridConfiguration
+    val end   = new Position("a8")
+    val conf  = new GridConfiguration
     placeKings(conf)
     conf.add(start, White, Rook)
     conf.add("f5", Black, Rook)
@@ -173,8 +173,8 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
 
   private def rejectPromoteCapturingThatWouldNotCapture(): Assertion = {
     val start = new Position("a7")
-    val end = new Position("a8")
-    val conf = new GridConfiguration
+    val end   = new Position("a8")
+    val conf  = new GridConfiguration
     placeKings(conf)
     conf.add(start, White, Pawn)
     conf.add("f5", Black, Rook)
@@ -189,14 +189,14 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
   private def getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveWhite(): Assertion = {
 
     val start = new Position("e2")
-    val end = new Position("e3")
-    val conf = new GridConfiguration
+    val end   = new Position("e3")
+    val conf  = new GridConfiguration
     conf.add(start, White, Pawn)
     val e = new StandardMoveExplorer(conf)
     /* Move to remove the possibility of a two square advance. */
     conf.move(start, end)
 
-    val actual = e.getBasicPositions(end)
+    val actual                  = e.getBasicPositions(end)
     val expected: Set[Position] = Set("e4")
     withClue("Position set excluded two square advance") {
       actual shouldBe expected
@@ -206,14 +206,14 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
   private def getBasicPositionsExcludesDoubleAdvanceWhenNotFirstMoveBlack(): Assertion = {
 
     val start = new Position("e7")
-    val end = new Position("e6")
-    val conf = new GridConfiguration
+    val end   = new Position("e6")
+    val conf  = new GridConfiguration
     conf.add(start, Black, Pawn)
     val e = new StandardMoveExplorer(conf)
     /* Move to remove the possibility of a two square advance. */
     conf.move(start, end)
 
-    val actual = e.getBasicPositions(end)
+    val actual                  = e.getBasicPositions(end)
     val expected: Set[Position] = Set("e5")
     withClue("Position set excluded two square advance") {
       actual shouldBe expected
@@ -223,8 +223,8 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
   /* All conditions met */
   private def getBasicPositionsIncludesEnPassantWhite(): Assertion = {
     val whitePawnStart = new Position("e4")
-    val whitePawnEnd = new Position("e5")
-    val conf = new GridConfiguration
+    val whitePawnEnd   = new Position("e5")
+    val conf           = new GridConfiguration
     conf.add(whitePawnStart, White, Pawn)
     conf.add("d7", Black, Pawn)
     val e = new StandardMoveExplorer(conf)
@@ -235,7 +235,7 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
      * The black pawn is now on the same rank as the white pawn and has moved two squares which is the
      * full set of pre-conditions required to allow white to capture via en passant.
      */
-    val actual = e.getBasicPositions(whitePawnEnd)
+    val actual                  = e.getBasicPositions(whitePawnEnd)
     val expected: Set[Position] = Set("d6", "e6")
     withClue("Position set included en passant") {
       actual shouldBe expected
@@ -245,8 +245,8 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
   /* All conditions met */
   private def getBasicPositionsIncludesEnPassantBlack(): Assertion = {
     val blackPawnStart = new Position("e5")
-    val blackPawnEnd = new Position("e4")
-    val conf = new GridConfiguration
+    val blackPawnEnd   = new Position("e4")
+    val conf           = new GridConfiguration
     conf.add(blackPawnStart, Black, Pawn)
     conf.add("d2", White, Pawn)
     val e = new StandardMoveExplorer(conf)
@@ -254,10 +254,10 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
     conf.move(blackPawnStart, blackPawnEnd)
     conf.move("d2", "d4")
     /*
-		   * The white pawn is now on the same rank as the black pawn and has moved two squares which is the
-		   * full set of pre-conditions required to allow black to capture via en passant.
-		   */
-    val actual = e.getBasicPositions(blackPawnEnd)
+     * The white pawn is now on the same rank as the black pawn and has moved two squares which is the
+     * full set of pre-conditions required to allow black to capture via en passant.
+     */
+    val actual                  = e.getBasicPositions(blackPawnEnd)
     val expected: Set[Position] = Set("d3", "e3")
     withClue("Position set included en passant") {
       actual shouldBe expected
@@ -272,7 +272,7 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
   /* No double advance */
   private def getBasicPositionsExcludesEnPassantWhenNotDoubleAdvance(): Assertion = {
     val whitePawn = new Position("e2")
-    val conf = new GridConfiguration
+    val conf      = new GridConfiguration
     conf.add(whitePawn, White, Pawn)
     conf.add("d3", Black, Pawn)
     val e = new StandardMoveExplorer(conf)
@@ -280,7 +280,7 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
      * The captured pawn must have moved two squares immediately prior to the capture.
      */
     conf.move("d3", "d2")
-    val actual = e.getBasicPositions(whitePawn)
+    val actual                  = e.getBasicPositions(whitePawn)
     val expected: Set[Position] = Set("e4", "e3")
     withClue("Position set excluded en passant") {
       actual shouldBe expected
@@ -290,7 +290,7 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
   /* Not fifth row */
   private def getBasicPositionsExcludesEnPassantWhenNotFifthRow(): Assertion = {
     val whitePawn = new Position("e2")
-    val conf = new GridConfiguration
+    val conf      = new GridConfiguration
     conf.add(whitePawn, White, Pawn)
     conf.add("d7", Black, Pawn)
     val e = new StandardMoveExplorer(conf)
@@ -298,7 +298,7 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
      * The capturing pawn must be on the fifth row (white), fourth row (black).
      */
     conf.move("d7", "d5")
-    val actual = e.getBasicPositions(whitePawn)
+    val actual                  = e.getBasicPositions(whitePawn)
     val expected: Set[Position] = Set("e4", "e3")
     withClue("Position set excluded en passant") {
       actual shouldBe expected
@@ -308,8 +308,8 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
   /* Not adjacent column */
   private def getBasicPositionsExcludesEnPassantWhenNotAdjacentColumn(): Assertion = {
     val whitePawnStart = new Position("e4")
-    val whitePawnEnd = new Position("e5")
-    val conf = new GridConfiguration
+    val whitePawnEnd   = new Position("e5")
+    val conf           = new GridConfiguration
     conf.add(whitePawnStart, White, Pawn)
     conf.add("b7", Black, Pawn)
     val e = new StandardMoveExplorer(conf)
@@ -317,7 +317,7 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
     conf.move(whitePawnStart, whitePawnEnd)
     /* The pieces must be on adjacent columns */
     conf.move("b7", "b5")
-    val actual = e.getBasicPositions(whitePawnEnd)
+    val actual                  = e.getBasicPositions(whitePawnEnd)
     val expected: Set[Position] = Set("e6")
     withClue("Position set excluded en passant") {
       actual shouldBe expected
@@ -427,7 +427,7 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
   }
 
   private def rejectIllegalMoveRejectsReCastling(): Assertion = {
-    val conf = new GridConfiguration
+    val conf         = new GridConfiguration
     val moveExplorer = new StandardMoveExplorer(conf)
 
     conf.add("a1", White, Rook)
@@ -494,7 +494,7 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
     conf.add("g8", White, Pawn)
     conf.add("g7", White, Pawn)
 
-    val e = new StandardMoveExplorer(conf)
+    val e     = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(White)
     withClue("The only possible move should have been selected") {
       moves.loneElement shouldBe MovePieceCapturing("a8", "b8")
@@ -509,8 +509,11 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
 
     val e = new StandardMoveExplorer(conf)
     // TODO: Use collect
-    val moves = e.legalMoves(White) filter { case _: Promote => true case _ => false }
-    val promote = Promote("b7", Queen)
+    val moves = e.legalMoves(White) filter {
+      case _: Promote => true
+      case _          => false
+    }
+    val promote  = Promote("b7", Queen)
     val expected = List(promote.copy(piece = Knight), promote)
     withClue("Pawn promotion to both Queen and Knight was considered") {
       moves shouldBe expected
@@ -525,8 +528,11 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
     conf.add("c8", Black, Rook)
 
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(White) filter { case _: PromoteCapturing => true case _ => false }
-    val promote = PromoteCapturing("b7", "c8", Queen)
+    val moves = e.legalMoves(White) filter {
+      case _: PromoteCapturing => true
+      case _                   => false
+    }
+    val promote  = PromoteCapturing("b7", "c8", Queen)
     val expected = List(promote.copy(piece = Knight), promote)
     withClue("Capturing pawn promotion to both Queen and Knight was considered") {
       moves shouldBe expected
@@ -552,7 +558,7 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
     conf.add("e3", White, Queen)
     conf.add("b4", White, King)
     conf.add("g6", Black, Queen)
-    val e = new StandardMoveExplorer(conf)
+    val e     = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(Black)
     withClue("Black escaped from check by selecting the only possible move") {
       moves.loneElement shouldBe MovePieceCapturing("d3", "e3")
@@ -581,7 +587,7 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
     conf.add("d4", White, Bishop)
     conf.add("f7", White, Queen)
     conf.add("g8", Black, King)
-    val e = new StandardMoveExplorer(conf)
+    val e     = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(Black)
     withClue("Black escaped from check by selected the only possible move") {
       moves.loneElement shouldBe MovePieceCapturing("g8", "f7")
@@ -595,7 +601,10 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
     conf.add("h1", White, Rook)
     val e = new StandardMoveExplorer(conf)
     // TODO: Use collect
-    val moves = e.legalMoves(White) filter { case _: Castle => true case _ => false }
+    val moves = e.legalMoves(White) filter {
+      case _: Castle => true
+      case _         => false
+    }
     withClue("Both long and short castling was included") {
       moves shouldBe Castle(White, Short) :: Castle(White, Long) :: Nil
     }
@@ -608,7 +617,10 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
     conf.add("e1", White, King)
     conf.add("h2", White, Rook)
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(White) filter { case _: Castle => true case _ => false }
+    val moves = e.legalMoves(White) filter {
+      case _: Castle => true
+      case _         => false
+    }
     withClue("When only long castling was possible short castling was not considered") {
       moves.loneElement shouldBe Castle(White, Long)
     }
@@ -620,7 +632,10 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
     conf.add("e1", White, King)
     conf.add("h1", White, Rook)
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(White) filter { case _: Castle => true case _ => false }
+    val moves = e.legalMoves(White) filter {
+      case _: Castle => true
+      case _         => false
+    }
     withClue("When only short castling was possible long castling was not considered") {
       moves.loneElement shouldBe Castle(White, Short)
     }
@@ -632,7 +647,10 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
     conf.add("e1", White, King)
     conf.add("h1", Black, Rook)
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(White) filter { case _: Castle => true case _ => false }
+    val moves = e.legalMoves(White) filter {
+      case _: Castle => true
+      case _         => false
+    }
     withClue("When no castling was possible no castling was considered") {
       moves shouldBe empty
     }
@@ -644,7 +662,10 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
     conf.add("e1", White, King)
     conf.add("h1", White, Bishop)
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(White) filter { case _: Castle => true case _ => false }
+    val moves = e.legalMoves(White) filter {
+      case _: Castle => true
+      case _         => false
+    }
     withClue("When the outside piece was not a rook no castling was considered") {
       moves shouldBe empty
     }
@@ -657,7 +678,10 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
     conf.add("e1", White, Queen)
     conf.add("h1", White, Rook)
     val e = new StandardMoveExplorer(conf)
-    val moves = e.legalMoves(White) filter { case _: Castle => true case _ => false }
+    val moves = e.legalMoves(White) filter {
+      case _: Castle => true
+      case _         => false
+    }
     withClue("When the inside piece was not a king  no castling was considered") {
       moves shouldBe empty
     }
@@ -672,7 +696,7 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
     conf.applyMove(MovePiece("d4", "d5"))
     /* Allow pawn to be captured with en passant */
     conf.applyMove(MovePiece("e7", "e5"))
-    val e = new StandardMoveExplorer(conf)
+    val e     = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(White)
     withClue("MovePiece should not have been in the list of acceptable moves") {
       moves should not contain MovePiece("d5", "e6")
@@ -685,7 +709,7 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
   private def resignExcluded(): Assertion = {
     val conf: Configuration = new GridConfiguration
     placeKings(conf)
-    val e = new StandardMoveExplorer(conf)
+    val e     = new StandardMoveExplorer(conf)
     val moves = e.legalMoves(White)
     withClue("Resign was not in the list of legal moves") {
       moves should not contain Resign(White)
@@ -737,7 +761,7 @@ class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils 
     for (move <- DefectFixture.defect5Moves) {
       conf.applyMove(move)
     }
-    val e = new StandardMoveExplorer(conf)
+    val e    = new StandardMoveExplorer(conf)
     val move = DefectFixture.defect5FinalMove
     withClue(s"$move should be rejected") {
       a[InvalidParticipantException] shouldBe thrownBy {

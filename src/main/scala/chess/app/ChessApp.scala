@@ -56,46 +56,81 @@ object ChessApp {
     // TODO: For the tournament loop over all combinations of players
     val explorerFactory = (conf: ConfigurationView) => new StandardMoveExplorer(conf)
 
-    val checkingName = "Checking"
-    val checkMatingCapturingName = "CM, Cap"
-    val checkMatingCaptureEvadingName = "CM, CapEva"
-    val checkMatingCaptureEvadingCheckingName = "CM, CapEva, Chk"
-    val checkMatingCaptureEvadingCapturingName = "CM, CapEva, Cap"
+    val checkingName                                    = "Checking"
+    val checkMatingCapturingName                        = "CM, Cap"
+    val checkMatingCaptureEvadingName                   = "CM, CapEva"
+    val checkMatingCaptureEvadingCheckingName           = "CM, CapEva, Chk"
+    val checkMatingCaptureEvadingCapturingName          = "CM, CapEva, Cap"
     val checkMatingCaptureEvadingHighValueCapturingName = "CM, CapEva, HVCap"
-    val checkMatingHighValueCapturingName = "CM, HVCap"
-    val checkMatingCheckingHighValueCapturingName = "CM, Chk, HVCap"
+    val checkMatingHighValueCapturingName               = "CM, HVCap"
+    val checkMatingCheckingHighValueCapturingName       = "CM, Chk, HVCap"
 
-    val p1 = (checkingName,
-      (colour: Colour, explorer: MoveExplorer) => Players.checkingPlayer(checkingName, colour, explorerFactory))
-    val p2 = (checkMatingCapturingName,
-      (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCapturingPlayer(checkMatingCapturingName, colour, explorerFactory))
-    val p3 = (checkMatingCaptureEvadingName,
-      (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingPlayer(checkMatingCaptureEvadingName, colour, explorerFactory))
-    val p4 = (checkMatingCaptureEvadingCheckingName,
-      (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingCheckingPlayer(checkMatingCaptureEvadingCheckingName, colour, explorerFactory))
-    val p5 = (checkMatingCaptureEvadingCapturingName,
-      (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingCapturingPlayer(checkMatingCaptureEvadingCapturingName, colour, explorerFactory))
-    val p6 = (checkMatingCaptureEvadingHighValueCapturingName,
-      (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCaptureEvadingHighValueCapturingPlayer(checkMatingCaptureEvadingHighValueCapturingName, colour, explorerFactory))
-    val p7 = (checkMatingHighValueCapturingName,
-      (colour: Colour, explorer: MoveExplorer) => Players.checkMatingHighValueCapturingPlayer(checkMatingHighValueCapturingName, colour, explorerFactory))
-    val p8 = (checkMatingCheckingHighValueCapturingName,
-      (colour: Colour, explorer: MoveExplorer) => Players.checkMatingCheckingHighValueCapturingPlayer(checkMatingCheckingHighValueCapturingName, colour, explorerFactory))
+    val p1 = (
+      checkingName,
+      (colour: Colour, explorer: MoveExplorer) => Players.checkingPlayer(checkingName, colour, explorerFactory)
+    )
+    val p2 = (
+      checkMatingCapturingName,
+      (colour: Colour, explorer: MoveExplorer) =>
+        Players.checkMatingCapturingPlayer(checkMatingCapturingName, colour, explorerFactory)
+    )
+    val p3 = (
+      checkMatingCaptureEvadingName,
+      (colour: Colour, explorer: MoveExplorer) =>
+        Players.checkMatingCaptureEvadingPlayer(checkMatingCaptureEvadingName, colour, explorerFactory)
+    )
+    val p4 = (
+      checkMatingCaptureEvadingCheckingName,
+      (colour: Colour, explorer: MoveExplorer) =>
+        Players.checkMatingCaptureEvadingCheckingPlayer(checkMatingCaptureEvadingCheckingName, colour, explorerFactory)
+    )
+    val p5 = (
+      checkMatingCaptureEvadingCapturingName,
+      (colour: Colour, explorer: MoveExplorer) =>
+        Players.checkMatingCaptureEvadingCapturingPlayer(
+          checkMatingCaptureEvadingCapturingName,
+          colour,
+          explorerFactory
+        )
+    )
+    val p6 = (
+      checkMatingCaptureEvadingHighValueCapturingName,
+      (colour: Colour, explorer: MoveExplorer) =>
+        Players.checkMatingCaptureEvadingHighValueCapturingPlayer(
+          checkMatingCaptureEvadingHighValueCapturingName,
+          colour,
+          explorerFactory
+        )
+    )
+    val p7 = (
+      checkMatingHighValueCapturingName,
+      (colour: Colour, explorer: MoveExplorer) =>
+        Players.checkMatingHighValueCapturingPlayer(checkMatingHighValueCapturingName, colour, explorerFactory)
+    )
+    val p8 = (
+      checkMatingCheckingHighValueCapturingName,
+      (colour: Colour, explorer: MoveExplorer) =>
+        Players.checkMatingCheckingHighValueCapturingPlayer(
+          checkMatingCheckingHighValueCapturingName,
+          colour,
+          explorerFactory
+        )
+    )
 
     val interactive = false
     if (interactive) {
       val playerName = "Human"
       // TODO: Stop assuming BlockingPlayer will be Black
-      val player = new BlockingPlayer(Black, playerName)
+      val player                  = new BlockingPlayer(Black, playerName)
       val blockingPlayerGenerator = (playerName, (colour: Colour, explorer: MoveExplorer) => player)
-      val ps = List(p1, blockingPlayerGenerator)
-      val names = ps map (_._1)
-      val scoreCard = new ScoreCard(names toSet)
+      val ps                      = List(p1, blockingPlayerGenerator)
+      val names                   = ps map (_._1)
+      val scoreCard               = new ScoreCard(names toSet)
 
       val generators = ps map (_._2)
 
       val interactiveMode = true
-      val sb = SwingBoard.createAndShowBoard(interactiveMode)
+      val sb              = SwingBoard.createAndShowBoard(interactiveMode)
 
       /* Invoked when a legal move has been parsed. */
       val moveListener = new MoveListener {
@@ -110,8 +145,8 @@ object ChessApp {
       // TODO: Stop using a tuple for blockingPlayerGenerator
       play(scoreCard, boardAdapterOpt, generators.head, blockingPlayerGenerator._2)
     } else {
-      val ps = List(p1, p2, p3, p4, p5, p6, p7, p8)
-      val names = ps map (_._1)
+      val ps        = List(p1, p2, p3, p4, p5, p6, p7, p8)
+      val names     = ps map (_._1)
       val scoreCard = new ScoreCard(names toSet)
 
       val generators = ps map (_._2)
@@ -138,7 +173,7 @@ object ChessApp {
   private def mel(player: BlockingPlayer, legalMoveListener: MoveListener) = {
     class MF(val text: String) extends MoveFactory {
       def getMove(colour: Colour, conf: Configuration): Option[Move] = {
-        val e = new StandardMoveExplorer(conf)
+        val e     = new StandardMoveExplorer(conf)
         val moves = e.legalMoves(player.getColour)
         //    Console.out.println("legalMoves: " + moves)
         val moveOpt = StandardMoveParser.parse(moves, text)
@@ -161,20 +196,25 @@ object ChessApp {
 
   private class OutcomeListener extends GameChangedSubscriber {
     var winner: Option[Colour] = None
-    var isDrawn: Boolean = false
+    var isDrawn: Boolean       = false
 
     def onGameChanged(event: GameChanged): Unit = {
       event match {
         case Won(colour, _) => winner = Some(colour)
-        case Drawn(_) => isDrawn = true
+        case Drawn(_)       => isDrawn = true
       }
     }
   }
 
-  private def play(scoreCard: ScoreCard, boardAdapterOpt: Option[BoardAdapter], whitePlayerGenerator: (Colour, MoveExplorer) => Player, blackPlayerGenerator: (Colour, MoveExplorer) => Player): Unit = {
+  private def play(
+      scoreCard: ScoreCard,
+      boardAdapterOpt: Option[BoardAdapter],
+      whitePlayerGenerator: (Colour, MoveExplorer) => Player,
+      blackPlayerGenerator: (Colour, MoveExplorer) => Player
+  ): Unit = {
     val outcomeListener = new OutcomeListener
 
-    val useTextUI = false
+    val useTextUI    = false
     val includeDelay = false
 
     val ui = if (useTextUI) new TextUI else NoUI
@@ -182,11 +222,15 @@ object ChessApp {
     val delayer = if (includeDelay) new DelayingSubscriber else NoUI
 
     val boardChangedSubscribers = boardAdapterOpt.toList ++ List(ui, delayer)
-    val board = new BoardModel(BoardModel.standardPlacements, boardChangedSubscribers,
-      boardAdapterOpt.toList, List(ui, outcomeListener, delayer))
+    val board = new BoardModel(
+      BoardModel.standardPlacements,
+      boardChangedSubscribers,
+      boardAdapterOpt.toList,
+      List(ui, outcomeListener, delayer)
+    )
 
-    val white = whitePlayerGenerator(Colours.White, board.getMoveExplorer)
-    val black = blackPlayerGenerator(Colours.Black, board.getMoveExplorer)
+    val white          = whitePlayerGenerator(Colours.White, board.getMoveExplorer)
+    val black          = blackPlayerGenerator(Colours.Black, board.getMoveExplorer)
     val playerSelector = new PlayerSelector(white, black)
 
     //    if(false ){
@@ -199,19 +243,18 @@ object ChessApp {
     //    }
 
     // TODO: Continue functionalising this maybe as a lazy seq from which the first MAX_MOVES are taken
-    val moveCount = (
-      for {
-        m <- 1 to MaxMoves
-        if !board.isCompleted
-      } yield {
-        board.move(playerSelector.next().getMove(board.getConfiguration))
-        m
-      }).max
+    val moveCount = (for {
+      m <- 1 to MaxMoves
+      if !board.isCompleted
+    } yield {
+      board.move(playerSelector.next().getMove(board.getConfiguration))
+      m
+    }).max
 
     val isAborted = moveCount == MaxMoves
 
     if (outcomeListener.winner.isDefined) {
-      val colour = outcomeListener.winner.get
+      val colour          = outcomeListener.winner.get
       val (winner, loser) = if (colour == Colours.White) (white, black) else (black, white)
       scoreCard.addWin(winner, loser)
     } else if (outcomeListener.isDrawn) {
@@ -234,4 +277,3 @@ object ChessApp {
     TimeUnit.SECONDS.sleep(count)
   }
 }
-

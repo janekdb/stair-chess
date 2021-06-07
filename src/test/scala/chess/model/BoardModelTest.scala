@@ -7,7 +7,7 @@ import LoneElement._
 import OptionValues._
 import wordspec.AnyWordSpec
 import matchers.should.Matchers
-import test.TestUtils
+import chess.test.TestUtils
 
 class BoardModelTest extends AnyWordSpec with Matchers with Inspectors with TestUtils {
 
@@ -56,7 +56,8 @@ class BoardModelTest extends AnyWordSpec with Matchers with Inspectors with Test
   private class PlacementsBuilder {
     var placements: List[(Colour, Piece, Position)] = Nil
 
-    def apply(colour: Colour, piece: Piece, position: String): Unit = placements = (colour, piece, new Position(position)) :: placements
+    def apply(colour: Colour, piece: Piece, position: String): Unit = placements =
+      (colour, piece, new Position(position)) :: placements
 
     def apply(placements: List[(Colour, Piece, Position)]): Unit = this.placements = placements ::: this.placements
 
@@ -132,7 +133,6 @@ class BoardModelTest extends AnyWordSpec with Matchers with Inspectors with Test
 
     val files = List("c", "d", "e")
     forAll(files) { file =>
-
       val pb = new PlacementsBuilder
 
       /* Allow white to castle long. */
@@ -259,7 +259,7 @@ class BoardModelTest extends AnyWordSpec with Matchers with Inspectors with Test
           eventCount += 1
           event match {
             case _: PieceMoved => pieceMoved = true
-            case _ => fail("Unexpected event: " + event)
+            case _             => fail("Unexpected event: " + event)
           }
         }
       }
@@ -294,7 +294,7 @@ class BoardModelTest extends AnyWordSpec with Matchers with Inspectors with Test
     val pb = new PlacementsBuilder
     /* Position the Queen so that it can check the black King on the next move. */
     val queenStart = "b7"
-    val queenEnd = "c8"
+    val queenEnd   = "c8"
     pb(White, Queen, queenStart)
     pb(Black, King, "d8")
 
@@ -321,7 +321,7 @@ class BoardModelTest extends AnyWordSpec with Matchers with Inspectors with Test
     pb(White, Pawn, "f2")
 
     val bm = new BoardModel(pb, Nil, Nil, Nil)
-    val s = newEventCapturer
+    val s  = newEventCapturer
     bm.subscribe(s)
     bm.move(MovePiece(queenStart, queenEnd))
     withClue("The list of event should not include Won") {
@@ -349,7 +349,7 @@ class BoardModelTest extends AnyWordSpec with Matchers with Inspectors with Test
         for (event <- events) {
           event match {
             case e: PieceMovedCapturing => pieceMovedCapturing = Some(e)
-            case _ => fail("Unexpected event: " + event)
+            case _                      => fail("Unexpected event: " + event)
           }
         }
       }
@@ -362,13 +362,13 @@ class BoardModelTest extends AnyWordSpec with Matchers with Inspectors with Test
     bm.move("e4e5")
     /* Double advance on adjacent column with white on the same row allows en passant */
     val blackStart: Position = "d7"
-    val blackEnd: Position = "d5"
+    val blackEnd: Position   = "d5"
     bm.move(MovePiece(blackStart, blackEnd))
 
     bm.subscribe(s)
 
     val whiteStart: Position = "e5"
-    val whiteEnd: Position = "d6"
+    val whiteEnd: Position   = "d6"
     bm.move(EnPassant(whiteStart, whiteEnd))
 
     withClue("PieceMovedTaking event was sent") {
@@ -492,7 +492,7 @@ While the rule does not require that the position occur thrice on nearly consecu
 typically with one of the kings being put into perpetual check. The intermediate
 positions and moves do not matter · they can be the same or different. The rule applies to positions, not moves.
   private def repeatedConfigurationsIsDetected = fail
-  */
+   */
 
   /* Defects */
 

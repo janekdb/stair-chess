@@ -5,7 +5,7 @@ import org.scalatest._
 import wordspec.AnyWordSpec
 import matchers.should.Matchers
 import LoneElement._
-import test.TestUtils
+import chess.test.TestUtils
 
 object GridConfigurationTest extends AnyWordSpec with Matchers with TestUtils {
 
@@ -51,10 +51,10 @@ object GridConfigurationTest extends AnyWordSpec with Matchers with TestUtils {
 
     all(rows) should have size BOARD_SIZE
 
-    rows(0)(0) shouldBe(White, Pawn)
-    rows(1)(1) shouldBe(White, Knight)
-    rows(3)(3) shouldBe(Black, Rook)
-    rows(3)(4) shouldBe(Black, Queen)
+    rows(0)(0) shouldBe (White, Pawn)
+    rows(1)(1) shouldBe (White, Knight)
+    rows(3)(3) shouldBe (Black, Rook)
+    rows(3)(4) shouldBe (Black, Queen)
 
     /* All remaining cells must be null */
     val expectedNullCount = BOARD_SIZE * BOARD_SIZE - 4
@@ -67,11 +67,11 @@ object GridConfigurationTest extends AnyWordSpec with Matchers with TestUtils {
     val conf = new GridConfiguration
 
     val whiteStart: Position = "e2"
-    val whiteEnd: Position = "e3"
+    val whiteEnd: Position   = "e3"
     conf.add(whiteStart, White, Pawn)
 
     val blackStart: Position = "h8"
-    val blackEnd: Position = "h4"
+    val blackEnd: Position   = "h4"
     conf.add(blackStart, Black, Rook)
 
     withClue("The last move should have been None") {
@@ -89,7 +89,7 @@ object GridConfigurationTest extends AnyWordSpec with Matchers with TestUtils {
     val conf = new GridConfiguration
 
     val whiteStart: Position = "e2"
-    val whiteEnd: Position = "e3"
+    val whiteEnd: Position   = "e3"
     conf.add(whiteStart, White, Pawn)
 
     conf.applyMove(MovePiece(whiteStart, whiteEnd))
@@ -101,11 +101,11 @@ object GridConfigurationTest extends AnyWordSpec with Matchers with TestUtils {
     val conf = new GridConfiguration
 
     val whiteStart: Position = "a5"
-    val whiteEnd: Position = "b6"
+    val whiteEnd: Position   = "b6"
     conf.add(whiteStart, White, Pawn)
 
     val blackStart: Position = "b7"
-    val blackEnd: Position = "b5"
+    val blackEnd: Position   = "b5"
     conf.add(blackStart, Black, Pawn)
 
     conf.applyMove(MovePiece(blackStart, blackEnd))
@@ -126,9 +126,9 @@ object GridConfigurationTest extends AnyWordSpec with Matchers with TestUtils {
   }
 
   private def pieceMovedEventSent(): Assertion = {
-    val conf = new GridConfiguration
+    val conf                 = new GridConfiguration
     val whiteStart: Position = "a5"
-    val whiteEnd: Position = "a6"
+    val whiteEnd: Position   = "a6"
     conf.add(whiteStart, White, Pawn)
     val events = conf.applyMove(MovePiece(whiteStart, whiteEnd))
     withClue("The events sent when a piece was moved should have been correct") {
@@ -137,9 +137,9 @@ object GridConfigurationTest extends AnyWordSpec with Matchers with TestUtils {
   }
 
   private def pieceMovedCapturingEventSent(): Assertion = {
-    val conf = new GridConfiguration
+    val conf                 = new GridConfiguration
     val whiteStart: Position = "a5"
-    val whiteEnd: Position = "b6"
+    val whiteEnd: Position   = "b6"
     conf.add(whiteStart, White, Pawn)
     conf.add(whiteEnd, Black, Queen)
     val events = conf.applyMove(MovePieceCapturing(whiteStart, whiteEnd))
@@ -149,9 +149,9 @@ object GridConfigurationTest extends AnyWordSpec with Matchers with TestUtils {
   }
 
   private def promoteEventsSent(): Assertion = {
-    val conf = new GridConfiguration
+    val conf                 = new GridConfiguration
     val whiteStart: Position = "a7"
-    val whiteEnd: Position = "a8"
+    val whiteEnd: Position   = "a8"
     conf.add(whiteStart, White, Pawn)
     val events = conf.applyMove(Promote(whiteStart, Queen))
     withClue("The events sent when a piece was promoted should have been correct") {
@@ -160,9 +160,9 @@ object GridConfigurationTest extends AnyWordSpec with Matchers with TestUtils {
   }
 
   private def promoteCapturingEventsSent(): Assertion = {
-    val conf = new GridConfiguration
+    val conf                 = new GridConfiguration
     val whiteStart: Position = "a7"
-    val whiteEnd: Position = "b8"
+    val whiteEnd: Position   = "b8"
     conf.add(whiteStart, White, Pawn)
     conf.add(whiteEnd, Black, Bishop)
     val events = conf.applyMove(PromoteCapturing(whiteStart, whiteEnd, Queen))
@@ -175,7 +175,7 @@ object GridConfigurationTest extends AnyWordSpec with Matchers with TestUtils {
     val conf = new GridConfiguration
 
     val start: Position = "f7"
-    val end: Position = "f8"
+    val end: Position   = "f8"
     conf.add(start, White, Pawn)
     val events = conf.applyMove(Promote(start, Knight))
     events shouldBe PieceMoved(start, end) :: Promoted(end, Knight) :: Nil
@@ -191,7 +191,7 @@ object GridConfigurationTest extends AnyWordSpec with Matchers with TestUtils {
     val conf = new GridConfiguration
 
     val start: Position = "e4"
-    val end: Position = "e5"
+    val end: Position   = "e5"
     conf.add(start, White, Pawn)
     val confPost = conf.applied(MovePiece(start, end))
 

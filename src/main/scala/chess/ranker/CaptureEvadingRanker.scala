@@ -6,9 +6,8 @@ import chess.model.MoveExplorer
 import chess.model.Capturing
 import chess.ranker
 
-/**
- * An implementation of MoveRanker that ranks moves that reduce the number of attacked pieces higher than other moves.
- */
+/** An implementation of MoveRanker that ranks moves that reduce the number of attacked pieces higher than other moves.
+  */
 class CaptureEvadingRanker(val explorerFactory: ConfigurationView => MoveExplorer, colour: Colour) extends MoveRanker {
 
   /*
@@ -16,10 +15,13 @@ class CaptureEvadingRanker(val explorerFactory: ConfigurationView => MoveExplore
    * @return The negation of the number of pieces under attack.
    */
   private def rank(confView: ConfigurationView)(move: Move): Int = {
-    val future = confView.applied(move)
-    val e = explorerFactory(future)
+    val future     = confView.applied(move)
+    val e          = explorerFactory(future)
     val legalMoves = e.legalMoves(colour.opposite)
-    val capturingMoves = legalMoves filter { case _: Capturing => true case _ => false }
+    val capturingMoves = legalMoves filter {
+      case _: Capturing => true
+      case _            => false
+    }
     -capturingMoves.size
   }
 

@@ -1,11 +1,12 @@
 package chess.model
 
-/**
- * Classes that can encapsulate moves extend this trait.
- */
+/** Classes that can encapsulate moves extend this trait.
+  */
 trait MoveExplorer {
 
-  /** @throws IllegalMoveException when the move would violate a condition not considered by {@link getBasicPositions} */
+  /** @throws
+    *   IllegalMoveException when the move would violate a condition not considered by {@link getBasicPositions}
+    */
   def rejectIllegalMove(move: Move): Unit
 
   /** @return true if the king of the selected colour is in check */

@@ -19,11 +19,9 @@ class GridConfiguration extends Configuration {
     pieces -= position
   }
 
-  /**
-   * Move the piece, recording its previous position.
-   * Throw exception if there is no piece at the given position.
-   * Throw exception if the end position is already occupied.
-   */
+  /** Move the piece, recording its previous position. Throw exception if there is no piece at the given position. Throw
+    * exception if the end position is already occupied.
+    */
   def move(start: Position, end: Position): Unit = {
     val (colour, piece, _) = getExistingPiece(start)
     if (pieces contains end) {
@@ -51,7 +49,7 @@ class GridConfiguration extends Configuration {
           for (c <- 1 to Constants.BOARD_SIZE) yield {
             pieces.get(new Position(c, r)) match {
               case Some((colour, piece, _)) => (colour, piece)
-              case None => null
+              case None                     => null
             }
           }
         row.toList

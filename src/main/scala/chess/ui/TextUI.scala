@@ -1,9 +1,22 @@
 package chess.ui
 
-import chess.model.{ BoardModel, BoardChangedSubscriber, Configuration, ConfigurationView, GridConfiguration, Colour, Move, Piece, Position, Promote, Resign, GameOutcomeModes }
-import chess.model.{ Rook, Knight, Bishop, Queen, King, Pawn }
-import chess.model.{ Castle, MovePiece }
-import chess.model.{ BoardChanged, Castled, PieceMoved, PieceMovedCapturing, PiecePlaced, Promoted, Resigned }
+import chess.model.{
+  BoardModel,
+  BoardChangedSubscriber,
+  Configuration,
+  ConfigurationView,
+  GridConfiguration,
+  Colour,
+  Move,
+  Piece,
+  Position,
+  Promote,
+  Resign,
+  GameOutcomeModes
+}
+import chess.model.{Rook, Knight, Bishop, Queen, King, Pawn}
+import chess.model.{Castle, MovePiece}
+import chess.model.{BoardChanged, Castled, PieceMoved, PieceMovedCapturing, PiecePlaced, Promoted, Resigned}
 import chess.model.GameChanged
 import chess.model.GameChangedSubscriber
 import chess.model.Won

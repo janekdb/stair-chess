@@ -20,7 +20,7 @@ class CheckingRankerTest extends AnyWordSpec with Matchers with TestUtils {
 
   private def alwaysChecks: Assertion = {
     val explorerFactory = (cv: ConfigurationView) => new StandardMoveExplorer(cv)
-    val ranker = new CheckingRanker(explorerFactory, White)
+    val ranker          = new CheckingRanker(explorerFactory, White)
 
     val conf: Configuration = new GridConfiguration
     addKings(conf)
@@ -28,7 +28,7 @@ class CheckingRankerTest extends AnyWordSpec with Matchers with TestUtils {
     conf.add("g5", White, Pawn)
     val expectedKnightMove = new MovePiece("c4d6")
 
-    val explorer = new StandardMoveExplorer(conf)
+    val explorer                      = new StandardMoveExplorer(conf)
     val rankedMoves: List[List[Move]] = ranker.rankMoves(explorer.legalMoves(White), conf)
 
     /* Visual inspection of the ranked moves confirmed the partition count. */
