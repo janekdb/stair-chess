@@ -12,7 +12,6 @@ import chess.model.ex.{
   PreviouslyMovedException,
   UnreachablePositionException
 }
-import chess.util.TODO
 import chess.model.ex.NonPromotingPawnAdvance
 import scala.language.postfixOps
 
@@ -34,12 +33,14 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
   }
 
   /** @return
-    *   The set of possible positions excluding moves that would result in 1. The move escaping from the board edges, or
-    *   2. A non-Knight jumping over a piece, or 3. A piece taking another piece of the same colour. Further
+    *   The set of possible positions excluding moves that would result in
+   *    1. The move escaping from the board edges, or
+    *   2. A non-Knight jumping over a piece, or
+   *    3. A piece taking another piece of the same colour. Further
     *   restrictions on moves are imposed by {@link #rejectIllegalMove}
     */
   def getEndPositions(position: Position, pawnMovePredicate: (Position, (Int, Int)) => Boolean): Set[Position] = {
-    val (colour, piece, _) = conf.getExistingPiece(position)
+    val Placed(colour, piece, _) = conf.getExistingPiece(position)
 
     val vectors = piece.movements(colour)
     // TODO: Move repeatable property into vectors by pre-repeating the vectors
@@ -49,6 +50,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
       case Rook   => true
       case _      => false
     }
+    // TODO: Optimize with mutable set
     var basicPositions = Set[Position]()
 
     val moveAllowed = piece match {
@@ -83,6 +85,8 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
     if (pawnDiagonal(dCol, dRow)) {
       /* Can only take if piece present or en passant possible. The client code will check for the colour */
       val p = startPosition.offset(dCol, dRow)
+      //println(s"pawnMoveAllowed: last move: ${conf.getLastMove}")
+      // TODO: Switch from val to def to enjoy short circuit evaluation
       val lastMoveWasDoublePawn = conf.getLastMove match {
         case Some((Pawn, start, end)) if (start.getRow - end.getRow).abs == 2 => true
         case _                                                                => false
@@ -92,7 +96,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
         case _                                              => false
       }
       val rowIsEnPassant = {
-        val (colour, _, _) = conf.getExistingPiece(startPosition)
+        val colour = conf.getExistingPiece(startPosition).colour
         startPosition.getRow == colour.enPassantRow
       }
       conf.exists(p) || (lastMoveWasDoublePawn && lastMoveWasAdjacentColumn && rowIsEnPassant)
@@ -103,8 +107,8 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
     } else if (pawnForwardTwo(dCol, dRow)) {
       conf.getExistingPiece(startPosition) match {
         /* Disallow double advancement if the pawn has already been moved. */
-        case (_, _, Some(_)) => false
-        case _               =>
+        case Placed(_, _, Some(_)) => false
+        case _                     =>
           /* Deny attempt to jump over a piece */
           val r = if (dRow == 2) 1 else -1
           val p = startPosition.offset(0, r)
@@ -139,7 +143,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
   def testPieceColour(movePiecePosition: Position, movingPieceColour: Colour): (Boolean, Boolean) = {
     conf.getPiece(movePiecePosition) match {
       case None => /* Square unoccupied */ (false, false)
-      case Some((otherColour, _, _)) =>
+      case Some(Placed(otherColour, _, _)) =>
         if (otherColour == movingPieceColour) (true, false) else (false, true)
     }
   }
@@ -154,7 +158,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
     }
 
     def checkNotNonPromotingPawnAdvance(start: Position, end: Position): Unit = {
-      val (_, piece, _) = conf.getExistingPiece(start)
+      val piece = conf.getExistingPiece(start).piece
       piece match {
         case Pawn =>
           if (end.getRow == Constants.WHITE_HOME_ROW || end.getRow == Constants.BLACK_HOME_ROW)
@@ -209,7 +213,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
 
         /* Disallow if the pieces are not a rook and king in the correct positions */
         List((rook, Rook), (king, King)).foreach { case (p, t) =>
-          val (_, piece, _) = conf.getExistingPiece(p)
+          val piece = conf.getExistingPiece(p).piece
           if (piece != t) {
             throw new InvalidParticipantException(move, piece)
           }
@@ -218,8 +222,8 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
         /* Disallow if either piece has already been moved. */
         (king, rook).foreach { p =>
           conf.getExistingPiece(p) match {
-            case (_, _, Some(_)) => throw new PreviouslyMovedException(move)
-            case _               => ()
+            case Placed(_, _, Some(_)) => throw new PreviouslyMovedException(move)
+            case _                     => ()
           }
         }
 
@@ -286,8 +290,8 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
      * 2. Apply the move without recursively calling this method
      * 3. See if the King is in check
      */
-    val (colour, _, _) = conf.getExistingPiece(move.start)
-    val future         = conf.applied(move)
+    val colour = conf.getExistingPiece(move.start).colour
+    val future = conf.applied(move)
 
     if (new StandardMoveExplorer(future).kingInCheck(colour)) {
       throw new CheckedOwnKing(move)
@@ -299,8 +303,8 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
     val startPositions = conf.locatePieces(colour)
     var moves          = List[Move]()
     for (s <- startPositions) {
-      val endPositions  = this.getBasicPositions(s)
-      val (_, piece, _) = conf.getExistingPiece(s)
+      val endPositions = this.getBasicPositions(s)
+      val piece        = conf.getExistingPiece(s).piece
       for (moveList <- generateMoves(piece, s, endPositions))
         moves = moveList ::: moves
     }
@@ -315,7 +319,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
         moves = Castle(colour, castlingType) :: moves
       }
     }
-    moves filter { moveAcceptable }
+    moves filter (moveAcceptable)
   }
 
   private def isHomeRow(row: Int): Boolean = List(Constants.WHITE_HOME_ROW, Constants.BLACK_HOME_ROW) contains row
@@ -330,8 +334,9 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
         case Pawn if isHomeRow(end.getRow) =>
           if (endOccupied) promotionPieces.map { PromoteCapturing(start, end, _) }
           else promotionPieces.map { Promote(start, _) }
-        case Pawn if !endOccupied && isDiagonal(start, end) => List(EnPassant(start, end))
-        case _ => if (endOccupied) List(MovePieceCapturing(start, end)) else List(MovePiece(start, end))
+        case Pawn if !endOccupied && isDiagonal(start, end) => EnPassant(start, end) :: Nil
+        // TODO: Why is EnPassant not testing for the existence of the position that would be captured?
+        case _ => if (endOccupied) MovePieceCapturing(start, end) :: Nil else MovePiece(start, end) :: Nil
       }
     }
   }

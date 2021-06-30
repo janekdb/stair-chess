@@ -10,9 +10,9 @@ class DelegatingConfigurationView(val configuration: Configuration) extends Conf
 
   def getRows: List[List[(Colour, Piece)]] = configuration.getRows
 
-  def getExistingPiece(position: Position): (Colour, Piece, Option[Position]) = configuration.getExistingPiece(position)
+  def getExistingPiece(position: Position): Placed = configuration.getExistingPiece(position)
 
-  def getPiece(position: Position): Option[(Colour, Piece, Option[Position])] = configuration.getPiece(position)
+  def getPiece(position: Position): Option[Placed] = configuration.getPiece(position)
 
   def locatePieces(colour: Colour, piece: Piece): List[Position] = configuration.locatePieces(colour, piece)
 

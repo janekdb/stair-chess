@@ -10,7 +10,7 @@ class HighValueCapturingRanker(val explorerFactory: ConfigurationView => MoveExp
   private def rank(confView: ConfigurationView)(move: Move): Int = {
     move match {
       case m: MovePieceCapturing =>
-        val (_, capturedPiece, _) = confView.getExistingPiece(m.end)
+        val capturedPiece = confView.getExistingPiece(m.end).piece
         RANKING_LOW + capturedPiece.value
       case _ => RANKING_LOW
     }

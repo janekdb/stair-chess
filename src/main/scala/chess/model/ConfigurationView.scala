@@ -1,5 +1,7 @@
 package chess.model
 
+final case class Placed(colour: Colour, piece: Piece, previousPosition: Option[Position])
+
 /** Read only access to a Configuration
   */
 trait ConfigurationView {
@@ -11,10 +13,10 @@ trait ConfigurationView {
   def getRows: List[List[(Colour, Piece)]]
 
   /** Throw exception if there is no piece at the given position. Includes the previous position if any. */
-  def getExistingPiece(position: Position): (Colour, Piece, Option[Position])
+  def getExistingPiece(position: Position): Placed
 
   /** Include previous position option. */
-  def getPiece(position: Position): Option[(Colour, Piece, Option[Position])]
+  def getPiece(position: Position): Option[Placed]
 
   /** Return positions of all pieces of the given colour and type. */
   def locatePieces(colour: Colour, piece: Piece): List[Position]
@@ -29,7 +31,7 @@ trait ConfigurationView {
   // TODO: Do this in a monadic style
   def exists(p: Position, c: Colour): Boolean = {
     getPiece(p) match {
-      case Some((colour, _, _)) => colour == c
+      case Some(Placed(colour, _, _)) => colour == c
       case None                 => false
     }
   }
@@ -55,9 +57,20 @@ object ConfigurationView {
   // TODO: Remove mutable variables from getTextRepresentation
   /*  */
   /** Return a text representation formatted as a grid with row and column labels. Black starts at the top and is
-    * represented by lowercase letters. <pre> abcdefgh 8 rnbqkbnr 7 ·p·pp·pp 6 ··p····· 5 ·····p·· 4 ·p·····P 3 N··P····
-    * 2 P·P·PPP· 1 R·BQKBNR abcdefgh </pre>
-    */
+    * represented by lowercase letters.
+   * <pre>
+   *   abcdefgh
+   * 8 rnbqkbnr
+   * 7 ·p·pp·pp
+   * 6 ··p·····
+   * 5 ·····p··
+   * 4 ·p·····P
+   * 3 N··P····
+   * 2 P·P·PPP·
+   * 1 R·BQKBNR
+   *   abcdefgh
+   * </pre>
+   */
   def getTextRepresentation(confView: ConfigurationView): List[String] = {
     var lines: List[String] = List()
     val COLUMN_LABELS       = "  abcdefgh"

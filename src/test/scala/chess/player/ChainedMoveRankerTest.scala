@@ -221,7 +221,7 @@ object ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
 
   private def isPiece(targetPiece: Piece)(conf: ConfigurationView, move: Move) = move match {
     case sm: SimpleMove =>
-      val (_, piece, _) = conf.getExistingPiece(sm.start)
+      val piece= conf.getExistingPiece(sm.start).piece
       targetPiece == piece
     case _ => false
   }

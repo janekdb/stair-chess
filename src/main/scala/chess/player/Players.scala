@@ -2,7 +2,14 @@ package chess.player
 import chess.model.Colour
 import chess.model.ConfigurationView
 import chess.model.MoveExplorer
-import chess.ranker.{CaptureEvadingRanker, CapturingRanker, CheckMatingRanker, CheckingRanker, HighValueCapturingRanker}
+import chess.ranker.{
+  CaptureEvadingRanker,
+  CapturingRanker,
+  CheckMatingRanker,
+  CheckingRanker,
+  ForkingRanker,
+  HighValueCapturingRanker
+}
 
 object Players {
 

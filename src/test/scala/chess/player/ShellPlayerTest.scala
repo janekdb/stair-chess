@@ -32,12 +32,12 @@ class ShellPlayerTest extends AnyWordSpec with Matchers with TestUtils {
       def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {
         val knightMoves = moves filter {
           case move: SimpleMove =>
-            val (_, piece, _) = conf.getExistingPiece(move.start)
+            val piece = conf.getExistingPiece(move.start).piece
             piece == Knight
           case _ => false
         }
         assert(knightMoves.nonEmpty)
-        val otherMoves = moves filterNot (knightMoves.contains)
+        val otherMoves = moves filterNot knightMoves.contains
         List(knightMoves, otherMoves)
       }
     }
@@ -50,7 +50,7 @@ class ShellPlayerTest extends AnyWordSpec with Matchers with TestUtils {
       case _             => fail()
     }
 
-    val (colour, piece, _) = conf.getExistingPiece(start)
+    val Placed(colour, piece, _) = conf.getExistingPiece(start)
     colour shouldBe White
     piece shouldBe Knight
   }

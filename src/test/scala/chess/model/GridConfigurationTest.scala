@@ -117,7 +117,7 @@ object GridConfigurationTest extends AnyWordSpec with Matchers with TestUtils {
         captured shouldBe blackEnd
       case _ => fail("Unexpected list of events: " + events)
     }
-    val (colour, piece, _) = conf.getExistingPiece(whiteEnd)
+    val Placed(colour, piece, _) = conf.getExistingPiece(whiteEnd)
     colour shouldBe White
     piece shouldBe Pawn
     withClue("The black pawn should have been taken") {
