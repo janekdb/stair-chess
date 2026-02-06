@@ -12,7 +12,6 @@ sealed abstract class Piece {
 case object Pawn extends Piece {
   override def movements(colour: Colour): List[(Int, Int)] = {
     val s = colour.pawnRowIncrement
-    List((0, 1), (0, 2), (-1, 1), (1, 1)) map (t => (t._1, s * t._2))
     List((0, 1), (0, 2), (-1, 1), (1, 1)) map { case (c, r) => (c, s * r) }
   }
 
