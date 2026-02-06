@@ -9,13 +9,22 @@ class GridConfiguration extends Configuration {
     assert(pieces contains new Position(position.getCol, position.getRow))
   }
 
-  def remove(position: Position, hint: String): Unit = {
+  def remove(position: Position): Unit = {
     if (!pieces.contains(position)) {
       throw new IllegalStateException(
-        s"No piece at $position. Hint: $hint\nPieces: \n"+ listPieces.mkString("\n"))
+        s"No piece at $position\nPieces: \n"+ listPieces.mkString("\n"))
     }
     pieces -= position
   }
+
+  // Removed hint param to allow compile
+//  def remove(position: Position, hint: String): Unit = {
+//    if (!pieces.contains(position)) {
+//      throw new IllegalStateException(
+//        s"No piece at $position. Hint: $hint\nPieces: \n"+ listPieces.mkString("\n"))
+//    }
+//    pieces -= position
+//  }
 
   private def listPieces: List[(Position, Placed)] =
     pieces.toList.sortBy{case (p, _) => p.toString()}

@@ -35,8 +35,8 @@ trait Configuration extends ConfigurationView {
         this.move(start, end)
         List(PieceMoved(start, end))
       case MovePieceCapturing(start, end) =>
-        val (colour, piece, _)  = this.getExistingPiece(start)
-        val (otherColour, _, _) = this.getExistingPiece(end)
+        val Placed(colour, piece, _)  = this.getExistingPiece(start)
+        val Placed(otherColour, _, _) = this.getExistingPiece(end)
         /* The opponents piece is being captured. */
         assert(otherColour != colour)
         this.remove(end)
