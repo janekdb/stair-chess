@@ -37,7 +37,7 @@ class Position(val col: Int, val row: Int) {
     }
   }
 
-  override def hashCode: Int = row + col
+  override def hashCode: Int = row * Constants.BOARD_SIZE + col
 }
 
 object Position {
