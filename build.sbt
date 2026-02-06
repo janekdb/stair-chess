@@ -2,11 +2,11 @@ lazy val root = (project in file("."))
   .settings(
     inThisBuild(List(
       organization := "chess",
-      scalaVersion := "2.13.5"
+      scalaVersion := "2.13.18"
     )),
     name := "stair-chess"
   )
 scalacOptions ++= Seq("-deprecation", "-feature", "-language:implicitConversions")
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.7" % Test
 
-logBuffered in Test := false
+Test / logBuffered := false
