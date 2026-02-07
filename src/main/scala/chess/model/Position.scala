@@ -21,10 +21,10 @@ class Position(val col: Int, val row: Int) {
   def getRow: Int = row
   def getCol: Int = col
 
-  private def inBounds(i: Int): Boolean = i >= 1 & i <= Constants.BOARD_SIZE
+  private def inBounds(i: Int): Boolean = i >= 1 && i <= Constants.BOARD_SIZE
 
   /** return true if the position would remain inside the board */
-  def canOffset(dCol: Int, dRow: Int): Boolean = inBounds(col + dCol) & inBounds(row + dRow)
+  def canOffset(dCol: Int, dRow: Int): Boolean = inBounds(col + dCol) && inBounds(row + dRow)
 
   override def toString: String = { Constants.COLUMN_LABELS.substring(col - 1, col) + row }
 
