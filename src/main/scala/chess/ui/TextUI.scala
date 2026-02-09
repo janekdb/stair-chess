@@ -69,12 +69,12 @@ class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
         }
       case _ => throw new AssertionError("event was not handled: " + event)
     }
-    render
+    render()
   }
 
   def onPiecePlaced(event: PiecePlaced): Unit = {
     conf.add(event.position, event.colour, event.piece)
-    render
+    render()
   }
 
   private def render(): Unit = {

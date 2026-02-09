@@ -87,7 +87,7 @@ object ConfigurationView {
             /* Middle dot: U+00B7 */
             case null => "·"
             case (c: Colour, p: Piece) =>
-              val col = colourise(c) _
+              val col = colourise(c)
               symbols.get(p) match {
                 case Some(s) => col(s)
                 case None    => assert(false)

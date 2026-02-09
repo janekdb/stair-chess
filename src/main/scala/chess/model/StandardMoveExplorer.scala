@@ -55,7 +55,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
 
     val moveAllowed = piece match {
       case Pawn => pawnMovePredicate
-      case _    => anyMoveAllowed _
+      case _    => anyMoveAllowed
     }
 
     for (v <- vectors) {

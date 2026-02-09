@@ -270,7 +270,7 @@ object ChessApp {
     /* Let the spectators note the final position. */
     delay(1)
 
-    boardAdapterOpt.foreach(_.close)
+    boardAdapterOpt.foreach(_.close())
   }
 
   private def delay(count: Int = 1): Unit = {
