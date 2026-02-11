@@ -1,4 +1,6 @@
 package chess.ui
+import scala.compiletime.uninitialized
+
 import chess.model.{BoardChanged, BoardChangedSubscriber, Castled, Colour, ConfigurationChangedSubscriber, ConfigurationView, Drawn, GameChanged, GameChangedSubscriber, Piece, PieceMoved, PieceMovedCapturing, PiecePlaced, Placed, Position, Promoted, Resigned, Won}
 import chess.util.TODO
 
@@ -7,7 +9,7 @@ class BoardAdapter(val board: Board)
     with ConfigurationChangedSubscriber
     with GameChangedSubscriber {
 
-  var configuration: ConfigurationView = _
+  var configuration: ConfigurationView = uninitialized
 
   def onConfigurationChanged(event: ConfigurationView): Unit = {
     this.configuration = event
