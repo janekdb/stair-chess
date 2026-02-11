@@ -1,10 +1,10 @@
 package chess.model
 
 import chess.model.Colours.{Black, White}
-import org.scalatest._
+import org.scalatest.*
 import wordspec.AnyWordSpec
 import matchers.should.Matchers
-import LoneElement._
+import LoneElement.*
 import chess.test.TestUtils
 
 object GridConfigurationTest extends AnyWordSpec with Matchers with TestUtils {

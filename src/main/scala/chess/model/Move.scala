@@ -1,7 +1,7 @@
 package chess.model
 
 import ex.IllegalPromotionException
-import Constants._
+import Constants.*
 
 private object Utils {
   def start(move: String): Position = {
@@ -23,7 +23,7 @@ private object Utils {
   }
 }
 
-import Utils._
+import Utils.*
 
 /** Verbs */
 

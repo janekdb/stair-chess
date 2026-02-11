@@ -3,7 +3,7 @@ package chess.ranker
 import chess.model.Colours.White
 import chess.model.{Configuration, ConfigurationView, GridConfiguration, StandardMoveExplorer}
 import chess.test.TestUtils
-import org.scalatest._
+import org.scalatest.*
 import wordspec.AnyWordSpec
 import matchers.should.Matchers
 

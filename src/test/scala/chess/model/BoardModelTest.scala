@@ -1,10 +1,10 @@
 package chess.model
 
 import chess.model.Colours.{Black, White}
-import chess.model.ex._
-import org.scalatest._
-import LoneElement._
-import OptionValues._
+import chess.model.ex.*
+import org.scalatest.*
+import LoneElement.*
+import OptionValues.*
 import wordspec.AnyWordSpec
 import matchers.should.Matchers
 import chess.test.TestUtils

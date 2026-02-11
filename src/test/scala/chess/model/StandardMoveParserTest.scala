@@ -1,7 +1,7 @@
 package chess.model
 
 import chess.model.Colours.{Black, White}
-import org.scalatest._
+import org.scalatest.*
 import matchers.should.Matchers
 import chess.test.TestUtils
 import wordspec.AnyWordSpec

@@ -2,7 +2,7 @@ package chess.stage
 
 import chess.model.{Configuration, Move}
 import chess.player.Player
-import org.scalatest._
+import org.scalatest.*
 import wordspec.AnyWordSpec
 import matchers.should.Matchers
 import chess.test.TestUtils

@@ -1,8 +1,8 @@
 package chess.player
 
 import chess.model.Colours.White
-import chess.model._
-import org.scalatest._
+import chess.model.*
+import org.scalatest.*
 import matchers.should.Matchers
 import wordspec.AnyWordSpec
 import chess.test.TestUtils

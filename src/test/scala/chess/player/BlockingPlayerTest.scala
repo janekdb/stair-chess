@@ -1,12 +1,12 @@
 package chess.player
 
 import chess.model.Colours.Black
-import chess.model._
+import chess.model.*
 import chess.test.TestUtils
-import org.scalatest._
+import org.scalatest.*
 import wordspec.AnyWordSpec
 import matchers.should.Matchers
-import OptionValues._
+import OptionValues.*
 import java.util.concurrent.CountDownLatch
 import scala.concurrent.Future
 

@@ -1,9 +1,9 @@
 package chess.ranker
 
 import chess.model.Colours.{Black, White}
-import chess.model._
+import chess.model.*
 import chess.test.TestUtils
-import org.scalatest._
+import org.scalatest.*
 import matchers.should.Matchers
 import wordspec.AnyWordSpec
 

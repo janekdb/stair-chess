@@ -1,12 +1,12 @@
 package chess.player
 
 import chess.model.Colours.White
-import chess.model._
+import chess.model.*
 import chess.ranker.MoveRanker
-import org.scalatest._
+import org.scalatest.*
 import matchers.should.Matchers
 import wordspec.AnyWordSpec
-import OptionValues._
+import OptionValues.*
 import chess.test.TestUtils
 
 // TODO: Mixin a piece value source to influence capturing player

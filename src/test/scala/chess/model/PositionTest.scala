@@ -1,6 +1,6 @@
 package chess.model
 
-import org.scalatest._
+import org.scalatest.*
 import matchers.should.Matchers
 import wordspec.AnyWordSpec
 

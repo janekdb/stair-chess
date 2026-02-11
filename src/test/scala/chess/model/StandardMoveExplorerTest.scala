@@ -1,12 +1,12 @@
 package chess.model
 
 import chess.model.Colours.{Black, White}
-import chess.model.ex._
+import chess.model.ex.*
 import chess.test.TestUtils
-import org.scalatest._
+import org.scalatest.*
 import wordspec.AnyWordSpec
 import matchers.should.Matchers
-import LoneElement._
+import LoneElement.*
 
 class StandardMoveExplorerTest extends AnyWordSpec with Matchers with TestUtils {
 
