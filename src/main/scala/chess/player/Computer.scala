@@ -12,8 +12,8 @@ class Computer extends Player {
   def getName = "Computer"
 
   def getMove(configuration: Configuration): Option[Move] = {
-    val m :: ms = moves
-    moves = ms
-    Some(m)
+    val move = moves.headOption
+    moves = moves.tail
+    move
   }
 }

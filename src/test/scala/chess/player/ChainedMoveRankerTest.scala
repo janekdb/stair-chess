@@ -49,7 +49,7 @@ object ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
 
     def discriminator: Discriminator = (move: Move) => (if (isRook(conf, move)) 1 else 0, moveLength(move))
 
-    val r :: s :: rs = rankedMoves
+    val r :: s :: rs : @unchecked = rankedMoves
     verifyDescending(r, s, rs, discriminator)
   }
 
@@ -84,7 +84,7 @@ object ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
 
     def discriminator: Discriminator = (move: Move) => (moveLength(move), if (isBishop(conf, move)) 1 else 0)
 
-    val r :: s :: rs = rankedMoves
+    val r :: s :: rs : @unchecked = rankedMoves
     verifyDescending(r, s, rs, discriminator)
   }
 
@@ -136,7 +136,7 @@ object ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
 
     def discriminator: Discriminator = (move: Move) => (moveLength(move), if (isBishop(conf, move)) 1 else 0)
 
-    val r :: s :: rs = rankedMoves
+    val r :: s :: rs : @unchecked = rankedMoves
     verifyDescending(r, s, rs, discriminator)
   }
 

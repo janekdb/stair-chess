@@ -13,8 +13,8 @@ class Human extends Player {
   def getName = "Human"
 
   def getMove(configuration: Configuration): Option[Move] = {
-    val m :: ms = moves
-    moves = ms
-    Some(m)
+    val move = moves.headOption
+    moves = moves.tail
+    move
   }
 }

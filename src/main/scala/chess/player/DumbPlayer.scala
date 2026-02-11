@@ -8,9 +8,9 @@ class DumbPlayer(var moves: List[Move]) extends Player {
   def getName = "DumbPlayer"
 
   def getMove(configuration: Configuration): Option[Move] = {
-    val m :: ms = moves
-    moves = ms
-    Some(m)
+    val move = moves.headOption
+    moves = moves.tail
+    move
   }
 
 }
