@@ -4,3 +4,4 @@ bin/
 .bsp/
 .idea/
 target/
+lib/
