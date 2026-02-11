@@ -233,7 +233,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
           if (conf.getPiece(p).isDefined) throw new InterveningPieceException(move, p)
         }
 
-        /* Disallow if King is in check or would cross any square that is is attacked or would end in check. */
+        /* Disallow if King is in check or would cross any square that is attacked or would end in check. */
         // TODO: Consider converting to map operation with predicate to test for attacked status
         val exposedPositions  = king :: kingEnd :: Position.getInterveningPositions(king, kingEnd) toSet
         val opponentPositions = conf locatePieces colour.opposite
