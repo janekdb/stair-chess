@@ -1,8 +1,6 @@
 package chess.model
 
-//import Colours.Colour
 import chess.util.UnhandledCaseException
-import scala.language.postfixOps
 
 trait Configuration extends ConfigurationView {
 
@@ -56,11 +54,11 @@ trait Configuration extends ConfigurationView {
       case p @ Promote(start, piece) =>
         val events = applyMove(MovePiece(start, p.end))
         this.replace(p.end, piece)
-        Promoted(p.end, piece) :: events reverse
+        Promoted(p.end, piece) :: events.reverse
       case PromoteCapturing(start, end, piece) =>
         val events = applyMove(MovePieceCapturing(start, end))
         this.replace(end, piece)
-        Promoted(end, piece) :: events reverse
+        Promoted(end, piece) :: events.reverse
       case default => throw new UnhandledCaseException(move.toString)
     }
   }

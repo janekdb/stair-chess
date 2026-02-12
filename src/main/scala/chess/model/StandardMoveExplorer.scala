@@ -13,7 +13,6 @@ import chess.model.ex.{
   UnreachablePositionException
 }
 import chess.model.ex.NonPromotingPawnAdvance
-import scala.language.postfixOps
 
 /** The moves of standard chess
   */
@@ -235,7 +234,7 @@ class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
 
         /* Disallow if King is in check or would cross any square that is attacked or would end in check. */
         // TODO: Consider converting to map operation with predicate to test for attacked status
-        val exposedPositions  = king :: kingEnd :: Position.getInterveningPositions(king, kingEnd) toSet
+        val exposedPositions  = (king :: kingEnd :: Position.getInterveningPositions(king, kingEnd)).toSet
         val opponentPositions = conf locatePieces colour.opposite
         opponentPositions.foreach { p =>
           val attackedPositions = getAttackedPositions(p)

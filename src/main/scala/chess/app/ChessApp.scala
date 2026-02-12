@@ -28,7 +28,6 @@ import chess.player.BlockingPlayer
 import chess.model.StandardMoveParser
 import chess.model.MoveFactory
 import chess.model.Move
-import scala.language.postfixOps
 
 // TODO: ->Add an interactive mode
 // TODO:   ->Disable text entry when not user's turn
@@ -125,7 +124,7 @@ object ChessApp {
       val blockingPlayerGenerator = (playerName, (colour: Colour, explorer: MoveExplorer) => player)
       val ps                      = List(p1, blockingPlayerGenerator)
       val names                   = ps map (_._1)
-      val scoreCard               = new ScoreCard(names toSet)
+      val scoreCard               = new ScoreCard(names.toSet)
 
       val generators = ps map (_._2)
 
@@ -147,7 +146,7 @@ object ChessApp {
     } else {
       val ps        = List(p1, p2, p3, p4, p5, p6, p7, p8)
       val names     = ps map (_._1)
-      val scoreCard = new ScoreCard(names toSet)
+      val scoreCard = new ScoreCard(names.toSet)
 
       val generators = ps map (_._2)
       times(1000) {
