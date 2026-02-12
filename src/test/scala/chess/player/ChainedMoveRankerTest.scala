@@ -226,9 +226,9 @@ object ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
     case _ => false
   }
 
-  private def isBishop = isPiece(Bishop) _
+  private def isBishop = isPiece(Bishop)
 
-  private def isRook = isPiece(Rook) _
+  private def isRook = isPiece(Rook)
 
   // TODO: Add a length property to SimpleMove or maybe to Move
   private def moveLength(move: Move) = move match {

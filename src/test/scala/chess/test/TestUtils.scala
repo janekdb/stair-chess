@@ -25,6 +25,6 @@ trait TestUtils {
   }
 
   protected def addKings(conf: Configuration): Unit = {
-    for (op <- List(addWhiteKing _, addBlackKing _)) op(conf)
+    for (op <- List(addWhiteKing, addBlackKing)) op(conf)
   }
 }
