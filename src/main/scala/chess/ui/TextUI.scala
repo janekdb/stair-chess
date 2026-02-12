@@ -12,7 +12,7 @@ import chess.model.{
   Position,
   Promote,
   Resign,
-  GameOutcomeModes
+  GameOutcomeMode
 }
 import chess.model.{Rook, Knight, Bishop, Queen, King, Pawn}
 import chess.model.{Castle, MovePiece}

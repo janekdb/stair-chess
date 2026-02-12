@@ -5,7 +5,7 @@ import chess.model.ex.IllegalMoveException
 import chess.model.ex.InvalidStalemateException
 import chess.model.ex.UnconsideredMovesStalemateException
 import chess.util.UnhandledCaseException
-import GameOutcomeModes.GameOutcomeMode
+import chess.model.GameOutcomeMode
 import chess.util.TODO
 
 // TODO: End game when the last n positions have been repeated checking for the value of n
@@ -55,11 +55,11 @@ class BoardModel(
   }
 
   case class GameOutcome(gameOutcomeMode: GameOutcomeMode, winner: Option[Colour]) {
-    def isCheckMate: Boolean = gameOutcomeMode == GameOutcomeModes.CheckMate
+    def isCheckMate: Boolean = gameOutcomeMode == GameOutcomeMode.CheckMate
 
-    def isResigned: Boolean = gameOutcomeMode == GameOutcomeModes.Resignation
+    def isResigned: Boolean = gameOutcomeMode == GameOutcomeMode.Resignation
 
-    def isStalemate: Boolean = gameOutcomeMode == GameOutcomeModes.Stalemate
+    def isStalemate: Boolean = gameOutcomeMode == GameOutcomeMode.Stalemate
   }
 
   var gameOutcome: Option[GameOutcome] = None
@@ -118,13 +118,13 @@ class BoardModel(
     val (events: List[BoardChanged], outcomeOpt) = optMove match {
       // TODO: Add a way to resign a game but not by using a Move subclass
       case None =>
-        (List(), Some(GameOutcome(GameOutcomeModes.Stalemate, None)))
+        (List(), Some(GameOutcome(GameOutcomeMode.Stalemate, None)))
       case _ =>
         val move   = optMove.get
         val colour = optColour.get
         val e      = conf.applyMove(move)
         val outcomeOption =
-          if (checkForCheckMate(colour.opposite)) Some(GameOutcome(GameOutcomeModes.CheckMate, Some(colour))) else None
+          if (checkForCheckMate(colour.opposite)) Some(GameOutcome(GameOutcomeMode.CheckMate, Some(colour))) else None
         (e, outcomeOption)
     }
     if (outcomeOpt.isDefined) {
@@ -135,7 +135,7 @@ class BoardModel(
     }
 
     val wonEvent   = if (isWon) List(Won(gameOutcome.get.winner.get, gameOutcome.get.gameOutcomeMode)) else Nil
-    val drawnEvent = if (isDrawn) List(Drawn(GameOutcomeModes.Stalemate)) else Nil
+    val drawnEvent = if (isDrawn) List(Drawn(GameOutcomeMode.Stalemate)) else Nil
     for (s <- gameChangedSubscribers; e <- Nil ::: wonEvent ::: drawnEvent) {
       s.onGameChanged(e)
     }

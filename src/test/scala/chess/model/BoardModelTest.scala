@@ -235,7 +235,7 @@ class BoardModelTest extends AnyWordSpec with Matchers with Inspectors with Test
       def assertAllEventsReceived(): Assertion = expectedEvents shouldBe empty
     }
 
-    val v = new VerifyingGameChangedSubscriber(List(Won(Black, GameOutcomeModes.CheckMate)))
+    val v = new VerifyingGameChangedSubscriber(List(Won(Black, GameOutcomeMode.CheckMate)))
     bm.subscribe(v)
     bm.move("c7a7")
     v.assertAllEventsReceived()
@@ -325,7 +325,7 @@ class BoardModelTest extends AnyWordSpec with Matchers with Inspectors with Test
     bm.subscribe(s)
     bm.move(MovePiece(queenStart, queenEnd))
     withClue("The list of event should not include Won") {
-      s.events should not contain Won(White, GameOutcomeModes.CheckMate)
+      s.events should not contain Won(White, GameOutcomeMode.CheckMate)
     }
     withClue("The list of events should be comprised of one PieceMoved event") {
       s.events.loneElement shouldBe PieceMoved(queenStart, queenEnd)
@@ -443,7 +443,7 @@ class BoardModelTest extends AnyWordSpec with Matchers with Inspectors with Test
     bm.subscribe(s)
     bm.move(None)
     withClue("When no move was offered stalemate was detected") {
-      s.events shouldBe Drawn(GameOutcomeModes.Stalemate) :: Nil
+      s.events shouldBe Drawn(GameOutcomeMode.Stalemate) :: Nil
     }
     withClue("On stalemate the game is completed") {
       bm.isCompleted shouldBe true

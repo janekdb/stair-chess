@@ -1,6 +1,6 @@
 package chess.model
 
-import GameOutcomeModes.GameOutcomeMode
+import chess.model.GameOutcomeMode
 
 sealed abstract class GameChanged
 
