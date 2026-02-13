@@ -6,7 +6,7 @@ import matchers.should.Matchers
 
 class MoveTest extends AnyWordSpec with Matchers {
 
-  private implicit class PositionHelper(val sc: StringContext) {
+  extension(sc: StringContext) {
     def p(args: Any*): Position = new Position(sc.parts.head)
   }
 
