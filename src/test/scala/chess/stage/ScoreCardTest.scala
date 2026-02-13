@@ -7,7 +7,7 @@ import wordspec.AnyWordSpec
 import matchers.should.Matchers
 import chess.test.TestUtils
 
-object ScoreCardTest extends AnyWordSpec with Matchers with TestUtils {
+class ScoreCardTest extends AnyWordSpec with Matchers with TestUtils {
 
   private implicit def player2String(player: Player): String = player.getName
 

@@ -10,7 +10,7 @@ import chess.test.TestUtils
 
 import scala.annotation.tailrec
 
-object ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
+class ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
 
   "A ChainedMoveRanker" when {
     "selecting a move" should {
@@ -194,7 +194,7 @@ object ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
 
   /* Test sequence is descending by the ranker criteria */
   @tailrec
-  def verifyDescending(m: List[Move], n: List[Move], ms: List[List[Move]], discriminator: Discriminator): Assertion = {
+  private def verifyDescending(m: List[Move], n: List[Move], ms: List[List[Move]], discriminator: Discriminator): Assertion = {
     m should not be empty
     n should not be empty
 

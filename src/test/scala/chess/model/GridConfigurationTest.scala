@@ -7,7 +7,7 @@ import matchers.should.Matchers
 import LoneElement.*
 import chess.test.TestUtils
 
-object GridConfigurationTest extends AnyWordSpec with Matchers with TestUtils {
+class GridConfigurationTest extends AnyWordSpec with Matchers with TestUtils {
 
   "A GridConfiguration" should {
     "behave as expected" in {
