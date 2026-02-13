@@ -38,7 +38,7 @@ class StandardMoveParserTest extends AnyWordSpec with Matchers with Inspectors w
     parse(getMoves(Black), "gggg") shouldBe empty
     /* Monkey test */
     val r = new Random(0)
-    forAll(1 to 20) { x =>
+    forAll((1 to 20).toList) { x =>
       val monkeyText = randomString(r, r.nextInt(10) + 1)
       parse(getMoves(Black), monkeyText) shouldBe empty
     }
