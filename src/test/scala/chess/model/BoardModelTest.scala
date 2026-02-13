@@ -253,7 +253,7 @@ class BoardModelTest extends AnyWordSpec with Matchers with Inspectors with Test
 
     var pieceMoved = false
     var eventCount = 0
-    val s = new Object with BoardChangedSubscriber {
+    val s = new BoardChangedSubscriber {
       def onBoardChanged(events: List[BoardChanged]): Unit = {
         for (event <- events) {
           eventCount += 1
@@ -344,7 +344,7 @@ class BoardModelTest extends AnyWordSpec with Matchers with Inspectors with Test
     val bm = new BoardModel(pb, Nil, Nil, Nil)
 
     var pieceMovedCapturing: Option[PieceMovedCapturing] = None
-    val s = new Object with BoardChangedSubscriber {
+    val s = new BoardChangedSubscriber {
       def onBoardChanged(events: List[BoardChanged]): Unit = {
         for (event <- events) {
           event match {
@@ -406,7 +406,7 @@ class BoardModelTest extends AnyWordSpec with Matchers with Inspectors with Test
 
   private def confirmConfigurationEventIsSent(): Assertion = {
     var events: List[ConfigurationView] = Nil
-    val listener = new Object with ConfigurationChangedSubscriber {
+    val listener = new ConfigurationChangedSubscriber {
       def onConfigurationChanged(event: ConfigurationView): Unit = {
         events ::= event
       }

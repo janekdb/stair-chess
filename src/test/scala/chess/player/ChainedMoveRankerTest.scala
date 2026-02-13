@@ -142,13 +142,13 @@ class ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
 
   private def rankerCombinationStopsRankingWhenOnlyOneOption(): Assertion = {
 
-    val headRanker = new Object with MoveRanker {
+    val headRanker = new MoveRanker {
       def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {
         List(List(moves.head), moves.tail)
       }
     }
     val assertionMessage = "throwingRanker should not have been invoked for a singleton move list"
-    val throwingRanker = new Object with MoveRanker {
+    val throwingRanker = new MoveRanker {
       def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {
         if (moves.size == 1)
           throw new AssertionError(assertionMessage)
@@ -183,7 +183,7 @@ class ChainedMoveRankerTest extends AnyWordSpec with Matchers with TestUtils {
       List(preferred, other) filterNot (_.isEmpty)
     }
 
-  private val longestRanker = new Object with MoveRanker {
+  private val longestRanker = new MoveRanker {
     def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {
       val grouped = moves.groupBy(moveLength).toList
       grouped.sortBy(_._1).map(_._2).reverse

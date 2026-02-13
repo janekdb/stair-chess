@@ -28,7 +28,7 @@ class ShellPlayerTest extends AnyWordSpec with Matchers with TestUtils {
     conf.add("a1", White, Rook)
     conf.add("b1", White, Knight)
     conf.add("c1", White, Bishop)
-    val mr = new Object with MoveRanker {
+    val mr = new MoveRanker {
       def rankMoves(moves: List[Move], conf: ConfigurationView): List[List[Move]] = {
         val knightMoves = moves filter {
           case move: SimpleMove =>
