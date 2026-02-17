@@ -5,8 +5,9 @@ import Colours.{Black, White}
 object DefectFixture {
 
   // TODO: Use TestUtils instead of duplicating implicit functions
-  implicit def string2MovePiece(s: String): MovePiece = new MovePiece(s)
-  implicit def string2Position(s: String): Position   = new Position(s)
+  given Conversion[String, MovePiece] = new MovePiece(_)
+
+  given Conversion[String, Position] = new Position(_)
 
   var defect5Moves: List[Move] = List[Move]()
   defect5Moves ::= new MovePiece("g2g4")

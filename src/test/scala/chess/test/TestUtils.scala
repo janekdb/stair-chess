@@ -8,11 +8,15 @@ import chess.model.King
 /** Chess specific helpers to simplify tests. */
 trait TestUtils {
 
-  implicit def piece2List(t: Piece): List[Piece]                  = List(t)
-  implicit def string2MovePieceOption(s: String): Some[MovePiece] = Some(new MovePiece(s))
-  implicit def string2MovePiece(s: String): MovePiece             = new MovePiece(s)
-  implicit def moveMoveOption(m: Move): Some[Move]                = Some(m)
-  implicit def string2Position(s: String): Position               = new Position(s)
+  given Conversion[Piece, List[Piece]] = List(_)
+
+  given Conversion[String, Some[MovePiece]] = t => Some(new MovePiece(t))
+
+  given Conversion[String, MovePiece] = new MovePiece(_)
+
+  given Conversion[Move, Some[Move]] = Some(_)
+
+  given Conversion[String, Position] = new Position(_)
 
   protected def addWhiteKing(conf: Configuration): Unit = {
     /* The King is required to allow the kingInCheck method to complete. */

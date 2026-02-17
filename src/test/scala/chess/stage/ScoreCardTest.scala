@@ -9,7 +9,7 @@ import chess.test.TestUtils
 
 class ScoreCardTest extends AnyWordSpec with Matchers with TestUtils {
 
-  private implicit def player2String(player: Player): String = player.getName
+  given Conversion[Player, String] = _.getName
 
   "A ScoreCard" when {
     "scoring" should {

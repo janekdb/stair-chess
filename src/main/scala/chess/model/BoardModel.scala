@@ -144,7 +144,8 @@ class BoardModel(
   }
 
   private def extractColour(move: Move): Colour = {
-    implicit def tuple2colour(t: (Colour, Piece, Option[Position])): Colour = t._1
+
+    given Conversion[(Colour, Piece, Option[Position]), Colour] = _._1
 
     move match {
       case Castle(colour, _)             => colour

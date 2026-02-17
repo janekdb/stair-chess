@@ -10,7 +10,7 @@ import scala.util.Random
 
 class StandardMoveParserTest extends AnyWordSpec with Matchers with Inspectors with TestUtils {
 
-  private implicit def iterableToList(iter: Iterable[Move]): List[Move] = iter.toList
+  given Conversion[Iterable[Move], List[Move]] = _.toList
 
   "A StandardMoveParser" should {
     "skip invalid inputs" in {

@@ -1,25 +1,11 @@
 package chess.library
 
-import chess.model.{
-  BoardModel,
-  Castle,
-  Colour,
-  Move,
-  MovePiece,
-  MovePieceCapturing,
-  Position,
-  Promote,
-  Resign,
-  Short,
-  Long,
-  Queen
-}
-import chess.model.Promote
+import chess.model.{Move, MovePiece}
 import chess.model.MovePieceCapturing
 
 object Library {
 
-  implicit def stringToMovePiece(s: String): MovePiece = new MovePiece(s)
+  given Conversion[String, MovePiece] = new MovePiece(_)
 
   private val scholarsMateBlack: List[Move] = List("e7e5", "b8c6", "g8f6")
 

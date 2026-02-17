@@ -18,7 +18,7 @@ import chess.model.ex.NonPromotingPawnAdvance
   */
 class StandardMoveExplorer(conf: ConfigurationView) extends MoveExplorer {
 
-  private implicit def tuple2list(t: (Position, Position)): List[Position] = List(t._1, t._2)
+  given Conversion[(Position, Position), List[Position]] = t => List(t._1, t._2)
 
   /** The set of attacked positions including empty squares that would be attacked by a pawn if an opposition piece were
     * present

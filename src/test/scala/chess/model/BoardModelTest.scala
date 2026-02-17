@@ -51,7 +51,7 @@ class BoardModelTest extends AnyWordSpec with Matchers with Inspectors with Test
     }
   }
 
-  private implicit def placementBuilder2List(pb: PlacementsBuilder): List[(Colour, Piece, Position)] = pb.asList
+  private given Conversion[PlacementsBuilder, List[(Colour, Piece, Position)]] = _.asList
 
   private class PlacementsBuilder {
     private var placements: List[(Colour, Piece, Position)] = Nil

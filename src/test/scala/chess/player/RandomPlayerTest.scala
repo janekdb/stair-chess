@@ -9,7 +9,7 @@ import chess.test.TestUtils
 
 class RandomPlayerTest extends AnyWordSpec with Matchers with TestUtils {
 
-  private implicit def optMove2Move(optMove: Option[Move]): Move = optMove.get
+  given Conversion[Option[Move], Move] = _.get
 
   "A RandomPlayer" when {
     "playing" should {
