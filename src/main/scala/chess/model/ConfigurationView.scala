@@ -42,7 +42,7 @@ trait ConfigurationView {
 
 object ConfigurationView {
 
-  import chess.model.Colours.{Black, White}
+  import chess.model.Colour.{Black, White}
 
   private val symbols =
     Map[Piece, String](Rook -> "R", Knight -> "N", Bishop -> "B", King -> "K", Queen -> "Q", Pawn -> "P")

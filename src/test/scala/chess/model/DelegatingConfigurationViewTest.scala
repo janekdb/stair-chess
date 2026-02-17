@@ -1,6 +1,6 @@
 package chess.model
 
-import chess.model.Colours.Black
+import chess.model.Colour.Black
 import chess.test.TestUtils
 import org.scalatest.*
 import matchers.should.Matchers

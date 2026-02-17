@@ -3,8 +3,7 @@ package chess.app
 import java.util.concurrent.TimeUnit
 import chess.model.BoardModel
 import chess.model.Colour
-import chess.model.Colours.Black
-import chess.model.Colours
+import chess.model.Colour.{Black, White}
 import chess.model.Configuration
 import chess.model.ConfigurationView
 import chess.model.Drawn
@@ -228,8 +227,8 @@ object ChessApp {
       List(ui, outcomeListener, delayer)
     )
 
-    val white          = whitePlayerGenerator(Colours.White, board.getMoveExplorer)
-    val black          = blackPlayerGenerator(Colours.Black, board.getMoveExplorer)
+    val white          = whitePlayerGenerator(White, board.getMoveExplorer)
+    val black          = blackPlayerGenerator(Black, board.getMoveExplorer)
     val playerSelector = new PlayerSelector(white, black)
 
     //    if(false ){
@@ -254,7 +253,7 @@ object ChessApp {
 
     if (outcomeListener.winner.isDefined) {
       val colour          = outcomeListener.winner.get
-      val (winner, loser) = if (colour == Colours.White) (white, black) else (black, white)
+      val (winner, loser) = if (colour == White) (white, black) else (black, white)
       scoreCard.addWin(winner, loser)
     } else if (outcomeListener.isDrawn) {
       scoreCard.addDraw(white, black)

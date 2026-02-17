@@ -1,6 +1,6 @@
 package chess.player
 
-import chess.model.Colours.Black
+import chess.model.Colour.Black
 import chess.model.*
 import chess.test.TestUtils
 import org.scalatest.*

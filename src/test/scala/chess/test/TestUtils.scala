@@ -2,7 +2,7 @@ package chess.test
 
 import chess.model.{Move, Piece, Position, MovePiece}
 import chess.model.Configuration
-import chess.model.Colours.{Black, White}
+import chess.model.Colour.{Black, White}
 import chess.model.King
 
 /** Chess specific helpers to simplify tests. */

@@ -1,6 +1,6 @@
 package chess.ranker
 
-import chess.model.Colours.White
+import chess.model.Colour.White
 import chess.model.{Configuration, ConfigurationView, GridConfiguration, StandardMoveExplorer}
 import chess.test.TestUtils
 import org.scalatest.*

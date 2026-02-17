@@ -1,6 +1,6 @@
 package chess.model
 
-import chess.model.Colours.{Black, White}
+import chess.model.Colour.{Black, White}
 import chess.model.ex.*
 import chess.test.TestUtils
 import org.scalatest.*

@@ -179,7 +179,7 @@ class BoardModel(
 
 object BoardModel {
 
-  import Colours.{Black, White}
+  import Colour.{Black, White}
 
   def standardPlacements: List[(Colour, Piece, Position)] = {
 

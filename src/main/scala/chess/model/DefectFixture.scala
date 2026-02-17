@@ -1,6 +1,6 @@
 package chess.model
 
-import Colours.{Black, White}
+import Colour.{Black, White}
 
 object DefectFixture {
 

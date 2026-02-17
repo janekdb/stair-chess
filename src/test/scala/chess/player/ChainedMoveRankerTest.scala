@@ -1,6 +1,6 @@
 package chess.player
 
-import chess.model.Colours.White
+import chess.model.Colour.White
 import chess.model.*
 import chess.ranker.MoveRanker
 import org.scalatest.*
