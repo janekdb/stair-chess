@@ -1,6 +1,7 @@
 package chess.model
 
 import chess.model.Colour.{Black, White}
+import chess.model.GameChanged.{Drawn, Won}
 import chess.model.ex.*
 import org.scalatest.*
 import LoneElement.*

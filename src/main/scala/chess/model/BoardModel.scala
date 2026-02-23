@@ -5,6 +5,7 @@ import chess.model.ex.IllegalMoveException
 import chess.model.ex.InvalidStalemateException
 import chess.model.ex.UnconsideredMovesStalemateException
 import chess.util.UnhandledCaseException
+import chess.model.GameChanged.{Drawn, Won}
 import chess.model.GameOutcomeMode
 import chess.util.TODO
 

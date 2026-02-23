@@ -4,8 +4,7 @@ import chess.model.BoardChanged
 import chess.model.GameChanged
 import chess.model.GameChangedSubscriber
 import java.util.concurrent.TimeUnit
-import chess.model.Drawn
-import chess.model.Won
+import chess.model.GameChanged.{Drawn, Won}
 import chess.model.PieceMoved
 import chess.model.Promoted
 import chess.model.PieceMovedCapturing

@@ -6,12 +6,11 @@ import chess.model.Colour
 import chess.model.Colour.{Black, White}
 import chess.model.Configuration
 import chess.model.ConfigurationView
-import chess.model.Drawn
 import chess.model.GameChanged
+import chess.model.GameChanged.{Drawn, Won}
 import chess.model.GameChangedSubscriber
 import chess.model.MoveExplorer
 import chess.model.StandardMoveExplorer
-import chess.model.Won
 import chess.player.Player
 import chess.player.Players
 import chess.stage.Display

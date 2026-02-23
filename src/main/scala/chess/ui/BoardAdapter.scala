@@ -1,7 +1,8 @@
 package chess.ui
 import scala.compiletime.uninitialized
 
-import chess.model.{BoardChanged, BoardChangedSubscriber, Castled, Colour, ConfigurationChangedSubscriber, ConfigurationView, Drawn, GameChanged, GameChangedSubscriber, Piece, PieceMoved, PieceMovedCapturing, PiecePlaced, Placed, Position, Promoted, Resigned, Won}
+import chess.model.{BoardChanged, BoardChangedSubscriber, Castled, Colour, ConfigurationChangedSubscriber, ConfigurationView, GameChanged, GameChangedSubscriber, Piece, PieceMoved, PieceMovedCapturing, PiecePlaced, Placed, Position, Promoted, Resigned}
+import chess.model.GameChanged.{Drawn, Won}
 import chess.util.TODO
 
 class BoardAdapter(val board: Board)

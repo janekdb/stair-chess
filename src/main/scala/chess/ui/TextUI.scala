@@ -19,8 +19,7 @@ import chess.model.{Castle, MovePiece}
 import chess.model.{BoardChanged, Castled, PieceMoved, PieceMovedCapturing, PiecePlaced, Promoted, Resigned}
 import chess.model.GameChanged
 import chess.model.GameChangedSubscriber
-import chess.model.Won
-import chess.model.Drawn
+import chess.model.GameChanged.{Drawn, Won}
 
 class TextUI extends BoardChangedSubscriber with GameChangedSubscriber {
 
