@@ -27,7 +27,7 @@ import Utils.*
 
 /** Verbs */
 
-abstract class Move
+abstract sealed class Move
 
 /* A simple move has start and end positions */
 abstract class SimpleMove extends Move {
