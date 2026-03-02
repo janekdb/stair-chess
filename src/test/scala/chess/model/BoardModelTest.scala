@@ -54,6 +54,7 @@ class BoardModelTest extends AnyWordSpec with Matchers with Inspectors with Test
 
   private given Conversion[PlacementsBuilder, List[(Colour, Piece, Position)]] = _.asList
 
+  /** Reduce boilerplate when assembling a list of piece placements */
   private class PlacementsBuilder {
     private var placements: List[(Colour, Piece, Position)] = Nil
 
@@ -372,7 +373,7 @@ class BoardModelTest extends AnyWordSpec with Matchers with Inspectors with Test
     val whiteEnd: Position   = "d6"
     bm.move(EnPassant(whiteStart, whiteEnd))
 
-    withClue("PieceMovedTaking event was sent") {
+    withClue("PieceMovedCapturing event was sent") {
       pieceMovedCapturing shouldBe defined
     }
     pieceMovedCapturing.value.start shouldBe whiteStart
