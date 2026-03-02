@@ -2,7 +2,7 @@ package chess.model
 
 class GridConfiguration extends Configuration {
 
-  var pieces: Map[Position, Placed] = Map[Position, Placed]()
+  private var pieces: Map[Position, Placed] = Map[Position, Placed]()
 
   def add(position: Position, colour: Colour, piece: Piece): Unit = {
     pieces += (position -> Placed(colour, piece, None))

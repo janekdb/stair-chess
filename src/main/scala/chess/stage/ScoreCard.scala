@@ -6,9 +6,9 @@ import scala.collection.mutable
 
 class ScoreCard(val players: Set[String]) {
 
-  val wins   = new mutable.HashMap[String, Int]()
-  val draws  = new mutable.HashMap[String, Int]()
-  val scores = new mutable.HashMap[String, Scores]()
+  private val wins   = new mutable.HashMap[String, Int]()
+  private val draws  = new mutable.HashMap[String, Int]()
+  private val scores = new mutable.HashMap[String, Scores]()
 
   players.foreach(p => wins.put(p, 0))
   players.foreach(p => draws.put(p, 0))

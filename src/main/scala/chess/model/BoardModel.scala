@@ -63,7 +63,7 @@ class BoardModel(
     def isStalemate: Boolean = gameOutcomeMode == GameOutcomeMode.Stalemate
   }
 
-  var gameOutcome: Option[GameOutcome] = None
+  private var gameOutcome: Option[GameOutcome] = None
 
   private def wonGuard(): Unit = if (!isWon) throw new AssertionError("There is no winner")
 
