@@ -1,6 +1,6 @@
 package chess.ranker
 
-import chess.model.{Colour, ConfigurationView, Move, MoveExplorer, MovePieceCapturing}
+import chess.model.{Colour, ConfigurationView, EnPassant, Move, MoveExplorer, MovePieceCapturing, PromoteCapturing}
 import chess.ranker
 
 /** A ranker which prefers capturing high value pieces
@@ -10,6 +10,12 @@ class HighValueCapturingRanker(val explorerFactory: ConfigurationView => MoveExp
   private def rank(confView: ConfigurationView)(move: Move): Int = {
     move match {
       case m: MovePieceCapturing =>
+        val capturedPiece = confView.getExistingPiece(m.end).piece
+        RANKING_LOW + capturedPiece.value
+      case m: EnPassant =>
+        val capturedPiece = confView.getExistingPiece(m.captured).piece
+        RANKING_LOW + capturedPiece.value
+      case m: PromoteCapturing =>
         val capturedPiece = confView.getExistingPiece(m.end).piece
         RANKING_LOW + capturedPiece.value
       case _ => RANKING_LOW
