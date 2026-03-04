@@ -34,3 +34,8 @@ Replace rankers by labellers: For each move label the move
 
 Search the tree: Start by following position where the opponent has only a few moves.
 
+Add new rankers from new-strategies.md
+
+In tournament mode do not hide/show the board, instead leave the board showing and clear/set the pieces instead.
+
+Simplify HighValueCapturingRanker by implementing the Capturing trait more usefully in Move.scala
