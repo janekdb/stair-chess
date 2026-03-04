@@ -13,8 +13,14 @@ import chess.ranker.{
 
 object Players {
 
-  def checkingPlayer(name: String, colour: Colour, explorerFactory: ConfigurationView => MoveExplorer): Player = {
-    val ranker = new CheckingRanker(explorerFactory, colour)
+  def checkMatingCheckingPlayer(
+      name: String,
+      colour: Colour,
+      explorerFactory: ConfigurationView => MoveExplorer
+  ): Player = {
+    val checkMatingRanker = new CheckMatingRanker(explorerFactory, colour)
+    val checkingRanker    = new CheckingRanker(explorerFactory, colour)
+    val ranker            = new ChainedMoveRanker(checkMatingRanker, checkingRanker)
     new ShellPlayer(name, colour, explorerFactory, ranker)
   }
 

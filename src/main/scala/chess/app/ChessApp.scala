@@ -53,7 +53,7 @@ object ChessApp {
     // TODO: For the tournament loop over all combinations of players
     val explorerFactory = (conf: ConfigurationView) => new StandardMoveExplorer(conf)
 
-    val checkingName                                    = "Checking"
+    val checkMatingCheckingName                         = "CM, Chk"
     val checkMatingCapturingName                        = "CM, Cap"
     val checkMatingCaptureEvadingName                   = "CM, CapEva"
     val checkMatingCaptureEvadingCheckingName           = "CM, CapEva, Chk"
@@ -63,8 +63,9 @@ object ChessApp {
     val checkMatingCheckingHighValueCapturingName       = "CM, Chk, HVCap"
 
     val p1 = (
-      checkingName,
-      (colour: Colour, explorer: MoveExplorer) => Players.checkingPlayer(checkingName, colour, explorerFactory)
+      checkMatingCheckingName,
+      (colour: Colour, explorer: MoveExplorer) =>
+        Players.checkMatingCheckingPlayer(checkMatingCheckingName, colour, explorerFactory)
     )
     val p2 = (
       checkMatingCapturingName,
